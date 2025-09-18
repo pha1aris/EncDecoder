@@ -1,0 +1,13 @@
+verilog xil_defaultlib  \
+"../../../../project_1.gen/sources_1/ip/GT_rx500M_tx1G/sim/gtwizard_ultrascale_v1_7_gthe4_channel.v" \
+"../../../../project_1.gen/sources_1/ip/GT_rx500M_tx1G/sim/GT_rx500M_tx1G_gthe4_channel_wrapper.v" \
+"../../../../project_1.gen/sources_1/ip/GT_rx500M_tx1G/sim/gtwizard_ultrascale_v1_7_gthe4_common.v" \
+"../../../../project_1.gen/sources_1/ip/GT_rx500M_tx1G/sim/GT_rx500M_tx1G_gthe4_common_wrapper.v" \
+"../../../../project_1.gen/sources_1/ip/GT_rx500M_tx1G/sim/GT_rx500M_tx1G_gtwizard_gthe4.v" \
+"../../../../project_1.gen/sources_1/ip/GT_rx500M_tx1G/sim/GT_rx500M_tx1G_gtwizard_top.v" \
+"../../../../project_1.gen/sources_1/ip/GT_rx500M_tx1G/sim/GT_rx500M_tx1G.v" \
+
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
