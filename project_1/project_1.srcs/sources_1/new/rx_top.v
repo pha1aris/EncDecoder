@@ -34,9 +34,28 @@ module rx_top(
     output wire                  ch0_gthtxp_out
 );
 
+wire [31:0] gth_rx_data;
+wire gth_rx_valid;
+wire de_intv_tready;
+wire [31:0] de_intv_tdata_o ;
+wire        de_intv_tvalid_o;
+wire        de_intv_tready_o;
 
-
-
+    de_interleaver  #(
+        .CODEWORD_SIZE(256),   // 每个码字256 words (1024B)
+        .NUM_CODEWORDS(4)    // 4个码字
+    )de_interleaver(
+        .clk(core_clk),
+        .rst(rst),
+        // 输入接口
+        .s_axis_tdata(gth_rx_data),
+        .s_axis_tvalid(gth_rx_valid),
+        .s_axis_tready(de_intv_tready),
+        // 输出接口
+        .m_axis_tdata (de_intv_tdata_o ),
+        .m_axis_tvalid(de_intv_tvalid_o),
+        .m_axis_tready(de_intv_tready_o)
+    );
 
     DeSync DeSync(
         // --- 时钟和复位 ---
@@ -143,7 +162,7 @@ module rx_top(
         .EN       (obuf_rden && !output_buf_empty),
         .DATA_OUT (prbs_error_to_gth)
     );
-    
+
     assign prbs_match_out1 = ~|prbs_error_to_gth;
 
 endmodule

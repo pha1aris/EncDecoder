@@ -1,7 +1,0 @@
-# compile vhdl design source files
-vhdl xil_defaultlib  \
-"../../../../project_1.gen/sources_1/ip/rs_decoder_0/sim/rs_decoder_0.vhd" \
-"../../../../project_1.gen/sources_1/ip/rs_encoder_0/sim/rs_encoder_0.vhd" \
-
-# Do not sort compile order
-nosort
