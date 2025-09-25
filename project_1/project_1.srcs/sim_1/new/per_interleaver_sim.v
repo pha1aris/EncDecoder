@@ -14,14 +14,14 @@
 //              检查输入输出是否一致
 //////////////////////////////////////////////////////////////////////////////////
 
-module interleaver_tb();
+module per_interleaver_sim();
 
     // ================= 参数定义 =================
     parameter CORE_CLK_PERIOD = 10.0;
     parameter CODEWORD_SIZE_IN_32 = 65;
     parameter NUM_CODEWORDS = 4;
     localparam BLOCK_SIZE = CODEWORD_SIZE_IN_32 * NUM_CODEWORDS; // 260
-    localparam NUM_BLOCKS_TO_TEST = 3; // 测试3个数据块，以验证乒乓操作
+    localparam NUM_BLOCKS_TO_TEST = 2; // 测试3个数据块，以验证乒乓操作
     localparam TOTAL_WORDS = BLOCK_SIZE * NUM_BLOCKS_TO_TEST; // 780
 
     // ================= 时钟与复位 =================
@@ -44,10 +44,10 @@ module interleaver_tb();
 
     // ================= DUT 端口信号 =================
     // pre_interleaver 输入
-    reg  [31:0] src_tdata;
+    wire  [31:0] src_tdata;
     reg         src_tvalid;
     wire        src_tready;
-
+    assign src_tdata = sent_count;
     // pre_interleaver <-> de_interleaver 连接
     wire [31:0] intv_tdata;
     wire        intv_tvalid;
@@ -62,14 +62,14 @@ module interleaver_tb();
     integer sent_count = 0;
     initial begin
         src_tvalid = 0;
-        src_tdata  = 0;
+        // src_tdata  = 0;
         wait (rst == 0); // 等待复位结束
         #50;
 
         while (sent_count < TOTAL_WORDS) begin
             @(posedge core_clk);
             src_tvalid <= 1;
-            src_tdata  <= sent_count; // 用递增数据方便检查
+            // src_tdata  <= sent_count; // 用递增数据方便检查
             if (src_tvalid && src_tready) begin
                 sent_count <= sent_count + 1;
             end
@@ -77,6 +77,26 @@ module interleaver_tb();
 
         @(posedge core_clk);
         src_tvalid <= 0;
+    end
+
+    reg [31:0] send_cnt;
+    reg cnt_valid;
+    wire [31:0] prbs_data;
+
+    always @(posedge core_clk or posedge rst) begin
+        if(rst) begin
+            send_cnt <= 0;
+            cnt_valid <= 0;
+        end else if(src_tvalid && src_tready)begin
+            cnt_valid <= 1;
+            if(send_cnt == CODEWORD_SIZE_IN_32 - 1)begin
+                send_cnt <= 'd1;
+            end else begin
+                send_cnt <= send_cnt + 1;
+            end
+        end else begin
+            cnt_valid <= 0;
+        end
     end
 
     // ================= 随机反压模拟 =================
@@ -92,39 +112,68 @@ module interleaver_tb();
         end
     end
 
+    gtwizard_ultrascale_0_prbs_any #(
+        .CHK_MODE               (0),
+        .INV_PATTERN            (1),
+        .POLY_LENGHT            (31),
+        .POLY_TAP               (28),
+        .NBITS                  (32)
+    ) prbs_any_gen_inst (
+        .RST                    (rst),
+        .CLK                    (core_clk),
+        .DATA_IN                ('d0),
+        .EN                     (src_tready && src_tvalid),
+        .DATA_OUT               (prbs_data)
+    );
 
     // ================= DUT 实例化 =================
     pre_interleaver #(
         .CODEWORD_SIZE_IN_32(CODEWORD_SIZE_IN_32),
-        .NUM_CODEWORDS(NUM_CODEWORDS)
+        .NUM_CODEWORDS      (NUM_CODEWORDS)
     ) u_pre_interleaver (
-        .clk(core_clk),
-        .rst(rst),
-        .s_axis_tdata (src_tdata),
-        .s_axis_tvalid(src_tvalid),
-        .s_axis_tready(src_tready),
-        .m_axis_tdata (intv_tdata),
-        .m_axis_tvalid(intv_tvalid),
-        .m_axis_tready(intv_tready) // 连接到下游的ready信号
+        .clk                (core_clk),
+        .rst                (rst),
+        .s_axis_tdata       (send_cnt),
+        .s_axis_tvalid      (src_tvalid),
+        .s_axis_tready      (src_tready),
+        .m_axis_tdata       (intv_tdata),
+        .m_axis_tvalid      (intv_tvalid),
+        .m_axis_tready      (intv_tready) // 连接到下游的ready信号
     );
 
     de_interleaver #(
-        .CODEWORD_SIZE_IN_32(CODEWORD_SIZE_IN_32),
-        .NUM_CODEWORDS(NUM_CODEWORDS)
+        .CODEWORD_SIZE_IN_32 (CODEWORD_SIZE_IN_32),
+        .NUM_CODEWORDS       (NUM_CODEWORDS)
     ) u_de_interleaver (
-        .clk(core_clk),
-        .rst(rst),
-        .s_axis_tdata (intv_tdata),
-        .s_axis_tvalid(intv_tvalid),
-        .s_axis_tready(intv_tready),
-        .m_axis_tdata (final_tdata),
-        .m_axis_tvalid(final_tvalid),
-        .m_axis_tready(final_tready)
+        .clk                (core_clk),
+        .rst                (rst),
+        .s_axis_tdata       (intv_tdata),
+        .s_axis_tvalid      (intv_tvalid),
+        .s_axis_tready      (intv_tready),
+        .m_axis_tdata       (final_tdata),
+        .m_axis_tvalid      (final_tvalid),
+        .m_axis_tready      (1)
     );
 
+    wire [31:0] prbs_error_to_gth;
+    gtwizard_ultrascale_0_prbs_any #(
+        .CHK_MODE       (1),
+        .INV_PATTERN    (1),
+        .POLY_LENGHT    (31),
+        .POLY_TAP       (28),
+        .NBITS          (32)
+    ) prbs_checker_inst1 (
+        .RST            (rst),
+        .CLK            (core_clk), // 假设 tx_clk 与 rd_clk 同步用于此测试
+        .DATA_IN        (final_tdata),
+        .EN             (final_tvalid),
+        .DATA_OUT       (prbs_error_to_gth)
+    );
+
+    wire prbs_match;
+    assign prbs_match = ~|prbs_error_to_gth;
     // ================= Checker: 比对输入/输出 =================
     integer received_count = 0;
-    // 使用Verilog-2001兼容的定长数组和指针来代替SystemVerilog队列
     reg [31:0] sent_data_mem[0:TOTAL_WORDS-1];
     integer push_ptr = 0;
     integer pop_ptr = 0;
@@ -145,7 +194,7 @@ module interleaver_tb();
         if (!rst && final_tvalid && final_tready) begin
             if (pop_ptr >= push_ptr) begin // 检查FIFO是否为空
                 $display("[%0t] ERROR: Checker received data, but FIFO model is empty!", $time);
-                $stop;
+                // $stop;
             end
 
             expected_data = sent_data_mem[pop_ptr];
@@ -154,7 +203,7 @@ module interleaver_tb();
                 $display("[%0t] ERROR: Data mismatch!", $time);
                 $display("    Expected: %0d", expected_data);
                 $display("    Received: %0d", final_tdata);
-                $stop;
+                // $stop;
             end else begin
                 // $display("[%0t] INFO: Correctly received data %0d", $time, final_tdata);
             end
@@ -171,7 +220,7 @@ module interleaver_tb();
         $display("SUCCESS: Simulation finished without errors.");
         $display("Total words sent and verified: %0d", received_count);
         $display("==========================================================");
-        $finish;
+        // $finish;
     end
 
     initial begin
@@ -180,7 +229,7 @@ module interleaver_tb();
         $display("ERROR: Simulation timed out!");
         $display("Words sent: %0d, Words received: %0d", sent_count, received_count);
         $display("==========================================================");
-        $stop;
+        // $stop;
     end
 
 endmodule

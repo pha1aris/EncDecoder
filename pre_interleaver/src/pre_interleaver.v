@@ -52,6 +52,13 @@ module pre_interleaver #(
     reg [6:0] ptr1;
     reg       block1_full;
     reg       block1_reading;
+    reg m_axis_tvalid_r;
+    reg [31:0] read_data0;
+    reg [6:0]  rd_ptr0;
+    reg [1:0]  rd_ram_sel0;
+    reg [31:0] read_data1;
+    reg [6:0]  rd_ptr1;
+    reg [1:0]  rd_ram_sel1;
     
     // ================== 写 Block 0 逻辑 ==================
     always @(posedge clk or posedge rst) begin
@@ -149,7 +156,6 @@ module pre_interleaver #(
     //     end
     // end
 // --- register valid one cycle later so it lines up with read_data (which comes from sync RAM) ---
-reg m_axis_tvalid_r;
 
 always @(posedge clk or posedge rst) begin
     if (rst) begin
@@ -187,9 +193,6 @@ end
 // ==========================================================================================
 
     // ================== Block 0 读逻辑 ==================
-    reg [31:0] read_data0;
-    reg [6:0]  rd_ptr0;
-    reg [1:0]  rd_ram_sel0;
 
     always @(posedge clk or posedge rst) begin
         if(rst) begin
@@ -234,9 +237,6 @@ end
     end
 
     // ================== Block 1 读逻辑 ==================
-    reg [31:0] read_data1;
-    reg [6:0]  rd_ptr1;
-    reg [1:0]  rd_ram_sel1;
 
     always @(posedge clk or posedge rst) begin
         if(rst) begin

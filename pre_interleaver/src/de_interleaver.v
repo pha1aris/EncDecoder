@@ -56,6 +56,15 @@ module de_interleaver #(
     reg [6:0] ptr1;
     reg       block1_full;
     reg       block1_reading;
+    reg [31:0] read_data0;
+    reg [6:0]  rd_ptr0;
+    reg [1:0]  rd_ram_sel0;
+
+    reg block0_reading_d, block1_reading_d; // 上一周期的 reading 快照
+    
+    reg [31:0] read_data1;
+    reg [6:0]  rd_ptr1;
+    reg [1:0]  rd_ram_sel1;
 
     // ================== 写 Block 0 逻辑 (接收交织数据) ==================
     always @(posedge clk or posedge rst) begin
@@ -152,7 +161,6 @@ module de_interleaver #(
     // end
 
     // --- 在 module 顶部或适当位置新增延迟寄存器 ---
-    reg block0_reading_d, block1_reading_d; // 上一周期的 reading 快照
 
     // --- 在 posedge 时更新快照（放在当前已有的 posedge 区域之外也可以） ---
     always @(posedge clk or posedge rst) begin
@@ -191,9 +199,7 @@ module de_interleaver #(
 
 
     // ================== Block 0 读逻辑 (恢复原始顺序) ==================
-    reg [31:0] read_data0;
-    reg [6:0]  rd_ptr0;
-    reg [1:0]  rd_ram_sel0;
+
 
     always @(posedge clk or posedge rst) begin
         if(rst) begin
@@ -232,10 +238,6 @@ module de_interleaver #(
     end
 
     // ================== Block 1 读逻辑 (恢复原始顺序) ==================
-    reg [31:0] read_data1;
-    reg [6:0]  rd_ptr1;
-    reg [1:0]  rd_ram_sel1;
-
     always @(posedge clk or posedge rst) begin
         if(rst) begin
             rd_ptr1 <= 'd0;
