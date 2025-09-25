@@ -21,7 +21,7 @@ module per_interleaver_sim();
     parameter CODEWORD_SIZE_IN_32 = 65;
     parameter NUM_CODEWORDS = 4;
     localparam BLOCK_SIZE = CODEWORD_SIZE_IN_32 * NUM_CODEWORDS; // 260
-    localparam NUM_BLOCKS_TO_TEST = 2; // 测试3个数据块，以验证乒乓操作
+    localparam NUM_BLOCKS_TO_TEST = 1; // 测试3个数据块，以验证乒乓操作
     localparam TOTAL_WORDS = BLOCK_SIZE * NUM_BLOCKS_TO_TEST; // 780
 
     // ================= 时钟与复位 =================
@@ -57,7 +57,21 @@ module per_interleaver_sim();
     wire [31:0] final_tdata;
     wire        final_tvalid;
     reg         final_tready; // 由TB的Checker控制
+    reg [31:0] send_cnt;
+    reg cnt_valid;
+    wire [31:0] prbs_data;
+    wire [31:0] intv_v1_tdata;
+    wire intv_v1_tvalid;
+    wire intv_v1_tready;
+    wire deintv_tready;
+ 
+    wire [31:0]deintv_tdata;
+    wire       deintv_tvalid;
+    wire [31:0] prbs_error_to_gth;
+    wire prbs_match;
+    assign prbs_match = ~|prbs_error_to_gth;
 
+    reg [31:0] expected_data;
     // ================= 输入数据流生成 =================
     // integer sent_count = 0;
     // assign src_tdata = sent_count;
@@ -80,9 +94,6 @@ module per_interleaver_sim();
     //     src_tvalid <= 0;
     // end
 
-    reg [31:0] send_cnt;
-    reg cnt_valid;
-    // wire [31:0] prbs_data;
 
     always @(posedge core_clk or posedge rst) begin
         if(rst) begin
@@ -113,153 +124,102 @@ module per_interleaver_sim();
         end
     end
 
-    // gtwizard_ultrascale_0_prbs_any #(
-    //     .CHK_MODE               (0),
-    //     .INV_PATTERN            (1),
-    //     .POLY_LENGHT            (31),
-    //     .POLY_TAP               (28),
-    //     .NBITS                  (32)
-    // ) prbs_any_gen_inst (
-    //     .RST                    (rst),
-    //     .CLK                    (core_clk),
-    //     .DATA_IN                ('d0),
-    //     .EN                     (src_tready && src_tvalid),
-    //     .DATA_OUT               (prbs_data)
-    // );
-
     // ================= DUT 实例化 =================
-    // pre_interleaver #(
-    //     .CODEWORD_SIZE_IN_32(CODEWORD_SIZE_IN_32),
-    //     .NUM_CODEWORDS      (NUM_CODEWORDS)
-    // ) u_pre_interleaver (
-    //     .clk                (core_clk),
-    //     .rst                (rst),
-    //     .s_axis_tdata       (send_cnt),
-    //     .s_axis_tvalid      (cnt_valid),
-    //     .s_axis_tready      (src_tready),
-    //     .m_axis_tdata       (intv_tdata),
-    //     .m_axis_tvalid      (intv_tvalid),
-    //     .m_axis_tready      (intv_tready) // 连接到下游的ready信号
-    // );
 
-wire [31:0] intv_v1_tdata;
-wire intv_v1_tvalid;
-wire intv_v1_tready;
-wire deintv_tready;
-
-    pre_interleaver_v1 #(
-        .CODEWORD_SIZE_IN_32         (65),
-        .NUM_CODEWORDS         (4)  // 每个RAM深度 = 2^6 = 64   
-    )pre_interleaver_v1(
-        .clk                (core_clk),
-        .rst                (rst),
-        .s_axis_tdata       (send_cnt),
-        .s_axis_tvalid      (cnt_valid),
-        .s_axis_tready      (src_tready),
-        .m_axis_tdata       (intv_v1_tdata),
-        .m_axis_tvalid      (intv_v1_tvalid),
-        .m_axis_tready      (deintv_tready) // 连接到下游的ready信号
+    gtwizard_ultrascale_0_prbs_any #(
+        .CHK_MODE               (0),
+        .INV_PATTERN            (1),
+        .POLY_LENGHT            (31),
+        .POLY_TAP               (28),
+        .NBITS                  (32)
+    ) prbs_any_gen_inst (
+        .RST                    (rst),
+        .CLK                    (core_clk),
+        .DATA_IN                ('d0),
+        .EN                     (src_tready && cnt_valid),
+        .DATA_OUT               (prbs_data)
     );
 
-wire [31:0]deintv_tdata;
-wire       deintv_tvalid;
- de_interleaver_v1#(
-        .CODEWORD_SIZE_IN_32         (65),
+    pre_interleaver_v1 #(
+        .CODEWORD_SIZE_IN_32   (65),
+        .NUM_CODEWORDS         (4)  // 每个RAM深度 = 2^6 = 64   
+    )pre_interleaver_v1(
+        .clk                    (core_clk),
+        .rst                    (rst),
+        .s_axis_tdata           (prbs_data),
+        .s_axis_tvalid          (cnt_valid),
+        .s_axis_tready          (src_tready),
+        .m_axis_tdata           (intv_v1_tdata),
+        .m_axis_tvalid          (intv_v1_tvalid),
+        .m_axis_tready          (deintv_tready) // 连接到下游的ready信号
+    );
+
+    de_interleaver_v1#(
+        .CODEWORD_SIZE_IN_32   (65),
         .NUM_CODEWORDS         (4)  // 每个RAM深度 = 2^6 = 64  
-)de_interleaver_v1(
-        .clk                (core_clk),
-        .rst                (rst),
-        .s_axis_tdata       (intv_v1_tdata),
-        .s_axis_tvalid      (intv_v1_tvalid),
-        .s_axis_tready      (deintv_tready),
-        .m_axis_tdata       (deintv_tdata),
-        .m_axis_tvalid      (deintv_tvalid),
-        .m_axis_tready      (1) // 连接到下游的ready信号
-);
-    // pre_interleaver_v1 #(
-    //     .CODEWORD_SIZE_IN_32         (65),
-    //     .NUM_CODEWORDS         (4)  // 每个RAM深度 = 2^6 = 64   
-    // )de_interleaver_v1(
-    //     .clk                (core_clk),
-    //     .rst                (rst),
-    //     .s_axis_tdata       (intv_v1_tdata),
-    //     .s_axis_tvalid      (intv_v1_tvalid),
-    //     .s_axis_tready      (deintv_tready),
-    //     .m_axis_tdata       (deintv_tdata),
-    //     .m_axis_tvalid      (deintv_tvalid),
-    //     .m_axis_tready      (1) // 连接到下游的ready信号
-    // );
+    )de_interleaver_v1(
+        .clk                    (core_clk),
+        .rst                    (rst),
+        .s_axis_tdata           (intv_v1_tdata),
+        .s_axis_tvalid          (intv_v1_tvalid),
+        .s_axis_tready          (deintv_tready),
+        .m_axis_tdata           (deintv_tdata),
+        .m_axis_tvalid          (deintv_tvalid),
+        .m_axis_tready          (1) // 连接到下游的ready信号
+    );
 
-    // de_interleaver #(
-    //     .CODEWORD_SIZE_IN_32 (CODEWORD_SIZE_IN_32),
-    //     .NUM_CODEWORDS       (NUM_CODEWORDS)
-    // ) u_de_interleaver (
-    //     .clk                (core_clk),
-    //     .rst                (rst),
-    //     .s_axis_tdata       (intv_tdata),
-    //     .s_axis_tvalid      (intv_tvalid),
-    //     .s_axis_tready      (intv_tready),
-    //     .m_axis_tdata       (final_tdata),
-    //     .m_axis_tvalid      (final_tvalid),
-    //     .m_axis_tready      (1)
-    // );
+    gtwizard_ultrascale_0_prbs_any #(
+        .CHK_MODE               (1),
+        .INV_PATTERN            (1),
+        .POLY_LENGHT            (31),
+        .POLY_TAP               (28),
+        .NBITS                  (32)
+    ) prbs_checker_inst1 (
+        .RST                    (rst),
+        .CLK                    (core_clk), // 假设 tx_clk 与 rd_clk 同步用于此测试
+        .DATA_IN                (deintv_tdata),
+        .EN                     (deintv_tvalid),
+        .DATA_OUT               (prbs_error_to_gth)
+    );
 
-    // wire [31:0] prbs_error_to_gth;
-    // gtwizard_ultrascale_0_prbs_any #(
-    //     .CHK_MODE       (1),
-    //     .INV_PATTERN    (1),
-    //     .POLY_LENGHT    (31),
-    //     .POLY_TAP       (28),
-    //     .NBITS          (32)
-    // ) prbs_checker_inst1 (
-    //     .RST            (rst),
-    //     .CLK            (core_clk), // 假设 tx_clk 与 rd_clk 同步用于此测试
-    //     .DATA_IN        (final_tdata),
-    //     .EN             (final_tvalid),
-    //     .DATA_OUT       (prbs_error_to_gth)
-    // );
-
-    // wire prbs_match;
-    // assign prbs_match = ~|prbs_error_to_gth;
     // ================= Checker: 比对输入/输出 =================
-    integer received_count = 0;
-    reg [31:0] sent_data_mem[0:TOTAL_WORDS-1];
-    integer push_ptr = 0;
-    integer pop_ptr = 0;
+    // integer received_count = 0;
+    // reg [31:0] sent_data_mem[0:TOTAL_WORDS-1];
+    // integer push_ptr = 0;
+    // integer pop_ptr = 0;
 
-    // 记录发送的数据
-    always @(posedge core_clk) begin
-        if (src_tvalid && src_tready) begin
-            if (push_ptr < TOTAL_WORDS) begin
-                sent_data_mem[push_ptr] = src_tdata;
-                push_ptr = push_ptr + 1;
-            end
-        end
-    end
+    // // 记录发送的数据
+    // always @(posedge core_clk) begin
+    //     if (src_tvalid && src_tready) begin
+    //         if (push_ptr < TOTAL_WORDS) begin
+    //             sent_data_mem[push_ptr] = src_tdata;
+    //             push_ptr = push_ptr + 1;
+    //         end
+    //     end
+    // end
 
-            reg [31:0] expected_data;
-    // 检查接收的数据
-    always @(posedge core_clk) begin
-        if (!rst && final_tvalid && final_tready) begin
-            if (pop_ptr >= push_ptr) begin // 检查FIFO是否为空
-                $display("[%0t] ERROR: Checker received data, but FIFO model is empty!", $time);
-                // $stop;
-            end
+    // // 检查接收的数据
+    // always @(posedge core_clk) begin
+    //     if (!rst && final_tvalid && final_tready) begin
+    //         if (pop_ptr >= push_ptr) begin // 检查FIFO是否为空
+    //             $display("[%0t] ERROR: Checker received data, but FIFO model is empty!", $time);
+    //             // $stop;
+    //         end
 
-            expected_data = sent_data_mem[pop_ptr];
+    //         expected_data = sent_data_mem[pop_ptr];
             
-            if (final_tdata !== expected_data) begin
-                $display("[%0t] ERROR: Data mismatch!", $time);
-                $display("    Expected: %0d", expected_data);
-                $display("    Received: %0d", final_tdata);
-                // $stop;
-            end else begin
-                // $display("[%0t] INFO: Correctly received data %0d", $time, final_tdata);
-            end
-            pop_ptr = pop_ptr + 1;
-            received_count <= received_count + 1;
-        end
-    end
+    //         if (final_tdata !== expected_data) begin
+    //             $display("[%0t] ERROR: Data mismatch!", $time);
+    //             $display("    Expected: %0d", expected_data);
+    //             $display("    Received: %0d", final_tdata);
+    //             // $stop;
+    //         end else begin
+    //             // $display("[%0t] INFO: Correctly received data %0d", $time, final_tdata);
+    //         end
+    //         pop_ptr = pop_ptr + 1;
+    //         received_count <= received_count + 1;
+    //     end
+    // end
 
     // ================= 仿真结束条件 =================
     // initial begin

@@ -21,7 +21,7 @@ module per_interleaver_sim();
     parameter CODEWORD_SIZE_IN_32 = 65;
     parameter NUM_CODEWORDS = 4;
     localparam BLOCK_SIZE = CODEWORD_SIZE_IN_32 * NUM_CODEWORDS; // 260
-    localparam NUM_BLOCKS_TO_TEST = 2; // 测试3个数据块，以验证乒乓操作
+    localparam NUM_BLOCKS_TO_TEST = 20; // 测试3个数据块，以验证乒乓操作
     localparam TOTAL_WORDS = BLOCK_SIZE * NUM_BLOCKS_TO_TEST; // 780
 
     // ================= 时钟与复位 =================
@@ -127,33 +127,69 @@ module per_interleaver_sim();
     );
 
     // ================= DUT 实例化 =================
-    pre_interleaver #(
-        .CODEWORD_SIZE_IN_32(CODEWORD_SIZE_IN_32),
-        .NUM_CODEWORDS      (NUM_CODEWORDS)
-    ) u_pre_interleaver (
+    // pre_interleaver #(
+    //     .CODEWORD_SIZE_IN_32(CODEWORD_SIZE_IN_32),
+    //     .NUM_CODEWORDS      (NUM_CODEWORDS)
+    // ) u_pre_interleaver (
+    //     .clk                (core_clk),
+    //     .rst                (rst),
+    //     .s_axis_tdata       (send_cnt),
+    //     .s_axis_tvalid      (src_tvalid),
+    //     .s_axis_tready      (src_tready),
+    //     .m_axis_tdata       (intv_tdata),
+    //     .m_axis_tvalid      (intv_tvalid),
+    //     .m_axis_tready      (intv_tready) // 连接到下游的ready信号
+    // );
+
+    pre_interleaver_v1 #(
+       .CODEWORD_SIZE_IN_32(CODEWORD_SIZE_IN_32),    // 每个码字长度 (32-bit words)
+       .NUM_CODEWORDS      (NUM_CODEWORDS)    // 码字个数
+    )pre_interleaver_v1(
         .clk                (core_clk),
         .rst                (rst),
-        .s_axis_tdata       (send_cnt),
+
+        // 输入接口 (AXIS-like)
+        .s_axis_tdata       (prbs_data),
         .s_axis_tvalid      (src_tvalid),
         .s_axis_tready      (src_tready),
+
+        // 输出接口 (AXIS-like)
         .m_axis_tdata       (intv_tdata),
         .m_axis_tvalid      (intv_tvalid),
-        .m_axis_tready      (intv_tready) // 连接到下游的ready信号
+        .m_axis_tready      (intv_tready) 
     );
 
-    de_interleaver #(
-        .CODEWORD_SIZE_IN_32 (CODEWORD_SIZE_IN_32),
-        .NUM_CODEWORDS       (NUM_CODEWORDS)
-    ) u_de_interleaver (
+    de_interleaver_v1   #(
+        .CODEWORD_SIZE_IN_32(CODEWORD_SIZE_IN_32),   // 每个码字长度 (32-bit words)
+        .NUM_CODEWORDS      (NUM_CODEWORDS)   // 码字个数
+    )de_interleaver_v1(
         .clk                (core_clk),
         .rst                (rst),
+
+        // 输入接口 (AXIS-like)
         .s_axis_tdata       (intv_tdata),
         .s_axis_tvalid      (intv_tvalid),
         .s_axis_tready      (intv_tready),
-        .m_axis_tdata       (final_tdata),
-        .m_axis_tvalid      (final_tvalid),
-        .m_axis_tready      (1)
+
+        // 输出接口 (AXIS-like)
+       .m_axis_tdata        (final_tdata),
+       .m_axis_tvalid       (final_tvalid),
+       .m_axis_tready       (1)
     );
+
+    // de_interleaver #(
+    //     .CODEWORD_SIZE_IN_32 (CODEWORD_SIZE_IN_32),
+    //     .NUM_CODEWORDS       (NUM_CODEWORDS)
+    // ) u_de_interleaver (
+    //     .clk                (core_clk),
+    //     .rst                (rst),
+    //     .s_axis_tdata       (intv_tdata),
+    //     .s_axis_tvalid      (intv_tvalid),
+    //     .s_axis_tready      (intv_tready),
+    //     .m_axis_tdata       (final_tdata),
+    //     .m_axis_tvalid      (final_tvalid),
+    //     .m_axis_tready      (1)
+    // );
 
     wire [31:0] prbs_error_to_gth;
     gtwizard_ultrascale_0_prbs_any #(

@@ -2,7 +2,7 @@
 // 长度为CODEWORD_SIZE_IN_32（32bits）的
 // 码字中
 //
-module pre_interleaver #(
+module pre_interleaver_v1 #(
     parameter CODEWORD_SIZE_IN_32 = 65,    // 每个码字长度 (32-bit words)
     parameter NUM_CODEWORDS       = 4      // 码字个数
 )(

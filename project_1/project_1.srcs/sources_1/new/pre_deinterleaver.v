@@ -2,7 +2,7 @@
 // 解交织器将外部数据按行将数据存入
 // 按列将数据读出 还原数据
 // 
-module de_interleaver_v1#(
+module pre_deinterleaver#(
     parameter CODEWORD_SIZE_IN_32 = 65,    // 每个码字长度 (32-bit words)
     parameter NUM_CODEWORDS       = 4      // 码字个数
 )(

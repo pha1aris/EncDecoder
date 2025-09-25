@@ -48,8 +48,6 @@ module tx_top(
     inout  [31:0]               c0_ddr4_dq,
     inout  [3:0]                c0_ddr4_dqs_c,
     inout  [3:0]                c0_ddr4_dqs_t
-
-
 );
 
     gtwizard_ultrascale_0_prbs_any #(
