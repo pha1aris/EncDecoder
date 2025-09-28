@@ -134,7 +134,7 @@ ddr4_rw #(
     .rfifo_wcount(rd_fifo_wcount)
 );
 
-// DDR4 IP核例化
+// DDR4 mig IP核例化
 ddr4_0 u_ddr4_0 (
   .c0_init_calib_complete(c0_init_calib_complete),
   .c0_sys_clk_p(sys_clk_p),

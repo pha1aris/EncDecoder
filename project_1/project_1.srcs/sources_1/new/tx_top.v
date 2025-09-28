@@ -50,6 +50,32 @@ module tx_top(
     inout  [3:0]                c0_ddr4_dqs_t
 );
 
+
+    parameter MATRIX_COL = 8;
+    parameter MATRIX_ROW = 8;
+    parameter WR_BRUST_LEN  = 8;
+    parameter RD_BRUST_LEN  = 64;
+    
+    wire[31:0] prbs_data;
+    wire prbs_data_valid;
+    wire        wr_clk;
+    wire [7:0]  M_AXIS_OUTPUT_TDATA ;
+    wire        M_AXIS_OUTPUT_TVALID;
+    wire        M_AXIS_OUTPUT_TREADY;
+    wire        M_AXIS_OUTPUT_TLAST ;
+    wire [31:0] sync_data_o;
+    wire        sync_valid_o;
+    wire        intv_tready;
+    wire [31:0] intv_tdata_o;
+    wire        intv_tvalid_o;
+    wire        intv_tready_o;
+    wire        ddr_init_calib_complete;
+    wire        ddr_uiclk_50M;
+    wire        ddr_wr_fifo_wclk;
+    wire        ddr_rd_fifo_rclk;
+    wire [31:0] rd_fifo_rdata;
+    wire        rd_fifo_rvalid;
+
     gtwizard_ultrascale_0_prbs_any #(
         .CHK_MODE               (0),
         .INV_PATTERN            (1),
@@ -74,8 +100,10 @@ module tx_top(
         .m_axis_output_tdata    (M_AXIS_OUTPUT_TDATA ),
         .m_axis_output_tvalid   (M_AXIS_OUTPUT_TVALID),
         .m_axis_output_tready   (M_AXIS_OUTPUT_TREADY ),
-        .m_axis_output_tlast    (M_AXIS_OUTPUT_TLAST)
+        .m_axis_output_tlast    (M_AXIS_OUTPUT_TLAST )
     );
+
+
 
     Sync Sync(
         .rst                    (rst),
@@ -88,30 +116,25 @@ module tx_top(
         .sync_valid_o           (sync_valid_o)
     );
 
-    // wire intv_tready;
-    // wire [31:0] intv_tdata_o;
-    // wire intv_tvalid_o;
-    // wire intv_tready_o;
-    // pre_interleaver  #(
-    //     .CODEWORD_SIZE(256),   // 每个码字256 words (1024B)
-    //     .NUM_CODEWORDS(4)    // 4个码字
-    // )pre_interleaver(
-    //     .clk(core_clk),
-    //     .rst(rst),
-    //     // 输入接口
-    //     .s_axis_tdata(sync_data_o),
-    //     .s_axis_tvalid(sync_valid_o),
-    //     .s_axis_tready(intv_tready),
-    //     // 输出接口
-    //     .m_axis_tdata (intv_tdata_o),
-    //     .m_axis_tvalid(intv_tvalid_o),
-    //     .m_axis_tready(intv_tready_o)
-    // );
+
+    pre_interleaver #(
+        .CODEWORD_SIZE          (256),   // 每个码字256 words (1024B)
+        .NUM_CODEWORDS          (4)    // 4个码字
+    )pre_interleaver(
+        .rst                    (rst),
+        .clk                    (core_clk),
+        .s_axis_tdata           (sync_data_o),
+        .s_axis_tvalid          (sync_valid_o),
+        .s_axis_tready          (intv_tready),
+        .m_axis_tdata           (intv_tdata_o),
+        .m_axis_tvalid          (intv_tvalid_o),
+        .m_axis_tready          (intv_tready_o)
+    );
 
     ddr4_controler_clean #(
-        .MATRIX_COL(8), 
-        .MATRIX_ROW(8)
-    ) ddr4_controler_U1 (
+        .MATRIX_COL             (8), 
+        .MATRIX_ROW             (8)
+    ) ddr_interleaver (
         .sys_clk_p              (sys_clk_p), 
         .sys_clk_n              (sys_clk_n), 
         .rst_n                  (sys_rst_n),
@@ -129,21 +152,18 @@ module tx_top(
         .c0_ddr4_dq             (c0_ddr4_dq),
         .c0_ddr4_dqs_c          (c0_ddr4_dqs_c),
         .c0_ddr4_dqs_t          (c0_ddr4_dqs_t),
-        .ui_clkout              (clk_50m_u1), 
-        .c0_init_calib_complete (init_calib_complete_u1),
+        .ui_clkout              (ddr_uiclk_50M), 
+        .c0_init_calib_complete (ddr_init_calib_complete),
         .wr_bust_len            (8),
         .rd_bust_len            (64),
     //prbs data mode
-        .wr_fifo_wclk           (clk_15p625), 
-        .wr_fifo_wdata          (prbs_data_gen),    //input 
-        .wr_fifo_wen            (data_valid),       //input 
-        .rd_fifo_rclk           (clk_15p625), 
+        .wr_fifo_wclk           (ddr_wr_fifo_wclk), 
+        .wr_fifo_wdata          (intv_tdata_o),    //input 
+        .wr_fifo_wen            (intv_tready_o),       //input 
+        .rd_fifo_rclk           (ddr_rd_fifo_rclk), 
         .rd_fifo_rvalid         (rd_fifo_rvalid),   //output
         .rd_fifo_rdata          (rd_fifo_rdata_u1)  //ouptut
     );
 
-
-
-
-
+    
 endmodule
