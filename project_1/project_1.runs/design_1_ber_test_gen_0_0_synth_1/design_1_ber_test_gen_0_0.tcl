@@ -57,6 +57,7 @@ if {$::dispatch::connected} {
 
 OPTRACE "design_1_ber_test_gen_0_0_synth_1" START { ROLLUP_AUTO }
 set_param general.maxThreads 32
+set_param bd.open.in_stealth_mode 2
 set_param simulator.modelsimInstallPath C:/modeltech64_2020.4/win64
 set_msg_config -id {HDL-1065} -limit 10000
 set_param project.vivado.isBlockSynthRun true
@@ -79,7 +80,7 @@ set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/ber_test_gen.v
-read_ip -quiet c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_ber_test_gen_0_0/design_1_ber_test_gen_0_0.xci
+read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_ber_test_gen_0_0/design_1_ber_test_gen_0_0.xci
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being

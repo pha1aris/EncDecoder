@@ -3541,22 +3541,22 @@
         "ports": [
           "zynq_ultra_ps_e_0/pl_clk0",
           "zynq_ultra_ps_e_0/saxihp0_fpd_aclk",
-          "ber_test_gen_0/clk",
           "BER_axis_packager_0/clk",
           "zynq_ultra_ps_e_0/maxihpm0_lpd_aclk",
           "axi_smc/aclk",
           "axi_dma_0/s_axi_lite_aclk",
           "rst_ps8_0_100M/slowest_sync_clk",
           "axi_smc_1/aclk",
-          "axi_dma_0/m_axi_s2mm_aclk"
+          "axi_dma_0/m_axi_s2mm_aclk",
+          "ber_test_gen_0/clk"
         ]
       },
       "zynq_ultra_ps_e_0_pl_resetn0": {
         "ports": [
           "zynq_ultra_ps_e_0/pl_resetn0",
           "BER_axis_packager_0/rst_n",
-          "ber_test_gen_0/rst_n",
-          "rst_ps8_0_100M/ext_reset_in"
+          "rst_ps8_0_100M/ext_reset_in",
+          "ber_test_gen_0/rst_n"
         ]
       }
     },

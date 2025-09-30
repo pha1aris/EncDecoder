@@ -56,34 +56,6 @@ module de_interleaver_v1#(
             block1_full <= 0;
             wr_ram_sel <= 'd0;
         end else if(s_axis_tvalid && s_axis_tready) begin
-            // if(!block0_full)begin
-            //     if(wr_ram_sel <= 3'd3)begin
-            //         if(ptr_b0 == CODEWORD_SIZE_IN_32-1)begin
-            //             ptr_b0 <= 'd0;
-            //             if(wr_ram_sel == 'd3)begin
-            //                 block0_full <= 1;
-            //                 wr_ram_sel <= 'd4;
-            //             end else begin
-            //                 wr_ram_sel <= wr_ram_sel + 1;
-            //             end
-            //         end else begin
-            //             ptr_b0 <= ptr_b0 + 1;
-            //         end
-            //     end 
-            //     else if(!block1_full) begin
-            //         if(ptr_b1 == CODEWORD_SIZE_IN_32 - 1)begin
-            //             ptr_b1 <= 0;
-            //             if(wr_ram_sel == 'd7)begin
-            //                 block1_full <= 1;
-            //                 wr_ram_sel <= 'd0;
-            //             end else begin
-            //                 wr_ram_sel <= 'd4;
-            //             end 
-            //         end else begin
-            //             ptr_b1 <= ptr_b1 + 1;
-            //         end
-            //     end
-            // end 
             if(!block0_full)begin   //===== 写 block0 =====
                 if(ptr_b0 == CODEWORD_SIZE_IN_32 - 1)begin
                     ptr_b0 <= 'd0;
