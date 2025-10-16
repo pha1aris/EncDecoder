@@ -237,10 +237,13 @@ module Sync (
                     m_axis_output_tdata_reg  <= next_sync_data;
                     m_axis_output_tvalid_reg <= 1'b1;
 
-                    // 判断是否为数据帧的最后一个字节
-                    wire is_last_byte = (state == SEND_PADDING && pad_byte_cnt == PADDING_LEN - 1) ||
-                                        (state == SEND_DATA && PADDING_LEN == 0 && data_byte_cnt == PAYLOAD_LEN - 1);
-                    m_axis_output_tlast_reg <= is_last_byte;
+                    // --- 【修正】 START of CORRECTION ---
+                    // wire is_last_byte = (state == SEND_PADDING && pad_byte_cnt == PADDING_LEN - 1) ||
+                    //                     (state == SEND_DATA && PADDING_LEN == 0 && data_byte_cnt == PAYLOAD_LEN - 1);
+                    // m_axis_output_tlast_reg <= is_last_byte;
+                    m_axis_output_tlast_reg <= (state == SEND_PADDING && pad_byte_cnt == PADDING_LEN - 1) ||
+                                               (state == SEND_DATA && PADDING_LEN == 0 && data_byte_cnt == PAYLOAD_LEN - 1);
+                    // --- 【修正】 END of CORRECTION ---
 
                     pack_byte_cnt <= 2'd0;
                 end else if (pack_byte_cnt != 2'd3) begin

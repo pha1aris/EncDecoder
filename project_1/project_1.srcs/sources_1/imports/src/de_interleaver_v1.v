@@ -3,7 +3,7 @@
 // 按列将数据读出 还原数据
 // 
 module de_interleaver_v1#(
-    parameter CODEWORD_SIZE_IN_32 = 65,    // 每个码字长度 (32-bit words)
+parameter CODEWORD_SIZE_IN_32 = 65,    // 每个码字长度 (32-bit words)
     parameter NUM_CODEWORDS       = 4      // 码字个数
 )(
     input  wire                              clk,
@@ -30,7 +30,7 @@ module de_interleaver_v1#(
     reg [31:0] RAM6 [CODEWORD_SIZE_IN_32-1:0];
     reg [31:0] RAM7 [CODEWORD_SIZE_IN_32-1:0];
 
-    // 仿真时初始化RAM (仅用于仿真)
+    // ... initial block is unchanged ...
     integer i;
     initial begin
         for (i = 0; i < CODEWORD_SIZE_IN_32; i = i+1) begin
@@ -48,6 +48,7 @@ module de_interleaver_v1#(
     assign s_axis_tready = !(block0_full && block1_full);
 
  //  ------------------写入逻辑(按行写入)-------------------------
+ //  (写入逻辑保持不变)
     always @(posedge clk or posedge rst) begin
         if(rst) begin
             ptr_b0 <= 'd0;
@@ -56,35 +57,7 @@ module de_interleaver_v1#(
             block1_full <= 0;
             wr_ram_sel <= 'd0;
         end else if(s_axis_tvalid && s_axis_tready) begin
-            // if(!block0_full)begin
-            //     if(wr_ram_sel <= 3'd3)begin
-            //         if(ptr_b0 == CODEWORD_SIZE_IN_32-1)begin
-            //             ptr_b0 <= 'd0;
-            //             if(wr_ram_sel == 'd3)begin
-            //                 block0_full <= 1;
-            //                 wr_ram_sel <= 'd4;
-            //             end else begin
-            //                 wr_ram_sel <= wr_ram_sel + 1;
-            //             end
-            //         end else begin
-            //             ptr_b0 <= ptr_b0 + 1;
-            //         end
-            //     end 
-            //     else if(!block1_full) begin
-            //         if(ptr_b1 == CODEWORD_SIZE_IN_32 - 1)begin
-            //             ptr_b1 <= 0;
-            //             if(wr_ram_sel == 'd7)begin
-            //                 block1_full <= 1;
-            //                 wr_ram_sel <= 'd0;
-            //             end else begin
-            //                 wr_ram_sel <= 'd4;
-            //             end 
-            //         end else begin
-            //             ptr_b1 <= ptr_b1 + 1;
-            //         end
-            //     end
-            // end 
-            if(!block0_full)begin   //===== 写 block0 =====
+            if(!block0_full)begin    //===== 写 block0 =====
                 if(ptr_b0 == CODEWORD_SIZE_IN_32 - 1)begin
                     ptr_b0 <= 'd0;
                     if(wr_ram_sel == 3'd3)begin
@@ -110,14 +83,11 @@ module de_interleaver_v1#(
                     ptr_b1 <= ptr_b1 + 1;
                 end
             end
-            // else begin
-                
-            // end
         end
     end
 
     always @(posedge clk) begin
-        if(s_axis_tvalid && s_axis_tready)begin        
+        if(s_axis_tvalid && s_axis_tready)begin      
             case(wr_ram_sel)
                 'd0: RAM0[ptr_b0] <= s_axis_tdata;
                 'd1: RAM1[ptr_b0] <= s_axis_tdata; 
@@ -143,37 +113,60 @@ module de_interleaver_v1#(
             rd_ptr_b1 <= 0;
             rd_ram_sel <= 0;
             rd_active <= 0;
-            end else if (rd_active && m_axis_tready) begin
-            if(rd_ram_sel == 3'd3)begin
-                rd_ram_sel <= 'd0;
-                if(rd_ptr_b0 == CODEWORD_SIZE_IN_32 - 1)begin
-                    rd_ram_sel <= 'd4;
-                    rd_ptr_b0 <= 0;
-                    block0_full <= 0;
+        end else if (rd_active && m_axis_tready) begin
+            // 正在读 Block 0 (ram_sel 0-3)
+            if (rd_ram_sel <= 3'd3) begin
+                if (rd_ram_sel == 3'd3) begin // 读完一行 (RAM0[x]..RAM3[x])
+                    rd_ram_sel <= 3'd0;
+                    if (rd_ptr_b0 == CODEWORD_SIZE_IN_32 - 1) begin // 整个 block0 读完
+                        block0_full <= 0;
+                        rd_ptr_b0   <= 0;
+                        // [最小修改 1/3] 安全地切换到 block1 或停止
+                        if (block1_full) begin
+                            rd_ram_sel <= 3'd4; // 只有当 block1 满了才切换
+                        end else begin
+                            rd_active <= 1'b0;  // 否则停止读
+                        end
+                    end else begin
+                        rd_ptr_b0 <= rd_ptr_b0 + 1;
+                    end
                 end else begin
-                    rd_ptr_b0 <= rd_ptr_b0 + 1;
+                    rd_ram_sel <= rd_ram_sel + 1;
+                end
+            // 正在读 Block 1 (ram_sel 4-7)
+            end else begin
+                if (rd_ram_sel == 3'd7) begin // 读完一行 (RAM4[x]..RAM7[x])
+                    rd_ram_sel <= 3'd4;
+                    if (rd_ptr_b1 == CODEWORD_SIZE_IN_32 - 1) begin // 整个 block1 读完
+                        block1_full <= 0;
+                        rd_ptr_b1   <= 0;
+                        // [最小修改 2/3] 安全地检查 block0 或停止
+                        if (block0_full) begin
+                            rd_ram_sel <= 3'd0; // 只有当 block0 满了才准备切换
+                        end else begin
+                            rd_active <= 1'b0;  // 否则停止读
+                        end
+                        // 无论如何，完成一个 block 的读取后，先停止，让启动逻辑决定下一步
+                        rd_active <= 1'b0; 
+                    end else begin
+                        rd_ptr_b1 <= rd_ptr_b1 + 1;
+                    end
+                end else begin
+                    rd_ram_sel <= rd_ram_sel + 1;
                 end
             end
-            else if(rd_ram_sel == 3'd7)begin
-                rd_ram_sel <= 3'd4;
-                if(rd_ptr_b1 == CODEWORD_SIZE_IN_32 - 1)begin
-                    rd_ram_sel <= 3'd0;
-                    rd_ptr_b1 <= 'd0;
-                    block1_full <= 0;
-                    rd_active <= 0;
-                end else begin
-                    rd_ptr_b1 <= rd_ptr_b1 + 1;
-                end 
-            end else begin
-                rd_ram_sel <= rd_ram_sel + 1;
-            end
-
         end else if (!rd_active && (block0_full || block1_full)) begin
             rd_active <= 1'b1; // 有数据就开始读
+            // [最小修改 3/3] 读之前，正确初始化读指针
+            if (block0_full) begin
+                rd_ram_sel <= 3'd0;
+            end else begin // 暗示 block1_full 为真
+                rd_ram_sel <= 3'd4;
+            end
         end
     end
 
-    // 输出数据
+    // 输出数据 (保持不变)
     always @(posedge clk or posedge rst) begin
         if(rst)begin
             m_axis_tdata <= 0;
@@ -191,6 +184,7 @@ module de_interleaver_v1#(
         end
     end
 
+    // tvalid 逻辑 (保持不变, 您的实现已是正确的)
     always @(posedge clk or posedge rst) begin
         if(rst) begin
             m_axis_tvalid <= 0;

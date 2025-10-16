@@ -76,3 +76,290 @@ create_ip_run [get_files -of_objects [get_fileset sources_1] c:/Users/PC/Desktop
 launch_runs gtwizard_ultrascale_1_synth_1 -jobs 32
 wait_on_run gtwizard_ultrascale_1_synth_1
 export_simulation -lib_map_path [list {modelsim=C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.cache/compile_simlib/modelsim} {questa=C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.cache/compile_simlib/questa} {riviera=C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.cache/compile_simlib/riviera} {activehdl=C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.cache/compile_simlib/activehdl}] -of_objects [get_files c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/gtwizard_ultrascale_1/gtwizard_ultrascale_1.xci] -directory C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.ip_user_files/sim_scripts -ip_user_files_dir C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.ip_user_files -ipstatic_source_dir C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.ip_user_files/ipstatic -use_ip_compiled_libs -force -quiet
+open_example_project -force -dir C:/Users/PC/Desktop/fps [get_ips  gtwizard_ultrascale_1]
+update_compile_order -fileset sources_1
+close [ open C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/tx_chain.v w ]
+add_files C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/tx_chain.v
+update_compile_order -fileset sources_1
+close [ open C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/rx_chain.v w ]
+add_files C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/rx_chain.v
+update_compile_order -fileset sources_1
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+close [ open C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sim_1/new/loopback_tb.v w ]
+add_files -fileset sim_1 C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sim_1/new/loopback_tb.v
+update_compile_order -fileset sim_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top loopback_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+launch_simulation
+source loopback_tb.tcl
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/clk}} {{/loopback_tb/u_tx_chain/rst}} {{/loopback_tb/u_tx_chain/m_axis_tdata}} {{/loopback_tb/u_tx_chain/m_axis_tvalid}} {{/loopback_tb/u_tx_chain/m_axis_tready}} {{/loopback_tb/u_tx_chain/prbs_data}} {{/loopback_tb/u_tx_chain/encoder_fifo_wrrdy}} {{/loopback_tb/u_tx_chain/encoder_tdata}} {{/loopback_tb/u_tx_chain/encoder_tvalid}} {{/loopback_tb/u_tx_chain/encoder_tready}} {{/loopback_tb/u_tx_chain/encoder_tlast}} {{/loopback_tb/u_tx_chain/sync_tdata}} {{/loopback_tb/u_tx_chain/sync_tvalid}} {{/loopback_tb/u_tx_chain/sync_tready}} {{/loopback_tb/u_tx_chain/sync_tlast}} 
+run 2 us
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_rx_chain}} 
+run 2 us
+run 2 us
+run 2 us
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/clk}} {{/loopback_tb/u_tx_chain/rst}} {{/loopback_tb/u_tx_chain/m_axis_tdata}} {{/loopback_tb/u_tx_chain/m_axis_tvalid}} {{/loopback_tb/u_tx_chain/m_axis_tready}} {{/loopback_tb/u_tx_chain/prbs_data}} {{/loopback_tb/u_tx_chain/encoder_fifo_wrrdy}} {{/loopback_tb/u_tx_chain/encoder_tdata}} {{/loopback_tb/u_tx_chain/encoder_tvalid}} {{/loopback_tb/u_tx_chain/encoder_tready}} {{/loopback_tb/u_tx_chain/encoder_tlast}} {{/loopback_tb/u_tx_chain/sync_tdata}} {{/loopback_tb/u_tx_chain/sync_tvalid}} {{/loopback_tb/u_tx_chain/sync_tready}} {{/loopback_tb/u_tx_chain/sync_tlast}} 
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/pre_interleaver}} 
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/Sync}} 
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/pre_interleaver}} 
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_rx_chain}} 
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/pre_interleaver}} 
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top per_interleaver_sim [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+close_sim
+update_compile_order -fileset sim_1
+launch_simulation
+source per_interleaver_sim.tcl
+run 2 us
+current_wave_config {Untitled 2}
+add_wave {{/per_interleaver_sim/pre_interleaver_v1}} 
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top loopback_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+launch_simulation
+source loopback_tb.tcl
+current_wave_config {Untitled 3}
+add_wave {{/loopback_tb/u_tx_chain/pre_interleaver}} 
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+run 2 us
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top per_interleaver_sim [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source per_interleaver_sim.tcl
+update_compile_order -fileset sim_1
+run 2 us
+run 5 us
+run 5 us
+current_wave_config {Untitled 4}
+add_wave {{/per_interleaver_sim/pre_interleaver_v1}} 
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top loopback_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source loopback_tb.tcl
+update_compile_order -fileset sim_1
+current_wave_config {Untitled 5}
+add_wave {{/loopback_tb/u_tx_chain/pre_interleaver}} 
+run 5 us
+run 5 us
+run 5 us
+run 5 us
+run 5 us
+run 5 us
+run 5 us
+run 5 us
+run 5 us
+run 5 us
+run 5 us
+run 5 us
+relaunch_sim
+run 5 us
+run 5 us
+run 5 us
+relaunch_sim
+run 5 us
+run 5 us
+run 5 us
+run 5 us
+run 5 us
+run 5 us
+run 9 us
+do run.do
+relaunch_sim
+run all
+current_wave_config {Untitled 5}
+add_wave {{/loopback_tb/u_tx_chain/pre_interleaver/clk}} {{/loopback_tb/u_tx_chain/pre_interleaver/rst}} {{/loopback_tb/u_tx_chain/pre_interleaver/s_axis_tdata}} {{/loopback_tb/u_tx_chain/pre_interleaver/s_axis_tvalid}} {{/loopback_tb/u_tx_chain/pre_interleaver/s_axis_tready}} {{/loopback_tb/u_tx_chain/pre_interleaver/m_axis_tdata}} {{/loopback_tb/u_tx_chain/pre_interleaver/m_axis_tvalid}} {{/loopback_tb/u_tx_chain/pre_interleaver/m_axis_tready}} {{/loopback_tb/u_tx_chain/pre_interleaver/RAM0}} {{/loopback_tb/u_tx_chain/pre_interleaver/RAM1}} {{/loopback_tb/u_tx_chain/pre_interleaver/RAM2}} {{/loopback_tb/u_tx_chain/pre_interleaver/RAM3}} {{/loopback_tb/u_tx_chain/pre_interleaver/RAM4}} {{/loopback_tb/u_tx_chain/pre_interleaver/RAM5}} {{/loopback_tb/u_tx_chain/pre_interleaver/RAM6}} {{/loopback_tb/u_tx_chain/pre_interleaver/RAM7}} {{/loopback_tb/u_tx_chain/pre_interleaver/wr_addr}} {{/loopback_tb/u_tx_chain/pre_interleaver/wr_ram_idx}} {{/loopback_tb/u_tx_chain/pre_interleaver/wr_block_is_b0}} {{/loopback_tb/u_tx_chain/pre_interleaver/block0_full}} {{/loopback_tb/u_tx_chain/pre_interleaver/block1_full}} {{/loopback_tb/u_tx_chain/pre_interleaver/rd_state}} {{/loopback_tb/u_tx_chain/pre_interleaver/rd_addr}} {{/loopback_tb/u_tx_chain/pre_interleaver/rd_ram_sel}} {{/loopback_tb/u_tx_chain/pre_interleaver/rd_handshake}} {{/loopback_tb/u_tx_chain/pre_interleaver/CODEWORD_SIZE_IN_32}} {{/loopback_tb/u_tx_chain/pre_interleaver/NUM_CODEWORDS_PER_BLOCK}} {{/loopback_tb/u_tx_chain/pre_interleaver/S_IDLE}} {{/loopback_tb/u_tx_chain/pre_interleaver/S_READ_BLOCK0}} {{/loopback_tb/u_tx_chain/pre_interleaver/S_READ_BLOCK1}} 
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top per_interleaver_sim [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source per_interleaver_sim.tcl
+update_compile_order -fileset sim_1
+run 9 us
+run 9 us
+current_wave_config {Untitled 6}
+add_wave {{/per_interleaver_sim/pre_interleaver_v1}} 
+relaunch_sim
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+current_wave_config {Untitled 6}
+add_wave {{/per_interleaver_sim}} 
+run 9 us
+current_wave_config {Untitled 6}
+add_wave {{/per_interleaver_sim/de_interleaver_v1}} 
+current_wave_config {Untitled 6}
+add_wave {{/per_interleaver_sim/pre_interleaver_v1}} 
+current_wave_config {Untitled 6}
+add_wave {{/per_interleaver_sim/prbs_match}} 
+relaunch_sim
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top loopback_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source loopback_tb.tcl
+update_compile_order -fileset sim_1
+current_wave_config {Untitled 7}
+add_wave {{/loopback_tb/u_tx_chain/pre_interleaver}} 
+run 9 us
+run 9 us
+run 9 us
+relaunch_sim
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+relaunch_sim
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+relaunch_sim
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+relaunch_sim
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+relaunch_sim
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+current_wave_config {Untitled 7}
+add_wave {{/loopback_tb/u_tx_chain/pre_interleaver}} 
+run 9 us
+relaunch_sim
+update_compile_order -fileset sources_1
+relaunch_sim
+run 9 us
+current_wave_config {Untitled 7}
+add_wave {{/loopback_tb/u_tx_chain/pre_interleaver}} 
+run 15 us
+run 15 us
+run 15 us
+run 15 us
+run 15 us
+relaunch_sim
+relaunch_sim
+run 15 us
+run 15 us
+update_compile_order -fileset sources_1
+relaunch_sim
+current_wave_config {Untitled 7}
+add_wave {{/loopback_tb/u_tx_chain/pre_interleaver}} 
+run 15 us
+current_wave_config {Untitled 7}
+add_wave {{/loopback_tb/u_rx_chain/pre_deinterleaver}} 
+relaunch_sim
+run 15 us
+run 15 us
+run 15 us
+run 15 us
+run 15 us
+relaunch_sim
+relaunch_sim
+run 15 us
+run 15 us
+run 15 us
+run 15 us
+run 15 us
+close_sim

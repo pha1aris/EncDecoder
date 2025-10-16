@@ -16,7 +16,7 @@ module pre_interleaver #(
 
     // 输出接口 (AXIS-like)
     output reg  [31:0]                       m_axis_tdata,
-    output reg                              m_axis_tvalid,
+    output reg                               m_axis_tvalid,
     input  wire                              m_axis_tready
 );
     

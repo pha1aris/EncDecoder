@@ -2,7 +2,7 @@
 // 长度为CODEWORD_SIZE_IN_32（32bits）的
 // 码字中
 //
-module pre_interleaver_v1 #(
+module pre_interleaver #(
     parameter CODEWORD_SIZE_IN_32 = 65,    // 每个码字长度 (32-bit words)
     parameter NUM_CODEWORDS       = 4      // 码字个数
 )(
@@ -16,7 +16,7 @@ module pre_interleaver_v1 #(
 
     // 输出接口 (AXIS-like)
     output reg  [31:0]                       m_axis_tdata,
-    output reg                              m_axis_tvalid,
+    output reg                               m_axis_tvalid,
     input  wire                              m_axis_tready
 );
     
