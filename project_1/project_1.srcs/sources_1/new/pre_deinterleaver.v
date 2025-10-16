@@ -14,6 +14,7 @@ module pre_deinterleaver#(
     input  wire                              s_axis_tvalid,
     output wire                              s_axis_tready,
 
+    input wire                               start_of_frame,
     // 输出接口 (AXIS-like)
     output reg  [31:0]                       m_axis_tdata,
     output reg                               m_axis_tvalid,
@@ -29,6 +30,18 @@ module pre_deinterleaver#(
     reg [31:0] RAM5 [CODEWORD_SIZE_IN_32-1:0];
     reg [31:0] RAM6 [CODEWORD_SIZE_IN_32-1:0];
     reg [31:0] RAM7 [CODEWORD_SIZE_IN_32-1:0];
+
+    reg start_of_frame_d0,start_of_frame_d1;
+
+    always@(posedge clk or posedge rst)begin
+        if(rst)begin
+            {start_of_frame_d0,start_of_frame_d1} <= {2'b00};
+        end else begin
+            start_of_frame_d0 <= start_of_frame;
+            start_of_frame_d1 <= start_of_frame_d0;
+        end
+    end
+
 
     // 仿真时初始化RAM (仅用于仿真)
     integer i;
@@ -48,6 +61,78 @@ module pre_deinterleaver#(
     assign s_axis_tready = !(block0_full && block1_full);
 
  //  ------------------写入逻辑(按行写入)-------------------------
+    // always @(posedge clk or posedge rst) begin
+    //     if(rst) begin
+    //         ptr_b0 <= 'd0;
+    //         ptr_b1 <= 'd0;
+    //         block0_full <= 0;
+    //         block1_full <= 0;
+    //         wr_ram_sel <= 'd0;
+    //     end else if(s_axis_tvalid && s_axis_tready) begin
+    //         // if(!block0_full)begin
+    //         //     if(wr_ram_sel <= 3'd3)begin
+    //         //         if(ptr_b0 == CODEWORD_SIZE_IN_32-1)begin
+    //         //             ptr_b0 <= 'd0;
+    //         //             if(wr_ram_sel == 'd3)begin
+    //         //                 block0_full <= 1;
+    //         //                 wr_ram_sel <= 'd4;
+    //         //             end else begin
+    //         //                 wr_ram_sel <= wr_ram_sel + 1;
+    //         //             end
+    //         //         end else begin
+    //         //             ptr_b0 <= ptr_b0 + 1;
+    //         //         end
+    //         //     end 
+    //         //     else if(!block1_full) begin
+    //         //         if(ptr_b1 == CODEWORD_SIZE_IN_32 - 1)begin
+    //         //             ptr_b1 <= 0;
+    //         //             if(wr_ram_sel == 'd7)begin
+    //         //                 block1_full <= 1;
+    //         //                 wr_ram_sel <= 'd0;
+    //         //             end else begin
+    //         //                 wr_ram_sel <= 'd4;
+    //         //             end 
+    //         //         end else begin
+    //         //             ptr_b1 <= ptr_b1 + 1;
+    //         //         end
+    //         //     end
+    //         // end 
+
+    //         if(!block0_full)begin   //===== 写 block0 =====
+    //             if(ptr_b0 == CODEWORD_SIZE_IN_32 - 1)begin
+    //                 ptr_b0 <= 'd0;
+    //                 if(wr_ram_sel == 3'd3)begin
+    //                     wr_ram_sel <= 3'd4; //写满block0--跳转到block1
+    //                     block0_full <= 1;
+    //                 end else begin
+    //                     wr_ram_sel <= wr_ram_sel + 1;
+    //                 end
+    //             end else begin
+    //                 ptr_b0 <= ptr_b0 + 1;
+    //             end
+    //         end 
+
+
+
+    //         else if(!block1_full)begin// ===== 写 block1 =====
+    //             if(ptr_b1 == CODEWORD_SIZE_IN_32 - 1)begin
+    //                 ptr_b1 <= 'd0;
+    //                 if(wr_ram_sel == 3'd7)begin
+    //                     wr_ram_sel <= 'd0; //写满block1--跳转到block0
+    //                     block1_full <= 1;
+    //                 end else begin
+    //                     wr_ram_sel <= wr_ram_sel + 1;
+    //                 end
+    //             end else begin
+    //                 ptr_b1 <= ptr_b1 + 1;
+    //             end
+    //         end
+    //         // else begin
+                
+    //         // end
+    //     end
+    // end
+//  ------------------写入逻辑(按行写入)-------------------------
     always @(posedge clk or posedge rst) begin
         if(rst) begin
             ptr_b0 <= 'd0;
@@ -55,36 +140,17 @@ module pre_deinterleaver#(
             block0_full <= 0;
             block1_full <= 0;
             wr_ram_sel <= 'd0;
-        end else if(s_axis_tvalid && s_axis_tready) begin
-            // if(!block0_full)begin
-            //     if(wr_ram_sel <= 3'd3)begin
-            //         if(ptr_b0 == CODEWORD_SIZE_IN_32-1)begin
-            //             ptr_b0 <= 'd0;
-            //             if(wr_ram_sel == 'd3)begin
-            //                 block0_full <= 1;
-            //                 wr_ram_sel <= 'd4;
-            //             end else begin
-            //                 wr_ram_sel <= wr_ram_sel + 1;
-            //             end
-            //         end else begin
-            //             ptr_b0 <= ptr_b0 + 1;
-            //         end
-            //     end 
-            //     else if(!block1_full) begin
-            //         if(ptr_b1 == CODEWORD_SIZE_IN_32 - 1)begin
-            //             ptr_b1 <= 0;
-            //             if(wr_ram_sel == 'd7)begin
-            //                 block1_full <= 1;
-            //                 wr_ram_sel <= 'd0;
-            //             end else begin
-            //                 wr_ram_sel <= 'd4;
-            //             end 
-            //         end else begin
-            //             ptr_b1 <= ptr_b1 + 1;
-            //         end
-            //     end
-            // end 
-            if(!block0_full)begin   //===== 写 block0 =====
+        end 
+        // 关键修改1：将 start_of_frame 作为高优先级事件，不受 tvalid/tready 影响
+        else if(start_of_frame_d1) begin 
+            // 关键修改2：复位所有的写指针，确保从头开始
+            wr_ram_sel <= 'd0;
+            ptr_b0 <= 'd0;
+            ptr_b1 <= 'd0;
+        end 
+        // 关键修改3：仅在数据传输时，才执行指针递增逻辑
+        else if(s_axis_tvalid && s_axis_tready) begin
+            if(!block0_full)begin    //===== 写 block0 =====
                 if(ptr_b0 == CODEWORD_SIZE_IN_32 - 1)begin
                     ptr_b0 <= 'd0;
                     if(wr_ram_sel == 3'd3)begin
@@ -110,9 +176,6 @@ module pre_deinterleaver#(
                     ptr_b1 <= ptr_b1 + 1;
                 end
             end
-            // else begin
-                
-            // end
         end
     end
 

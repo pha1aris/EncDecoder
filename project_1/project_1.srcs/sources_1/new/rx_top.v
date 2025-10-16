@@ -33,7 +33,22 @@ module rx_top(
     inout  [3:0]                c0_ddr4_dqs_c,
     inout  [3:0]                c0_ddr4_dqs_t
 );
-
+    parameter [63:0]   SYNC_MARKER       = 64'hB1699558A53333A8;
+    parameter integer  SYNC_REPETITION = 3;
+    parameter integer  PAYLOAD_LEN     = 64;
+    parameter integer  PACKAGE_LEN      = SYNC_REPETITION * 64 + PAYLOAD_LEN;
+    parameter integer  ERROR_THRESHOLD = 10;
+    parameter integer  HAMMING_WIDTH   = 8;
+    parameter integer  SCORE_HIGH      = 4;
+    parameter integer  SCORE_MED       = 2;
+    parameter integer  HAMM_HIGH       = 2;
+    parameter integer  HAMM_MED        = 5;
+    parameter integer  SCORE_THRESHOLD = 6;
+    parameter integer  TEMPORAL_DEPTH  = 8;
+    parameter integer  TEMPORAL_VOTE   = 6;
+    parameter integer  K_GOOD          = 3;
+    parameter integer  K_BAD           = 4;
+    parameter integer  BUF_DEPTH_BITS  = 8;// 缓冲区深度 = 2^8 = 256
     // ---------------- 原有信号（保持不变） ----------------
     wire [31:0] gth_rx_data;
     wire gth_rx_valid;
@@ -60,11 +75,56 @@ module rx_top(
     wire        deintv_valid_o;
     wire        read_start;
 
-    // ... （保持你原来的 DDR 实例化与其它模块，不再重复） ...
+
+    wire [31:0] data_from_gth;
+    wire [7:0]  data_from_fifo;
+    wire        fifo_rd_ready;
+    wire frame_sync_tready;
+
+    wire [7:0] frame_sync_data_o;
+    wire frame_sync_valid_o;
+    wire frame_sync_ready_o;
+
+    wire        start_of_frame;
+    wire        locked_o;
+
+     frame_synchronizer_circular #(
+        .SYNC_MARKER            (SYNC_MARKER     ),
+        .SYNC_REPETITION        (SYNC_REPETITION ),
+        .PAYLOAD_LEN            (PAYLOAD_LEN     ),
+        .PACKAGE_LEN            (PACKAGE_LEN     ),
+        .ERROR_THRESHOLD        (ERROR_THRESHOLD ),
+        .HAMMING_WIDTH          (HAMMING_WIDTH   ),
+        .SCORE_HIGH             (SCORE_HIGH      ),
+        .SCORE_MED              (SCORE_MED       ),
+        .HAMM_HIGH              (HAMM_HIGH       ),
+        .HAMM_MED               (HAMM_MED        ),
+        .SCORE_THRESHOLD        (SCORE_THRESHOLD ),
+        .TEMPORAL_DEPTH         (TEMPORAL_DEPTH  ),
+        .TEMPORAL_VOTE          (TEMPORAL_VOTE   ),
+        .K_GOOD                 (K_GOOD          ),
+        .K_BAD                  (K_BAD           ),
+        .BUF_DEPTH_BITS         (BUF_DEPTH_BITS  )    // 缓冲区深度 = 2^8 = 256
+    )frame_synchronizer_circular(
+        .clk                    (clk),
+        .rst                    (rst),
+        // AXI-Stream 输入
+        .m_axis_output_tdata    (data_from_fifo),
+        .s_axis_input_tvalid    (fifo_rd_ready),
+        .s_axis_input_tready    (frame_sync_tready),
+        // AXI-Stream 输出 (来自回读缓冲区)
+        .m_axis_output_tdata    (frame_sync_data_o),
+        .m_axis_output_tvalid   (frame_sync_valid_o),
+        .m_axis_output_tready   (frame_sync_ready_o),
+        // 状态输出
+        .start_of_frame_o       (start_of_frame),
+        .locked_o               (locked_o)
+    );
+
     ddr4_controler_deintv #(
         .MATRIX_COL             (8), 
         .MATRIX_ROW             (8)
-    ) ddr4_controler_U2 (
+    ) De_Interleaver (
         .sys_clk_p              (sys_clk_p), 
         .sys_clk_n              (sys_clk_n), 
         .rst_n                  (sys_rst_n),
@@ -84,6 +144,9 @@ module rx_top(
         .c0_ddr4_dqs_t          (c0_ddr4_dqs_t),
         .ui_clkout              (ddr_uiclk_50M), 
         .c0_init_calib_complete (ddr_init_calib_complete),
+
+        .start_of_frame         (start_of_frame),
+
         .wr_bust_len            (8),
         .rd_bust_len            (64),
         .wr_fifo_wclk           (ddr_wr_fifo_wclk), 
@@ -100,51 +163,60 @@ module rx_top(
         .CODEWORD_SIZE          (256),
         .NUM_CODEWORDS          (4)
     ) pre_deinterleaver (
-        .clk    (core_clk),
-        .rst    (rst),
-        .s_axis_tdata (gth_rx_data),
-        .s_axis_tvalid(gth_rx_valid),
-        .s_axis_tready(de_intv_tready),
-        .m_axis_tdata(de_intv_tdata_o),
-        .m_axis_tvalid(de_intv_tvalid_o),
-        .m_axis_tready(de_intv_tready_o)
+        .clk                    (ddr_rd_fifo_rclk),
+        .rst                    (rst),
+        .s_axis_tdata           (rd_fifo_rdata),
+        .s_axis_tvalid          (deintv_valid_o),
+        .s_axis_tready          (de_intv_tready),
+
+        .start_of_frame         (start_of_frame),
+
+        .m_axis_tdata           (de_intv_tdata_o),
+        .m_axis_tvalid          (de_intv_tvalid_o),
+        .m_axis_tready          (de_intv_tready_o)
     );
 
-    DeSync DeSync (
-        .rst (rst),
-        .core_clk(core_clk),
-        .data_i(sync_data_o),
-        .data_valid_i(sync_valid_o),
-        .m_axis_output_tdata(decoder_sync_tdata),
-        .m_axis_output_tvalid(decoder_sync_tvalid),
-        .m_axis_output_tlast(decoder_sync_tlast),
-        .m_axis_output_tready(decoder_sync_tready)
+    DeSync DeSync(
+        .rst                    (rst),
+        .core_clk               (core_clk),
+    // --- MODIFICATION 1: 将输入接口修改为AXI-Stream slave接口 ---
+    // input wire [31:0]   data_i,
+    // input wire          data_valid_i,
+    // output wire         fifo_input_rdy,
+        .s_axis_input_tdata     (de_intv_tdata_o),
+        .s_axis_input_tvalid    (de_intv_tvalid_o),
+        .s_axis_input_tready    (de_intv_tready_o),
+    // --- END of MODIFICATION 1 ---
+        .m_axis_output_tdata    (decoder_sync_tdata ),
+        .m_axis_output_tvalid   (decoder_sync_tvalid),
+        .m_axis_output_tlast    (decoder_sync_tlast ),
+        .m_axis_output_tready   (decoder_sync_tready)
     );
 
     Decoder Decoder (
-        .rst (rst),
-        .core_clk(core_clk),
-        .s_axis_input_tdata(decoder_sync_tdata),
-        .s_axis_input_tvalid(decoder_sync_tvalid),
-        .s_axis_input_tlast(decoder_sync_tlast),
-        .s_axis_input_tready(decoder_sync_tready),
-        .output_tdata(decoder_output_tdata),
-        .output_tvalid(decoder_output_tvalid),
-        .output_tready(Decoder_output_ready)
+        .core_clk               (core_clk),
+        .rst                    (rst),
+        .s_axis_input_tdata     (decoder_sync_tdata),
+        .s_axis_input_tvalid    (decoder_sync_tvalid),
+        .s_axis_input_tlast     (decoder_sync_tlast),
+        .s_axis_input_tready    (decoder_sync_tready),
+        .output_tdata           (decoder_output_tdata),
+        .output_tvalid          (decoder_output_tvalid),
+        .output_tready          (Decoder_output_ready)
     );
 
     wr_gth_fifo output_buf (
-        .srst (reset_sync),
-        .wr_clk(core_clk),
-        .rd_clk(rd_clk),
-        .din(decoder_output_tdata),
-        .wr_en(decoder_output_tvalid),
-        .rd_en(obuf_rden && !output_buf_empty),
-        .dout(data_to_gth),
-        .full(output_buf_full),
-        .empty(output_buf_empty),
-        .wr_rst_busy(obuf_wrst_busy),
-        .rd_rst_busy(obuf_rrst_busy)
+        .srst                   (reset_sync),
+        .wr_clk                 (core_clk),
+        .rd_clk                 (rd_clk),
+        .din                    (decoder_output_tdata),
+        .wr_en                  (decoder_output_tvalid),
+        .rd_en                  (obuf_rden && !output_buf_empty),
+        .dout                   (data_to_gth),
+        .full                   (output_buf_full),
+        .empty                  (output_buf_empty),
+        .wr_rst_busy            (obuf_wrst_busy),
+        .rd_rst_busy            (obuf_rrst_busy)
     );
 
     // PRBS checker (保持原样)
@@ -152,17 +224,17 @@ module rx_top(
     wire        prbs_match_out1;
 
     gtwizard_ultrascale_0_prbs_any #(
-        .CHK_MODE    (1),
-        .INV_PATTERN (1),
-        .POLY_LENGHT (31),
-        .POLY_TAP    (28),
-        .NBITS       (32)
+        .CHK_MODE       (1),
+        .INV_PATTERN    (1),
+        .POLY_LENGHT    (31),
+        .POLY_TAP       (28),
+        .NBITS          (32)
     ) prbs_checker_inst1 (
-        .RST   (reset_sync_chk),
-        .CLK   (rd_clk),
-        .DATA_IN(data_to_gth),
-        .EN    (obuf_rden && !output_buf_empty),
-        .DATA_OUT(prbs_error_to_gth)
+        .RST            (reset_sync_chk),
+        .CLK            (rd_clk),
+        .DATA_IN        (data_to_gth),
+        .EN             (obuf_rden && !output_buf_empty),
+        .DATA_OUT       (prbs_error_to_gth)
     );
 
     assign prbs_match_out1 = ~|prbs_error_to_gth;

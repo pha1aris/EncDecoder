@@ -22,7 +22,7 @@ module ddr4_rw_deintv # (
     input  [8:0]                rfifo_wcount,           // 读端口FIFO中的数据量
     input  [7:0]                rd_bust_len,            // 从DDR4中读数据时的突发长度
     input  [7:0]                wr_bust_len,            // 往DDR4中写数据时的突发长度
-
+    input                       start_of_frame,
     input                       ddr4_read_valid,        // DDR4读数据有效
     output reg                  read_start,
 
@@ -41,6 +41,17 @@ localparam  WRITE     = 3'd2; // 写状态
 localparam  READ      = 3'd3; // 读状态
 
 parameter BRUST_TIME = (MATRIX_COL * MATRIX_ROW) / BRUST_LEN;
+
+    reg start_of_frame_d0,start_of_frame_d1;
+    wire start_of_frame_pulse = start_of_frame_d0 & ~start_of_frame_d1;
+    always@(posedge ui_clk or posedge ui_clk_sync_rst)begin
+        if(ui_clk_sync_rst)begin
+            {start_of_frame_d0,start_of_frame_d1} <= {2'b00};
+        end else begin
+            start_of_frame_d0 <= start_of_frame;
+            start_of_frame_d1 <= start_of_frame_d0;
+        end
+    end
 
 // reg define
 reg    [3:0]                state_cnt;              // 状态计数器
@@ -230,7 +241,32 @@ always @(posedge ui_clk or negedge rst_n) begin
 
             DDR_DONE:begin
                 // 当写到一个完整页面时，切换bank并开始读取
-                if(app_addr_wr_r >= PAGE_SIZE)begin
+                // ===========================
+                // 帧同步：start_of_frame_pulse
+                // ===========================
+                if (start_of_frame_pulse) begin
+                    // 写地址复位
+                    wr_row_addr      <= 'd0;
+                    wr_col_addr      <= 'd0;
+                    app_addr_wr_r    <= 'd0;
+                    wr_addr_cnt      <= 'd0;
+                    // 读地址复位
+                    rd_row_addr      <= 'd0;
+                    rd_col_addr      <= 'd0;
+                    app_addr_rd_r    <= 'd0;
+                    rd_addr_cnt      <= 'd0;
+                    // bank 对齐复位（ping-pong）
+                    wr_addr_bank     <= 1'b0;
+                    rd_addr_bank     <= 1'b1;
+                    // 清除结束标志
+                    wr_end           <= 1'b0;
+                    rd_end           <= 1'b0;
+                    // 关闭读开始标志，等待下一突发启动
+                    read_start       <= 1'b0;
+                    // 保持状态不变，等待下一 WRITE/READ
+                    state_cnt        <= DDR_DONE;
+                end
+                else if(app_addr_wr_r >= PAGE_SIZE)begin
                     app_addr_wr_r <= 'd0;
                     state_cnt <= DDR_DONE;
                     wr_col_addr <= 'd0;
@@ -255,10 +291,15 @@ always @(posedge ui_clk or negedge rst_n) begin
                     wr_addr_cnt <= 24'd0;
                 end
                 // 读条件：已写入一块数据并FIFO有足够空间且已经开始读取
+                // else if(rfifo_wcount <= (9'd512 - rd_bust_len_a) &&
+                //         read_start && ddr4_read_valid && 
+                //         (wr_end_w0 && fast_end_wbank == 0) ||
+                //         (wr_end_w0 && fast_end_wbank == 1) )  begin
+
                 else if(rfifo_wcount <= (9'd512 - rd_bust_len_a) &&
-                        read_start && ddr4_read_valid && 
-                        (wr_end_w0 && fast_end_wbank == 0) ||
-                        (wr_end_w0 && fast_end_wbank == 1) )begin
+                    read_start && ddr4_read_valid && 
+                    ((wr_end_w0 && fast_end_wbank == 0) || (wr_end_w0 && fast_end_rbank == 1)))begin
+
                     state_cnt <= READ;
                     rd_addr_cnt <= 24'd0;
                 end

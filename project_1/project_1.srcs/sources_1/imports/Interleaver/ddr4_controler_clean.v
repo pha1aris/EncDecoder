@@ -37,6 +37,9 @@ module ddr4_controler_clean # (
     inout  [3:0]                c0_ddr4_dqs_c,
     inout  [3:0]                c0_ddr4_dqs_t,
     // --- 用户接口 ---
+
+    input                       start_of_frame_i,
+
     output                      ui_clkout,
     output                      c0_init_calib_complete,
     input  [7:0]                rd_bust_len,

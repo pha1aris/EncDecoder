@@ -23,6 +23,8 @@ module ddr4_rw # (
     input  [7:0]                rd_bust_len,            // 从DDR4中读数据时的突发长度
     input  [7:0]                wr_bust_len,            // 往DDR4中写数据时的突发长度
     
+    input                       start_frame_i,
+
     input                       ddr4_read_valid,        // DDR4读数据有效
 
     output                      rfifo_wren,             // 从ddr4读出数据的有效使能
