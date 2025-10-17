@@ -9,8 +9,11 @@ module rx_chain (
     input  wire [31:0]  s_axis_tdata,
     input  wire         s_axis_tvalid,
     output wire         s_axis_tready,
+    input wire          sync_tlast,
+    input wire          encoder_tlast,
 
     // 误码统计输出
+    output wire        prbs_match,
     output reg [63:0]  total_bits_o,
     output reg [63:0]  error_count_o
 );
@@ -48,12 +51,14 @@ module rx_chain (
     DeSync DeSync(
         .rst                    (rst),
         .core_clk               (clk),
-        .s_axis_input_tdata     (deintv_tdata),
-        .s_axis_input_tvalid    (deintv_tvalid),
-        .s_axis_input_tready    (deintv_tready),
-        .m_axis_output_tdata    (desync_tdata),
+
+        .s_axis_input_tdata     (s_axis_tdata),
+        .s_axis_input_tvalid    (s_axis_tvalid),
+        .s_axis_input_tready    (s_axis_tready),
+
+        .m_axis_output_tdata    (desync_tdata ),
         .m_axis_output_tvalid   (desync_tvalid),
-        .m_axis_output_tlast    (desync_tlast),
+        .m_axis_output_tlast    (desync_tlast ),
         .m_axis_output_tready   (desync_tready)
     );
 
@@ -61,10 +66,11 @@ module rx_chain (
     Decoder Decoder (
         .core_clk               (clk),
         .rst                    (rst),
-        .s_axis_input_tdata     (desync_tdata),
+        .s_axis_input_tdata     (desync_tdata ),
         .s_axis_input_tvalid    (desync_tvalid),
-        .s_axis_input_tlast     (desync_tlast),
+        .s_axis_input_tlast     (desync_tlast ),
         .s_axis_input_tready    (desync_tready),
+
         .output_tdata           (decoder_tdata),
         .output_tvalid          (decoder_tvalid),
         .output_tready          (1'b1) // 假设解码器后级总能接收数据
@@ -85,29 +91,33 @@ module rx_chain (
         .DATA_OUT  (prbs_error_vector)
     );
 
+    // wire prbs_match;
+
+    assign prbs_match = ~|prbs_error_vector;
+
     // 5. 误码统计逻辑
-    function [5:0] popcount32;
-        input [31:0] v;
-        integer k;
-        begin
-            popcount32 = 6'd0;
-            for (k = 0; k < 32; k = k + 1) begin
-                popcount32 = popcount32 + v[k];
-            end
-        end
-    endfunction
+    // function [5:0] popcount32;
+    //     input [31:0] v;
+    //     integer k;
+    //     begin
+    //         popcount32 = 6'd0;
+    //         for (k = 0; k < 32; k = k + 1) begin
+    //             popcount32 = popcount32 + v[k];
+    //         end
+    //     end
+    // endfunction
 
 
-    wire [5:0] perr_cnt = popcount32(prbs_error_vector);
+    // wire [5:0] perr_cnt = popcount32(prbs_error_vector);
 
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
-            error_count_o <= 64'd0;
-            total_bits_o  <= 64'd0;
-        end else if (decoder_tvalid) begin
-            error_count_o <= error_count_o + perr_cnt;
-            total_bits_o  <= total_bits_o + 32;
-        end
-    end
+    // always @(posedge clk or posedge rst) begin
+    //     if (rst) begin
+    //         error_count_o <= 64'd0;
+    //         total_bits_o  <= 64'd0;
+    //     end else if (decoder_tvalid) begin
+    //         error_count_o <= error_count_o + perr_cnt;
+    //         total_bits_o  <= total_bits_o + 32;
+    //     end
+    // end
 
 endmodule

@@ -1,7 +1,6 @@
 module Decoder(
     input wire         rst,
     input wire         core_clk,
-    input wire         output_clk,
 
     // 8-bit AXI Stream Input
     input wire  [7:0]  s_axis_input_tdata,
@@ -111,6 +110,8 @@ module Decoder(
 //================================================================
 // 3. Output Buffering and Combination
 //================================================================
+    wire [7:0] fifo_input_tdata;
+    wire       fifo_input_tvalid;
     wire       fifo_wr_en;
     wire       fifo_full, fifo_empty, fifo_wr_rst_busy, fifo_rd_rst_busy;
     wire       fifo_rd_en;
@@ -149,7 +150,7 @@ module Decoder(
     fifo_sim_8_32 output_fifo_inst (
       .srst         (rst_sync), 
       .wr_clk       (core_clk),
-      .rd_clk       (output_clk),
+      .rd_clk       (core_clk),
       .din          (Dec_output_tdata),
       .wr_en        (Dec_output_valid), 
       .rd_en        (fifo_rd_en), 

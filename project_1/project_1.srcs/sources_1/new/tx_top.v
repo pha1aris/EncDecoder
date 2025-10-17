@@ -114,20 +114,6 @@ module tx_top(
         .sync_valid_o           (sync_valid_o)
     );
 
-
-    frame_generator frame_generator (
-        .clk                    (clk),
-        .rst                    (rst),
-        // --- AXI-Stream 从接口输入 (来自 DDR Interleaver) ---
-        .s_axis_input_tdata     (M_AXIS_OUTPUT_TDATA),
-        .s_axis_input_tvalid    (M_AXIS_OUTPUT_TVALID),
-        .s_axis_input_tready    (M_AXIS_OUTPUT_TREADY),
-        // --- AXI-Stream 主接口输出 (送往物理层) ---
-        .m_axis_output_tdata    (sync_data_o), 
-        .m_axis_output_tvalid   (sync_valid_o),
-        .m_axis_output_tready   (intv_tready)
-    );
-
     pre_interleaver #(
         .CODEWORD_SIZE          (256),   // 每个码字256 words (1024B)
         .NUM_CODEWORDS          (4)    // 4个码字
@@ -176,5 +162,17 @@ module tx_top(
         .rd_fifo_rdata          (rd_fifo_rdata_u1)  //ouptut
     );
 
+    frame_generator frame_generator (
+        .clk                    (clk),
+        .rst                    (rst),
+        // --- AXI-Stream 从接口输入 (来自 DDR Interleaver) ---
+        .s_axis_input_tdata     (M_AXIS_OUTPUT_TDATA),
+        .s_axis_input_tvalid    (M_AXIS_OUTPUT_TVALID),
+        .s_axis_input_tready    (M_AXIS_OUTPUT_TREADY),
+        // --- AXI-Stream 主接口输出 (送往物理层) ---
+        .m_axis_output_tdata    (sync_data_o), 
+        .m_axis_output_tvalid   (sync_valid_o),
+        .m_axis_output_tready   (intv_tready)
+    );
     
 endmodule

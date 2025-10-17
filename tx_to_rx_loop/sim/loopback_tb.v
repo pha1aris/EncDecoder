@@ -86,11 +86,6 @@ module loopback_tb;
     // 4. DUT 实例化和全链路连接
     // =================================================================
 
-
-wire enc_tvalid;
-wire enc_tready;
-assign enc_tvalid = 1;
-
     // --- 模块 1: PRBS-31 生成器 (数据源, 32位) ---
     gtwizard_ultrascale_0_prbs_any #(
         .CHK_MODE    (0),
@@ -100,50 +95,34 @@ assign enc_tvalid = 1;
         .NBITS       (32) // **注意: Encoder 输入是32位**
     ) prbs_gen_inst (
         .RST      (rst),
-        .CLK      (prbs_clk), 
+        .CLK      (prbs_clk), // **使用 prbs_clk**
         .DATA_IN  ('d0),
-        .EN       (enc_tready && enc_tvalid), 
+        .EN       (encoder_ready_for_data), // 由Encoder的FIFO反压控制
         .DATA_OUT (prbs_data_out)
     );
-    // --- 模块 2: PRBS-7 生成器 (数据源, 32位) ---
-    wire [7:0] prbs_7;
-    gtwizard_ultrascale_0_prbs_any #(
-        .CHK_MODE    (0),
-        .INV_PATTERN (1),
-        .POLY_LENGHT (31),
-        .POLY_TAP    (28),
-        .NBITS       (8) // **注意: sync 输入是8位**
-    ) prbs_gen7_inst (
-        .RST      (rst),
-        .CLK      (prbs_clk), 
-        .DATA_IN  ('d0),
-        .EN       (enc_tready && enc_tvalid), 
-        .DATA_OUT (prbs_7)
-    );
+
     // --- 模块 2: Encoder (编码 + 跨时钟域) ---
-    // Encoder Encoder_inst (
-    //     .rst                    (rst),
-    //     .input_fifo_clk         (prbs_clk), 
-    //     .core_clk               (clk),      
-    //     .data_i                 (prbs_data_out),
-    //     .data_valid_i           (enc_tvalid), // 当FIFO ready时，认为数据有效
-    //     .input_fifo_wrrdy       (enc_tready),
-    //     .m_axis_output_tdata    (encoder_tdata),
-    //     .m_axis_output_tvalid   (encoder_tvalid),
-    //     .m_axis_output_tlast    (encoder_tlast),
-    //     .m_axis_output_tready   (sync_ready_for_encoder)
-    // );
+    Encoder Encoder_inst (
+        .rst                (rst),
+        .input_fifo_clk     (prbs_clk), // **写时钟**
+        .core_clk           (clk),      // **读时钟**
+        .data_i             (prbs_data_out),
+        .data_valid_i       (encoder_ready_for_data), // 当FIFO ready时，认为数据有效
+        .input_fifo_wrrdy   (encoder_ready_for_data),
+        .m_axis_output_tdata(encoder_tdata),
+        .m_axis_output_tvalid(encoder_tvalid),
+        .m_axis_output_tlast(encoder_tlast),
+        .m_axis_output_tready(sync_ready_for_encoder)
+    );
 
     // --- 模块 3: Sync (添加同步头) ---
     Sync Sync_inst (
         .rst                    (rst),
-        .wr_clk                 (prbs_clk),
         .core_clk               (clk),
-        .s_axis_input_tdata     (prbs_7),
-        .s_axis_input_tvalid    (enc_tvalid),
-        .s_axis_input_tlast     (encoder_tlast),    ///未连接
-        .s_axis_input_tready    (enc_tready),
-
+        .s_axis_input_tdata     (encoder_tdata),
+        .s_axis_input_tvalid    (encoder_tvalid),
+        .s_axis_input_tlast     (encoder_tlast),
+        .s_axis_input_tready    (sync_ready_for_encoder),
         .m_axis_output_tdata    (sync_tdata),
         .m_axis_output_tvalid   (sync_tvalid),
         .m_axis_output_tlast    (sync_tlast),
@@ -153,65 +132,45 @@ assign enc_tvalid = 1;
     // --- 模块 4: DeSync (移除同步头) ---
     DeSync DeSync_inst (
         .rst                    (rst),
-        .wr_clk                 (clk),
-        .core_clk               (prbs_clk),
+        .core_clk               (clk),
         .s_axis_input_tdata     (sync_tdata),
         .s_axis_input_tvalid    (sync_tvalid),
-        // .s_axis_input_tlast     (sync_tlast), // DeSync 需要 tlast
+        .s_axis_input_tlast     (sync_tlast), // DeSync 需要 tlast
         .s_axis_input_tready    (desync_ready_for_sync),
-
         .m_axis_output_tdata    (desync_tdata),
         .m_axis_output_tvalid   (desync_tvalid),
         .m_axis_output_tlast    (desync_tlast),
-        .m_axis_output_tready   (1)
+        .m_axis_output_tready   (decoder_ready_for_desync)
     );
 
     // --- 模块 5: Decoder (解码) ---
-    // Decoder Decoder_inst (
-    //     .rst                    (rst),
-    //     .core_clk               (clk),
-    //     .output_clk             (prbs_clk),
-    //     .s_axis_input_tdata     (encoder_tdata),
-    //     .s_axis_input_tvalid    (encoder_tvalid),
-    //     .s_axis_input_tlast     (encoder_tlast),
-    //     .s_axis_input_tready    (sync_ready_for_encoder),
-    //     .output_tdata           (decoder_tdata),
-    //     .output_tvalid          (decoder_tvalid),
-    //     .output_tready          (1'b1) // 假设PRBS校验器总能接收数据
-    // );
+    Decoder Decoder_inst (
+        .rst                 (rst),
+        .core_clk            (clk),
+        .s_axis_input_tdata  (desync_tdata),
+        .s_axis_input_tvalid (desync_tvalid),
+        .s_axis_input_tlast  (desync_tlast),
+        .s_axis_input_tready (decoder_ready_for_desync),
+        .output_tdata        (decoder_tdata),
+        .output_tvalid       (decoder_tvalid),
+        .output_tready       (1'b1) // 假设PRBS校验器总能接收数据
+    );
 
     // --- 模块 6: PRBS-31 校验器 (32位) ---
     gtwizard_ultrascale_0_prbs_any #(
-        .CHK_MODE           (1),
-        .INV_PATTERN        (1),
-        .POLY_LENGHT        (31),
-        .POLY_TAP           (28),
-        .NBITS              (32) // **注意: Decoder 输出是32位**
+        .CHK_MODE    (1),
+        .INV_PATTERN (1),
+        .POLY_LENGHT (31),
+        .POLY_TAP    (28),
+        .NBITS       (32) // **注意: Decoder 输出是32位**
     ) prbs_checker_inst (
-        .RST                (rst),
-        .CLK                (prbs_clk),
-        .DATA_IN            (desync_tdata),
-        .EN                 (desync_tvalid),
-        .DATA_OUT           (prbs_error_vector)
+        .RST      (rst),
+        .CLK      (clk),
+        .DATA_IN  (decoder_tdata),
+        .EN       (decoder_tvalid),
+        .DATA_OUT (prbs_error_vector)
     );
 
-    // --- 模块 7: PRBS-7 校验器 (32位) ---
-    wire [7:0] prbs_err_7;
-    wire prbs_match7;
-    assign prbs_match7 = ~|prbs_err_7;
-    gtwizard_ultrascale_0_prbs_any #(
-        .CHK_MODE           (1),
-        .INV_PATTERN        (1),
-        .POLY_LENGHT        (31),
-        .POLY_TAP           (28),
-        .NBITS              (8) // **注意: sync 输出是8位**
-    ) prbs_checker7_inst (
-        .RST                (rst),
-        .CLK                (prbs_clk),
-        .DATA_IN            (desync_tdata),
-        .EN                 (desync_tvalid),
-        .DATA_OUT           (prbs_err_7)
-    );
     // =================================================================
     // 5. 误码统计逻辑
     // =================================================================
