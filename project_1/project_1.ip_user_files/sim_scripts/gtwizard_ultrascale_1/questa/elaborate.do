@@ -1,0 +1,1 @@
+vopt -l elaborate.log +acc=npr -suppress 10016  -L xil_defaultlib -L xilinx_vip -L xpm -L gtwizard_ultrascale_v1_7_19 -L xilinx_vip -L unisims_ver -L unimacro_ver -L secureip -work xil_defaultlib xil_defaultlib.gtwizard_ultrascale_1 xil_defaultlib.glbl -o gtwizard_ultrascale_1_opt
