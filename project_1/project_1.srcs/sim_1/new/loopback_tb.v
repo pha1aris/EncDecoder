@@ -35,39 +35,39 @@ module loopback_tb;
 
     // --- 链路各阶段的连线 ---
     // PRBS Gen -> Encoder
-    wire [31:0] prbs_data_out;
-    wire        encoder_ready_for_data;
+    // wire [31:0] prbs_data_out;
+    // wire        encoder_ready_for_data;
 
-    // Encoder -> Sync
-    wire [7:0]  encoder_tdata;
-    wire        encoder_tvalid;
-    wire        encoder_tlast;
-    wire        sync_ready_for_encoder;
+    // // Encoder -> Sync
+    // wire [7:0]  encoder_tdata;
+    // wire        encoder_tvalid;
+    // wire        encoder_tlast;
+    // wire        sync_ready_for_encoder;
 
-    // Sync -> DeSync
-    wire [31:0] sync_tdata;
-    wire        sync_tvalid;
-    wire        sync_tlast;
-    wire        desync_ready_for_sync;
+    // // Sync -> DeSync
+    // wire [31:0] sync_tdata;
+    // wire        sync_tvalid;
+    // wire        sync_tlast;
+    // wire        desync_ready_for_sync;
 
     // DeSync -> Decoder
-    wire [7:0]  desync_tdata;
-    wire        desync_tvalid;
-    wire        desync_tlast;
-    wire        decoder_ready_for_desync;
+    // wire [7:0]  desync_tdata;
+    // wire        desync_tvalid;
+    // wire        desync_tlast;
+    // wire        decoder_ready_for_desync;
 
     // Decoder -> PRBS Checker
-    wire [31:0] decoder_tdata;
-    wire        decoder_tvalid;
+    // wire [31:0] decoder_tdata;
+    // wire        decoder_tvalid;
 
     // PRBS Checker 输出
-    wire [31:0] prbs_error_vector;
-    wire prbs_match;
-    assign prbs_match = ~|prbs_error_vector;
+    // wire [31:0] prbs_error_vector;
+    // wire prbs_match;
+    // assign prbs_match = ~|prbs_error_vector;
 
-    // 统计信号
-    reg [63:0] total_bits;
-    reg [63:0] error_count;
+    // // 统计信号
+    // reg [63:0] total_bits;
+    // reg [63:0] error_count;
 
     // =================================================================
     // 3. 时钟和复位生成
@@ -87,60 +87,68 @@ module loopback_tb;
     // =================================================================
 
 
-    wire enc_tvalid;
-    wire enc_tready;
-    assign enc_tvalid = 1;
+    // wire enc_tvalid;
+    // wire enc_tready;
+    // assign enc_tvalid = 1;
 
-    wire [7:0] Desync_tdata;
-    wire Desync_tvalid;
-    wire Desync_tlast;
-    wire Desync_tready;
+    // wire [7:0] Desync_tdata;
+    // wire Desync_tvalid;
+    // wire Desync_tlast;
+    // wire Desync_tready;
 
     // --- 模块 1: PRBS-31 生成器 (数据源, 32位) ---
-    gtwizard_ultrascale_0_prbs_any #(
-        .CHK_MODE    (0),
-        .INV_PATTERN (1),
-        .POLY_LENGHT (31),
-        .POLY_TAP    (28),
-        .NBITS       (32) // **注意: Encoder 输入是32位**
-    ) prbs_gen_inst (
-        .RST      (rst),
-        .CLK      (prbs_clk), 
-        .DATA_IN  ('d0),
-        .EN       (enc_tready && enc_tvalid), 
-        .DATA_OUT (prbs_data_out)
-    );
-    // --- 模块 2: PRBS-7 生成器 (数据源, 32位) ---
-    wire [7:0] prbs_7;
-    gtwizard_ultrascale_0_prbs_any #(
-        .CHK_MODE    (0),
-        .INV_PATTERN (1),
-        .POLY_LENGHT (31),
-        .POLY_TAP    (28),
-        .NBITS       (8) // **注意: sync 输入是8位**
-    ) prbs_gen7_inst (
-        .RST      (rst),
-        .CLK      (prbs_clk), 
-        .DATA_IN  ('d0),
-        .EN       (enc_tready && enc_tvalid), 
-        .DATA_OUT (prbs_7)
-    );
+    // gtwizard_ultrascale_0_prbs_any #(
+    //     .CHK_MODE    (0),
+    //     .INV_PATTERN (1),
+    //     .POLY_LENGHT (31),
+    //     .POLY_TAP    (28),
+    //     .NBITS       (32) // **注意: Encoder 输入是32位**
+    // ) prbs_gen_inst (
+    //     .RST      (rst),
+    //     .CLK      (prbs_clk), 
+    //     .DATA_IN  ('d0),
+    //     .EN       (enc_tready && enc_tvalid), 
+    //     .DATA_OUT (prbs_data_out)
+    // );
+    // // --- 模块 2: PRBS-7 生成器 (数据源, 32位) ---
+    // wire [7:0] prbs_7;
+    // gtwizard_ultrascale_0_prbs_any #(
+    //     .CHK_MODE    (0),
+    //     .INV_PATTERN (1),
+    //     .POLY_LENGHT (31),
+    //     .POLY_TAP    (28),
+    //     .NBITS       (8) // **注意: sync 输入是8位**
+    // ) prbs_gen7_inst (
+    //     .RST      (rst),
+    //     .CLK      (prbs_clk), 
+    //     .DATA_IN  ('d0),
+    //     .EN       (enc_tready && enc_tvalid), 
+    //     .DATA_OUT (prbs_7)
+    // );
 
 
     // --- 模块 2: Encoder (编码 + 跨时钟域) ---
-    Encoder Encoder_inst (
-        .rst                    (rst),
-        .input_fifo_clk         (prbs_clk), 
-        .core_clk               (clk),      
-        .data_i                 (prbs_data_out),
-        .data_valid_i           (enc_tvalid), // 当FIFO ready时，认为数据有效
-        .input_fifo_wrrdy       (enc_tready),
+    // Encoder Encoder_inst (
+    //     .rst                    (rst),
+    //     .input_fifo_clk         (prbs_clk), 
+    //     .core_clk               (clk),      
+    //     .data_i                 (prbs_data_out),
+    //     .data_valid_i           (enc_tvalid), // 当FIFO ready时，认为数据有效
+    //     .input_fifo_wrrdy       (enc_tready),
 
-        .m_axis_output_tdata    (encoder_tdata),
-        .m_axis_output_tvalid   (encoder_tvalid),
-        .m_axis_output_tlast    (encoder_tlast),
-        .m_axis_output_tready   (sync_ready_for_encoder)
+    //     .m_axis_output_tdata    (encoder_tdata),
+    //     .m_axis_output_tvalid   (encoder_tvalid),
+    //     .m_axis_output_tlast    (encoder_tlast),
+    //     .m_axis_output_tready   (sync_ready_for_encoder)
+    // );
+
+
+    tx_chain tx_chain (
+    .clk                        (clk),          // 主时钟 (Encoder, TLAST Gen, Interleaver, Packer)
+    .rst                        (rst),
+    .prbs_clk                   (  prbs_clk   )    // PRBS 时钟
     );
+
 
     // --- 模块 3: Sync (添加同步头) ---
     // Sync Sync_inst (
@@ -158,35 +166,36 @@ module loopback_tb;
     //     .m_axis_output_tready   (desync_ready_for_sync)
     // );
 
-    wire [31:0] sync_data_o;
-    wire        sync_valid_o;
+    // wire [31:0] sync_data_o;
+    // wire        sync_valid_o;
 
-    Sync_axis Sync_axis (
-        .rst                    (rst),                  // 高有效复位
-        .core_clk               (clk),             // 时钟
-        // AXI Stream Input
-        .s_axis_input_tdata     (encoder_tdata),
-        .s_axis_input_tvalid    (encoder_tvalid),
-        .s_axis_input_tlast     (encoder_tlast),   // tlast 信号当前未被使用，逻辑依赖于固定的 PAYLOAD_LEN
-        .s_axis_input_tready    (sync_ready_for_encoder),
+    // Sync_axis Sync_axis (
+    //     .rst                    (rst),                  // 高有效复位
+    //     .core_clk               (clk),             // 时钟
+    //     // AXI Stream Input
+    //     .s_axis_input_tdata     (encoder_tdata),
+    //     .s_axis_input_tvalid    (encoder_tvalid),
+    //     .s_axis_input_tlast     (encoder_tlast),   // tlast 信号当前未被使用，逻辑依赖于固定的 PAYLOAD_LEN
+    //     .s_axis_input_tready    (sync_ready_for_encoder),
 
-        // 32-bit Aligned Output
-        .sync_data_o            (sync_data_o),
-        .sync_valid_o           (sync_valid_o)
-    );
+    //     // 32-bit Aligned Output
+    //     .sync_data_o            (sync_data_o),
+    //     .sync_valid_o           (sync_valid_o)
+    // );
 
-    Desync_axis Desync_axis(
-        .rst                    (rst),
-        .core_clk               (clk),
+    // Desync_axis Desync_axis(
+    //     .rst                    (rst),
+    //     .core_clk               (clk),
 
-        .data_i                 (sync_data_o),
-        .data_valid_i           (sync_valid_o),
+    //     .data_i                 (sync_data_o),
+    //     .data_valid_i           (sync_valid_o),
 
-        .m_axis_output_tdata    (Desync_tdata),
-        .m_axis_output_tvalid   (Desync_tvalid),
-        .m_axis_output_tlast    (Desync_tlast),
-        .m_axis_output_tready   (Desync_tready)
-    );
+    //     .m_axis_output_tdata    (Desync_tdata),
+    //     .m_axis_output_tvalid   (Desync_tvalid),
+    //     .m_axis_output_tlast    (Desync_tlast),
+    //     .m_axis_output_tready   (Desync_tready)
+    // );
+    
     // --- 模块 4: DeSync (移除同步头) ---
     // DeSync DeSync_inst (
     //     .rst                    (rst),
@@ -204,53 +213,53 @@ module loopback_tb;
     // );
 
     // --- 模块 5: Decoder (解码) ---
-    Decoder Decoder_inst (
-        .rst                    (rst),
-        .core_clk               (clk),
-        .output_clk             (prbs_clk),
+    // Decoder Decoder_inst (
+    //     .rst                    (rst),
+    //     .core_clk               (clk),
+    //     .output_clk             (prbs_clk),
 
-        .s_axis_input_tdata     (Desync_tdata),
-        .s_axis_input_tvalid    (Desync_tvalid),
-        .s_axis_input_tlast     (Desync_tlast),
-        .s_axis_input_tready    (Desync_tready),
+    //     .s_axis_input_tdata     (Desync_tdata),
+    //     .s_axis_input_tvalid    (Desync_tvalid),
+    //     .s_axis_input_tlast     (Desync_tlast),
+    //     .s_axis_input_tready    (Desync_tready),
 
-        .output_tdata           (decoder_tdata),
-        .output_tvalid          (decoder_tvalid),
-        .output_tready          (1'b1) // 假设PRBS校验器总能接收数据
-    );
+    //     .output_tdata           (decoder_tdata),
+    //     .output_tvalid          (decoder_tvalid),
+    //     .output_tready          (1'b1) // 假设PRBS校验器总能接收数据
+    // );
 
     // --- 模块 6: PRBS-31 校验器 (32位) ---
-    gtwizard_ultrascale_0_prbs_any #(
-        .CHK_MODE           (1),
-        .INV_PATTERN        (1),
-        .POLY_LENGHT        (31),
-        .POLY_TAP           (28),
-        .NBITS              (32) // **注意: Decoder 输出是32位**
-    ) prbs_checker_inst (
-        .RST                (rst),
-        .CLK                (prbs_clk),
-        .DATA_IN            (desync_tdata),
-        .EN                 (desync_tvalid),
-        .DATA_OUT           (prbs_error_vector)
-    );
+    // gtwizard_ultrascale_0_prbs_any #(
+    //     .CHK_MODE           (1),
+    //     .INV_PATTERN        (1),
+    //     .POLY_LENGHT        (31),
+    //     .POLY_TAP           (28),
+    //     .NBITS              (32) // **注意: Decoder 输出是32位**
+    // ) prbs_checker_inst (
+    //     .RST                (rst),
+    //     .CLK                (prbs_clk),
+    //     .DATA_IN            (desync_tdata),
+    //     .EN                 (desync_tvalid),
+    //     .DATA_OUT           (prbs_error_vector)
+    // );
 
     // --- 模块 7: PRBS-7 校验器 (32位) ---
-    wire [7:0] prbs_err_7;
-    wire prbs_match7;
-    assign prbs_match7 = ~|prbs_err_7;
-    gtwizard_ultrascale_0_prbs_any #(
-        .CHK_MODE           (1),
-        .INV_PATTERN        (1),
-        .POLY_LENGHT        (31),
-        .POLY_TAP           (28),
-        .NBITS              (8) // **注意: sync 输出是8位**
-    ) prbs_checker7_inst (
-        .RST                (rst),
-        .CLK                (prbs_clk),
-        .DATA_IN            (decoder_tdata),
-        .EN                 (decoder_tvalid),
-        .DATA_OUT           (prbs_err_7)
-    );
+    // wire [7:0] prbs_err_7;
+    // wire prbs_match7;
+    // assign prbs_match7 = ~|prbs_err_7;
+    // gtwizard_ultrascale_0_prbs_any #(
+    //     .CHK_MODE           (1),
+    //     .INV_PATTERN        (1),
+    //     .POLY_LENGHT        (31),
+    //     .POLY_TAP           (28),
+    //     .NBITS              (8) // **注意: sync 输出是8位**
+    // ) prbs_checker7_inst (
+    //     .RST                (rst),
+    //     .CLK                (prbs_clk),
+    //     .DATA_IN            (decoder_tdata),
+    //     .EN                 (decoder_tvalid),
+    //     .DATA_OUT           (prbs_err_7)
+    // );
     // =================================================================
     // 5. 误码统计逻辑
     // =================================================================
@@ -283,13 +292,13 @@ module loopback_tb;
     initial begin
         // 初始化和复位
         rst = 1;
-        $display("[%0t ns] Simulation started. System is in reset.", $time);
+        // $display("[%0t ns] Simulation started. System is in reset.", $time);
         repeat(10) @(posedge clk);
         rst = 0;
-        $display("[%0t ns] Reset released. Starting data transmission.", $time);
+        // $display("[%0t ns] Reset released. Starting data transmission.", $time);
 
-        // 运行足够长的时间以处理多个帧
-        repeat(50000) @(posedge clk);
+        // // 运行足够长的时间以处理多个帧
+        // repeat(50000) @(posedge clk);
 
         // // 检查结果并结束仿真
         // $display("-------------------------------------------------");

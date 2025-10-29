@@ -5,7 +5,6 @@ module rx_chain (
     input  wire         clk,
     input  wire         rst,
 
-    // 交织数据的输入接口 (AXI-Stream)
     input  wire [31:0]  s_axis_tdata,
     input  wire         s_axis_tvalid,
     output wire         s_axis_tready,
@@ -31,37 +30,6 @@ module rx_chain (
     wire        decoder_tvalid;
     wire [31:0] prbs_error_vector;
 
-
-    // 1. 解交织器
-    pre_deinterleaver #(
-        .CODEWORD_SIZE (256),
-        .NUM_CODEWORDS (4)
-    ) pre_deinterleaver (
-        .clk            (clk),
-        .rst            (rst),
-        .s_axis_tdata   (s_axis_tdata),
-        .s_axis_tvalid  (s_axis_tvalid),
-        .s_axis_tready  (s_axis_tready), // 反压信号
-        .m_axis_tdata   (deintv_tdata),
-        .m_axis_tvalid  (deintv_tvalid),
-        .m_axis_tready  (deintv_tready)
-    );
-
-    // 2. 去同步头
-    DeSync DeSync(
-        .rst                    (rst),
-        .core_clk               (clk),
-
-        .s_axis_input_tdata     (s_axis_tdata),
-        .s_axis_input_tvalid    (s_axis_tvalid),
-        .s_axis_input_tready    (s_axis_tready),
-
-        .m_axis_output_tdata    (desync_tdata ),
-        .m_axis_output_tvalid   (desync_tvalid),
-        .m_axis_output_tlast    (desync_tlast ),
-        .m_axis_output_tready   (desync_tready)
-    );
-
     // 3. 解码器
     Decoder Decoder (
         .core_clk               (clk),
@@ -70,15 +38,33 @@ module rx_chain (
         .s_axis_input_tvalid    (desync_tvalid),
         .s_axis_input_tlast     (desync_tlast ),
         .s_axis_input_tready    (desync_tready),
-
         .output_tdata           (decoder_tdata),
         .output_tvalid          (decoder_tvalid),
         .output_tready          (1'b1) // 假设解码器后级总能接收数据
     );
 
+
+    sid_1 sid_1 (
+        .aclk                     (aclk),                                      // input wire aclk
+        .aresetn                  (aresetn),                                // input wire aresetn
+        .s_axis_data_tdata        (s_axis_data_tdata),            // input wire [7 : 0] s_axis_data_tdata
+        .s_axis_data_tvalid       (s_axis_data_tvalid),          // input wire s_axis_data_tvalid
+        .s_axis_data_tlast        (s_axis_data_tlast),            // input wire s_axis_data_tlast
+        .s_axis_data_tready       (s_axis_data_tready),          // output wire s_axis_data_tready
+        .m_axis_data_tdata        (m_axis_data_tdata),            // output wire [7 : 0] m_axis_data_tdata
+        .m_axis_data_tuser        (m_axis_data_tuser),            // output wire [1 : 0] m_axis_data_tuser
+        .m_axis_data_tvalid       (m_axis_data_tvalid),          // output wire m_axis_data_tvalid
+        .m_axis_data_tlast        (m_axis_data_tlast),            // output wire m_axis_data_tlast
+        .m_axis_data_tready       (m_axis_data_tready),          // input wire m_axis_data_tready
+        .event_tlast_unexpected   (event_tlast_unexpected),  // output wire event_tlast_unexpected
+        .event_tlast_missing      (event_tlast_missing),        // output wire event_tlast_missing
+        .event_halted             (event_halted)                      // output wire event_halted
+    );
+
+
     // 4. PRBS-31 校验器
     gtwizard_ultrascale_0_prbs_any #(
-        .CHK_MODE    (1),
+        .CHK_MODE    (0),
         .INV_PATTERN (1),
         .POLY_LENGHT (31),
         .POLY_TAP    (28),
@@ -119,5 +105,7 @@ module rx_chain (
     //         total_bits_o  <= total_bits_o + 32;
     //     end
     // end
+
+
 
 endmodule

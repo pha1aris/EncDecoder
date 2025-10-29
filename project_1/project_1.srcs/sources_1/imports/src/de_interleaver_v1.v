@@ -3,7 +3,7 @@
 // 按列将数据读出 还原数据
 // 
 module de_interleaver_v1#(
-parameter CODEWORD_SIZE_IN_32 = 65,    // 每个码字长度 (32-bit words)
+    parameter CODEWORD_SIZE_IN_32 = 65,    // 每个码字长度 (32-bit words)
     parameter NUM_CODEWORDS       = 4      // 码字个数
 )(
     input  wire                              clk,

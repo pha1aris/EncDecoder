@@ -1,0 +1,404 @@
+#-----------------------------------------------------------
+# Vivado v2024.2 (64-bit)
+# SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
+# IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
+# SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
+# Start of session at: Tue Oct 28 10:43:06 2025
+# Process ID         : 424
+# Current directory  : C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/sid_1_synth_1
+# Command line       : vivado.exe -log sid_1.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source sid_1.tcl
+# Log file           : C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/sid_1_synth_1/sid_1.vds
+# Journal file       : C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/sid_1_synth_1\vivado.jou
+# Running On         : FSO-A
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : 13th Gen Intel(R) Core(TM) i9-13900K
+# CPU Frequency      : 2995 MHz
+# CPU Physical cores : 24
+# CPU Logical cores  : 32
+# Host memory        : 68263 MB
+# Swap memory        : 10200 MB
+# Total Virtual      : 78464 MB
+# Available Virtual  : 61784 MB
+#-----------------------------------------------------------
+Sourcing tcl script 'D:/2024_2/Vivado/2024.2/scripts/Vivado_init.tcl'
+source sid_1.tcl -notrace
+INFO: [IP_Flow 19-6924] IPCACHE: Running cache check for IP inst: sid_1
+Command: synth_design -top sid_1 -part xczu15eg-ffvb1156-2-i -incremental_mode off -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xczu15eg'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xczu15eg'
+INFO: [Device 21-403] Loading part xczu15eg-ffvb1156-2-i
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 21292
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1759.414 ; gain = 189.223
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'sid_1' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/sid_1/synth/sid_1.vhd:78]
+	Parameter c_xdevicefamily bound to: zynquplus - type: string 
+	Parameter c_family bound to: zynquplus - type: string 
+	Parameter c_architecture bound to: 0 - type: integer 
+	Parameter c_mem_init_prefix bound to: sid_1 - type: string 
+	Parameter c_elaboration_dir bound to: ./ - type: string 
+	Parameter c_type bound to: 0 - type: integer 
+	Parameter c_mode bound to: 1 - type: integer 
+	Parameter c_symbol_width bound to: 8 - type: integer 
+	Parameter c_row_type bound to: 0 - type: integer 
+	Parameter c_row_constant bound to: 255 - type: integer 
+	Parameter c_has_row bound to: 0 - type: integer 
+	Parameter c_has_row_valid bound to: 0 - type: integer 
+	Parameter c_min_num_rows bound to: 15 - type: integer 
+	Parameter c_row_width bound to: 4 - type: integer 
+	Parameter c_num_selectable_rows bound to: 4 - type: integer 
+	Parameter c_row_select_file bound to: sid_1_RS.mif - type: string 
+	Parameter c_has_row_sel bound to: 0 - type: integer 
+	Parameter c_has_row_sel_valid bound to: 0 - type: integer 
+	Parameter c_use_row_permute_file bound to: 0 - type: integer 
+	Parameter c_row_permute_file bound to: sid_1_RP.mif - type: string 
+	Parameter c_col_type bound to: 0 - type: integer 
+	Parameter c_col_constant bound to: 255 - type: integer 
+	Parameter c_has_col bound to: 0 - type: integer 
+	Parameter c_has_col_valid bound to: 0 - type: integer 
+	Parameter c_min_num_cols bound to: 15 - type: integer 
+	Parameter c_col_width bound to: 4 - type: integer 
+	Parameter c_num_selectable_cols bound to: 4 - type: integer 
+	Parameter c_col_select_file bound to: sid_1_CS.mif - type: string 
+	Parameter c_has_col_sel bound to: 0 - type: integer 
+	Parameter c_has_col_sel_valid bound to: 0 - type: integer 
+	Parameter c_use_col_permute_file bound to: 0 - type: integer 
+	Parameter c_col_permute_file bound to: sid_1_CP.mif - type: string 
+	Parameter c_block_size_type bound to: 3 - type: integer 
+	Parameter c_block_size_constant bound to: 225 - type: integer 
+	Parameter c_has_block_size bound to: 0 - type: integer 
+	Parameter c_block_size_width bound to: 8 - type: integer 
+	Parameter c_has_block_size_valid bound to: 0 - type: integer 
+	Parameter c_num_branches bound to: 16 - type: integer 
+	Parameter c_branch_length_type bound to: 0 - type: integer 
+	Parameter c_branch_length_constant bound to: 16 - type: integer 
+	Parameter c_branch_length_file bound to: sid_1.mif - type: string 
+	Parameter c_num_configurations bound to: 1 - type: integer 
+	Parameter c_external_ram bound to: 0 - type: integer 
+	Parameter c_ext_mem_latency bound to: 0 - type: integer 
+	Parameter c_ext_addr_width bound to: 16 - type: integer 
+	Parameter c_memstyle bound to: 1 - type: integer 
+	Parameter c_pipe_level bound to: 0 - type: integer 
+	Parameter c_throughput_mode bound to: 0 - type: integer 
+	Parameter c_has_aclken bound to: 0 - type: integer 
+	Parameter c_has_aresetn bound to: 1 - type: integer 
+	Parameter c_has_rdy bound to: 0 - type: integer 
+	Parameter c_has_block_start bound to: 1 - type: integer 
+	Parameter c_has_block_end bound to: 1 - type: integer 
+	Parameter c_has_fdo bound to: 0 - type: integer 
+	Parameter c_s_axis_ctrl_tdata_width bound to: 1 - type: integer 
+	Parameter c_s_axis_data_tdata_width bound to: 8 - type: integer 
+	Parameter c_m_axis_data_tdata_width bound to: 8 - type: integer 
+	Parameter c_m_axis_data_tuser_width bound to: 2 - type: integer 
+	Parameter c_has_dout_tready bound to: 1 - type: integer 
+INFO: [Synth 8-3491] module 'sid_v8_0_22' declared at 'c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/sid_1/hdl/sid_v8_0_vh_rfs.vhd:27742' bound to instance 'U0' of component 'sid_v8_0_22' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/sid_1/synth/sid_1.vhd:215]
+INFO: [Synth 8-256] done synthesizing module 'sid_1' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/sid_1/synth/sid_1.vhd:78]
+WARNING: [Synth 8-7129] Port doutb[7] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port doutb[6] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port doutb[5] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port doutb[4] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port doutb[3] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port doutb[2] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port doutb[1] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port doutb[0] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[15] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[14] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[13] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[12] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[11] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[10] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[9] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[8] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[7] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[6] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[5] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[4] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[3] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[2] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[1] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port addrb[0] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[7] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[6] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[5] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[4] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[3] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[2] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[1] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port dinb[0] in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port enb in module rs_block_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sclr in module sid_mem is either unconnected or has no load
+WARNING: [Synth 8-7129] Port AINIT in module c_reg_fd_v12_0_10_viv is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ACLR in module c_reg_fd_v12_0_10_viv is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ASET in module c_reg_fd_v12_0_10_viv is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SINIT in module c_reg_fd_v12_0_10_viv is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SSET in module c_reg_fd_v12_0_10_viv is either unconnected or has no load
+WARNING: [Synth 8-7129] Port AINIT in module c_reg_fd_v12_0_10_viv__parameterized15 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ACLR in module c_reg_fd_v12_0_10_viv__parameterized15 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ASET in module c_reg_fd_v12_0_10_viv__parameterized15 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SINIT in module c_reg_fd_v12_0_10_viv__parameterized15 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SCLR in module c_reg_fd_v12_0_10_viv__parameterized15 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SSET in module c_reg_fd_v12_0_10_viv__parameterized15 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port AINIT in module c_reg_fd_v12_0_10_viv__parameterized5 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ACLR in module c_reg_fd_v12_0_10_viv__parameterized5 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ASET in module c_reg_fd_v12_0_10_viv__parameterized5 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SINIT in module c_reg_fd_v12_0_10_viv__parameterized5 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SSET in module c_reg_fd_v12_0_10_viv__parameterized5 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port a[1] in module c_shift_ram_v12_0_18_legacy__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port a[0] in module c_shift_ram_v12_0_18_legacy__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port aclr in module c_shift_ram_v12_0_18_legacy__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port aset in module c_shift_ram_v12_0_18_legacy__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ainit in module c_shift_ram_v12_0_18_legacy__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sclr in module c_shift_ram_v12_0_18_legacy__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sset in module c_shift_ram_v12_0_18_legacy__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sinit in module c_shift_ram_v12_0_18_legacy__parameterized0 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port AINIT in module c_reg_fd_v12_0_10_viv__parameterized13 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ACLR in module c_reg_fd_v12_0_10_viv__parameterized13 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ASET in module c_reg_fd_v12_0_10_viv__parameterized13 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SINIT in module c_reg_fd_v12_0_10_viv__parameterized13 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SCLR in module c_reg_fd_v12_0_10_viv__parameterized13 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port AINIT in module c_reg_fd_v12_0_10_viv__parameterized3 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ACLR in module c_reg_fd_v12_0_10_viv__parameterized3 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ASET in module c_reg_fd_v12_0_10_viv__parameterized3 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SINIT in module c_reg_fd_v12_0_10_viv__parameterized3 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SCLR in module c_reg_fd_v12_0_10_viv__parameterized3 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SSET in module c_reg_fd_v12_0_10_viv__parameterized3 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[16] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[15] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[14] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[13] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[12] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[11] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[10] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[9] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[8] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[7] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[6] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[5] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[4] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[3] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[2] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[1] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port B[0] in module c_compare_v12_0_10_viv__parameterized1 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port AINIT in module c_reg_fd_v12_0_10_viv__parameterized11 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ACLR in module c_reg_fd_v12_0_10_viv__parameterized11 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ASET in module c_reg_fd_v12_0_10_viv__parameterized11 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SINIT in module c_reg_fd_v12_0_10_viv__parameterized11 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SCLR in module c_reg_fd_v12_0_10_viv__parameterized11 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port SSET in module c_reg_fd_v12_0_10_viv__parameterized11 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port add in module c_addsub_v12_0_19_lut6_legacy__parameterized5 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port c_in in module c_addsub_v12_0_19_lut6_legacy__parameterized5 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sclr in module c_addsub_v12_0_19_lut6_legacy__parameterized5 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sset in module c_addsub_v12_0_19_lut6_legacy__parameterized5 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port sinit in module c_addsub_v12_0_19_lut6_legacy__parameterized5 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port c_in in module c_addsub_v12_0_19_legacy__parameterized5 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port b_in in module c_addsub_v12_0_19_legacy__parameterized5 is either unconnected or has no load
+WARNING: [Synth 8-7129] Port a_signed in module c_addsub_v12_0_19_legacy__parameterized5 is either unconnected or has no load
+INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2102.523 ; gain = 532.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 2102.523 ; gain = 532.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 2102.523 ; gain = 532.332
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.012 . Memory (MB): peak = 2102.523 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 129 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/sid_1/sid_1_ooc.xdc] for cell 'U0'
+Finished Parsing XDC File [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/sid_1/sid_1_ooc.xdc] for cell 'U0'
+Parsing XDC File [C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/sid_1_synth_1/dont_touch.xdc]
+Finished Parsing XDC File [C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/sid_1_synth_1/dont_touch.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 2102.523 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 6 instances were transformed.
+  BUF => LUT1: 6 instances
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.027 . Memory (MB): peak = 2102.523 ; gain = 0.000
+INFO: [Designutils 20-5008] Incremental synthesis strategy off
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2102.523 ; gain = 532.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xczu15eg-ffvb1156-2-i
+INFO: [Synth 8-6742] Reading net delay rules and data
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2102.523 ; gain = 532.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+Applied set_property KEEP_HIERARCHY = SOFT for U0. (constraint file  C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/sid_1_synth_1/dont_touch.xdc, line 9).
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2102.523 ; gain = 532.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2102.523 ; gain = 532.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 3528 (col length:168)
+BRAMs: 1488 (col length: RAMB18 168 RAMB36 84)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2102.523 ; gain = 532.332
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 2656.367 ; gain = 1086.176
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 2658.254 ; gain = 1088.062
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+INFO: [Synth 8-7052] The timing for the instance U0/i_synth/gen_rect.rb1/erg1.srm1/i_inferred/bmg.spg.bm1/ram1.ram2.ram_contents_reg_bram_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance U0/i_synth/gen_rect.rb1/erg1.srm1/i_inferred/bmg.spg.bm1/ram1.ram2.ram_contents_reg_bram_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance U0/i_synth/gen_rect.rb1/erg1.srm1/i_inferred/bmg.spg.bm1/ram1.ram2.ram_contents_reg_bram_11 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance U0/i_synth/gen_rect.rb1/erg1.srm1/i_inferred/bmg.spg.bm1/ram1.ram2.ram_contents_reg_bram_15 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:22 ; elapsed = 00:00:24 . Memory (MB): peak = 2686.398 ; gain = 1116.207
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:24 ; elapsed = 00:00:26 . Memory (MB): peak = 2878.645 ; gain = 1308.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:24 ; elapsed = 00:00:26 . Memory (MB): peak = 2878.645 ; gain = 1308.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:24 ; elapsed = 00:00:26 . Memory (MB): peak = 2878.645 ; gain = 1308.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 2878.645 ; gain = 1308.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 2878.645 ; gain = 1308.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 2878.645 ; gain = 1308.453
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |BUF      |     5|
+|2     |LUT1     |     9|
+|3     |LUT2     |    47|
+|4     |LUT3     |    23|
+|5     |LUT4     |     6|
+|6     |LUT5     |    43|
+|7     |LUT6     |    33|
+|8     |MUXCY    |    59|
+|9     |RAMB36E2 |    16|
+|12    |SRL16E   |    12|
+|13    |XORCY    |    64|
+|14    |FDRE     |   152|
+|15    |FDSE     |     8|
++------+---------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 2878.645 ; gain = 1308.453
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 61 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:13 ; elapsed = 00:00:22 . Memory (MB): peak = 2878.645 ; gain = 1308.453
+Synthesis Optimization Complete : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 2878.645 ; gain = 1308.453
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 2878.645 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 128 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 2878.645 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 13 instances were transformed.
+  (CARRY4) => CARRY8: 8 instances
+  BUF => LUT1: 5 instances
+
+Synth Design complete | Checksum: 130c6f34
+INFO: [Common 17-83] Releasing license: Synthesis
+27 Infos, 101 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:37 ; elapsed = 00:00:36 . Memory (MB): peak = 2878.645 ; gain = 2376.238
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 2878.645 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/sid_1_synth_1/sid_1.dcp' has been generated.
+INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP sid_1, cache-ID = b3caf5b8a0c63f7f
+INFO: [Coretcl 2-1174] Renamed 109 cell refs.
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 2878.645 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/sid_1_synth_1/sid_1.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file sid_1_utilization_synth.rpt -pb sid_1_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Tue Oct 28 10:43:52 2025...

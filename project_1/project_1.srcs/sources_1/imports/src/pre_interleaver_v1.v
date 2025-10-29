@@ -65,7 +65,7 @@ module pre_interleaver_v1 #(
                     wr_ram_sel <= wr_ram_sel + 1;
                 end
             end
-            else if (!block1_full) begin
+            if (!block1_full) begin
                 if (wr_ram_sel == 3'd7) begin
                     wr_ram_sel <= 3'd4;
                     if (ptr_b1 == CODEWORD_SIZE_IN_32-1) begin

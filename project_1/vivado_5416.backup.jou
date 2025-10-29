@@ -1,0 +1,370 @@
+#-----------------------------------------------------------
+# Vivado v2024.2 (64-bit)
+# SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
+# IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
+# SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
+# Start of session at: Fri Oct 17 10:12:31 2025
+# Process ID         : 5416
+# Current directory  : C:/Users/PC/Desktop/fps/EnDec/project_1
+# Command line       : vivado.exe -gui_launcher_event rodinguilauncherevent13128 C:\Users\PC\Desktop\fps\EnDec\project_1\project_1.xpr
+# Log file           : C:/Users/PC/Desktop/fps/EnDec/project_1/vivado.log
+# Journal file       : C:/Users/PC/Desktop/fps/EnDec/project_1\vivado.jou
+# Running On         : FSO-A
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : 13th Gen Intel(R) Core(TM) i9-13900K
+# CPU Frequency      : 2995 MHz
+# CPU Physical cores : 24
+# CPU Logical cores  : 32
+# Host memory        : 68263 MB
+# Swap memory        : 10200 MB
+# Total Virtual      : 78464 MB
+# Available Virtual  : 63614 MB
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.xpr
+update_compile_order -fileset sources_1
+launch_simulation
+source loopback_tb.tcl
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/pre_interleaver}} 
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_rx_chain/prbs_checker_inst}} 
+relaunch_sim
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/Sync}} 
+relaunch_sim
+run 9 us
+run 9 us
+relaunch_sim
+relaunch_sim
+relaunch_sim
+run 9 us
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/Sync}} 
+relaunch_sim
+relaunch_sim
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/Sync}} 
+run 9 us
+relaunch_sim
+run 9 us
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_rx_chain/Decoder}} 
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_rx_chain/prbs_checker_inst}} 
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_rx_chain/prbs_error_vector}} 
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_rx_chain/perr_cnt}} 
+relaunch_sim
+run 9 us
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_rx_chain/prbs_match}} 
+run 9 us
+run 9 us
+relaunch_sim
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+relaunch_sim
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+relaunch_sim
+relaunch_sim
+run 9 us
+run 9 us
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/Encoder}} 
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/prbs_any_gen_inst}} 
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/Sync}} 
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/pre_interleaver}} 
+relaunch_sim
+run 9 us
+run 9 us
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_rx_chain/prbs_match}} 
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_rx_chain/Decoder}} 
+relaunch_sim
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_tx_chain/Encoder}} 
+current_wave_config {Untitled 1}
+add_wave {{/loopback_tb/u_rx_chain/Decoder}} 
+close_sim
+set_property SOURCE_SET sources_1 [get_filesets sim_1]
+close [ open C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sim_1/new/EncDecoder_sim.v w ]
+add_files -fileset sim_1 C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sim_1/new/EncDecoder_sim.v
+update_compile_order -fileset sim_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top EncDecoder_sim [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sim_1
+launch_simulation
+source EncDecoder_sim.tcl
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+relaunch_sim
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/Encoder_inst}} 
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/Decoder_inst}} 
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/Encoder_inst/event_s_input_tlast_missing}} {{/EncDecoder_sim/Encoder_inst/event_s_input_tlast_unexpected}} 
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/Decoder_inst/Decoder_U0/event_s_input_tlast_missing}} 
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/Decoder_inst/Decoder_U0/event_s_input_tlast_unexpected}} 
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/Decoder_inst/Decoder_U1/event_s_input_tlast_missing}} 
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/Decoder_inst/Decoder_U1/event_s_input_tlast_unexpected}} 
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/Decoder_inst/Decoder_U1/m_axis_stat_tdata}} 
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/Decoder_inst/Decoder_U1/m_axis_stat_tvalid}} 
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/Decoder_inst/Decoder_U1/m_axis_stat_tready}} 
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/Decoder_inst/Decoder_U0/m_axis_stat_tdata}} 
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/Decoder_inst/Decoder_U0/m_axis_stat_tvalid}} 
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/Decoder_inst/Decoder_U0/m_axis_stat_tready}} 
+run 9 us
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/Decoder_inst}} 
+relaunch_sim
+run 9 us
+run 9 us
+run 9 us
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/prbs_match}} 
+relaunch_sim
+current_wave_config {Untitled 2}
+add_wave {{/EncDecoder_sim/prbs_match}} 
+run 9 us
+run 9 us
+run 9 us
+run 9 us
+close_sim
+launch_simulation
+source EncDecoder_sim.tcl
+run 9 us
+run 20 us
+run 20 us
+run 20 us
+run 20 us
+run 20 us
+run 20 us
+run 20 us
+run 20 us
+run 20 us
+run 20 us
+run 20 us
+run 20 us
+run 20 us
+run 20 us
+run 100 us
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top loopback_tb [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source loopback_tb.tcl
+update_compile_order -fileset sim_1
+close_sim
+launch_simulation
+source loopback_tb.tcl
+run 100 us
+relaunch_sim
+current_wave_config {Untitled 5}
+add_wave {{/loopback_tb}} 
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+relaunch_sim
+current_wave_config {Untitled 5}
+add_wave {{/loopback_tb}} 
+run 10 us
+run 10 us
+close_sim
+launch_simulation
+launch_simulation
+source loopback_tb.tcl
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/prbs_gen_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Encoder_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Encoder_inst/Encoder_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Encoder_inst}} 
+relaunch_sim
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Encoder_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Encoder_inst/Encoder_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Encoder_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Sync_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Sync_inst}} 
+relaunch_sim
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Encoder_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Sync_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/DeSync_inst}} 
+relaunch_sim
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/DeSync_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Decoder_inst}} 
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/prbs_match}} 
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Decoder_inst}} 
+relaunch_sim
+run 10 us
+run 10 us
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/prbs_match}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/prbs_checker_inst}} 
+relaunch_sim
+run 10 us
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/prbs_match}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Decoder_inst/output_fifo_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/DeSync_inst/fifo_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Sync_inst/input_fifo}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Encoder_inst/input_buf}} 
+relaunch_sim
+run 10 us
+run 10 us
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/prbs_match}} 
+relaunch_sim
+relaunch_sim
+run 10 us
+run 10 us
+relaunch_sim
+run 10 us
+relaunch_sim
+relaunch_sim
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/prbs_7}} 
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/prbs_match7}} 
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/prbs_checker7_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/prbs_match7}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/prbs_match}} 
+relaunch_sim
+run 10 us
+relaunch_sim
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/prbs_7}} 
+relaunch_sim
+relaunch_sim
+run 10 us
+run 10 us
+run 10 us
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/DeSync_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Sync_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/prbs_match7}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Sync_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Sync_inst}} 
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/DeSync_inst}} 
+relaunch_sim
+run 10 us
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb}} 
+run 10 us
+current_wave_config {Untitled 6}
+add_wave {{/loopback_tb/Sync_inst}} 

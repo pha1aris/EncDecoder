@@ -3,6 +3,7 @@
 // 功能: 按列写入, 按行读出. 支持断续的AXIS valid信号.
 // ============================================================================
 module pre_interleaver_v1 #(
+    parameter DATA_WIDTH = 32,
     parameter CODEWORD_SIZE_IN_32 = 65,
     parameter NUM_CODEWORDS       = 4
 )(

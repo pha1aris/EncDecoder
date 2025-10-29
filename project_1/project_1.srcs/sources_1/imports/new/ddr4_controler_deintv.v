@@ -128,6 +128,7 @@ module ddr4_controler_deintv # (
         .ui_clk(c0_ddr4_ui_clk),
         .ui_clk_sync_rst(c0_ddr4_ui_clk_sync_rst | ~rst_n),
         .init_calib_complete(c0_init_calib_complete),
+        .start_of_frame(start_of_frame),
         .app_rdy(c0_ddr4_app_rdy),
         .app_wdf_rdy(c0_ddr4_app_wdf_rdy),
         .app_rd_data_valid(c0_ddr4_app_rd_data_valid),
