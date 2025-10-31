@@ -125,9 +125,6 @@ module tb_frame_sync_top;
         @(posedge clk) din <= 32'h11111111; //4
         @(posedge clk) din <= 32'h11111111; //5
         @(posedge clk) din <= 32'h11111111; //6
-                // din_valid = 0;
-                // #(CLK_PERIOD * 12);
-                // din_valid = 1;
 // $display("frame 1 send finish ---");
         @(posedge clk) din <= 32'hB1699558; // Word 1 (MSB of pattern)
         @(posedge clk) din <= 32'hA53333A8; // Word 2
@@ -330,6 +327,7 @@ module tb_frame_sync_top;
 // $display("frame 4 send finish ---");
         // 7. 结束
         $display("--- [TB] Test Complete. ---");
+        #1000;
         // $finish;
          $stop;
     end

@@ -20,6 +20,7 @@ module frame_synchronizer_top #(
     output reg                    frame_sync_found,
     output reg  [4:0]             wnumber_dec,
     output reg  [3:0]             flocation,
+    output reg                    sof, // ★ [NEW] 帧首 (Start of Frame) 信号
     // ★ 清理：删除无效的 slip_detected 和 slip_amount 端口
     output reg  [PARALLEL-1:0]    dout,
     output reg                    dout_valid
@@ -228,8 +229,6 @@ module frame_synchronizer_top #(
     end
   end
 
-
-
   // ---------------- 写口暂停：锁定→清空→等到下一帧首再恢复写 ----------------
   reg hold_writes_until_fs;
   always @(posedge clk or negedge rst_n) begin
@@ -437,15 +436,36 @@ module frame_synchronizer_top #(
   assign header_blocking = tag_dout | (hdr_sup_cnt != {HDR_CNT_W{1'b0}});
   assign dout_fire_gate  = consume && !header_blocking;
 
+  //  SOF 脉冲生成逻辑
+  reg header_blocking_reg;
+  always @(posedge clk or negedge rst_n) begin
+    if(!rst_n) 
+      header_blocking_reg <= 1'b1; // 默认阻塞
+    else       
+      header_blocking_reg <= header_blocking; // 延迟一拍
+  end
+  
+  // SOF 脉冲：当 'consume' 为高, 且 'header_blocking' 刚从 1 变为 0 时
+  // 这标志着头部抑制结束，第一个 payload 周期开始
+  wire sof_pulse = consume && header_blocking_reg && !header_blocking;
+
+  // ★ [REVISED] 输出寄存器 (合并了 SOF)
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       dout_valid <= 1'b0;
       dout       <= {PARALLEL{1'b0}};
-    end else if (dout_fire_gate) begin
-      dout_valid <= 1'b1;
-      dout       <= data_dout; // FWFT
+      sof        <= 1'b0; // 复位 SOF
     end else begin
-      dout_valid <= 1'b0;
+      // SOF 脉冲持续一个时钟周期
+      sof <= sof_pulse;
+      
+      // dout 和 dout_valid 逻辑
+      if (dout_fire_gate) begin
+        dout_valid <= 1'b1;
+        dout       <= data_dout; // FWFT
+      end else begin
+        dout_valid <= 1'b0;
+      end
     end
   end
 
@@ -546,4 +566,5 @@ module frame_synchronizer_top #(
 
 
 endmodule
+
 
