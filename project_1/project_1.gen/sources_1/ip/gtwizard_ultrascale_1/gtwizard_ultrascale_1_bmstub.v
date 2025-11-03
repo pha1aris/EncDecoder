@@ -7,8 +7,15 @@
 (* BLOCK_STUB = "true" *)
 module gtwizard_ultrascale_1 (
   gtwiz_userclk_tx_reset_in,
-  gtwiz_userclk_tx_active_in,
-  gtwiz_userclk_rx_active_in,
+  gtwiz_userclk_tx_srcclk_out,
+  gtwiz_userclk_tx_usrclk_out,
+  gtwiz_userclk_tx_usrclk2_out,
+  gtwiz_userclk_tx_active_out,
+  gtwiz_userclk_rx_reset_in,
+  gtwiz_userclk_rx_srcclk_out,
+  gtwiz_userclk_rx_usrclk_out,
+  gtwiz_userclk_rx_usrclk2_out,
+  gtwiz_userclk_rx_active_out,
   gtwiz_reset_clk_freerun_in,
   gtwiz_reset_all_in,
   gtwiz_reset_tx_pll_and_datapath_in,
@@ -27,16 +34,16 @@ module gtwizard_ultrascale_1 (
   rx8b10ben_in,
   rxbufreset_in,
   rxcommadeten_in,
+  rxlpmen_in,
   rxmcommaalignen_in,
   rxpcommaalignen_in,
-  rxusrclk_in,
-  rxusrclk2_in,
   tx8b10ben_in,
   txctrl0_in,
   txctrl1_in,
   txctrl2_in,
-  txusrclk_in,
-  txusrclk2_in,
+  txdiffctrl_in,
+  txpostcursor_in,
+  txprecursor_in,
   gthtxn_out,
   gthtxp_out,
   gtpowergood_out,
@@ -49,18 +56,30 @@ module gtwizard_ultrascale_1 (
   rxctrl1_out,
   rxctrl2_out,
   rxctrl3_out,
-  rxoutclk_out,
   rxpmaresetdone_out,
-  txoutclk_out,
   txpmaresetdone_out
 );
 
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]gtwiz_userclk_tx_reset_in;
   (* X_INTERFACE_IGNORE = "true" *)
-  input [0:0]gtwiz_userclk_tx_active_in;
+  output [0:0]gtwiz_userclk_tx_srcclk_out;
   (* X_INTERFACE_IGNORE = "true" *)
-  input [0:0]gtwiz_userclk_rx_active_in;
+  output [0:0]gtwiz_userclk_tx_usrclk_out;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [0:0]gtwiz_userclk_tx_usrclk2_out;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [0:0]gtwiz_userclk_tx_active_out;
+  (* X_INTERFACE_IGNORE = "true" *)
+  input [0:0]gtwiz_userclk_rx_reset_in;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [0:0]gtwiz_userclk_rx_srcclk_out;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [0:0]gtwiz_userclk_rx_usrclk_out;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [0:0]gtwiz_userclk_rx_usrclk2_out;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [0:0]gtwiz_userclk_rx_active_out;
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]gtwiz_reset_clk_freerun_in;
   (* X_INTERFACE_IGNORE = "true" *)
@@ -98,13 +117,11 @@ module gtwizard_ultrascale_1 (
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]rxcommadeten_in;
   (* X_INTERFACE_IGNORE = "true" *)
+  input [0:0]rxlpmen_in;
+  (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]rxmcommaalignen_in;
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]rxpcommaalignen_in;
-  (* X_INTERFACE_IGNORE = "true" *)
-  input [0:0]rxusrclk_in;
-  (* X_INTERFACE_IGNORE = "true" *)
-  input [0:0]rxusrclk2_in;
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]tx8b10ben_in;
   (* X_INTERFACE_IGNORE = "true" *)
@@ -114,9 +131,11 @@ module gtwizard_ultrascale_1 (
   (* X_INTERFACE_IGNORE = "true" *)
   input [7:0]txctrl2_in;
   (* X_INTERFACE_IGNORE = "true" *)
-  input [0:0]txusrclk_in;
+  input [4:0]txdiffctrl_in;
   (* X_INTERFACE_IGNORE = "true" *)
-  input [0:0]txusrclk2_in;
+  input [4:0]txpostcursor_in;
+  (* X_INTERFACE_IGNORE = "true" *)
+  input [4:0]txprecursor_in;
   (* X_INTERFACE_IGNORE = "true" *)
   output [0:0]gthtxn_out;
   (* X_INTERFACE_IGNORE = "true" *)
@@ -142,11 +161,7 @@ module gtwizard_ultrascale_1 (
   (* X_INTERFACE_IGNORE = "true" *)
   output [7:0]rxctrl3_out;
   (* X_INTERFACE_IGNORE = "true" *)
-  output [0:0]rxoutclk_out;
-  (* X_INTERFACE_IGNORE = "true" *)
   output [0:0]rxpmaresetdone_out;
-  (* X_INTERFACE_IGNORE = "true" *)
-  output [0:0]txoutclk_out;
   (* X_INTERFACE_IGNORE = "true" *)
   output [0:0]txpmaresetdone_out;
 

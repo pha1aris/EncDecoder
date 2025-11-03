@@ -59,24 +59,9 @@ create_clock -period 32.0 [get_ports gtwiz_reset_clk_freerun_in]
 # CPLL reference clock constraint (will be overridden by required constraint on IBUFDS_GTE4 input in context)
 create_clock -period 8.0 [get_ports gtrefclk0_in[0]]
 
-# Internal TX user clock constraint (will be overridden by required reference clock constraint propagated through CHANNEL primitive in context)
-create_clock -period 32.0 [get_ports txusrclk_in[0]]
-
-# External TX user clock constraint (will be overridden by required reference clock constraint propagated through CHANNEL primitive in context)
-create_clock -period 32.0 [get_ports txusrclk2_in[0]]
-
-# Internal RX user clock constraint (will be overridden by required reference clock constraint propagated through CHANNEL primitive in context)
-create_clock -period 32.0 [get_ports rxusrclk_in[0]]
-
-# External RX user clock constraint (will be overridden by required reference clock constraint propagated through CHANNEL primitive in context)
-create_clock -period 32.0 [get_ports rxusrclk2_in[0]]
-
 # DRP clock constraint for CHANNEL primitive
 create_clock -period 32.0 [get_ports drpclk_in[0]]
 
-# False path constraints
-# ----------------------------------------------------------------------------------------------------------------------
-set_false_path -to [get_cells -hierarchical -filter {NAME =~ *bit_synchronizer*inst/i_in_meta_reg}] -quiet
 
 ##set_false_path -to [get_cells -hierarchical -filter {NAME =~ *reset_synchronizer*inst/rst_in_*_reg}] -quiet
 set_false_path -to [get_pins -filter {REF_PIN_NAME=~*D} -of_objects [get_cells -hierarchical -filter {NAME =~ *reset_synchronizer*inst/rst_in_meta*}]] -quiet
@@ -90,4 +75,9 @@ set_false_path -to [get_pins -filter {REF_PIN_NAME=~*CLR} -of_objects [get_cells
 set_false_path -to [get_pins -filter {REF_PIN_NAME=~*CLR} -of_objects [get_cells -hierarchical -filter {NAME =~ *reset_synchronizer*inst/rst_in_sync2*}]] -quiet
 set_false_path -to [get_pins -filter {REF_PIN_NAME=~*CLR} -of_objects [get_cells -hierarchical -filter {NAME =~ *reset_synchronizer*inst/rst_in_sync3*}]] -quiet
 set_false_path -to [get_pins -filter {REF_PIN_NAME=~*CLR} -of_objects [get_cells -hierarchical -filter {NAME =~ *reset_synchronizer*inst/rst_in_out*}]] -quiet
+
+# False path constraints
+# ----------------------------------------------------------------------------------------------------------------------
+set_false_path -to [get_cells -hierarchical -filter {NAME =~ *gtwiz_userclk_tx_inst/*gtwiz_userclk_tx_active_*_reg}] -quiet
+set_false_path -to [get_cells -hierarchical -filter {NAME =~ *gtwiz_userclk_rx_inst/*gtwiz_userclk_rx_active_*_reg}] -quiet
 

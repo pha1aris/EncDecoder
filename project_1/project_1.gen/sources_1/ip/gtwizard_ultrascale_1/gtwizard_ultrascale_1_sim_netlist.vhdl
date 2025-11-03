@@ -2,7 +2,7 @@
 -- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
--- Date        : Thu Oct 16 17:31:24 2025
+-- Date        : Sat Nov  1 15:13:32 2025
 -- Host        : FSO-A running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
 --               c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_1/gtwizard_ultrascale_1_sim_netlist.vhdl
@@ -1728,7 +1728,7 @@ entity gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_bit_synchronizer_6 is
     \FSM_sequential_sm_reset_rx_reg[0]\ : out STD_LOGIC;
     \FSM_sequential_sm_reset_rx_reg[2]\ : out STD_LOGIC;
     E : out STD_LOGIC_VECTOR ( 0 to 0 );
-    gtwiz_userclk_rx_active_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_active_out : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_reset_clk_freerun_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     sm_reset_rx_timer_clr_reg : in STD_LOGIC;
     Q : in STD_LOGIC_VECTOR ( 2 downto 0 );
@@ -1821,7 +1821,7 @@ i_in_meta_reg: unisim.vcomponents.FDRE
         port map (
       C => gtwiz_reset_clk_freerun_in(0),
       CE => '1',
-      D => gtwiz_userclk_rx_active_in(0),
+      D => gtwiz_userclk_rx_active_out(0),
       Q => i_in_meta,
       R => '0'
     );
@@ -1915,7 +1915,7 @@ entity gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_bit_synchronizer_7 is
     gtwiz_reset_userclk_tx_active_sync : out STD_LOGIC;
     \FSM_sequential_sm_reset_tx_reg[2]\ : out STD_LOGIC;
     i_in_out_reg_0 : out STD_LOGIC;
-    gtwiz_userclk_tx_active_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_active_out : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_reset_clk_freerun_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     Q : in STD_LOGIC_VECTOR ( 2 downto 0 );
     sm_reset_tx_timer_clr_reg : in STD_LOGIC;
@@ -1975,7 +1975,7 @@ i_in_meta_reg: unisim.vcomponents.FDRE
         port map (
       C => gtwiz_reset_clk_freerun_in(0),
       CE => '1',
-      D => gtwiz_userclk_tx_active_in(0),
+      D => gtwiz_userclk_tx_active_out(0),
       Q => i_in_meta,
       R => '0'
     );
@@ -4721,11 +4721,11 @@ entity gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_channel is
     rxbyterealign_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxcdrlock_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxcommadet_out : out STD_LOGIC_VECTOR ( 0 to 0 );
-    rxoutclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_srcclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxoutclkpcs_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
-    txoutclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_srcclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     txpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     GTHE4_TXPRGDIVRESETDONE_IN : out STD_LOGIC;
     txresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
@@ -4751,29 +4751,35 @@ entity gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_channel is
     rx8b10ben_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxbufreset_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxcommadeten_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    rxlpmen_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxmcommaalignen_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxpcommaalignen_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     \gen_gtwizard_gthe4.rxprogdivreset_int\ : in STD_LOGIC;
     RXRATE : in STD_LOGIC_VECTOR ( 0 to 0 );
     \gen_gtwizard_gthe4.rxuserrdy_int\ : in STD_LOGIC;
-    rxusrclk_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    rxusrclk2_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_usrclk2_out : in STD_LOGIC_VECTOR ( 0 to 0 );
     tx8b10ben_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     GTHE4_TXPROGDIVRESET_OUT : in STD_LOGIC;
     \gen_gtwizard_gthe4.txuserrdy_int\ : in STD_LOGIC;
-    txusrclk_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    txusrclk2_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_usrclk2_out : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_userdata_tx_in : in STD_LOGIC_VECTOR ( 31 downto 0 );
     Q : in STD_LOGIC_VECTOR ( 15 downto 0 );
     txctrl0_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
     txctrl1_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
     \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3\ : in STD_LOGIC_VECTOR ( 2 downto 0 );
+    txdiffctrl_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
+    txpostcursor_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
+    txprecursor_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
     txctrl2_in : in STD_LOGIC_VECTOR ( 7 downto 0 );
     \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_4\ : in STD_LOGIC_VECTOR ( 6 downto 0 );
     lopt : in STD_LOGIC;
     lopt_1 : in STD_LOGIC;
     lopt_2 : out STD_LOGIC;
-    lopt_3 : out STD_LOGIC
+    lopt_3 : out STD_LOGIC;
+    lopt_4 : in STD_LOGIC;
+    lopt_5 : in STD_LOGIC;
+    lopt_6 : out STD_LOGIC;
+    lopt_7 : out STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_channel : entity is "gtwizard_ultrascale_v1_7_19_gthe4_channel";
@@ -5044,25 +5050,44 @@ architecture STRUCTURE of gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe
   signal \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_97\ : STD_LOGIC;
   signal \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_98\ : STD_LOGIC;
   signal \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_99\ : STD_LOGIC;
-  signal \^txoutclk_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \^gtwiz_userclk_rx_srcclk_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \^gtwiz_userclk_tx_srcclk_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \^lopt_2\ : STD_LOGIC;
+  signal \^lopt_3\ : STD_LOGIC;
   signal \xlnx_opt_\ : STD_LOGIC;
   signal \xlnx_opt__1\ : STD_LOGIC;
+  signal \xlnx_opt__2\ : STD_LOGIC;
+  signal \xlnx_opt__3\ : STD_LOGIC;
   attribute OPT_MODIFIED : string;
   attribute OPT_MODIFIED of BUFG_GT_SYNC : label is "MLO";
+  attribute OPT_MODIFIED of BUFG_GT_SYNC_1 : label is "MLO";
   attribute BOX_TYPE : string;
   attribute BOX_TYPE of \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST\ : label is "PRIMITIVE";
 begin
+  \^lopt_2\ <= lopt_4;
+  \^lopt_3\ <= lopt_5;
   \gen_gtwizard_gthe4.gtpowergood_int\ <= \^gen_gtwizard_gthe4.gtpowergood_int\;
+  gtwiz_userclk_rx_srcclk_out(0) <= \^gtwiz_userclk_rx_srcclk_out\(0);
+  gtwiz_userclk_tx_srcclk_out(0) <= \^gtwiz_userclk_tx_srcclk_out\(0);
   lopt_2 <= \xlnx_opt_\;
   lopt_3 <= \xlnx_opt__1\;
-  txoutclk_out(0) <= \^txoutclk_out\(0);
+  lopt_6 <= \xlnx_opt__2\;
+  lopt_7 <= \xlnx_opt__3\;
 BUFG_GT_SYNC: unisim.vcomponents.BUFG_GT_SYNC
      port map (
       CE => lopt,
       CESYNC => \xlnx_opt_\,
-      CLK => \^txoutclk_out\(0),
+      CLK => \^gtwiz_userclk_tx_srcclk_out\(0),
       CLR => lopt_1,
       CLRSYNC => \xlnx_opt__1\
+    );
+BUFG_GT_SYNC_1: unisim.vcomponents.BUFG_GT_SYNC
+     port map (
+      CE => \^lopt_2\,
+      CESYNC => \xlnx_opt__2\,
+      CLK => \^gtwiz_userclk_rx_srcclk_out\(0),
+      CLR => \^lopt_3\,
+      CLRSYNC => \xlnx_opt__3\
     );
 \gen_powergood_delay.intclk_rrst_n_r[4]_i_2\: unisim.vcomponents.LUT1
     generic map(
@@ -5934,7 +5959,7 @@ BUFG_GT_SYNC: unisim.vcomponents.BUFG_GT_SYNC
       RXLFPSTRESETDET => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_35\,
       RXLFPSU2LPEXITDET => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_36\,
       RXLFPSU3WAKEDET => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_37\,
-      RXLPMEN => '1',
+      RXLPMEN => rxlpmen_in(0),
       RXLPMGCHOLD => '0',
       RXLPMGCOVRDEN => '0',
       RXLPMHFHOLD => '0',
@@ -5961,7 +5986,7 @@ BUFG_GT_SYNC: unisim.vcomponents.BUFG_GT_SYNC
       RXOSINTSTROBEDONE => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_40\,
       RXOSINTSTROBESTARTED => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_41\,
       RXOSOVRDEN => '0',
-      RXOUTCLK => rxoutclk_out(0),
+      RXOUTCLK => \^gtwiz_userclk_rx_srcclk_out\(0),
       RXOUTCLKFABRIC => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_43\,
       RXOUTCLKPCS => rxoutclkpcs_out(0),
       RXOUTCLKSEL(2 downto 0) => B"010",
@@ -6015,8 +6040,8 @@ BUFG_GT_SYNC: unisim.vcomponents.BUFG_GT_SYNC
       RXSYSCLKSEL(1 downto 0) => B"00",
       RXTERMINATION => '0',
       RXUSERRDY => \gen_gtwizard_gthe4.rxuserrdy_int\,
-      RXUSRCLK => rxusrclk_in(0),
-      RXUSRCLK2 => rxusrclk2_in(0),
+      RXUSRCLK => gtwiz_userclk_rx_usrclk2_out(0),
+      RXUSRCLK2 => gtwiz_userclk_rx_usrclk2_out(0),
       RXVALID => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_62\,
       SIGVALIDCLK => '0',
       TSTIN(19 downto 0) => B"00000000000000000000",
@@ -6039,7 +6064,7 @@ BUFG_GT_SYNC: unisim.vcomponents.BUFG_GT_SYNC
       TXDCCRESET => '0',
       TXDEEMPH(1 downto 0) => B"00",
       TXDETECTRX => '0',
-      TXDIFFCTRL(4 downto 0) => B"11000",
+      TXDIFFCTRL(4 downto 0) => txdiffctrl_in(4 downto 0),
       TXDLYBYPASS => '1',
       TXDLYEN => '0',
       TXDLYHOLD => '0',
@@ -6059,7 +6084,7 @@ BUFG_GT_SYNC: unisim.vcomponents.BUFG_GT_SYNC
       TXMUXDCDEXHOLD => '0',
       TXMUXDCDORWREN => '0',
       TXONESZEROS => '0',
-      TXOUTCLK => \^txoutclk_out\(0),
+      TXOUTCLK => \^gtwiz_userclk_tx_srcclk_out\(0),
       TXOUTCLKFABRIC => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_67\,
       TXOUTCLKPCS => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_68\,
       TXOUTCLKSEL(2 downto 0) => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3\(2 downto 0),
@@ -6085,10 +6110,10 @@ BUFG_GT_SYNC: unisim.vcomponents.BUFG_GT_SYNC
       TXPMARESET => '0',
       TXPMARESETDONE => txpmaresetdone_out(0),
       TXPOLARITY => '0',
-      TXPOSTCURSOR(4 downto 0) => B"00000",
+      TXPOSTCURSOR(4 downto 0) => txpostcursor_in(4 downto 0),
       TXPRBSFORCEERR => '0',
       TXPRBSSEL(3 downto 0) => B"0000",
-      TXPRECURSOR(4 downto 0) => B"00000",
+      TXPRECURSOR(4 downto 0) => txprecursor_in(4 downto 0),
       TXPRGDIVRESETDONE => GTHE4_TXPRGDIVRESETDONE_IN,
       TXPROGDIVRESET => GTHE4_TXPROGDIVRESET_OUT,
       TXQPIBIASEN => '0',
@@ -6108,8 +6133,8 @@ BUFG_GT_SYNC: unisim.vcomponents.BUFG_GT_SYNC
       TXSYNCOUT => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_78\,
       TXSYSCLKSEL(1 downto 0) => B"00",
       TXUSERRDY => \gen_gtwizard_gthe4.txuserrdy_int\,
-      TXUSRCLK => txusrclk_in(0),
-      TXUSRCLK2 => txusrclk2_in(0)
+      TXUSRCLK => gtwiz_userclk_tx_usrclk2_out(0),
+      TXUSRCLK2 => gtwiz_userclk_tx_usrclk2_out(0)
     );
 end STRUCTURE;
 library IEEE;
@@ -6397,10 +6422,180 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
+entity gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gtwiz_userclk_rx is
+  port (
+    gtwiz_userclk_rx_usrclk2_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_active_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_srcclk_out : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_reset_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    lopt : out STD_LOGIC;
+    lopt_1 : in STD_LOGIC;
+    lopt_2 : in STD_LOGIC
+  );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gtwiz_userclk_rx : entity is "gtwizard_ultrascale_v1_7_19_gtwiz_userclk_rx";
+end gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gtwiz_userclk_rx;
+
+architecture STRUCTURE of gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gtwiz_userclk_rx is
+  signal \<const1>\ : STD_LOGIC;
+  signal \gen_gtwiz_userclk_rx_main.gtwiz_userclk_rx_active_meta\ : STD_LOGIC;
+  attribute async_reg : string;
+  attribute async_reg of \gen_gtwiz_userclk_rx_main.gtwiz_userclk_rx_active_meta\ : signal is "true";
+  signal \gen_gtwiz_userclk_rx_main.gtwiz_userclk_rx_active_sync\ : STD_LOGIC;
+  attribute async_reg of \gen_gtwiz_userclk_rx_main.gtwiz_userclk_rx_active_sync\ : signal is "true";
+  signal \^gtwiz_userclk_rx_usrclk2_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \^lopt\ : STD_LOGIC;
+  signal \^lopt_1\ : STD_LOGIC;
+  attribute BOX_TYPE : string;
+  attribute BOX_TYPE of \gen_gtwiz_userclk_rx_main.bufg_gt_usrclk_inst\ : label is "PRIMITIVE";
+  attribute OPT_MODIFIED : string;
+  attribute OPT_MODIFIED of \gen_gtwiz_userclk_rx_main.bufg_gt_usrclk_inst\ : label is "MLO";
+  attribute ASYNC_REG_boolean : boolean;
+  attribute ASYNC_REG_boolean of \gen_gtwiz_userclk_rx_main.gtwiz_userclk_rx_active_meta_reg\ : label is std.standard.true;
+  attribute KEEP : string;
+  attribute KEEP of \gen_gtwiz_userclk_rx_main.gtwiz_userclk_rx_active_meta_reg\ : label is "yes";
+  attribute ASYNC_REG_boolean of \gen_gtwiz_userclk_rx_main.gtwiz_userclk_rx_active_sync_reg\ : label is std.standard.true;
+  attribute KEEP of \gen_gtwiz_userclk_rx_main.gtwiz_userclk_rx_active_sync_reg\ : label is "yes";
+begin
+  \^lopt\ <= lopt_1;
+  \^lopt_1\ <= lopt_2;
+  gtwiz_userclk_rx_active_out(0) <= \gen_gtwiz_userclk_rx_main.gtwiz_userclk_rx_active_sync\;
+  gtwiz_userclk_rx_usrclk2_out(0) <= \^gtwiz_userclk_rx_usrclk2_out\(0);
+  lopt <= \<const1>\;
+VCC: unisim.vcomponents.VCC
+     port map (
+      P => \<const1>\
+    );
+\gen_gtwiz_userclk_rx_main.bufg_gt_usrclk_inst\: unisim.vcomponents.BUFG_GT
+    generic map(
+      SIM_DEVICE => "ULTRASCALE",
+      STARTUP_SYNC => "FALSE"
+    )
+        port map (
+      CE => \^lopt\,
+      CEMASK => '0',
+      CLR => \^lopt_1\,
+      CLRMASK => '0',
+      DIV(2 downto 0) => B"000",
+      I => gtwiz_userclk_rx_srcclk_out(0),
+      O => \^gtwiz_userclk_rx_usrclk2_out\(0)
+    );
+\gen_gtwiz_userclk_rx_main.gtwiz_userclk_rx_active_meta_reg\: unisim.vcomponents.FDCE
+    generic map(
+      INIT => '0'
+    )
+        port map (
+      C => \^gtwiz_userclk_rx_usrclk2_out\(0),
+      CE => '1',
+      CLR => gtwiz_userclk_rx_reset_in(0),
+      D => '1',
+      Q => \gen_gtwiz_userclk_rx_main.gtwiz_userclk_rx_active_meta\
+    );
+\gen_gtwiz_userclk_rx_main.gtwiz_userclk_rx_active_sync_reg\: unisim.vcomponents.FDCE
+    generic map(
+      INIT => '0'
+    )
+        port map (
+      C => \^gtwiz_userclk_rx_usrclk2_out\(0),
+      CE => '1',
+      CLR => gtwiz_userclk_rx_reset_in(0),
+      D => \gen_gtwiz_userclk_rx_main.gtwiz_userclk_rx_active_meta\,
+      Q => \gen_gtwiz_userclk_rx_main.gtwiz_userclk_rx_active_sync\
+    );
+end STRUCTURE;
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+library UNISIM;
+use UNISIM.VCOMPONENTS.ALL;
+entity gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gtwiz_userclk_tx is
+  port (
+    gtwiz_userclk_tx_usrclk2_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_active_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_srcclk_out : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_reset_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    lopt : out STD_LOGIC;
+    lopt_1 : in STD_LOGIC;
+    lopt_2 : in STD_LOGIC
+  );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gtwiz_userclk_tx : entity is "gtwizard_ultrascale_v1_7_19_gtwiz_userclk_tx";
+end gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gtwiz_userclk_tx;
+
+architecture STRUCTURE of gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gtwiz_userclk_tx is
+  signal \<const1>\ : STD_LOGIC;
+  signal \gen_gtwiz_userclk_tx_main.gtwiz_userclk_tx_active_meta\ : STD_LOGIC;
+  attribute async_reg : string;
+  attribute async_reg of \gen_gtwiz_userclk_tx_main.gtwiz_userclk_tx_active_meta\ : signal is "true";
+  signal \gen_gtwiz_userclk_tx_main.gtwiz_userclk_tx_active_sync\ : STD_LOGIC;
+  attribute async_reg of \gen_gtwiz_userclk_tx_main.gtwiz_userclk_tx_active_sync\ : signal is "true";
+  signal \^gtwiz_userclk_tx_usrclk2_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \^lopt\ : STD_LOGIC;
+  signal \^lopt_1\ : STD_LOGIC;
+  attribute BOX_TYPE : string;
+  attribute BOX_TYPE of \gen_gtwiz_userclk_tx_main.bufg_gt_usrclk_inst\ : label is "PRIMITIVE";
+  attribute OPT_MODIFIED : string;
+  attribute OPT_MODIFIED of \gen_gtwiz_userclk_tx_main.bufg_gt_usrclk_inst\ : label is "MLO";
+  attribute ASYNC_REG_boolean : boolean;
+  attribute ASYNC_REG_boolean of \gen_gtwiz_userclk_tx_main.gtwiz_userclk_tx_active_meta_reg\ : label is std.standard.true;
+  attribute KEEP : string;
+  attribute KEEP of \gen_gtwiz_userclk_tx_main.gtwiz_userclk_tx_active_meta_reg\ : label is "yes";
+  attribute ASYNC_REG_boolean of \gen_gtwiz_userclk_tx_main.gtwiz_userclk_tx_active_sync_reg\ : label is std.standard.true;
+  attribute KEEP of \gen_gtwiz_userclk_tx_main.gtwiz_userclk_tx_active_sync_reg\ : label is "yes";
+begin
+  \^lopt\ <= lopt_1;
+  \^lopt_1\ <= lopt_2;
+  gtwiz_userclk_tx_active_out(0) <= \gen_gtwiz_userclk_tx_main.gtwiz_userclk_tx_active_sync\;
+  gtwiz_userclk_tx_usrclk2_out(0) <= \^gtwiz_userclk_tx_usrclk2_out\(0);
+  lopt <= \<const1>\;
+VCC: unisim.vcomponents.VCC
+     port map (
+      P => \<const1>\
+    );
+\gen_gtwiz_userclk_tx_main.bufg_gt_usrclk_inst\: unisim.vcomponents.BUFG_GT
+    generic map(
+      SIM_DEVICE => "ULTRASCALE",
+      STARTUP_SYNC => "FALSE"
+    )
+        port map (
+      CE => \^lopt\,
+      CEMASK => '0',
+      CLR => \^lopt_1\,
+      CLRMASK => '0',
+      DIV(2 downto 0) => B"000",
+      I => gtwiz_userclk_tx_srcclk_out(0),
+      O => \^gtwiz_userclk_tx_usrclk2_out\(0)
+    );
+\gen_gtwiz_userclk_tx_main.gtwiz_userclk_tx_active_meta_reg\: unisim.vcomponents.FDCE
+    generic map(
+      INIT => '0'
+    )
+        port map (
+      C => \^gtwiz_userclk_tx_usrclk2_out\(0),
+      CE => '1',
+      CLR => gtwiz_userclk_tx_reset_in(0),
+      D => '1',
+      Q => \gen_gtwiz_userclk_tx_main.gtwiz_userclk_tx_active_meta\
+    );
+\gen_gtwiz_userclk_tx_main.gtwiz_userclk_tx_active_sync_reg\: unisim.vcomponents.FDCE
+    generic map(
+      INIT => '0'
+    )
+        port map (
+      C => \^gtwiz_userclk_tx_usrclk2_out\(0),
+      CE => '1',
+      CLR => gtwiz_userclk_tx_reset_in(0),
+      D => \gen_gtwiz_userclk_tx_main.gtwiz_userclk_tx_active_meta\,
+      Q => \gen_gtwiz_userclk_tx_main.gtwiz_userclk_tx_active_sync\
+    );
+end STRUCTURE;
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+library UNISIM;
+use UNISIM.VCOMPONENTS.ALL;
 entity gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_reset_inv_synchronizer is
   port (
     gtwiz_reset_rx_done_out : out STD_LOGIC_VECTOR ( 0 to 0 );
-    rxusrclk2_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_usrclk2_out : in STD_LOGIC_VECTOR ( 0 to 0 );
     rst_in_sync2_reg_0 : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -6434,7 +6629,7 @@ rst_in_meta_reg: unisim.vcomponents.FDCE
       INIT => '0'
     )
         port map (
-      C => rxusrclk2_in(0),
+      C => gtwiz_userclk_rx_usrclk2_out(0),
       CE => '1',
       CLR => \rst_in_out_i_1__0_n_0\,
       D => '1',
@@ -6453,7 +6648,7 @@ rst_in_out_reg: unisim.vcomponents.FDCE
       INIT => '0'
     )
         port map (
-      C => rxusrclk2_in(0),
+      C => gtwiz_userclk_rx_usrclk2_out(0),
       CE => '1',
       CLR => \rst_in_out_i_1__0_n_0\,
       D => rst_in_sync3,
@@ -6464,7 +6659,7 @@ rst_in_sync1_reg: unisim.vcomponents.FDCE
       INIT => '0'
     )
         port map (
-      C => rxusrclk2_in(0),
+      C => gtwiz_userclk_rx_usrclk2_out(0),
       CE => '1',
       CLR => \rst_in_out_i_1__0_n_0\,
       D => rst_in_meta,
@@ -6475,7 +6670,7 @@ rst_in_sync2_reg: unisim.vcomponents.FDCE
       INIT => '0'
     )
         port map (
-      C => rxusrclk2_in(0),
+      C => gtwiz_userclk_rx_usrclk2_out(0),
       CE => '1',
       CLR => \rst_in_out_i_1__0_n_0\,
       D => rst_in_sync1,
@@ -6486,7 +6681,7 @@ rst_in_sync3_reg: unisim.vcomponents.FDCE
       INIT => '0'
     )
         port map (
-      C => rxusrclk2_in(0),
+      C => gtwiz_userclk_rx_usrclk2_out(0),
       CE => '1',
       CLR => \rst_in_out_i_1__0_n_0\,
       D => rst_in_sync2,
@@ -6500,7 +6695,7 @@ use UNISIM.VCOMPONENTS.ALL;
 entity gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_reset_inv_synchronizer_17 is
   port (
     gtwiz_reset_tx_done_out : out STD_LOGIC_VECTOR ( 0 to 0 );
-    txusrclk2_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_usrclk2_out : in STD_LOGIC_VECTOR ( 0 to 0 );
     rst_in_sync2_reg_0 : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
@@ -6534,7 +6729,7 @@ rst_in_meta_reg: unisim.vcomponents.FDCE
       INIT => '0'
     )
         port map (
-      C => txusrclk2_in(0),
+      C => gtwiz_userclk_tx_usrclk2_out(0),
       CE => '1',
       CLR => rst_in_out_i_1_n_0,
       D => '1',
@@ -6553,7 +6748,7 @@ rst_in_out_reg: unisim.vcomponents.FDCE
       INIT => '0'
     )
         port map (
-      C => txusrclk2_in(0),
+      C => gtwiz_userclk_tx_usrclk2_out(0),
       CE => '1',
       CLR => rst_in_out_i_1_n_0,
       D => rst_in_sync3,
@@ -6564,7 +6759,7 @@ rst_in_sync1_reg: unisim.vcomponents.FDCE
       INIT => '0'
     )
         port map (
-      C => txusrclk2_in(0),
+      C => gtwiz_userclk_tx_usrclk2_out(0),
       CE => '1',
       CLR => rst_in_out_i_1_n_0,
       D => rst_in_meta,
@@ -6575,7 +6770,7 @@ rst_in_sync2_reg: unisim.vcomponents.FDCE
       INIT => '0'
     )
         port map (
-      C => txusrclk2_in(0),
+      C => gtwiz_userclk_tx_usrclk2_out(0),
       CE => '1',
       CLR => rst_in_out_i_1_n_0,
       D => rst_in_sync1,
@@ -6586,7 +6781,7 @@ rst_in_sync3_reg: unisim.vcomponents.FDCE
       INIT => '0'
     )
         port map (
-      C => txusrclk2_in(0),
+      C => gtwiz_userclk_tx_usrclk2_out(0),
       CE => '1',
       CLR => rst_in_out_i_1_n_0,
       D => rst_in_sync2,
@@ -7796,11 +7991,11 @@ entity gtwizard_ultrascale_1_gthe4_channel_wrapper is
     rxbyterealign_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxcdrlock_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxcommadet_out : out STD_LOGIC_VECTOR ( 0 to 0 );
-    rxoutclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_srcclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxoutclkpcs_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
-    txoutclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_srcclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     txpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     GTHE4_TXPRGDIVRESETDONE_IN : out STD_LOGIC;
     txresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
@@ -7826,29 +8021,35 @@ entity gtwizard_ultrascale_1_gthe4_channel_wrapper is
     rx8b10ben_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxbufreset_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxcommadeten_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    rxlpmen_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxmcommaalignen_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxpcommaalignen_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     \gen_gtwizard_gthe4.rxprogdivreset_int\ : in STD_LOGIC;
     RXRATE : in STD_LOGIC_VECTOR ( 0 to 0 );
     \gen_gtwizard_gthe4.rxuserrdy_int\ : in STD_LOGIC;
-    rxusrclk_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    rxusrclk2_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_usrclk2_out : in STD_LOGIC_VECTOR ( 0 to 0 );
     tx8b10ben_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     GTHE4_TXPROGDIVRESET_OUT : in STD_LOGIC;
     \gen_gtwizard_gthe4.txuserrdy_int\ : in STD_LOGIC;
-    txusrclk_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    txusrclk2_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_usrclk2_out : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_userdata_tx_in : in STD_LOGIC_VECTOR ( 31 downto 0 );
     Q : in STD_LOGIC_VECTOR ( 15 downto 0 );
     txctrl0_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
     txctrl1_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
     \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_2\ : in STD_LOGIC_VECTOR ( 2 downto 0 );
+    txdiffctrl_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
+    txpostcursor_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
+    txprecursor_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
     txctrl2_in : in STD_LOGIC_VECTOR ( 7 downto 0 );
     \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3\ : in STD_LOGIC_VECTOR ( 6 downto 0 );
     lopt : in STD_LOGIC;
     lopt_1 : in STD_LOGIC;
     lopt_2 : out STD_LOGIC;
-    lopt_3 : out STD_LOGIC
+    lopt_3 : out STD_LOGIC;
+    lopt_4 : in STD_LOGIC;
+    lopt_5 : in STD_LOGIC;
+    lopt_6 : out STD_LOGIC;
+    lopt_7 : out STD_LOGIC
   );
 end gtwizard_ultrascale_1_gthe4_channel_wrapper;
 
@@ -7882,12 +8083,20 @@ channel_inst: entity work.gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe
       gthtxn_out(0) => gthtxn_out(0),
       gthtxp_out(0) => gthtxp_out(0),
       gtrefclk0_in(0) => gtrefclk0_in(0),
+      gtwiz_userclk_rx_srcclk_out(0) => gtwiz_userclk_rx_srcclk_out(0),
+      gtwiz_userclk_rx_usrclk2_out(0) => gtwiz_userclk_rx_usrclk2_out(0),
+      gtwiz_userclk_tx_srcclk_out(0) => gtwiz_userclk_tx_srcclk_out(0),
+      gtwiz_userclk_tx_usrclk2_out(0) => gtwiz_userclk_tx_usrclk2_out(0),
       gtwiz_userdata_rx_out(31 downto 0) => gtwiz_userdata_rx_out(31 downto 0),
       gtwiz_userdata_tx_in(31 downto 0) => gtwiz_userdata_tx_in(31 downto 0),
       lopt => lopt,
       lopt_1 => lopt_1,
       lopt_2 => lopt_2,
       lopt_3 => lopt_3,
+      lopt_4 => lopt_4,
+      lopt_5 => lopt_5,
+      lopt_6 => lopt_6,
+      lopt_7 => lopt_7,
       rx8b10ben_in(0) => rx8b10ben_in(0),
       rxbufreset_in(0) => rxbufreset_in(0),
       rxbufstatus_out(2 downto 0) => rxbufstatus_out(2 downto 0),
@@ -7901,23 +8110,21 @@ channel_inst: entity work.gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe
       rxctrl1_out(15 downto 0) => rxctrl1_out(15 downto 0),
       rxctrl2_out(7 downto 0) => rxctrl2_out(7 downto 0),
       rxctrl3_out(7 downto 0) => rxctrl3_out(7 downto 0),
+      rxlpmen_in(0) => rxlpmen_in(0),
       rxmcommaalignen_in(0) => rxmcommaalignen_in(0),
-      rxoutclk_out(0) => rxoutclk_out(0),
       rxoutclkpcs_out(0) => rxoutclkpcs_out(0),
       rxpcommaalignen_in(0) => rxpcommaalignen_in(0),
       rxpmaresetdone_out(0) => rxpmaresetdone_out(0),
       rxresetdone_out(0) => rxresetdone_out(0),
-      rxusrclk2_in(0) => rxusrclk2_in(0),
-      rxusrclk_in(0) => rxusrclk_in(0),
       tx8b10ben_in(0) => tx8b10ben_in(0),
       txctrl0_in(15 downto 0) => txctrl0_in(15 downto 0),
       txctrl1_in(15 downto 0) => txctrl1_in(15 downto 0),
       txctrl2_in(7 downto 0) => txctrl2_in(7 downto 0),
-      txoutclk_out(0) => txoutclk_out(0),
+      txdiffctrl_in(4 downto 0) => txdiffctrl_in(4 downto 0),
       txpmaresetdone_out(0) => txpmaresetdone_out(0),
-      txresetdone_out(0) => txresetdone_out(0),
-      txusrclk2_in(0) => txusrclk2_in(0),
-      txusrclk_in(0) => txusrclk_in(0)
+      txpostcursor_in(4 downto 0) => txpostcursor_in(4 downto 0),
+      txprecursor_in(4 downto 0) => txprecursor_in(4 downto 0),
+      txresetdone_out(0) => txresetdone_out(0)
     );
 end STRUCTURE;
 library IEEE;
@@ -9583,16 +9790,16 @@ entity gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gtwiz_reset is
     \gen_gtwizard_gthe4.delay_pwrgood_gtrxreset_int\ : out STD_LOGIC;
     RESET_IN : out STD_LOGIC;
     gtpowergood_out : in STD_LOGIC_VECTOR ( 0 to 0 );
-    gtwiz_userclk_tx_active_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_active_out : in STD_LOGIC_VECTOR ( 0 to 0 );
     in0 : in STD_LOGIC;
-    gtwiz_userclk_rx_active_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_active_out : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxcdrlock_out : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_reset_clk_freerun_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_reset_all_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_reset_tx_datapath_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rst_in0 : in STD_LOGIC;
-    txusrclk2_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    rxusrclk2_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_usrclk2_out : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_usrclk2_out : in STD_LOGIC_VECTOR ( 0 to 0 );
     \gen_gtwizard_gthe4.gtpowergood_int\ : in STD_LOGIC;
     \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync\ : in STD_LOGIC;
     gtwiz_reset_tx_pll_and_datapath_in : in STD_LOGIC_VECTOR ( 0 to 0 );
@@ -10095,7 +10302,7 @@ bit_synchronizer_gtwiz_reset_userclk_rx_active_inst: entity work.gtwizard_ultras
       gtwiz_reset_rx_any_sync => gtwiz_reset_rx_any_sync,
       gtwiz_reset_rx_datapath_dly => gtwiz_reset_rx_datapath_dly,
       gtwiz_reset_rx_pll_and_datapath_dly => gtwiz_reset_rx_pll_and_datapath_dly,
-      gtwiz_userclk_rx_active_in(0) => gtwiz_userclk_rx_active_in(0),
+      gtwiz_userclk_rx_active_out(0) => gtwiz_userclk_rx_active_out(0),
       plllock_rx_sync => plllock_rx_sync,
       sm_reset_rx_pll_timer_sat => sm_reset_rx_pll_timer_sat,
       sm_reset_rx_timer_clr_reg => bit_synchronizer_plllock_rx_inst_n_2,
@@ -10112,7 +10319,7 @@ bit_synchronizer_gtwiz_reset_userclk_tx_active_inst: entity work.gtwizard_ultras
       \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync\ => \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync\,
       gtwiz_reset_clk_freerun_in(0) => gtwiz_reset_clk_freerun_in(0),
       gtwiz_reset_userclk_tx_active_sync => gtwiz_reset_userclk_tx_active_sync,
-      gtwiz_userclk_tx_active_in(0) => gtwiz_userclk_tx_active_in(0),
+      gtwiz_userclk_tx_active_out(0) => gtwiz_userclk_tx_active_out(0),
       i_in_out_reg_0 => bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_2,
       plllock_tx_sync => plllock_tx_sync,
       sm_reset_tx_pll_timer_sat => sm_reset_tx_pll_timer_sat,
@@ -10394,14 +10601,14 @@ reset_synchronizer_gtwiz_reset_tx_pll_and_datapath_inst: entity work.gtwizard_ul
 reset_synchronizer_rx_done_inst: entity work.gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_reset_inv_synchronizer
      port map (
       gtwiz_reset_rx_done_out(0) => gtwiz_reset_rx_done_out(0),
-      rst_in_sync2_reg_0 => gtwiz_reset_rx_done_int_reg_n_0,
-      rxusrclk2_in(0) => rxusrclk2_in(0)
+      gtwiz_userclk_rx_usrclk2_out(0) => gtwiz_userclk_rx_usrclk2_out(0),
+      rst_in_sync2_reg_0 => gtwiz_reset_rx_done_int_reg_n_0
     );
 reset_synchronizer_tx_done_inst: entity work.gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_reset_inv_synchronizer_17
      port map (
       gtwiz_reset_tx_done_out(0) => gtwiz_reset_tx_done_out(0),
-      rst_in_sync2_reg_0 => gtwiz_reset_tx_done_int_reg_n_0,
-      txusrclk2_in(0) => txusrclk2_in(0)
+      gtwiz_userclk_tx_usrclk2_out(0) => gtwiz_userclk_tx_usrclk2_out(0),
+      rst_in_sync2_reg_0 => gtwiz_reset_tx_done_int_reg_n_0
     );
 reset_synchronizer_txprogdivreset_inst: entity work.gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_reset_synchronizer_18
      port map (
@@ -12013,21 +12220,19 @@ entity gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_tx is
     GTHE4_CPLLLOCK_IN : in STD_LOGIC;
     USER_TXPROGDIVRESET_IN : in STD_LOGIC;
     GTHE4_TXPRGDIVRESETDONE_IN : in STD_LOGIC;
-    txoutclk_out : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_srcclk_out : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_userclk_tx_reset_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     drpclk_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     \progdiv_cfg_store_reg[15]_0\ : in STD_LOGIC_VECTOR ( 15 downto 0 );
     cal_on_tx_drdy : in STD_LOGIC;
-    lopt : out STD_LOGIC;
-    lopt_1 : in STD_LOGIC;
-    lopt_2 : in STD_LOGIC
+    lopt : in STD_LOGIC;
+    lopt_1 : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_tx : entity is "gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_tx";
 end gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_tx;
 
 architecture STRUCTURE of gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_tx is
-  signal \<const1>\ : STD_LOGIC;
   signal U_TXOUTCLK_FREQ_COUNTER_n_0 : STD_LOGIC;
   signal U_TXOUTCLK_FREQ_COUNTER_n_1 : STD_LOGIC;
   signal U_TXOUTCLK_FREQ_COUNTER_n_10 : STD_LOGIC;
@@ -12173,8 +12378,6 @@ architecture STRUCTURE of gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe
   signal dwe_i_1_n_0 : STD_LOGIC;
   signal freq_counter_rst_reg_n_0 : STD_LOGIC;
   signal \^in0\ : STD_LOGIC;
-  signal \^lopt\ : STD_LOGIC;
-  signal \^lopt_1\ : STD_LOGIC;
   signal mask_user_in_i_1_n_0 : STD_LOGIC;
   signal mask_user_in_reg_n_0 : STD_LOGIC;
   signal p_0_in0_in : STD_LOGIC;
@@ -12447,14 +12650,11 @@ architecture STRUCTURE of gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe
   attribute SOFT_HLUTNM of \wait_ctr[24]_i_6\ : label is "soft_lutpair36";
   attribute SOFT_HLUTNM of wr_i_1 : label is "soft_lutpair47";
 begin
-  \^lopt\ <= lopt_1;
-  \^lopt_1\ <= lopt_2;
   cal_on_tx_drpen_out <= \^cal_on_tx_drpen_out\;
   cal_on_tx_drpwe_out <= \^cal_on_tx_drpwe_out\;
   cpllpd_int_reg_0 <= \^cpllpd_int_reg_0\;
   cpllreset_int_reg_0 <= \^cpllreset_int_reg_0\;
   in0 <= \^in0\;
-  lopt <= \<const1>\;
 USER_CPLLLOCK_OUT_reg: unisim.vcomponents.FDRE
      port map (
       C => drpclk_in(0),
@@ -12520,10 +12720,6 @@ U_TXOUTCLK_FREQ_COUNTER: entity work.gtwizard_ultrascale_1_gtwizard_ultrascale_v
       rst_in_out_reg_0 => U_TXOUTCLK_FREQ_COUNTER_n_32,
       \state_reg[1]_0\ => freq_counter_rst_reg_n_0,
       txoutclkmon => txoutclkmon
-    );
-VCC: unisim.vcomponents.VCC
-     port map (
-      P => \<const1>\
     );
 bit_synchronizer_cplllock_inst: entity work.gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_bit_synchronizer_22
      port map (
@@ -12594,12 +12790,12 @@ bufg_gt_txoutclkmon_inst: unisim.vcomponents.BUFG_GT
       STARTUP_SYNC => "FALSE"
     )
         port map (
-      CE => \^lopt\,
+      CE => lopt,
       CEMASK => '1',
-      CLR => \^lopt_1\,
+      CLR => lopt_1,
       CLRMASK => '1',
       DIV(2 downto 0) => B"000",
-      I => txoutclk_out(0),
+      I => gtwiz_userclk_tx_srcclk_out(0),
       O => txoutclkmon
     );
 cal_fail_store_i_4: unisim.vcomponents.LUT3
@@ -15884,15 +16080,14 @@ entity gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal is
     GTHE4_CPLLLOCK_IN : in STD_LOGIC;
     USER_TXPROGDIVRESET_IN : in STD_LOGIC;
     GTHE4_TXPRGDIVRESETDONE_IN : in STD_LOGIC;
-    txoutclk_out : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_srcclk_out : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_userclk_tx_reset_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     drpclk_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     GTHE4_CHANNEL_DRPDO_IN : in STD_LOGIC_VECTOR ( 15 downto 0 );
     \gen_gtwizard_gthe4.drprdy_int\ : in STD_LOGIC;
     RESET_IN : in STD_LOGIC;
-    lopt : out STD_LOGIC;
-    lopt_1 : in STD_LOGIC;
-    lopt_2 : in STD_LOGIC
+    lopt : in STD_LOGIC;
+    lopt_1 : in STD_LOGIC
   );
   attribute ORIG_REF_NAME : string;
   attribute ORIG_REF_NAME of gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal : entity is "gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal";
@@ -15947,13 +16142,12 @@ gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_tx_i: entity work.gtwizard_ultrascale
       \di_reg[15]_0\(15 downto 0) => cal_on_tx_drpdi_out(15 downto 0),
       drpclk_in(0) => drpclk_in(0),
       gtwiz_userclk_tx_reset_in(0) => gtwiz_userclk_tx_reset_in(0),
+      gtwiz_userclk_tx_srcclk_out(0) => gtwiz_userclk_tx_srcclk_out(0),
       in0 => in0,
       lopt => lopt,
       lopt_1 => lopt_1,
-      lopt_2 => lopt_2,
       \progdiv_cfg_store_reg[15]_0\(15 downto 0) => cal_on_tx_dout(15 downto 0),
-      rst_in0 => rst_in0,
-      txoutclk_out(0) => txoutclk_out(0)
+      rst_in0 => rst_in0
     );
 reset_synchronizer_resetin_rx_inst: entity work.gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_reset_synchronizer_20
      port map (
@@ -15977,9 +16171,9 @@ entity gtwizard_ultrascale_1_gtwizard_gthe4 is
     rxbyteisaligned_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxbyterealign_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxcommadet_out : out STD_LOGIC_VECTOR ( 0 to 0 );
-    rxoutclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_srcclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
-    txoutclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_srcclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     txpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_userdata_rx_out : out STD_LOGIC_VECTOR ( 31 downto 0 );
     rxctrl0_out : out STD_LOGIC_VECTOR ( 15 downto 0 );
@@ -15988,7 +16182,11 @@ entity gtwizard_ultrascale_1_gtwizard_gthe4 is
     rxbufstatus_out : out STD_LOGIC_VECTOR ( 2 downto 0 );
     rxctrl2_out : out STD_LOGIC_VECTOR ( 7 downto 0 );
     rxctrl3_out : out STD_LOGIC_VECTOR ( 7 downto 0 );
+    gtwiz_userclk_rx_usrclk2_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_usrclk2_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     gtpowergood_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_active_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_active_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_reset_tx_done_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_reset_rx_cdr_stable_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_reset_rx_done_out : out STD_LOGIC_VECTOR ( 0 to 0 );
@@ -15999,20 +16197,19 @@ entity gtwizard_ultrascale_1_gtwizard_gthe4 is
     rx8b10ben_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxbufreset_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxcommadeten_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    rxlpmen_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxmcommaalignen_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxpcommaalignen_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    rxusrclk_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    rxusrclk2_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     tx8b10ben_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    txusrclk_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    txusrclk2_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_userdata_tx_in : in STD_LOGIC_VECTOR ( 31 downto 0 );
     txctrl0_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
     txctrl1_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
+    txdiffctrl_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
+    txpostcursor_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
+    txprecursor_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
     txctrl2_in : in STD_LOGIC_VECTOR ( 7 downto 0 );
     gtwiz_userclk_tx_reset_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    gtwiz_userclk_tx_active_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    gtwiz_userclk_rx_active_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_reset_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_reset_clk_freerun_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_reset_all_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_reset_tx_datapath_in : in STD_LOGIC_VECTOR ( 0 to 0 );
@@ -16053,14 +16250,27 @@ architecture STRUCTURE of gtwizard_ultrascale_1_gtwizard_gthe4 is
   signal \gen_gtwizard_gthe4.txprogdivreset_int\ : STD_LOGIC;
   signal \gen_gtwizard_gthe4.txuserrdy_int\ : STD_LOGIC;
   signal \^gtpowergood_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \^gtwiz_userclk_rx_active_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \^gtwiz_userclk_rx_srcclk_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \^gtwiz_userclk_rx_usrclk2_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \^gtwiz_userclk_tx_active_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \^gtwiz_userclk_tx_srcclk_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \^gtwiz_userclk_tx_usrclk2_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
   signal lopt : STD_LOGIC;
   signal lopt_1 : STD_LOGIC;
   signal lopt_2 : STD_LOGIC;
+  signal lopt_3 : STD_LOGIC;
+  signal lopt_4 : STD_LOGIC;
+  signal lopt_5 : STD_LOGIC;
   signal rst_in0 : STD_LOGIC;
-  signal \^txoutclk_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
 begin
   gtpowergood_out(0) <= \^gtpowergood_out\(0);
-  txoutclk_out(0) <= \^txoutclk_out\(0);
+  gtwiz_userclk_rx_active_out(0) <= \^gtwiz_userclk_rx_active_out\(0);
+  gtwiz_userclk_rx_srcclk_out(0) <= \^gtwiz_userclk_rx_srcclk_out\(0);
+  gtwiz_userclk_rx_usrclk2_out(0) <= \^gtwiz_userclk_rx_usrclk2_out\(0);
+  gtwiz_userclk_tx_active_out(0) <= \^gtwiz_userclk_tx_active_out\(0);
+  gtwiz_userclk_tx_srcclk_out(0) <= \^gtwiz_userclk_tx_srcclk_out\(0);
+  gtwiz_userclk_tx_usrclk2_out(0) <= \^gtwiz_userclk_tx_usrclk2_out\(0);
 \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst\: entity work.gtwizard_ultrascale_1_gthe4_channel_wrapper
      port map (
       D(15 downto 0) => \gen_gtwizard_gthe4.drpdo_int\(15 downto 0),
@@ -16089,12 +16299,20 @@ begin
       gthtxn_out(0) => gthtxn_out(0),
       gthtxp_out(0) => gthtxp_out(0),
       gtrefclk0_in(0) => gtrefclk0_in(0),
+      gtwiz_userclk_rx_srcclk_out(0) => \^gtwiz_userclk_rx_srcclk_out\(0),
+      gtwiz_userclk_rx_usrclk2_out(0) => \^gtwiz_userclk_rx_usrclk2_out\(0),
+      gtwiz_userclk_tx_srcclk_out(0) => \^gtwiz_userclk_tx_srcclk_out\(0),
+      gtwiz_userclk_tx_usrclk2_out(0) => \^gtwiz_userclk_tx_usrclk2_out\(0),
       gtwiz_userdata_rx_out(31 downto 0) => gtwiz_userdata_rx_out(31 downto 0),
       gtwiz_userdata_tx_in(31 downto 0) => gtwiz_userdata_tx_in(31 downto 0),
       lopt => lopt,
       lopt_1 => gtwiz_userclk_tx_reset_in(0),
       lopt_2 => lopt_1,
       lopt_3 => lopt_2,
+      lopt_4 => lopt_3,
+      lopt_5 => gtwiz_userclk_rx_reset_in(0),
+      lopt_6 => lopt_4,
+      lopt_7 => lopt_5,
       rx8b10ben_in(0) => rx8b10ben_in(0),
       rxbufreset_in(0) => rxbufreset_in(0),
       rxbufstatus_out(2 downto 0) => rxbufstatus_out(2 downto 0),
@@ -16108,23 +16326,21 @@ begin
       rxctrl1_out(15 downto 0) => rxctrl1_out(15 downto 0),
       rxctrl2_out(7 downto 0) => rxctrl2_out(7 downto 0),
       rxctrl3_out(7 downto 0) => rxctrl3_out(7 downto 0),
+      rxlpmen_in(0) => rxlpmen_in(0),
       rxmcommaalignen_in(0) => rxmcommaalignen_in(0),
-      rxoutclk_out(0) => rxoutclk_out(0),
       rxoutclkpcs_out(0) => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_10\,
       rxpcommaalignen_in(0) => rxpcommaalignen_in(0),
       rxpmaresetdone_out(0) => rxpmaresetdone_out(0),
       rxresetdone_out(0) => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_12\,
-      rxusrclk2_in(0) => rxusrclk2_in(0),
-      rxusrclk_in(0) => rxusrclk_in(0),
       tx8b10ben_in(0) => tx8b10ben_in(0),
       txctrl0_in(15 downto 0) => txctrl0_in(15 downto 0),
       txctrl1_in(15 downto 0) => txctrl1_in(15 downto 0),
       txctrl2_in(7 downto 0) => txctrl2_in(7 downto 0),
-      txoutclk_out(0) => \^txoutclk_out\(0),
+      txdiffctrl_in(4 downto 0) => txdiffctrl_in(4 downto 0),
       txpmaresetdone_out(0) => txpmaresetdone_out(0),
-      txresetdone_out(0) => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_16\,
-      txusrclk2_in(0) => txusrclk2_in(0),
-      txusrclk_in(0) => txusrclk_in(0)
+      txpostcursor_in(4 downto 0) => txpostcursor_in(4 downto 0),
+      txprecursor_in(4 downto 0) => txprecursor_in(4 downto 0),
+      txresetdone_out(0) => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_16\
     );
 \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst\: entity work.gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal
      port map (
@@ -16144,12 +16360,11 @@ begin
       drpclk_in(0) => drpclk_in(0),
       \gen_gtwizard_gthe4.drprdy_int\ => \gen_gtwizard_gthe4.drprdy_int\,
       gtwiz_userclk_tx_reset_in(0) => gtwiz_userclk_tx_reset_in(0),
+      gtwiz_userclk_tx_srcclk_out(0) => \^gtwiz_userclk_tx_srcclk_out\(0),
       in0 => \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_2\,
-      lopt => lopt,
-      lopt_1 => lopt_1,
-      lopt_2 => lopt_2,
-      rst_in0 => rst_in0,
-      txoutclk_out(0) => \^txoutclk_out\(0)
+      lopt => lopt_1,
+      lopt_1 => lopt_2,
+      rst_in0 => rst_in0
     );
 \gen_gtwizard_gthe4.gen_pwrgood_delay_inst[0].delay_powergood_inst\: entity work.gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_delay_powergood
      port map (
@@ -16191,14 +16406,34 @@ begin
       gtwiz_reset_tx_datapath_in(0) => gtwiz_reset_tx_datapath_in(0),
       gtwiz_reset_tx_done_out(0) => gtwiz_reset_tx_done_out(0),
       gtwiz_reset_tx_pll_and_datapath_in(0) => gtwiz_reset_tx_pll_and_datapath_in(0),
-      gtwiz_userclk_rx_active_in(0) => gtwiz_userclk_rx_active_in(0),
-      gtwiz_userclk_tx_active_in(0) => gtwiz_userclk_tx_active_in(0),
+      gtwiz_userclk_rx_active_out(0) => \^gtwiz_userclk_rx_active_out\(0),
+      gtwiz_userclk_rx_usrclk2_out(0) => \^gtwiz_userclk_rx_usrclk2_out\(0),
+      gtwiz_userclk_tx_active_out(0) => \^gtwiz_userclk_tx_active_out\(0),
+      gtwiz_userclk_tx_usrclk2_out(0) => \^gtwiz_userclk_tx_usrclk2_out\(0),
       i_in_out_reg => gtwiz_reset_rx_cdr_stable_out(0),
       in0 => \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_2\,
       rst_in0 => rst_in0,
-      rxcdrlock_out(0) => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_7\,
-      rxusrclk2_in(0) => rxusrclk2_in(0),
-      txusrclk2_in(0) => txusrclk2_in(0)
+      rxcdrlock_out(0) => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_7\
+    );
+\gen_gtwizard_gthe4.gen_rx_user_clocking_internal.gen_single_instance.gtwiz_userclk_rx_inst\: entity work.gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gtwiz_userclk_rx
+     port map (
+      gtwiz_userclk_rx_active_out(0) => \^gtwiz_userclk_rx_active_out\(0),
+      gtwiz_userclk_rx_reset_in(0) => gtwiz_userclk_rx_reset_in(0),
+      gtwiz_userclk_rx_srcclk_out(0) => \^gtwiz_userclk_rx_srcclk_out\(0),
+      gtwiz_userclk_rx_usrclk2_out(0) => \^gtwiz_userclk_rx_usrclk2_out\(0),
+      lopt => lopt_3,
+      lopt_1 => lopt_4,
+      lopt_2 => lopt_5
+    );
+\gen_gtwizard_gthe4.gen_tx_user_clocking_internal.gen_single_instance.gtwiz_userclk_tx_inst\: entity work.gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gtwiz_userclk_tx
+     port map (
+      gtwiz_userclk_tx_active_out(0) => \^gtwiz_userclk_tx_active_out\(0),
+      gtwiz_userclk_tx_reset_in(0) => gtwiz_userclk_tx_reset_in(0),
+      gtwiz_userclk_tx_srcclk_out(0) => \^gtwiz_userclk_tx_srcclk_out\(0),
+      gtwiz_userclk_tx_usrclk2_out(0) => \^gtwiz_userclk_tx_usrclk2_out\(0),
+      lopt => lopt,
+      lopt_1 => lopt_1,
+      lopt_2 => lopt_2
     );
 end STRUCTURE;
 library IEEE;
@@ -16769,11 +17004,11 @@ entity gtwizard_ultrascale_1_gtwizard_top is
   attribute C_LOCATE_RX_BUFFER_BYPASS_CONTROLLER : integer;
   attribute C_LOCATE_RX_BUFFER_BYPASS_CONTROLLER of gtwizard_ultrascale_1_gtwizard_top : entity is 0;
   attribute C_LOCATE_RX_USER_CLOCKING : integer;
-  attribute C_LOCATE_RX_USER_CLOCKING of gtwizard_ultrascale_1_gtwizard_top : entity is 1;
+  attribute C_LOCATE_RX_USER_CLOCKING of gtwizard_ultrascale_1_gtwizard_top : entity is 0;
   attribute C_LOCATE_TX_BUFFER_BYPASS_CONTROLLER : integer;
   attribute C_LOCATE_TX_BUFFER_BYPASS_CONTROLLER of gtwizard_ultrascale_1_gtwizard_top : entity is 0;
   attribute C_LOCATE_TX_USER_CLOCKING : integer;
-  attribute C_LOCATE_TX_USER_CLOCKING of gtwizard_ultrascale_1_gtwizard_top : entity is 1;
+  attribute C_LOCATE_TX_USER_CLOCKING of gtwizard_ultrascale_1_gtwizard_top : entity is 0;
   attribute C_LOCATE_USER_DATA_WIDTH_SIZING : integer;
   attribute C_LOCATE_USER_DATA_WIDTH_SIZING of gtwizard_ultrascale_1_gtwizard_top : entity is 0;
   attribute C_PCIE_CORECLK_FREQ : integer;
@@ -16930,6 +17165,8 @@ end gtwizard_ultrascale_1_gtwizard_top;
 
 architecture STRUCTURE of gtwizard_ultrascale_1_gtwizard_top is
   signal \<const0>\ : STD_LOGIC;
+  signal \^gtwiz_userclk_rx_usrclk2_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal \^gtwiz_userclk_tx_usrclk2_out\ : STD_LOGIC_VECTOR ( 0 to 0 );
 begin
   bufgtce_out(0) <= \<const0>\;
   bufgtcemask_out(2) <= \<const0>\;
@@ -17010,14 +17247,10 @@ begin
   gtwiz_buffbypass_tx_error_out(0) <= \<const0>\;
   gtwiz_reset_qpll0reset_out(0) <= \<const0>\;
   gtwiz_reset_qpll1reset_out(0) <= \<const0>\;
-  gtwiz_userclk_rx_active_out(0) <= \<const0>\;
-  gtwiz_userclk_rx_srcclk_out(0) <= \<const0>\;
-  gtwiz_userclk_rx_usrclk2_out(0) <= \<const0>\;
-  gtwiz_userclk_rx_usrclk_out(0) <= \<const0>\;
-  gtwiz_userclk_tx_active_out(0) <= \<const0>\;
-  gtwiz_userclk_tx_srcclk_out(0) <= \<const0>\;
-  gtwiz_userclk_tx_usrclk2_out(0) <= \<const0>\;
-  gtwiz_userclk_tx_usrclk_out(0) <= \<const0>\;
+  gtwiz_userclk_rx_usrclk2_out(0) <= \^gtwiz_userclk_rx_usrclk2_out\(0);
+  gtwiz_userclk_rx_usrclk_out(0) <= \^gtwiz_userclk_rx_usrclk2_out\(0);
+  gtwiz_userclk_tx_usrclk2_out(0) <= \^gtwiz_userclk_tx_usrclk2_out\(0);
+  gtwiz_userclk_tx_usrclk_out(0) <= \^gtwiz_userclk_tx_usrclk2_out\(0);
   gtytxn_out(0) <= \<const0>\;
   gtytxp_out(0) <= \<const0>\;
   pcierategen3_out(0) <= \<const0>\;
@@ -17286,6 +17519,7 @@ begin
   rxosintstarted_out(0) <= \<const0>\;
   rxosintstrobedone_out(0) <= \<const0>\;
   rxosintstrobestarted_out(0) <= \<const0>\;
+  rxoutclk_out(0) <= \<const0>\;
   rxoutclkfabric_out(0) <= \<const0>\;
   rxoutclkpcs_out(0) <= \<const0>\;
   rxphaligndone_out(0) <= \<const0>\;
@@ -17370,6 +17604,7 @@ begin
   txcomfinish_out(0) <= \<const0>\;
   txdccdone_out(0) <= \<const0>\;
   txdlysresetdone_out(0) <= \<const0>\;
+  txoutclk_out(0) <= \<const0>\;
   txoutclkfabric_out(0) <= \<const0>\;
   txoutclkpcs_out(0) <= \<const0>\;
   txphaligndone_out(0) <= \<const0>\;
@@ -17410,9 +17645,14 @@ GND: unisim.vcomponents.GND
       gtwiz_reset_tx_datapath_in(0) => gtwiz_reset_tx_datapath_in(0),
       gtwiz_reset_tx_done_out(0) => gtwiz_reset_tx_done_out(0),
       gtwiz_reset_tx_pll_and_datapath_in(0) => gtwiz_reset_tx_pll_and_datapath_in(0),
-      gtwiz_userclk_rx_active_in(0) => gtwiz_userclk_rx_active_in(0),
-      gtwiz_userclk_tx_active_in(0) => gtwiz_userclk_tx_active_in(0),
+      gtwiz_userclk_rx_active_out(0) => gtwiz_userclk_rx_active_out(0),
+      gtwiz_userclk_rx_reset_in(0) => gtwiz_userclk_rx_reset_in(0),
+      gtwiz_userclk_rx_srcclk_out(0) => gtwiz_userclk_rx_srcclk_out(0),
+      gtwiz_userclk_rx_usrclk2_out(0) => \^gtwiz_userclk_rx_usrclk2_out\(0),
+      gtwiz_userclk_tx_active_out(0) => gtwiz_userclk_tx_active_out(0),
       gtwiz_userclk_tx_reset_in(0) => gtwiz_userclk_tx_reset_in(0),
+      gtwiz_userclk_tx_srcclk_out(0) => gtwiz_userclk_tx_srcclk_out(0),
+      gtwiz_userclk_tx_usrclk2_out(0) => \^gtwiz_userclk_tx_usrclk2_out\(0),
       gtwiz_userdata_rx_out(31 downto 0) => gtwiz_userdata_rx_out(31 downto 0),
       gtwiz_userdata_tx_in(31 downto 0) => gtwiz_userdata_tx_in(31 downto 0),
       rx8b10ben_in(0) => rx8b10ben_in(0),
@@ -17427,20 +17667,18 @@ GND: unisim.vcomponents.GND
       rxctrl1_out(15 downto 0) => rxctrl1_out(15 downto 0),
       rxctrl2_out(7 downto 0) => rxctrl2_out(7 downto 0),
       rxctrl3_out(7 downto 0) => rxctrl3_out(7 downto 0),
+      rxlpmen_in(0) => rxlpmen_in(0),
       rxmcommaalignen_in(0) => rxmcommaalignen_in(0),
-      rxoutclk_out(0) => rxoutclk_out(0),
       rxpcommaalignen_in(0) => rxpcommaalignen_in(0),
       rxpmaresetdone_out(0) => rxpmaresetdone_out(0),
-      rxusrclk2_in(0) => rxusrclk2_in(0),
-      rxusrclk_in(0) => rxusrclk_in(0),
       tx8b10ben_in(0) => tx8b10ben_in(0),
       txctrl0_in(15 downto 0) => txctrl0_in(15 downto 0),
       txctrl1_in(15 downto 0) => txctrl1_in(15 downto 0),
       txctrl2_in(7 downto 0) => txctrl2_in(7 downto 0),
-      txoutclk_out(0) => txoutclk_out(0),
+      txdiffctrl_in(4 downto 0) => txdiffctrl_in(4 downto 0),
       txpmaresetdone_out(0) => txpmaresetdone_out(0),
-      txusrclk2_in(0) => txusrclk2_in(0),
-      txusrclk_in(0) => txusrclk_in(0)
+      txpostcursor_in(4 downto 0) => txpostcursor_in(4 downto 0),
+      txprecursor_in(4 downto 0) => txprecursor_in(4 downto 0)
     );
 end STRUCTURE;
 library IEEE;
@@ -17450,8 +17688,15 @@ use UNISIM.VCOMPONENTS.ALL;
 entity gtwizard_ultrascale_1 is
   port (
     gtwiz_userclk_tx_reset_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    gtwiz_userclk_tx_active_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    gtwiz_userclk_rx_active_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_srcclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_usrclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_usrclk2_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_tx_active_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_reset_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_srcclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_usrclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_usrclk2_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    gtwiz_userclk_rx_active_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_reset_clk_freerun_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_reset_all_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_reset_tx_pll_and_datapath_in : in STD_LOGIC_VECTOR ( 0 to 0 );
@@ -17470,16 +17715,16 @@ entity gtwizard_ultrascale_1 is
     rx8b10ben_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxbufreset_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxcommadeten_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    rxlpmen_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxmcommaalignen_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxpcommaalignen_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    rxusrclk_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    rxusrclk2_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     tx8b10ben_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     txctrl0_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
     txctrl1_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
     txctrl2_in : in STD_LOGIC_VECTOR ( 7 downto 0 );
-    txusrclk_in : in STD_LOGIC_VECTOR ( 0 to 0 );
-    txusrclk2_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    txdiffctrl_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
+    txpostcursor_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
+    txprecursor_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
     gthtxn_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     gthtxp_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     gtpowergood_out : out STD_LOGIC_VECTOR ( 0 to 0 );
@@ -17492,9 +17737,7 @@ entity gtwizard_ultrascale_1 is
     rxctrl1_out : out STD_LOGIC_VECTOR ( 15 downto 0 );
     rxctrl2_out : out STD_LOGIC_VECTOR ( 7 downto 0 );
     rxctrl3_out : out STD_LOGIC_VECTOR ( 7 downto 0 );
-    rxoutclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
-    txoutclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     txpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 )
   );
   attribute NotValidForBitStream : boolean;
@@ -17530,14 +17773,6 @@ architecture STRUCTURE of gtwizard_ultrascale_1 is
   signal NLW_inst_gtwiz_buffbypass_tx_error_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_gtwiz_reset_qpll0reset_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_gtwiz_reset_qpll1reset_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal NLW_inst_gtwiz_userclk_rx_active_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal NLW_inst_gtwiz_userclk_rx_srcclk_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal NLW_inst_gtwiz_userclk_rx_usrclk2_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal NLW_inst_gtwiz_userclk_rx_usrclk_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal NLW_inst_gtwiz_userclk_tx_active_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal NLW_inst_gtwiz_userclk_tx_srcclk_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal NLW_inst_gtwiz_userclk_tx_usrclk2_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal NLW_inst_gtwiz_userclk_tx_usrclk_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_gtytxn_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_gtytxp_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_pcierategen3_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
@@ -17594,6 +17829,7 @@ architecture STRUCTURE of gtwizard_ultrascale_1 is
   signal NLW_inst_rxosintstarted_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_rxosintstrobedone_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_rxosintstrobestarted_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal NLW_inst_rxoutclk_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_rxoutclkfabric_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_rxoutclkpcs_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_rxphaligndone_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
@@ -17629,6 +17865,7 @@ architecture STRUCTURE of gtwizard_ultrascale_1 is
   signal NLW_inst_txcomfinish_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_txdccdone_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_txdlysresetdone_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
+  signal NLW_inst_txoutclk_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_txoutclkfabric_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_txoutclkpcs_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_txphaligndone_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
@@ -17674,11 +17911,11 @@ architecture STRUCTURE of gtwizard_ultrascale_1 is
   attribute C_LOCATE_RX_BUFFER_BYPASS_CONTROLLER : integer;
   attribute C_LOCATE_RX_BUFFER_BYPASS_CONTROLLER of inst : label is 0;
   attribute C_LOCATE_RX_USER_CLOCKING : integer;
-  attribute C_LOCATE_RX_USER_CLOCKING of inst : label is 1;
+  attribute C_LOCATE_RX_USER_CLOCKING of inst : label is 0;
   attribute C_LOCATE_TX_BUFFER_BYPASS_CONTROLLER : integer;
   attribute C_LOCATE_TX_BUFFER_BYPASS_CONTROLLER of inst : label is 0;
   attribute C_LOCATE_TX_USER_CLOCKING : integer;
-  attribute C_LOCATE_TX_USER_CLOCKING of inst : label is 1;
+  attribute C_LOCATE_TX_USER_CLOCKING of inst : label is 0;
   attribute C_LOCATE_USER_DATA_WIDTH_SIZING : integer;
   attribute C_LOCATE_USER_DATA_WIDTH_SIZING of inst : label is 0;
   attribute C_PCIE_CORECLK_FREQ : integer;
@@ -17956,18 +18193,18 @@ inst: entity work.gtwizard_ultrascale_1_gtwizard_top
       gtwiz_reset_tx_done_in(0) => '0',
       gtwiz_reset_tx_done_out(0) => gtwiz_reset_tx_done_out(0),
       gtwiz_reset_tx_pll_and_datapath_in(0) => gtwiz_reset_tx_pll_and_datapath_in(0),
-      gtwiz_userclk_rx_active_in(0) => gtwiz_userclk_rx_active_in(0),
-      gtwiz_userclk_rx_active_out(0) => NLW_inst_gtwiz_userclk_rx_active_out_UNCONNECTED(0),
-      gtwiz_userclk_rx_reset_in(0) => '0',
-      gtwiz_userclk_rx_srcclk_out(0) => NLW_inst_gtwiz_userclk_rx_srcclk_out_UNCONNECTED(0),
-      gtwiz_userclk_rx_usrclk2_out(0) => NLW_inst_gtwiz_userclk_rx_usrclk2_out_UNCONNECTED(0),
-      gtwiz_userclk_rx_usrclk_out(0) => NLW_inst_gtwiz_userclk_rx_usrclk_out_UNCONNECTED(0),
-      gtwiz_userclk_tx_active_in(0) => gtwiz_userclk_tx_active_in(0),
-      gtwiz_userclk_tx_active_out(0) => NLW_inst_gtwiz_userclk_tx_active_out_UNCONNECTED(0),
+      gtwiz_userclk_rx_active_in(0) => '0',
+      gtwiz_userclk_rx_active_out(0) => gtwiz_userclk_rx_active_out(0),
+      gtwiz_userclk_rx_reset_in(0) => gtwiz_userclk_rx_reset_in(0),
+      gtwiz_userclk_rx_srcclk_out(0) => gtwiz_userclk_rx_srcclk_out(0),
+      gtwiz_userclk_rx_usrclk2_out(0) => gtwiz_userclk_rx_usrclk2_out(0),
+      gtwiz_userclk_rx_usrclk_out(0) => gtwiz_userclk_rx_usrclk_out(0),
+      gtwiz_userclk_tx_active_in(0) => '0',
+      gtwiz_userclk_tx_active_out(0) => gtwiz_userclk_tx_active_out(0),
       gtwiz_userclk_tx_reset_in(0) => gtwiz_userclk_tx_reset_in(0),
-      gtwiz_userclk_tx_srcclk_out(0) => NLW_inst_gtwiz_userclk_tx_srcclk_out_UNCONNECTED(0),
-      gtwiz_userclk_tx_usrclk2_out(0) => NLW_inst_gtwiz_userclk_tx_usrclk2_out_UNCONNECTED(0),
-      gtwiz_userclk_tx_usrclk_out(0) => NLW_inst_gtwiz_userclk_tx_usrclk_out_UNCONNECTED(0),
+      gtwiz_userclk_tx_srcclk_out(0) => gtwiz_userclk_tx_srcclk_out(0),
+      gtwiz_userclk_tx_usrclk2_out(0) => gtwiz_userclk_tx_usrclk2_out(0),
+      gtwiz_userclk_tx_usrclk_out(0) => gtwiz_userclk_tx_usrclk_out(0),
       gtwiz_userdata_rx_out(31 downto 0) => gtwiz_userdata_rx_out(31 downto 0),
       gtwiz_userdata_tx_in(31 downto 0) => gtwiz_userdata_tx_in(31 downto 0),
       gtyrxn_in(0) => '0',
@@ -18149,7 +18386,7 @@ inst: entity work.gtwizard_ultrascale_1_gtwizard_top
       rxlfpstresetdet_out(0) => NLW_inst_rxlfpstresetdet_out_UNCONNECTED(0),
       rxlfpsu2lpexitdet_out(0) => NLW_inst_rxlfpsu2lpexitdet_out_UNCONNECTED(0),
       rxlfpsu3wakedet_out(0) => NLW_inst_rxlfpsu3wakedet_out_UNCONNECTED(0),
-      rxlpmen_in(0) => '1',
+      rxlpmen_in(0) => rxlpmen_in(0),
       rxlpmgchold_in(0) => '0',
       rxlpmgcovrden_in(0) => '0',
       rxlpmhfhold_in(0) => '0',
@@ -18175,7 +18412,7 @@ inst: entity work.gtwizard_ultrascale_1_gtwizard_top
       rxosintstrobestarted_out(0) => NLW_inst_rxosintstrobestarted_out_UNCONNECTED(0),
       rxosinttestovrden_in(0) => '0',
       rxosovrden_in(0) => '0',
-      rxoutclk_out(0) => rxoutclk_out(0),
+      rxoutclk_out(0) => NLW_inst_rxoutclk_out_UNCONNECTED(0),
       rxoutclkfabric_out(0) => NLW_inst_rxoutclkfabric_out_UNCONNECTED(0),
       rxoutclkpcs_out(0) => NLW_inst_rxoutclkpcs_out_UNCONNECTED(0),
       rxoutclksel_in(2 downto 0) => B"010",
@@ -18228,8 +18465,8 @@ inst: entity work.gtwizard_ultrascale_1_gtwizard_top
       rxsysclksel_in(1 downto 0) => B"00",
       rxtermination_in(0) => '0',
       rxuserrdy_in(0) => '1',
-      rxusrclk2_in(0) => rxusrclk2_in(0),
-      rxusrclk_in(0) => rxusrclk_in(0),
+      rxusrclk2_in(0) => '0',
+      rxusrclk_in(0) => '0',
       rxvalid_out(0) => NLW_inst_rxvalid_out_UNCONNECTED(0),
       sdm0data_in(24 downto 0) => B"0000000000000000000000000",
       sdm0finalout_out(3 downto 0) => NLW_inst_sdm0finalout_out_UNCONNECTED(3 downto 0),
@@ -18269,7 +18506,7 @@ inst: entity work.gtwizard_ultrascale_1_gtwizard_top
       txdccreset_in(0) => '0',
       txdeemph_in(1 downto 0) => B"00",
       txdetectrx_in(0) => '0',
-      txdiffctrl_in(4 downto 0) => B"11000",
+      txdiffctrl_in(4 downto 0) => txdiffctrl_in(4 downto 0),
       txdiffpd_in(0) => '0',
       txdlybypass_in(0) => '1',
       txdlyen_in(0) => '0',
@@ -18291,7 +18528,7 @@ inst: entity work.gtwizard_ultrascale_1_gtwizard_top
       txmuxdcdexhold_in(0) => '0',
       txmuxdcdorwren_in(0) => '0',
       txoneszeros_in(0) => '0',
-      txoutclk_out(0) => txoutclk_out(0),
+      txoutclk_out(0) => NLW_inst_txoutclk_out_UNCONNECTED(0),
       txoutclkfabric_out(0) => NLW_inst_txoutclkfabric_out_UNCONNECTED(0),
       txoutclkpcs_out(0) => NLW_inst_txoutclkpcs_out_UNCONNECTED(0),
       txoutclksel_in(2 downto 0) => B"010",
@@ -18317,11 +18554,11 @@ inst: entity work.gtwizard_ultrascale_1_gtwizard_top
       txpmareset_in(0) => '0',
       txpmaresetdone_out(0) => txpmaresetdone_out(0),
       txpolarity_in(0) => '0',
-      txpostcursor_in(4 downto 0) => B"00000",
+      txpostcursor_in(4 downto 0) => txpostcursor_in(4 downto 0),
       txpostcursorinv_in(0) => '0',
       txprbsforceerr_in(0) => '0',
       txprbssel_in(3 downto 0) => B"0000",
-      txprecursor_in(4 downto 0) => B"00000",
+      txprecursor_in(4 downto 0) => txprecursor_in(4 downto 0),
       txprecursorinv_in(0) => '0',
       txprgdivresetdone_out(0) => NLW_inst_txprgdivresetdone_out_UNCONNECTED(0),
       txprogdivreset_in(0) => '0',
@@ -18343,8 +18580,8 @@ inst: entity work.gtwizard_ultrascale_1_gtwizard_top
       txsyncout_out(0) => NLW_inst_txsyncout_out_UNCONNECTED(0),
       txsysclksel_in(1 downto 0) => B"00",
       txuserrdy_in(0) => '1',
-      txusrclk2_in(0) => txusrclk2_in(0),
-      txusrclk_in(0) => txusrclk_in(0),
+      txusrclk2_in(0) => '0',
+      txusrclk_in(0) => '0',
       ubcfgstreamen_in(0) => '0',
       ubdaddr_out(0) => NLW_inst_ubdaddr_out_UNCONNECTED(0),
       ubden_out(0) => NLW_inst_ubden_out_UNCONNECTED(0),

@@ -1,186 +1,168 @@
 `timescale 1ns/1ps
-module gth_top(
+module gth_top (
+  input  wire        freerun_clk,
 
-input  wire gthrxp_in,
-input  wire gthrxn_in,
-output  wire gthtxp_out,
-output  wire gthtxn_out,
-  // GT输出
-output wire txoutclk_out,
-output wire rxoutclk_out
+  // TX/RX 用户数据
+  input  wire [31:0] gtwiz_userdata_tx_in,
+  output wire [31:0] gtwiz_userdata_rx_out,
 
+  // 导出 helper 生成的用户时钟与激活信号
+  output wire        gtwiz_userclk_tx_active_out,
+  output wire        gtwiz_userclk_rx_active_out,
+  output wire        gtwiz_userclk_tx_usrclk2_out,
+  output wire        gtwiz_userclk_rx_usrclk2_out,
+
+  // 参考时钟（差分）
+  input  wire        mgtrefclk0_x1y1_p,
+  input  wire        mgtrefclk0_x1y1_n,
+
+  // 串行物理
+  input  wire        gthrxp_in,
+  input  wire        gthrxn_in,
+  output wire        gthtxp_out,
+  output wire        gthtxn_out
+);
+
+  // 0) freerun BUFG
+    wire freerun_clk_buf;
+    BUFG u_bufg_freerun (.I(freerun_clk), .O(freerun_clk_buf));
+
+    // 1) 参考时钟缓冲（按器件用 GTE4/GTE3）
+    wire gtrefclk0;
+    IBUFDS_GTE4 #(
+      .REFCLK_EN_TX_PATH (1'b0),
+      .REFCLK_HROW_CK_SEL(2'b00),
+      .REFCLK_ICNTL_RX   (2'b00)
+    ) u_ibufds_refclk (
+      .I  (mgtrefclk0_x1y1_p),
+      .IB (mgtrefclk0_x1y1_n),
+      .CEB(1'b0),
+      .O  (gtrefclk0),
+      .ODIV2()
     );
-  // =========================
-  // 0) 全局参数/局部常量
-  // =========================
-  localparam LANES = 1;
 
-  // =========================
-  // 1) Freerun / 复位与DRP域
-  // =========================
-  wire                 freerun_clk;       // 50~125 MHz, 常用100/125
-  wire [LANES-1:0]     gtwiz_reset_clk_freerun_in = {LANES{freerun_clk}};
-  reg                  gtwiz_reset_all_in = 1'b1; // 上电拉高，稍后释放
-  wire [LANES-1:0]     drpclk_in          = {LANES{freerun_clk}};
+  // 2) 上电复位（极简：计数释放）
+    reg  rst_all = 1'b1;
+    reg [7:0] rcnt = 8'd0;
+    always @(posedge freerun_clk_buf) begin
+      if (rcnt != 8'hFF) rcnt <= rcnt + 1'b1;
+      if (rcnt == 8'd100) rst_all <= 1'b0;
+    end
 
-  // （可选）精细复位输入，默认拉低
-  wire [LANES-1:0]     gtwiz_reset_tx_pll_and_datapath_in = {LANES{1'b0}};
-  wire [LANES-1:0]     gtwiz_reset_tx_datapath_in         = {LANES{1'b0}};
-  wire [LANES-1:0]     gtwiz_reset_rx_pll_and_datapath_in = {LANES{1'b0}};
-  wire [LANES-1:0]     gtwiz_reset_rx_datapath_in         = {LANES{1'b0}};
+  // 3) 打包成 [0:0] 向量以匹配 IP
+    wire [0:0] gtwiz_reset_clk_freerun_in = freerun_clk_buf;
+    wire [0:0] gtwiz_reset_all_in         = rst_all;
+    wire [0:0] drpclk_in                  = freerun_clk_buf;
+    wire [0:0] gtrefclk0_in               = gtrefclk0;
 
-  // =========================
-  // 2) 参考时钟 / GT Refclk
-  // =========================
-  wire [LANES-1:0]     gtrefclk0_in;      // 由 IBUFDS_GTE# 提供
+    wire [0:0] gthrxp_vec = gthrxp_in;
+    wire [0:0] gthrxn_vec = gthrxn_in;
+    wire [0:0] gthtxp_vec;
+    wire [0:0] gthtxn_vec;
+    assign gthtxp_out = gthtxp_vec[0];
+    assign gthtxn_out = gthtxn_vec[0];
 
-  // =========================
-  // 3) 用户时钟（由GT输出产生并回灌）
-  // =========================
+    // 4) 8b/10b/对齐控制（示例：全开）
+    wire [0:0] tx8b10ben_in       = 1'b1;
+    wire [0:0] rx8b10ben_in       = 1'b1;
+    wire [0:0] rxcommadeten_in    = 1'b1;
+    wire [0:0] rxmcommaalignen_in = 1'b1;
+    wire [0:0] rxpcommaalignen_in = 1'b1;
+    wire [0:0] rxbufreset_in      = 1'b0;
 
-  // BUFG_GT 后的用户时钟
-  wire [LANES-1:0]     txusrclk_in;
-  wire [LANES-1:0]     txusrclk2_in;
-  wire [LANES-1:0]     rxusrclk_in;
-  wire [LANES-1:0]     rxusrclk2_in;
+  // 5) TX 控制（如果你要固定发送 K28.5，可把 txdata/ctrl 改成局部常量）
+    wire [15:0] txctrl0_in = 16'h0000;
+    wire [15:0] txctrl1_in = 16'h0000;
+    wire [ 7:0] txctrl2_in = 8'b0000_0000; // 若最低字节要发 K28.5，则置 8'b0000_0001
 
-  // 用户时钟激活/复位（用户域）
-  wire [LANES-1:0]     gtwiz_userclk_tx_reset_in = {LANES{1'b0}};
-  reg  [LANES-1:0]     gtwiz_userclk_tx_active_in = {LANES{1'b0}};
-  reg  [LANES-1:0]     gtwiz_userclk_rx_active_in = {LANES{1'b0}};
+    // 6) helper 的 userclk reset 依赖 PMA 就绪
+    wire [0:0] txpmaresetdone_out, rxpmaresetdone_out;
+    wire [0:0] gtwiz_userclk_tx_reset_in;
+    wire [0:0] gtwiz_userclk_rx_reset_in;
+    assign gtwiz_userclk_tx_reset_in[0] = ~txpmaresetdone_out[0];
+    assign gtwiz_userclk_rx_reset_in[0] = ~rxpmaresetdone_out[0];
 
-  // =========================
-  // 5) 编码/对齐/缓冲控制
-  // =========================
-  wire [LANES-1:0]     tx8b10ben_in       = {LANES{1'b1}}; // 若用8b/10b
-  wire [LANES-1:0]     rx8b10ben_in       = {LANES{1'b1}};
-  wire [LANES-1:0]     rxcommadeten_in    = {LANES{1'b1}}; // 用K28.5做对齐时置1
-  wire [LANES-1:0]     rxmcommaalignen_in = {LANES{1'b1}};
-  wire [LANES-1:0]     rxpcommaalignen_in = {LANES{1'b1}};
-  wire [LANES-1:0]     rxbufreset_in      = {LANES{1'b0}};
+    // 7) 导出 usrclk2/active（IP 端口是向量，顶层是标量）
+    wire [0:0] tx_usrclk2_v, rx_usrclk2_v, tx_active_v, rx_active_v;
+    assign gtwiz_userclk_tx_usrclk2_out = tx_usrclk2_v[0];
+    assign gtwiz_userclk_rx_usrclk2_out = rx_usrclk2_v[0];
+    assign gtwiz_userclk_tx_active_out  = tx_active_v[0];
+    assign gtwiz_userclk_rx_active_out  = rx_active_v[0];
 
-  // =========================
-  // 6) 发送数据/控制（TX域）
-  // =========================
-  wire [32*LANES-1:0]  gtwiz_userdata_tx_in;   // 例化时是32位/通道
-  wire [16*LANES-1:0]  txctrl0_in = {16*LANES{1'b0}};
-  wire [16*LANES-1:0]  txctrl1_in = {16*LANES{1'b0}};
-  wire [ 8*LANES-1:0]  txctrl2_in;             // 每字节CHARISK(K字)
+  // 8) 其余状态（可选）
+    wire [0:0] gtpowergood_out;
+    wire [2:0] rxbufstatus_out;
+    wire [0:0] rxbyteisaligned_out, rxbyterealign_out, rxcommadet_out;
+    wire [1:0] rxclkcorcnt_out;
+    wire [15:0] rxctrl0_out, rxctrl1_out;
+    wire [7:0]  rxctrl2_out, rxctrl3_out;
+    wire [0:0]  gtwiz_reset_tx_done_out, gtwiz_reset_rx_done_out;
 
-  // =========================
-  // 7) 接收数据/状态（RX域 输出→内部连用）
-  // =========================
-  wire [32*LANES-1:0]  gtwiz_userdata_rx_out;
-  wire [ 3*LANES-1:0]  rxbufstatus_out;
-  wire [LANES-1:0]     rxbyteisaligned_out, rxbyterealign_out, rxcommadet_out;
-  wire [ 2*LANES-1:0]  rxclkcorcnt_out;
-  wire [16*LANES-1:0]  rxctrl0_out, rxctrl1_out;
-  wire [ 8*LANES-1:0]  rxctrl2_out, rxctrl3_out;
+  // 9) GT Wizard（In Core）例化
+  gtwizard_ultrascale_1 u_gt (
+      .gtwiz_userclk_tx_reset_in            (gtwiz_userclk_tx_reset_in),
+      .gtwiz_userclk_tx_srcclk_out          (/* unconn */),
+      .gtwiz_userclk_tx_usrclk_out          (/* unconn */),
+      .gtwiz_userclk_tx_usrclk2_out         (tx_usrclk2_v),
+      .gtwiz_userclk_tx_active_out          (tx_active_v),
 
-  // =========================
-  // 8) 复位/电源/完成指示（输出→内部连用）
-  // =========================
-  wire [LANES-1:0]     gtwiz_reset_rx_cdr_stable_out;
-  wire [LANES-1:0]     gtwiz_reset_tx_done_out;
-  wire [LANES-1:0]     gtwiz_reset_rx_done_out;
-  wire [LANES-1:0]     gtpowergood_out;
-  wire [LANES-1:0]     txpmaresetdone_out, rxpmaresetdone_out;
+      .gtwiz_userclk_rx_reset_in            (gtwiz_userclk_rx_reset_in),
+      .gtwiz_userclk_rx_srcclk_out          (/* unconn */),
+      .gtwiz_userclk_rx_usrclk_out          (/* unconn */),
+      .gtwiz_userclk_rx_usrclk2_out         (rx_usrclk2_v),
+      .gtwiz_userclk_rx_active_out          (rx_active_v),
 
-  // =========================
-  // 9) 示例：生成用户时钟并置active
-  // =========================
-  // 单通道演示：BUFG_GT建议按通道各放一个
-  BUFG_GT u_bufg_txusrclk  (.I(txoutclk_out[0]), .CE(1'b1), .CEMASK(1'b0), .CLR(1'b0), .CLRMASK(1'b0), .DIV(3'd0), .O(txusrclk_in [0]));
-  BUFG_GT u_bufg_txusrclk2 (.I(txoutclk_out[0]), .CE(1'b1), .CEMASK(1'b0), .CLR(1'b0), .CLRMASK(1'b0), .DIV(3'd0), .O(txusrclk2_in[0]));
-  BUFG_GT u_bufg_rxusrclk  (.I(rxoutclk_out[0]), .CE(1'b1), .CEMASK(1'b0), .CLR(1'b0), .CLRMASK(1'b0), .DIV(3'd0), .O(rxusrclk_in [0]));
-  BUFG_GT u_bufg_rxusrclk2 (.I(rxoutclk_out[0]), .CE(1'b1), .CEMASK(1'b0), .CLR(1'b0), .CLRMASK(1'b0), .DIV(3'd0), .O(rxusrclk2_in[0]));
+      .gtwiz_reset_clk_freerun_in           (gtwiz_reset_clk_freerun_in),
+      .gtwiz_reset_all_in                   (gtwiz_reset_all_in),
+      .gtwiz_reset_tx_pll_and_datapath_in   (1'b0),
+      .gtwiz_reset_tx_datapath_in           (1'b0),
+      .gtwiz_reset_rx_pll_and_datapath_in   (1'b0),
+      .gtwiz_reset_rx_datapath_in           (1'b0),
 
-  // 时钟出来后在各自域里把 active 拉1（极简示例）
-  always @(posedge txusrclk_in[0]) gtwiz_userclk_tx_active_in[0] <= 1'b1;
-  always @(posedge rxusrclk_in[0]) gtwiz_userclk_rx_active_in[0] <= 1'b1;
+      .gtwiz_reset_rx_cdr_stable_out        (/* unconn */),
+      .gtwiz_reset_tx_done_out              (gtwiz_reset_tx_done_out),
+      .gtwiz_reset_rx_done_out              (gtwiz_reset_rx_done_out),
 
-  // 上电若干freerun周期释放总复位（极简上电时序）
-  reg [7:0] rst_cnt = 8'd0;
-  always @(posedge freerun_clk) begin
-    if (rst_cnt != 8'hFF) rst_cnt <= rst_cnt + 1'b1;
-    if (rst_cnt == 8'd100) gtwiz_reset_all_in <= 1'b0;
-  end
+      .gtwiz_userdata_tx_in                 (gtwiz_userdata_tx_in),
+      .gtwiz_userdata_rx_out                (gtwiz_userdata_rx_out),
 
-  // =========================
-  // 10) 示例：常量/测试数据装载
-  // =========================
-  assign gtwiz_userdata_tx_in = 32'hBC_55_AA_55; // 仅通道0示例
-  // 使能最低字节K字符(0xBC=K28.5)，其余为数据
-  assign txctrl2_in[7:0] = 8'b0000_0001;
+      .drpclk_in                            (drpclk_in),
 
-  // =========================
-  // 11) GT Wizard 例化（分组排版）
-  // =========================
-  gtwizard_ultrascale_1 u_gtwiz (
-    // ---- 用户时钟控制（用户域）----
-    .gtwiz_userclk_tx_reset_in            (gtwiz_userclk_tx_reset_in),
-    .gtwiz_userclk_tx_active_in           (gtwiz_userclk_tx_active_in),
-    .gtwiz_userclk_rx_active_in           (gtwiz_userclk_rx_active_in),
+      .txdiffctrl_in                        (5'b10000 ),         // <-- 对应 847 mV
+      .txprecursor_in                       (5'b00000 ),         // <-- 对应 0.00 dB
+      .txpostcursor_in                      (5'b01010 ),         // <-- 对应 2.50 dB (请确保你的 u_gt 例化中有这个端口)
+      .rxlpmen_in                           (1'b0     ),             // <-- 保持为 0 (DFE模式)
 
-    // ---- Freerun/复位/DRP ----
-    .gtwiz_reset_clk_freerun_in           (gtwiz_reset_clk_freerun_in),
-    .drpclk_in                            (drpclk_in),
-    .gtwiz_reset_all_in                   (gtwiz_reset_all_in),
-    .gtwiz_reset_tx_pll_and_datapath_in   (gtwiz_reset_tx_pll_and_datapath_in),
-    .gtwiz_reset_tx_datapath_in           (gtwiz_reset_tx_datapath_in),
-    .gtwiz_reset_rx_pll_and_datapath_in   (gtwiz_reset_rx_pll_and_datapath_in),
-    .gtwiz_reset_rx_datapath_in           (gtwiz_reset_rx_datapath_in),
+      .gthrxn_in                            (gthrxn_vec),
+      .gthrxp_in                            (gthrxp_vec),
+      .gthtxn_out                           (gthtxn_vec),
+      .gthtxp_out                           (gthtxp_vec),
 
-    // ---- 复位/完成指示（输出）----
-    .gtwiz_reset_rx_cdr_stable_out        (gtwiz_reset_rx_cdr_stable_out),
-    .gtwiz_reset_tx_done_out              (gtwiz_reset_tx_done_out),
-    .gtwiz_reset_rx_done_out              (gtwiz_reset_rx_done_out),
+      .gtrefclk0_in                         (gtrefclk0_in),
 
-    // ---- 用户数据 ----
-    .gtwiz_userdata_tx_in                 (gtwiz_userdata_tx_in),
-    .gtwiz_userdata_rx_out                (gtwiz_userdata_rx_out),
+      .rx8b10ben_in                         (rx8b10ben_in),
+      .rxbufreset_in                        (rxbufreset_in),
+      .rxcommadeten_in                      (rxcommadeten_in),
+      .rxmcommaalignen_in                   (rxmcommaalignen_in),
+      .rxpcommaalignen_in                   (rxpcommaalignen_in),
 
-    // ---- 参考时钟/用户时钟 ----
-    .gtrefclk0_in                         (gtrefclk0_in),
-    .txusrclk_in                          (txusrclk_in),
-    .txusrclk2_in                         (txusrclk2_in),
-    .rxusrclk_in                          (rxusrclk_in),
-    .rxusrclk2_in                         (rxusrclk2_in),
+      .tx8b10ben_in                         (tx8b10ben_in),
+      .txctrl0_in                           (txctrl0_in),
+      .txctrl1_in                           (txctrl1_in),
+      .txctrl2_in                           (txctrl2_in),
 
-    // ---- 串行物理 ----
-    .gthrxp_in                            (gthrxp_in),
-    .gthrxn_in                            (gthrxn_in),
-    .gthtxp_out                           (gthtxp_out),
-    .gthtxn_out                           (gthtxn_out),
-
-    // ---- 编码/对齐/缓冲 ----
-    .tx8b10ben_in                         (tx8b10ben_in),
-    .rx8b10ben_in                         (rx8b10ben_in),
-    .rxcommadeten_in                      (rxcommadeten_in),
-    .rxmcommaalignen_in                   (rxmcommaalignen_in),
-    .rxpcommaalignen_in                   (rxpcommaalignen_in),
-    .rxbufreset_in                        (rxbufreset_in),
-
-    // ---- TX控制 ----
-    .txctrl0_in                           (txctrl0_in),
-    .txctrl1_in                           (txctrl1_in),
-    .txctrl2_in                           (txctrl2_in),
-
-    // ---- 状态/调试（输出）----
-    .gtpowergood_out                      (gtpowergood_out),
-    .rxbufstatus_out                      (rxbufstatus_out),
-    .rxbyteisaligned_out                  (rxbyteisaligned_out),
-    .rxbyterealign_out                    (rxbyterealign_out),
-    .rxclkcorcnt_out                      (rxclkcorcnt_out),
-    .rxcommadet_out                       (rxcommadet_out),
-    .rxctrl0_out                          (rxctrl0_out),
-    .rxctrl1_out                          (rxctrl1_out),
-    .rxctrl2_out                          (rxctrl2_out),
-    .rxctrl3_out                          (rxctrl3_out),
-    .rxoutclk_out                         (rxoutclk_out),
-    .rxpmaresetdone_out                   (rxpmaresetdone_out),
-    .txoutclk_out                         (txoutclk_out),
-    .txpmaresetdone_out                   (txpmaresetdone_out)
+      .gtpowergood_out                      (gtpowergood_out),
+      .rxbufstatus_out                      (rxbufstatus_out),
+      .rxbyteisaligned_out                  (rxbyteisaligned_out),
+      .rxbyterealign_out                    (rxbyterealign_out),
+      .rxclkcorcnt_out                      (rxclkcorcnt_out),
+      .rxcommadet_out                       (rxcommadet_out),
+      .rxctrl0_out                          (rxctrl0_out),
+      .rxctrl1_out                          (rxctrl1_out),
+      .rxctrl2_out                          (rxctrl2_out),
+      .rxctrl3_out                          (rxctrl3_out),
+      .rxpmaresetdone_out                   (rxpmaresetdone_out),
+      .txpmaresetdone_out                   (txpmaresetdone_out)
   );
 
 endmodule

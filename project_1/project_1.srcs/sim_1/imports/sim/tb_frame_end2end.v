@@ -2,23 +2,48 @@
 
 //////////////////////////////////////////////////////////////////////////////////
 //
-// Module Name: tb_frame_end2end_optimized
+// Module Name: tb_frame_end2end (已修复 - 匹配无Header版本)
 //
 // Description:
-//   一个更健壮、自校验的端到端测试平台。
-//   - 新增! 自动数据校验逻辑 (Scoreboard)。
-//   - 新增! 随机化的反压/流控，模拟真实场景。
-//   - 新增! 错误注入任务，用于测试同步器的容错能力。
-//   - 结束时会自动报告 PASS / FAIL。
+//   端到端测试平台 (修复版)。
+//   - ★ 修正1: 帧参数匹配 "无Header" 的 generator (ASM + Payload)
+//   - ★ 修正2: TB_FRAME_LEN_BYTE = 24 (ASM) + 16 (Payload) = 40 字节
+//   - ★ 修正3: asm_pattern 匹配 generator 的 SYNC_MARKER
+//   - ★ 修正4: 启用了 Scoreboard 自校验和仿真控制
+//   - ★ 修正5 (Gemini): 修复了 asm_pattern 字节序颠倒的问题
 //
 //////////////////////////////////////////////////////////////////////////////////
 module tb_frame_end2end;
 
-    localparam PAYLOAD_SIZE_WORDS = 16; // 仿真小尺寸，方便观察
+    // =================================================================
+    // ★ 修复 1: 从 generator 计算帧参数 (匹配无Header版)
+    // =================================================================
+    localparam GEN_PAYLOAD_WORDS    = 4;  // 必须匹配 frame_generator.v
+    localparam GEN_ASM_REPS         = 3;  // 必须匹配 frame_generator.v
+    localparam GEN_ASM_BYTES        = 8 * GEN_ASM_REPS; // (64'h / 8 bits) * 3 = 24 字节
+    localparam GEN_HEADER_BYTES     = 0;  // ★★★ 移除了 Header ★★★
+    localparam GEN_PAYLOAD_BYTES    = GEN_PAYLOAD_WORDS * 4; // 4 * 4 = 16 字节
+    // ★ 修复 2: 计算传递给 synchronizer 的总帧长
+    localparam TB_FRAME_LEN_BYTE    = GEN_ASM_BYTES + GEN_HEADER_BYTES + GEN_PAYLOAD_BYTES; // 24 + 0 + 16 = 40 字节
+
+    // =================================================================
+    // ★ 修复 3: 同步器参数 (必须与我们的最终版本匹配)
+    // =================================================================
+    localparam TB_ASM_LEN           = 192; // 3 * 64-bit = 192 bits
+    localparam TB_M_VERIFY          = 2;
+    localparam TB_N_PROTECT         = 2;
+    localparam TB_PIPELINE_LATENCY  = 9; // (使用 TB 中设置的 9)
+    // ★ 修复 3: 定义 Generator 的 SYNC_MARKER
+    // localparam [63:0] TB_SYNC_MARKER = 64'hB1699558_A53333A8;
+    localparam [63:0] TB_SYNC_MARKER = 64'hA53333A8_B1699558;
+    // ★ 修复 5: 定义 HI/LO 字用于重组
+    localparam [31:0] TB_MARKER_HI   = TB_SYNC_MARKER[31:0]; // 32'hB1699558
+    localparam [31:0] TB_MARKER_LO   = TB_SYNC_MARKER[63:32];  // 32'hA53333A8
+
 
     // --- 时钟与复位 ---
     reg clk;
-    reg rst_n;
+    reg rst_n; // ★ 模块使用 rst_n
 
     initial begin
         clk = 0;
@@ -26,9 +51,9 @@ module tb_frame_end2end;
     end
 
     initial begin
-        rst_n = 0;
+        rst_n = 0; // ★
         #20;
-        rst_n = 1;
+        rst_n = 1; // ★
     end
 
     // --- 模块间连线 ---
@@ -38,43 +63,64 @@ module tb_frame_end2end;
 
     wire [31:0] framed_data_w;
     wire        framed_valid_w;
-    wire        framed_ready_w;
+    reg         framed_ready_w; // ★ 更改为 reg 以便进行反压
     
     wire [31:0] payload_data_sync_w;
     wire        payload_valid_sync_w;
     wire        payload_ready_sync_w;
-    assign payload_ready_sync_w = 1;
-    wire        start_of_frame_w;
+    assign      payload_ready_sync_w = 1; // 接收器总是准备好
+    wire        start_of_frame_w; // ★ 匹配 sof 端口
 
     // --- DUT 1: 帧生成器 ---
-    // 注意：这里需要例化您最新的 generator 模块
+    // (注意: 这里的 frame_generator 必须是 *无Header* 的版本)
     frame_generator #(
-        .PAYLOAD_SIZE_WORDS(PAYLOAD_SIZE_WORDS)
+        .SYNC_MARKER            (TB_SYNC_MARKER), // ★ 传递 SYNC_MARKER
+        .SYNC_REPETITION        (GEN_ASM_REPS),
+        .PAYLOAD_SIZE_WORDS     (GEN_PAYLOAD_WORDS) 
     ) u_frame_gen (
-        .clk(clk),
-        .rst_n(rst_n),
-        .payload_data_in(payload_data_gen_w),
-        .payload_valid_in(payload_valid_gen_w),
-        .payload_ready_out(payload_ready_gen_w),
-        .framed_data_out(framed_data_w),
-        .framed_valid_out(framed_valid_w),
-        .framed_ready_in(framed_ready_w)
+        .clk                (clk),
+        .rst_n              (rst_n), // 
+        .payload_data_in    (payload_data_gen_w),
+        .payload_valid_in   (payload_valid_gen_w),
+        .payload_ready_out  (payload_ready_gen_w),
+        .framed_data_out    (framed_data_w),
+        .framed_valid_out   (framed_valid_w),
+        .framed_ready_in    (framed_ready_w) // ★ 连接到反压 reg
     );
 
     // --- DUT 2: 帧同步器 ---
-    // 使用您提供的最新版本
-    frame_synchronizer #(
-        .PAYLOAD_SIZE_WORDS(PAYLOAD_SIZE_WORDS)
+    // ★ 例化我们已修复的 'frame_synchronizer_top' (即 frame_synchronizer_top_fixed.v)
+    frame_synchronizer_top #(
+        .PARALLEL(32),
+        .MASK_LEN(TB_ASM_LEN),
+        .ASM_LEN(TB_ASM_LEN),
+        .FRAME_LEN_BYTE(TB_FRAME_LEN_BYTE), // ★ 修复 2: 传递 40
+        .M_VERIFY(TB_M_VERIFY),
+        .N_PROTECT(TB_N_PROTECT),
+        .PIPELINE_LATENCY(TB_PIPELINE_LATENCY),
+        .FRAME_CNT_W     (16),
+        .TOLERANCE       (0),
+        .OUTPUT_DELAY    (3)
     ) u_frame_sync (
         .clk(clk),
-        .rst_n(rst_n),
-        .framed_data_in(framed_data_w),
-        .framed_valid_in(framed_valid_w),
-        .framed_ready_out(framed_ready_w),
-        .payload_data_out(payload_data_sync_w),
-        .payload_valid_out(payload_valid_sync_w),
-        .payload_ready_in(payload_ready_sync_w),
-        .start_of_frame_o(start_of_frame_w)
+        .rst_n(rst_n), // ★
+        .din(framed_data_w),
+        .din_valid(framed_valid_w),
+        // ★ 修复 5: asm_pattern 必须与 shift_buf 中的顺序匹配
+        //   Generator 发送 [HI, LO, HI, LO, HI, LO] (Word 1 -> 6)
+        //   Shift register (assuming {din, ...}) 存储 [LO, HI, LO, HI, LO, HI] (Word 6 -> 1)
+        .asm_pattern({TB_MARKER_LO, TB_MARKER_HI, 
+                      TB_MARKER_LO, TB_MARKER_HI, 
+                      TB_MARKER_LO, TB_MARKER_HI}), 
+        .asm_mask({TB_ASM_LEN{1'h1}}),   // 精确匹配
+        .frame_lock(frame_lock_w),      // (连接到内部线网)
+        .frame_sync_found(frame_sync_found_w),
+        .wnumber_dec(wnumber_dec_w),
+        .flocation(flocation_w),
+        .sof(start_of_frame_w),         // ★
+        .dout(payload_data_sync_w),
+        .dout_valid(payload_valid_sync_w)
+        // .dout_ready(payload_ready_sync_w) // 我们的同步器没有 dout_ready
     );
     
     // --- 1. 数据源 (Generator) ---
@@ -89,14 +135,25 @@ module tb_frame_end2end;
     assign payload_data_gen_w = payload_data_src;
     assign payload_valid_gen_w = 1'b1; // 数据源总是有效
 
-    // --- 2. 随机反压逻辑 ---
-    // always @(*) begin
-    //     // 模拟下游随机繁忙
-    //     payload_ready_sync_w = ($random % 10) > 2; // 70%的概率准备好
+    // --- 2. 随机反压逻辑 (连接到 framed_ready_w) ---
+    // (默认关闭, framed_ready_w 初始值为 1'b1)
+     initial framed_ready_w = 1'b1;
+    // always @(posedge clk or negedge rst_n) begin
+    //     if (!rst_n)
+    //         framed_ready_w <= 1'b1;
+    //     else
+    //         // 模拟下游随机繁忙
+    //         framed_ready_w <= ($random % 10) > 2; // 70%的概率准备好
     // end
 
+
+
+    // =================================================================
+    // ★ 修复 4: 启用自校验和仿真控制
+    // =================================================================
+
     // --- 3. 自校验逻辑 (Scoreboard & Checker) ---
-    reg [31:0] scoreboard_q[$:2*PAYLOAD_SIZE_WORDS]; // 一个简单的队列
+    reg [31:0] scoreboard_q[$:2*GEN_PAYLOAD_WORDS]; // 一个简单的队列
     reg [31:0] expected_data;
     integer    error_count;
     integer    transaction_count;
@@ -135,8 +192,8 @@ module tb_frame_end2end;
         // 等待复位完成
         @(posedge rst_n);
         
-        // 发送几帧数据
-        wait (transaction_count > 3 * PAYLOAD_SIZE_WORDS);
+        // 发送几帧数据 (例如 10 帧)
+        wait (transaction_count > (10 * GEN_PAYLOAD_WORDS));
 
         // **可以加入错误注入测试 (可选)**
         // #100;
@@ -147,30 +204,39 @@ module tb_frame_end2end;
         // 结束检查
         if (error_count == 0 && transaction_count > 0) begin
             $display("*******************************************");
-            $display("**** TEST PASSED!            ****");
+            $display("**** TEST PASSED!      ****");
             $display("*******************************************");
         end else begin
             $display("*******************************************");
-            $display("**** TEST FAILED!            ****");
+            $display("**** TEST FAILED!      ****");
             $display("*******************************************");
         end
         $finish;
     end
     
     // --- (可选) 错误注入任务 ---
-    task inject_bit_error(inout [31:0] data);
-        integer bit_pos;
-        begin
-            bit_pos = $random % 32;
-            $display("Injecting error at bit %d", bit_pos);
-            data[bit_pos] = ~data[bit_pos];
-        end
-    endtask
+    // task inject_bit_error(inout [31:0] data);
+    //     integer bit_pos;
+    //     begin
+    //         bit_pos = $random % 32;
+    //         $display("Injecting error at bit %d", bit_pos);
+    //         data[bit_pos] = ~data[bit_pos];
+    //     end
+    // endtask
     
     // 仿真波形 dump
     // initial begin
-    //     $dumpfile("tb_frame_end2end_optimized.vcd");
-    //     $dumpvars(0, tb_frame_end2end_optimized);
+    //     $dumpfile("tb_frame_end2end.vcd");
+    //     $dumpvars(0, tb_frame_end2end);
     // end
 
+    reg [31:0] payload_data;
+
+    always@(posedge clk)begin
+        if(payload_valid_sync_w)begin
+            $display("payload data %d",payload_data_sync_w);
+        end
+    end
+
 endmodule
+
