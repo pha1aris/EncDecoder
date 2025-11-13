@@ -2,7 +2,7 @@
 // Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-// Date        : Sat Nov  1 15:13:32 2025
+// Date        : Fri Nov  7 10:44:54 2025
 // Host        : FSO-A running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub
 //               c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_1/gtwizard_ultrascale_1_stub.v
@@ -25,12 +25,13 @@ module gtwizard_ultrascale_1(gtwiz_userclk_tx_reset_in,
   gtwiz_reset_tx_datapath_in, gtwiz_reset_rx_pll_and_datapath_in, 
   gtwiz_reset_rx_datapath_in, gtwiz_reset_rx_cdr_stable_out, gtwiz_reset_tx_done_out, 
   gtwiz_reset_rx_done_out, gtwiz_userdata_tx_in, gtwiz_userdata_rx_out, drpclk_in, 
-  gthrxn_in, gthrxp_in, gtrefclk0_in, rx8b10ben_in, rxbufreset_in, rxcommadeten_in, rxlpmen_in, 
-  rxmcommaalignen_in, rxpcommaalignen_in, tx8b10ben_in, txctrl0_in, txctrl1_in, txctrl2_in, 
-  txdiffctrl_in, txpostcursor_in, txprecursor_in, gthtxn_out, gthtxp_out, gtpowergood_out, 
-  rxbufstatus_out, rxbyteisaligned_out, rxbyterealign_out, rxclkcorcnt_out, rxcommadet_out, 
-  rxctrl0_out, rxctrl1_out, rxctrl2_out, rxctrl3_out, rxpmaresetdone_out, txpmaresetdone_out)
-/* synthesis syn_black_box black_box_pad_pin="gtwiz_userclk_tx_reset_in[0:0],gtwiz_userclk_tx_srcclk_out[0:0],gtwiz_userclk_tx_usrclk_out[0:0],gtwiz_userclk_tx_usrclk2_out[0:0],gtwiz_userclk_tx_active_out[0:0],gtwiz_userclk_rx_reset_in[0:0],gtwiz_userclk_rx_srcclk_out[0:0],gtwiz_userclk_rx_usrclk_out[0:0],gtwiz_userclk_rx_usrclk2_out[0:0],gtwiz_userclk_rx_active_out[0:0],gtwiz_reset_clk_freerun_in[0:0],gtwiz_reset_all_in[0:0],gtwiz_reset_tx_pll_and_datapath_in[0:0],gtwiz_reset_tx_datapath_in[0:0],gtwiz_reset_rx_pll_and_datapath_in[0:0],gtwiz_reset_rx_datapath_in[0:0],gtwiz_reset_rx_cdr_stable_out[0:0],gtwiz_reset_tx_done_out[0:0],gtwiz_reset_rx_done_out[0:0],gtwiz_userdata_tx_in[31:0],gtwiz_userdata_rx_out[31:0],drpclk_in[0:0],gthrxn_in[0:0],gthrxp_in[0:0],gtrefclk0_in[0:0],rx8b10ben_in[0:0],rxbufreset_in[0:0],rxcommadeten_in[0:0],rxlpmen_in[0:0],rxmcommaalignen_in[0:0],rxpcommaalignen_in[0:0],tx8b10ben_in[0:0],txctrl0_in[15:0],txctrl1_in[15:0],txctrl2_in[7:0],txdiffctrl_in[4:0],txpostcursor_in[4:0],txprecursor_in[4:0],gthtxn_out[0:0],gthtxp_out[0:0],gtpowergood_out[0:0],rxbufstatus_out[2:0],rxbyteisaligned_out[0:0],rxbyterealign_out[0:0],rxclkcorcnt_out[1:0],rxcommadet_out[0:0],rxctrl0_out[15:0],rxctrl1_out[15:0],rxctrl2_out[7:0],rxctrl3_out[7:0],rxpmaresetdone_out[0:0],txpmaresetdone_out[0:0]" */;
+  gthrxn_in, gthrxp_in, gtrefclk0_in, loopback_in, rx8b10ben_in, rxbufreset_in, 
+  rxcommadeten_in, rxlpmen_in, rxmcommaalignen_in, rxpcommaalignen_in, tx8b10ben_in, 
+  txctrl0_in, txctrl1_in, txctrl2_in, txdiffctrl_in, txpostcursor_in, txprecursor_in, 
+  gthtxn_out, gthtxp_out, gtpowergood_out, rxbufstatus_out, rxbyteisaligned_out, 
+  rxbyterealign_out, rxclkcorcnt_out, rxcommadet_out, rxctrl0_out, rxctrl1_out, rxctrl2_out, 
+  rxctrl3_out, rxpmaresetdone_out, txpmaresetdone_out)
+/* synthesis syn_black_box black_box_pad_pin="gtwiz_userclk_tx_reset_in[0:0],gtwiz_userclk_tx_srcclk_out[0:0],gtwiz_userclk_tx_usrclk_out[0:0],gtwiz_userclk_tx_usrclk2_out[0:0],gtwiz_userclk_tx_active_out[0:0],gtwiz_userclk_rx_reset_in[0:0],gtwiz_userclk_rx_srcclk_out[0:0],gtwiz_userclk_rx_usrclk_out[0:0],gtwiz_userclk_rx_usrclk2_out[0:0],gtwiz_userclk_rx_active_out[0:0],gtwiz_reset_clk_freerun_in[0:0],gtwiz_reset_all_in[0:0],gtwiz_reset_tx_pll_and_datapath_in[0:0],gtwiz_reset_tx_datapath_in[0:0],gtwiz_reset_rx_pll_and_datapath_in[0:0],gtwiz_reset_rx_datapath_in[0:0],gtwiz_reset_rx_cdr_stable_out[0:0],gtwiz_reset_tx_done_out[0:0],gtwiz_reset_rx_done_out[0:0],gtwiz_userdata_tx_in[31:0],gtwiz_userdata_rx_out[31:0],drpclk_in[0:0],gthrxn_in[0:0],gthrxp_in[0:0],gtrefclk0_in[0:0],loopback_in[2:0],rx8b10ben_in[0:0],rxbufreset_in[0:0],rxcommadeten_in[0:0],rxlpmen_in[0:0],rxmcommaalignen_in[0:0],rxpcommaalignen_in[0:0],tx8b10ben_in[0:0],txctrl0_in[15:0],txctrl1_in[15:0],txctrl2_in[7:0],txdiffctrl_in[4:0],txpostcursor_in[4:0],txprecursor_in[4:0],gthtxn_out[0:0],gthtxp_out[0:0],gtpowergood_out[0:0],rxbufstatus_out[2:0],rxbyteisaligned_out[0:0],rxbyterealign_out[0:0],rxclkcorcnt_out[1:0],rxcommadet_out[0:0],rxctrl0_out[15:0],rxctrl1_out[15:0],rxctrl2_out[7:0],rxctrl3_out[7:0],rxpmaresetdone_out[0:0],txpmaresetdone_out[0:0]" */;
   input [0:0]gtwiz_userclk_tx_reset_in;
   output [0:0]gtwiz_userclk_tx_srcclk_out;
   output [0:0]gtwiz_userclk_tx_usrclk_out;
@@ -56,6 +57,7 @@ module gtwizard_ultrascale_1(gtwiz_userclk_tx_reset_in,
   input [0:0]gthrxn_in;
   input [0:0]gthrxp_in;
   input [0:0]gtrefclk0_in;
+  input [2:0]loopback_in;
   input [0:0]rx8b10ben_in;
   input [0:0]rxbufreset_in;
   input [0:0]rxcommadeten_in;

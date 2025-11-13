@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 //
-// 模块: frame_synchronizer_pipelined  (带末级有效位 wflag_valid)
+// 模块: frame_synchronizer_pipelined 
 // 功能: 并行滑动窗口匹配引擎；A级用 din_valid 推进；B/C/D 级每拍推进；末级导出有效位.
 //
 module frame_synchronizer_pipelined #(

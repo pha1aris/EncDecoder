@@ -360,101 +360,101 @@ end
 // 1️⃣ 基本事件监控
 // ================================================================
 
-always @(posedge clk) begin
-  if (rst_n) begin
+// always @(posedge clk) begin
+//   if (rst_n) begin
 
-    // 打印帧头结束信号变化
-    if (uut.header_end_delayed)
-      $display("[%0t] hdr_end_dly | hit_in_frame=%0d | frame_lock=%0d | verify_cnt=%0d | miss_cnt=%0d",
-        $time, uut.hit_in_frame, uut.frame_lock, uut.verify_cnt, uut.miss_cnt);
+//     // 打印帧头结束信号变化
+//     if (uut.header_end_delayed)
+//       $display("[%0t] hdr_end_dly | hit_in_frame=%0d | frame_lock=%0d | verify_cnt=%0d | miss_cnt=%0d",
+//         $time, uut.hit_in_frame, uut.frame_lock, uut.verify_cnt, uut.miss_cnt);
 
-    if (uut.header_end_d1)
-      $display("[%0t] hdr_end_d1  | hit_in_frame=%0d | frame_lock=%0d | verify_cnt=%0d | miss_cnt=%0d",
-        $time, uut.hit_in_frame, uut.frame_lock, uut.verify_cnt, uut.miss_cnt);
+//     if (uut.header_end_d1)
+//       $display("[%0t] hdr_end_d1  | hit_in_frame=%0d | frame_lock=%0d | verify_cnt=%0d | miss_cnt=%0d",
+//         $time, uut.hit_in_frame, uut.frame_lock, uut.verify_cnt, uut.miss_cnt);
 
-    if (uut.header_end_d2)
-      $display("[%0t] hdr_end_d2  | hit_in_frame=%0d | frame_lock=%0d | verify_cnt=%0d | miss_cnt=%0d",
-        $time, uut.hit_in_frame, uut.frame_lock, uut.verify_cnt, uut.miss_cnt);
+//     if (uut.header_end_d2)
+//       $display("[%0t] hdr_end_d2  | hit_in_frame=%0d | frame_lock=%0d | verify_cnt=%0d | miss_cnt=%0d",
+//         $time, uut.hit_in_frame, uut.frame_lock, uut.verify_cnt, uut.miss_cnt);
 
-    // found_pulse 打印
-    if (uut.found_pulse)
-      $display("[%0t] found_pulse ↑ | in_header_delayed=%0d | hit_in_frame=%0d | state=%s",
-        $time, uut.in_header_delayed, uut.hit_in_frame, uut.ascii_state);
+//     // found_pulse 打印
+//     if (uut.found_pulse)
+//       $display("[%0t] found_pulse ↑ | in_header_delayed=%0d | hit_in_frame=%0d | state=%s",
+//         $time, uut.in_header_delayed, uut.hit_in_frame, uut.ascii_state);
 
-    // 帧起止标志
-    if (uut.frame_start)
-      $display("[%0t] frame_start ↑ (new frame begins)", $time);
-    if (uut.frame_end)
-      $display("[%0t] frame_end   ↑ (frame end reached)", $time);
+//     // 帧起止标志
+//     if (uut.frame_start)
+//       $display("[%0t] frame_start ↑ (new frame begins)", $time);
+//     if (uut.frame_end)
+//       $display("[%0t] frame_end   ↑ (frame end reached)", $time);
 
-    // 输出非法检查
-    if (uut.dout_valid && !uut.frame_lock) begin
-      $display("[%0t][ERROR]  dout_valid=1 while frame_lock=0 (BAD FRAME OUTPUT)", $time);
-      $stop;
-    end
+//     // 输出非法检查
+//     if (uut.dout_valid && !uut.frame_lock) begin
+//       $display("[%0t][ERROR]  dout_valid=1 while frame_lock=0 (BAD FRAME OUTPUT)", $time);
+//       $stop;
+//     end
 
-  end
-end
+//   end
+// end
 
 // ================================================================
 // 2️⃣ frame_lock 边沿检测（Verilog 兼容写法）
 // ================================================================
 
-reg prev_frame_lock;
-always @(posedge clk or negedge rst_n) begin
-  if (!rst_n)
-    prev_frame_lock <= 1'b0;
-  else
-    prev_frame_lock <= uut.frame_lock;
-end
+// reg prev_frame_lock;
+// always @(posedge clk or negedge rst_n) begin
+//   if (!rst_n)
+//     prev_frame_lock <= 1'b0;
+//   else
+//     prev_frame_lock <= uut.frame_lock;
+// end
 
-always @(posedge clk) begin
-  if (rst_n) begin
-    if (!prev_frame_lock && uut.frame_lock)
-      $display("[%0t] >>> Frame LOCK ACQUIRED <<<", $time);
-    if (prev_frame_lock && !uut.frame_lock)
-      $display("[%0t] !!! Frame LOCK LOST !!!", $time);
-  end
-end
+// always @(posedge clk) begin
+//   if (rst_n) begin
+//     if (!prev_frame_lock && uut.frame_lock)
+//       $display("[%0t] >>> Frame LOCK ACQUIRED <<<", $time);
+//     if (prev_frame_lock && !uut.frame_lock)
+//       $display("[%0t] !!! Frame LOCK LOST !!!", $time);
+//   end
+// end
 
 // ================================================================
 // 3️⃣ 状态一致性检查 / 命中异常检测
 // ================================================================
 
 // 若锁定状态下该帧未命中 → 预警
-always @(posedge clk) begin
-  if (rst_n && uut.frame_lock && uut.header_end_d2 && !uut.hit_in_frame) begin
-    $display("[%0t][WARN]  Locked but current frame missed header!", $time);
-  end
-  if (uut.found_pulse)
-  $display("[%0t] found_pulse vs in_header_delayed=%0d header_end_delayed=%0d",
-    $time, uut.in_header_delayed, uut.header_end_delayed);
-end
+// always @(posedge clk) begin
+//   if (rst_n && uut.frame_lock && uut.header_end_d2 && !uut.hit_in_frame) begin
+//     $display("[%0t][WARN]  Locked but current frame missed header!", $time);
+//   end
+//   if (uut.found_pulse)
+//   $display("[%0t] found_pulse vs in_header_delayed=%0d header_end_delayed=%0d",
+//     $time, uut.in_header_delayed, uut.header_end_delayed);
+// end
 
-// 检查 found_pulse 是否与 header_end_delayed 重叠
-reg found_overlap_hdr;
-always @(posedge clk or negedge rst_n) begin
-  if (!rst_n)
-    found_overlap_hdr <= 1'b0;
-  else
-    found_overlap_hdr <= uut.header_end_delayed && uut.found_pulse;
-end
+// // 检查 found_pulse 是否与 header_end_delayed 重叠
+// reg found_overlap_hdr;
+// always @(posedge clk or negedge rst_n) begin
+//   if (!rst_n)
+//     found_overlap_hdr <= 1'b0;
+//   else
+//     found_overlap_hdr <= uut.header_end_delayed && uut.found_pulse;
+// end
 
-always @(posedge clk) begin
-  if (found_overlap_hdr)
-    $display("[%0t][WARN]  found_pulse overlaps header_end_delayed, possible timing race!", $time);
-end
+// always @(posedge clk) begin
+//   if (found_overlap_hdr)
+//     $display("[%0t][WARN]  found_pulse overlaps header_end_delayed, possible timing race!", $time);
+// end
 
-// ================================================================
-// 4️⃣ 仿真结束汇总
-// ================================================================
+// // ================================================================
+// // 4️⃣ 仿真结束汇总
+// // ================================================================
 
-initial begin
-  #3000000; // 仿真时间，可按需求修改（此处为3us）
-  $display("\n===== [Simulation Summary] =====");
-  $display("仿真结束：若无 或 日志，则帧同步链稳定");
-  $stop;
-end
+// initial begin
+//   #3000000; // 仿真时间，可按需求修改（此处为3us）
+//   $display("\n===== [Simulation Summary] =====");
+//   $display("仿真结束：若无 或 日志，则帧同步链稳定");
+//   $stop;
+// end
 
 
 

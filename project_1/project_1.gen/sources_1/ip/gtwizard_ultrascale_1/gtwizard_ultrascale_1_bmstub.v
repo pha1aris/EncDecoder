@@ -31,6 +31,7 @@ module gtwizard_ultrascale_1 (
   gthrxn_in,
   gthrxp_in,
   gtrefclk0_in,
+  loopback_in,
   rx8b10ben_in,
   rxbufreset_in,
   rxcommadeten_in,
@@ -110,6 +111,8 @@ module gtwizard_ultrascale_1 (
   input [0:0]gthrxp_in;
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]gtrefclk0_in;
+  (* X_INTERFACE_IGNORE = "true" *)
+  input [2:0]loopback_in;
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]rx8b10ben_in;
   (* X_INTERFACE_IGNORE = "true" *)

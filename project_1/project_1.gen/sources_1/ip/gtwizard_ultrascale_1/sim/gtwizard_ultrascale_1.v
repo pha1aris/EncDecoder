@@ -79,6 +79,7 @@ module gtwizard_ultrascale_1 (
   gthrxn_in,
   gthrxp_in,
   gtrefclk0_in,
+  loopback_in,
   rx8b10ben_in,
   rxbufreset_in,
   rxcommadeten_in,
@@ -133,6 +134,7 @@ input wire [0 : 0] drpclk_in;
 input wire [0 : 0] gthrxn_in;
 input wire [0 : 0] gthrxp_in;
 input wire [0 : 0] gtrefclk0_in;
+input wire [2 : 0] loopback_in;
 input wire [0 : 0] rx8b10ben_in;
 input wire [0 : 0] rxbufreset_in;
 input wire [0 : 0] rxcommadeten_in;
@@ -463,7 +465,7 @@ output wire [0 : 0] txpmaresetdone_out;
     .incpctrl_in(1'H0),
     .gtyrxn_in(1'B0),
     .gtyrxp_in(1'B0),
-    .loopback_in(3'H0),
+    .loopback_in(loopback_in),
     .looprsvd_in(1'B0),
     .lpbkrxtxseren_in(1'B0),
     .lpbktxrxseren_in(1'B0),

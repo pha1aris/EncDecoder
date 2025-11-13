@@ -59,6 +59,10 @@ OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param tcl.collectionResultDisplayLimit 0
 set_param general.maxThreads 32
 set_param chipscope.maxJobs 8
+set_param power.BramSDPPropagationFix 1
+set_param power.enableUnconnectedCarry8PinPower 1
+set_param power.enableCarry8RouteBelPower 1
+set_param power.enableLutRouteBelPower 1
 set_param xicom.use_bs_reader 1
 set_param simulator.modelsimInstallPath C:/modeltech64_2020.4/win64
 OPTRACE "Creating in-memory project" START { }
@@ -77,25 +81,30 @@ set_property ip_output_repo c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.ca
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
+read_verilog -library xil_defaultlib -sv C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/frame_synchronizer_top.v
 read_verilog -library xil_defaultlib {
+  C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/imports/src/frame_generator.v
+  C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/frame_synchronizer_pipeline.v
   C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/gth_top.v
   C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/imports/imports/gtwizard_ultrascale_0_prbs_any.v
   C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/prbs_gth_test.v
 }
-read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/gtwizard_ultrascale_1/gtwizard_ultrascale_1.xci
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_1/synth/gtwizard_ultrascale_1_ooc.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_1/synth/gtwizard_ultrascale_1.xdc]
-
 read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc]
 
-read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/ila_0/ila_0.xci
-set_property used_in_synthesis false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/ila_0/ila_v6_2/constraints/ila_impl.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/ila_0/ila_v6_2/constraints/ila_impl.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/ila_0/ila_v6_2/constraints/ila.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/ila_0/ila_0_ooc.xdc]
+read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/gtwizard_ultrascale_1/gtwizard_ultrascale_1.xci
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_1/synth/gtwizard_ultrascale_1_ooc.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_1/synth/gtwizard_ultrascale_1.xdc]
+
+read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/sync_fifo/sync_fifo.xci
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/sync_fifo/sync_fifo.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/sync_fifo/sync_fifo_ooc.xdc]
+
+read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/vio_0/vio_0.xci
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/vio_0/vio_0.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/vio_0/vio_0_ooc.xdc]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -109,6 +118,8 @@ foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
 read_xdc C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/constrs_1/new/system_cons.xdc
 set_property used_in_implementation false [get_files C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/constrs_1/new/system_cons.xdc]
 
+read_xdc dont_touch.xdc
+set_property used_in_implementation false [get_files dont_touch.xdc]
 set_param ips.enableIPCacheLiteLoad 1
 
 read_checkpoint -auto_incremental -incremental C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/utils_1/imports/synth_1/design_1_wrapper.dcp

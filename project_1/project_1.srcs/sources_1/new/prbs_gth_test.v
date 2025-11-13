@@ -28,7 +28,10 @@
 // 5. ILA probe1 修改为 GTH TX 的输入 (framed_tx_data)。
 // 6. ILA probe2 修改为帧同步锁存信号 (frame_is_locked)。
 // 7. 根据 frame_generator 的参数 (SYNC_MARKER) 自动配置了 frame_synchronizer 的 (asm_pattern)。
-// 8. 修正了 frame_synchronizer 的 FRAME_LEN_BYTE (24B ASM + 16B Payload = 40B)。
+// 8. 修正了 frame_synchronizer 的 FRAME_LEN_BYTE (1MB + 24B ASM)。
+// 9. 删除了 L172 之后粘贴错的重复代码。
+// 10. ★ 修复了 gth_top 的例化语法错误 (缺少实例名称)。
+// 11. ★ 修复了 u_frame_sync 的悬空输出端口 (连接到 dummy wire)。
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -49,12 +52,13 @@ module prbs_gth_test(
     output wire         gthtxp_out,
     output wire         gthtxn_out
 );
+
     wire        freerun_clk, gtwiz_userclk_tx_active_out;
     wire        gtwiz_userclk_rx_active_out;
     wire        gtwiz_userclk_tx_usrclk2_out;
     wire        gtwiz_userclk_rx_usrclk2_out;
     // wire [31:0]userdata_tx_in ; // [GEMINI] 移除, 改用 framed_tx_data
-    wire [31:0] userdata_rx_out;
+    (* MARK_DEBUG="true" *) wire [31:0] userdata_rx_out;
     wire        pll_locked;
     wire [31:0] prbs_chk;
     wire        prbs_match;
@@ -62,135 +66,186 @@ module prbs_gth_test(
     // --- GEMINI: 为帧结构添加的新信号 ---
     wire [31:0] prbs_data;                      // PRBS Gen -> Frame Gen
     wire        payload_ready_from_frame_gen;   // Frame Gen -> PRBS Gen
-    wire [31:0] framed_tx_data;                 // Frame Gen -> GTH TX
-    wire [31:0] sync_dout;                      // Frame Sync -> PRBS Chk
+    (* MARK_DEBUG="true" *)wire [31:0] framed_tx_data;                 // Frame Gen -> GTH TX
+    wire        framed_tx_valid;                // Frame Gen -> GTH TX (用于门控)
+    (* MARK_DEBUG="true" *)wire [31:0] sync_dout;                      // Frame Sync -> PRBS Chk
     wire        sync_dout_valid;                // Frame Sync -> PRBS Chk
-    wire        frame_is_locked;                // Frame Sync 状态
+   (* MARK_DEBUG="true" *)  wire        frame_is_locked;                // Frame Sync 状态 (连接到 ILA)
     wire [191:0] asm_pattern_wire;              // 同步头 (ASM) 码型
     wire [191:0] asm_mask_wire;                 // 同步头 (ASM) 掩码
+    
+    // 为悬空的输出端口声明 wire (防止 lint/synthesis 警告)
+    wire        unused_sync_found;
+    wire [4:0]  unused_wnumber;
+    wire [3:0]  unused_flocation;
+    wire        unused_sof;
     // ------------------------------------
+
+    // --- GEMINI: 帧结构参数 (基于 1MB 负载) ---
+    // 1. 定义帧生成器 (TX) 参数
+    // localparam GEN_PAYLOAD_BYTES    = 1048576;          // 1MB 负载
+    localparam GEN_PAYLOAD_BYTES    = 220;
+    localparam GEN_PAYLOAD_WORDS    = GEN_PAYLOAD_BYTES / 4; // 262,144 个 32-bit 字
+    localparam GEN_ASM_REPS         = 3;                // 3 * 64-bit = 192 bits
+    localparam [63:0] GEN_SYNC_MARKER = 64'hA53333A8_B1699558; // 保持与TB一致
+
+    // 2. 推导帧同步器 (RX) 参数
+    localparam TB_ASM_LEN           = 192;              // GEN_ASM_REPS * 64
+    localparam TB_ASM_BYTES         = GEN_ASM_REPS * 8;       // 24 字节
+    localparam TB_FRAME_LEN_BYTE    = TB_ASM_BYTES + GEN_PAYLOAD_BYTES; // 24 + 1,048,576 = 1,048,600 字节
+    localparam TB_FRAME_CNT_W       = $clog2(TB_FRAME_LEN_BYTE); // $clog2(1048600) = 21
+
+    // 3. 推导 RX ASM 码型 (用于匹配)
+    //    Generator 发送: [HI, LO] [HI, LO] [HI, LO]
+    //    接收端 (shift_buf) 看到: {LO, HI, LO, HI, LO, HI}
+    localparam [31:0] TB_MARKER_HI = GEN_SYNC_MARKER[31:0]; // 32'hB1699558
+    localparam [31:0] TB_MARKER_LO = GEN_SYNC_MARKER[63:32];  // 32'hA53333A8
+    assign asm_pattern_wire = {TB_MARKER_LO, TB_MARKER_HI, 
+                               TB_MARKER_LO, TB_MARKER_HI, 
+                               TB_MARKER_LO, TB_MARKER_HI}; //A53333A8_B1699558 , ***
+    assign asm_mask_wire    = {TB_ASM_LEN{1'b1}};
+    // ------------------------------------------
 
     assign tx_disable = 2'b00;
     assign prbs_match = ~|prbs_chk;
-    // assign userdata_tx_in = prbs_data; // [GEMINI] 移除, ILA probe1 将直接连接到 framed_tx_data
+    // ================= 8b10b ctrl ===========
 
-    // [GEMINI NOTE]: ILA探针修改
-    // probe1 -> framed_tx_data (GTH的实际TX输入)
-    // probe2 -> frame_is_locked (帧同步锁存状态)
-    ila_0 ila_0 (
-        .clk      (freerun_clk), // input wire clk
-        .probe0   (userdata_rx_out), // input wire [31:0]  probe0 (GTH RX 输出)
-        .probe1   (framed_tx_data), // input wire [31:0]  probe1 (GTH TX 输入)
-        .probe2   (frame_is_locked) // input wire [0:0]   probe2 (帧同步锁存)
-    );
+    wire [7:0]   txctrl2_out;
+   (* MARK_DEBUG="true" *) wire [3:0]   charisk;
 
     clk_wiz_0 clk_wiz_0  (
-        .clk_out1   (freerun_clk),      
-        .reset      (!sys_rst_n), 
-        .locked     (pll_locked),       
-        .clk_in1_p  (sys_clk_p),    
-        .clk_in1_n  (sys_clk_n)    
+        .clk_out1                   (freerun_clk),     
+        .reset                      (!sys_rst_n), 
+        .locked                     (pll_locked),       
+        .clk_in1_p                  (sys_clk_p),    
+        .clk_in1_n                  (sys_clk_n)     
     );
 
-    gth_top     gth_top (
-      .freerun_clk                (freerun_clk),
-      // TX/RX 用户数据
-      .gtwiz_userdata_tx_in       (framed_tx_data), // [GEMINI] 修改: 连接到 Frame Gen 的输出
-      .gtwiz_userdata_rx_out      (userdata_rx_out),
-      // 导出 helper 生成的用户时钟与激活信号
-      .gtwiz_userclk_tx_active_out(gtwiz_userclk_tx_active_out),
-      .gtwiz_userclk_rx_active_out(gtwiz_userclk_rx_active_out),
-      .gtwiz_userclk_tx_usrclk2_out(gtwiz_userclk_tx_usrclk2_out),
-      .gtwiz_userclk_rx_usrclk2_out(gtwiz_userclk_rx_usrclk2_out),
-      // 参考时钟（差分）
-      .mgtrefclk0_x1y1_p          (mgtrefclk0_x1y1_p),
-      .mgtrefclk0_x1y1_n          (mgtrefclk0_x1y1_n),
-      // 串行物理
-      .gthrxp_in                  (gthrxp_in),
-      .gthrxn_in                  (gthrxn_in),
-      .gthtxp_out                 (gthtxp_out),
-      .gthtxn_out                 (gthtxn_out)
+        wire  [15:0] rxctrl0_out; 
+        wire  [15:0] rxctrl1_out; 
+        wire  [7:0] rxctrl2_out; 
+        wire  [7:0] rxctrl3_out;
+        wire  [3:0] rxdisperr = rxctrl0_out[3:0];
+        wire  [3:0] rxnotintable = rxctrl1_out[3:0]; 
+
+    assign charisk = rxctrl2_out[3:0];
+
+    gth_top gth_top (
+        .freerun_clk                  (freerun_clk),
+        .gtwiz_rst_in                 (!sys_rst_n || !pll_locked),
+
+    // TX/RX 用户数据
+        .gtwiz_userdata_tx_in         (framed_tx_data), // [GEMINI] 修改: 连接到 Frame Gen 的输出 (Frame Gen 在 IDLE 时输出 0)
+        .gtwiz_userdata_rx_out        (userdata_rx_out),
+        .gtwiz_userclk_tx_active_out  (gtwiz_userclk_tx_active_out),
+        .gtwiz_userclk_rx_active_out  (gtwiz_userclk_rx_active_out),
+        .gtwiz_userclk_tx_usrclk2_out (gtwiz_userclk_tx_usrclk2_out),
+        .gtwiz_userclk_rx_usrclk2_out (gtwiz_userclk_rx_usrclk2_out),
+   // 8b10b控制端口
+
+        .txctrl0_in                   (16'd0),
+        .txctrl1_in                   (16'd0),
+        .txctrl2_in                   (txctrl2_out), //发送是K码
+
+        .rxctrl0_out                  (rxctrl0_out), 
+        .rxctrl1_out                  (rxctrl1_out), 
+        .rxctrl2_out                  (rxctrl2_out),  //charisk
+        .rxctrl3_out                  (rxctrl3_out),
+
+        .tx8b10ben_in                 (1'b1),
+        .rx8b10ben_in                 (1'b1),
+        .rxcommadeten_in              (1'b1),
+        .rxmcommaalignen_in           (1'b1),
+        .rxpcommaalignen_in           (1'b1),
+        .rxbufreset_in                (1'b0),
+
+        .mgtrefclk0_x1y1_p            (mgtrefclk0_x1y1_p),
+        .mgtrefclk0_x1y1_n            (mgtrefclk0_x1y1_n),
+        .gthrxp_in                    (gthrxp_in),
+        .gthrxn_in                    (gthrxn_in),
+        .gthtxp_out                   (gthtxp_out),
+        .gthtxn_out                   (gthtxn_out)
     );
 
     gtwizard_ultrascale_0_prbs_any #(
-        .CHK_MODE    (0),
-        .INV_PATTERN (1),
-        .POLY_LENGHT (31),
-        .POLY_TAP    (28),
-        .NBITS       (32)
+        .CHK_MODE           (0),
+        .INV_PATTERN        (1),
+        .POLY_LENGHT        (31),
+        .POLY_TAP           (28),
+        .NBITS              (32)
     ) prbs_gen_inst (
-        .RST      (~gtwiz_userclk_tx_active_out),
-        .CLK      (gtwiz_userclk_tx_usrclk2_out),
-        .DATA_IN  ('d0),
-        .EN       (payload_ready_from_frame_gen), // [GEMINI] 修改: 由 Frame Gen 反压
-        .DATA_OUT (prbs_data)
+        .RST                (~gtwiz_userclk_tx_active_out), // 使用 GTH TX 激活信号
+        .CLK                (gtwiz_userclk_tx_usrclk2_out), // 使用 GTH TX 时钟
+        .DATA_IN            ('d0),
+        .EN                 (payload_ready_from_frame_gen), //  修改: 由 Frame Gen 反压
+        .DATA_OUT           (prbs_data)                     //  连接到 Frame Gen
     );
 
     gtwizard_ultrascale_0_prbs_any #(
-        .CHK_MODE (1),
-        .INV_PATTERN (1),
-        .POLY_LENGHT (31),
-        .POLY_TAP (28),
-        .NBITS (32)
+        .CHK_MODE           (1),
+        .INV_PATTERN        (1),
+        .POLY_LENGHT        (31),
+        .POLY_TAP           (28),
+        .NBITS              (32)
     ) prbs_chk_inst (
-        .RST      (!gtwiz_userclk_rx_active_out),
-        .CLK      (gtwiz_userclk_rx_usrclk2_out),
-        .DATA_IN  (sync_dout),       // [GEMINI] 修改: 连接到 Frame Sync 的输出
-        .EN       (sync_dout_valid), // [GEMINI] 修改: 由 Frame Sync 的 valid 信号控制
-        .DATA_OUT (prbs_chk)
+        .RST                (!gtwiz_userclk_rx_active_out), //  使用 GTH RX 激活信号
+        .CLK                (gtwiz_userclk_rx_usrclk2_out), //  使用 GTH RX 时钟
+        .DATA_IN            (sync_dout),                    //  修改: 连接到 Frame Sync 的输出
+        .EN                 (sync_dout_valid),              //  修改: 由 Frame Sync 的 valid 信号控制
+        .DATA_OUT           (prbs_chk)
     );
 
+    frame_generator #(
+        .SYNC_MARKER        (GEN_SYNC_MARKER),  // 64'hA53333A8_B1699558 
+        .SYNC_REPETITION    (GEN_ASM_REPS),
+        .PAYLOAD_SIZE_WORDS (GEN_PAYLOAD_WORDS) // 1MB 负载
+    ) u_frame_gen (
+        .clk                (gtwiz_userclk_tx_usrclk2_out), // GTH TX 时钟
+        .rst_n              (gtwiz_userclk_tx_active_out),  // GTH TX 激活
+        .txctrl2_out        (txctrl2_out),
+        .payload_data_in    (prbs_data),                    // 来自 PRBS Gen
+        .payload_valid_in   (1'b1),                         // PRBS 总是有效 (靠 ready 节流)
+        .payload_ready_out  (payload_ready_from_frame_gen), // 反压 PRBS Gen
+        .framed_data_out    (framed_tx_data),               // 连接到 GTH TX
+        .framed_valid_out   (framed_tx_valid),              // (GTH TX 是透明的, 但我们保留这个 valid 信号)
+        .framed_ready_in    (1'b1)                          // 假设 GTH TX 总是 ready
+    );
 
-// [GEMINI] 实例化帧生成器 (TX 路径)
-frame_generator #(
-    .SYNC_MARKER        (64'hB1699558_A53333A8),
-    // ★ 匹配 192-bit ASM
-    .SYNC_REPETITION    (3),  
-    // ★ 匹配 4 个字的 Payload (16 字节)
-    .PAYLOAD_SIZE_WORDS (4)
-) u_frame_generator (
-    .clk                (gtwiz_userclk_tx_usrclk2_out),
-    .rst_n              (gtwiz_userclk_tx_active_out),
-    .payload_data_in    (prbs_data),
-    .payload_valid_in   (1'b1), // PRBS Gen 在 EN=1 时总是有效的
-    .payload_ready_out  (payload_ready_from_frame_gen),
-    .framed_data_out    (framed_tx_data),
-    .framed_valid_out   (),     // 假设 GTH TX FIFO 总是准备好，不处理反压
-    .framed_ready_in    (1'b1)  // 假设 GTH TX FIFO 总是准备好
-);
+    (* MARK_DEBUG="true" *)wire [31:0] data_o;
+    (* MARK_DEBUG="true" *)wire data_valid_o;
 
-// [GEMINI] 实例化帧同步器 (RX 路径)
+    frame_synchronizer_top #(
+        .PARALLEL           (32),
+        .MASK_LEN           (TB_ASM_LEN),           // 192
+        .ASM_LEN            (TB_ASM_LEN),           // 192
+        .FRAME_LEN_BYTE     (TB_FRAME_LEN_BYTE),    // 1,048,600
+        .M_VERIFY           (2),                    // 
+        .N_PROTECT          (2),                    // 
+        .PIPELINE_LATENCY   (9),                    // 
+        .FRAME_CNT_W        (TB_FRAME_CNT_W),       // 21
+        .TOLERANCE          (0),
+        .OUTPUT_DELAY       (3)                     // (使用默认值)
+    ) u_frame_sync (
+        .clk                (gtwiz_userclk_rx_usrclk2_out), // GTH RX 时钟
+        .rst_n              (gtwiz_userclk_rx_active_out),  // GTH RX 激活
+        .din                (userdata_rx_out),            // GTH RX 数据
+        .din_valid          (gtwiz_userclk_rx_active_out),  // GTH RX 激活 = 数据有效
+        .din_charisk        (charisk),
+        .asm_pattern        (asm_pattern_wire),         // A53333A8_B1699558 * 3
+        .asm_mask           (asm_mask_wire),
+        .frame_lock         (frame_is_locked),            // 连接到 ILA probe2
+        
+        .frame_sync_found   (unused_sync_found),
+        .wnumber_dec        (unused_wnumber),
+        .flocation          (unused_flocation),
+        .sof                (unused_sof),
+        
+        .data_o             (data_o),
+        .data_valid_o       (data_valid_o),
 
-// 根据 frame_generator 的 SYNC_MARKER (B1699558_A53333A8) 和 REPETITION (3) 来定义 ASM 码型
-// ASM = 192 bits
-assign asm_pattern_wire = {64'hB1699558_A53333A8, 64'hB1699558_A53333A8, 64'hB1699558_A53333A8};
-// 使用全1掩码进行精确匹配
-assign asm_mask_wire    = {192{1'b1}}; 
-
-frame_synchronizer_top #(
-    .PARALLEL           (32),     // 数据总线位宽
-    .MASK_LEN           (192),    // 帧同步码 (ASM) 的掩码长度 (bits)。
-    .ASM_LEN            (192),    // 帧同步码 (ASM) 的总长度 (bits)。
-    .TOLERANCE          (0),      // 帧同步码 (ASM) 匹配时允许的最大误码位数 (容错)。
-    .FRAME_LEN_BYTE     (40),     // [GEMINI] 修正: 帧总长 = ASM(24B) + Payload(16B) = 40B
-    .M_VERIFY           (2),      // FSM: 需要连续 M 帧(帧头)命中才能进入 LOCK 状态。
-    .N_PROTECT          (2),      // FSM: 需要连续 N 帧(帧头)丢失才能从 LOCK 跌落到 PROTECT 状态。
-    .PIPELINE_LATENCY   (9)       // [GEMINI] 采用TB中的值 9
-) u_frame_synchronizer (
-    .clk                (gtwiz_userclk_rx_usrclk2_out),
-    .rst_n              (gtwiz_userclk_rx_active_out),    
-    .din                (userdata_rx_out),
-    .din_valid          (gtwiz_userclk_rx_active_out), // GTH RX 数据在时钟 active 时有效
-    .asm_pattern        (asm_pattern_wire),
-    .asm_mask           (asm_mask_wire),
-
-    .frame_lock         (frame_is_locked), // 连接到 ILA
-    .frame_sync_found   (),
-    .wnumber_dec        (),
-    .flocation          (),
-    .sof                (), // ★ [NEW] 帧首 (Start of Frame) 信号
-    .dout               (sync_dout),
-    .dout_valid         (sync_dout_valid)
-);
+        .dout               (sync_dout),                  // 连接到 PRBS Chk
+        .dout_valid         (sync_dout_valid)             // 连接到 PRBS Chk
+    );
 
 endmodule
+

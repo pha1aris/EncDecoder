@@ -2,7 +2,7 @@
 -- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
--- Date        : Sat Nov  1 15:13:32 2025
+-- Date        : Fri Nov  7 10:44:54 2025
 -- Host        : FSO-A running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
 --               c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_1/gtwizard_ultrascale_1_sim_netlist.vhdl
@@ -4766,6 +4766,7 @@ entity gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_channel is
     Q : in STD_LOGIC_VECTOR ( 15 downto 0 );
     txctrl0_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
     txctrl1_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
+    loopback_in : in STD_LOGIC_VECTOR ( 2 downto 0 );
     \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3\ : in STD_LOGIC_VECTOR ( 2 downto 0 );
     txdiffctrl_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
     txpostcursor_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
@@ -5689,7 +5690,7 @@ BUFG_GT_SYNC_1: unisim.vcomponents.BUFG_GT_SYNC
       GTTXRESET => \gen_gtwizard_gthe4.gttxreset_int\,
       GTTXRESETSEL => '0',
       INCPCTRL => '0',
-      LOOPBACK(2 downto 0) => B"000",
+      LOOPBACK(2 downto 0) => loopback_in(2 downto 0),
       PCIEEQRXEQADAPTDONE => '0',
       PCIERATEGEN3 => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_12\,
       PCIERATEIDLE => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_13\,
@@ -8036,6 +8037,7 @@ entity gtwizard_ultrascale_1_gthe4_channel_wrapper is
     Q : in STD_LOGIC_VECTOR ( 15 downto 0 );
     txctrl0_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
     txctrl1_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
+    loopback_in : in STD_LOGIC_VECTOR ( 2 downto 0 );
     \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_2\ : in STD_LOGIC_VECTOR ( 2 downto 0 );
     txdiffctrl_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
     txpostcursor_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
@@ -8089,6 +8091,7 @@ channel_inst: entity work.gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe
       gtwiz_userclk_tx_usrclk2_out(0) => gtwiz_userclk_tx_usrclk2_out(0),
       gtwiz_userdata_rx_out(31 downto 0) => gtwiz_userdata_rx_out(31 downto 0),
       gtwiz_userdata_tx_in(31 downto 0) => gtwiz_userdata_tx_in(31 downto 0),
+      loopback_in(2 downto 0) => loopback_in(2 downto 0),
       lopt => lopt,
       lopt_1 => lopt_1,
       lopt_2 => lopt_2,
@@ -16204,6 +16207,7 @@ entity gtwizard_ultrascale_1_gtwizard_gthe4 is
     gtwiz_userdata_tx_in : in STD_LOGIC_VECTOR ( 31 downto 0 );
     txctrl0_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
     txctrl1_in : in STD_LOGIC_VECTOR ( 15 downto 0 );
+    loopback_in : in STD_LOGIC_VECTOR ( 2 downto 0 );
     txdiffctrl_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
     txpostcursor_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
     txprecursor_in : in STD_LOGIC_VECTOR ( 4 downto 0 );
@@ -16305,6 +16309,7 @@ begin
       gtwiz_userclk_tx_usrclk2_out(0) => \^gtwiz_userclk_tx_usrclk2_out\(0),
       gtwiz_userdata_rx_out(31 downto 0) => gtwiz_userdata_rx_out(31 downto 0),
       gtwiz_userdata_tx_in(31 downto 0) => gtwiz_userdata_tx_in(31 downto 0),
+      loopback_in(2 downto 0) => loopback_in(2 downto 0),
       lopt => lopt,
       lopt_1 => gtwiz_userclk_tx_reset_in(0),
       lopt_2 => lopt_1,
@@ -17655,6 +17660,7 @@ GND: unisim.vcomponents.GND
       gtwiz_userclk_tx_usrclk2_out(0) => \^gtwiz_userclk_tx_usrclk2_out\(0),
       gtwiz_userdata_rx_out(31 downto 0) => gtwiz_userdata_rx_out(31 downto 0),
       gtwiz_userdata_tx_in(31 downto 0) => gtwiz_userdata_tx_in(31 downto 0),
+      loopback_in(2 downto 0) => loopback_in(2 downto 0),
       rx8b10ben_in(0) => rx8b10ben_in(0),
       rxbufreset_in(0) => rxbufreset_in(0),
       rxbufstatus_out(2 downto 0) => rxbufstatus_out(2 downto 0),
@@ -17712,6 +17718,7 @@ entity gtwizard_ultrascale_1 is
     gthrxn_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     gthrxp_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtrefclk0_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    loopback_in : in STD_LOGIC_VECTOR ( 2 downto 0 );
     rx8b10ben_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxbufreset_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxcommadeten_in : in STD_LOGIC_VECTOR ( 0 to 0 );
@@ -18212,7 +18219,7 @@ inst: entity work.gtwizard_ultrascale_1_gtwizard_top
       gtytxn_out(0) => NLW_inst_gtytxn_out_UNCONNECTED(0),
       gtytxp_out(0) => NLW_inst_gtytxp_out_UNCONNECTED(0),
       incpctrl_in(0) => '0',
-      loopback_in(2 downto 0) => B"000",
+      loopback_in(2 downto 0) => loopback_in(2 downto 0),
       looprsvd_in(0) => '0',
       lpbkrxtxseren_in(0) => '0',
       lpbktxrxseren_in(0) => '0',

@@ -2,7 +2,7 @@
 -- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
--- Date        : Sat Nov  1 15:13:32 2025
+-- Date        : Fri Nov  7 10:44:54 2025
 -- Host        : FSO-A running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode synth_stub
 --               c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_1/gtwizard_ultrascale_1_stub.vhdl
@@ -40,6 +40,7 @@ entity gtwizard_ultrascale_1 is
     gthrxn_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     gthrxp_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     gtrefclk0_in : in STD_LOGIC_VECTOR ( 0 to 0 );
+    loopback_in : in STD_LOGIC_VECTOR ( 2 downto 0 );
     rx8b10ben_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxbufreset_in : in STD_LOGIC_VECTOR ( 0 to 0 );
     rxcommadeten_in : in STD_LOGIC_VECTOR ( 0 to 0 );
@@ -81,7 +82,7 @@ architecture stub of gtwizard_ultrascale_1 is
   attribute syn_black_box : boolean;
   attribute black_box_pad_pin : string;
   attribute syn_black_box of stub : architecture is true;
-  attribute black_box_pad_pin of stub : architecture is "gtwiz_userclk_tx_reset_in[0:0],gtwiz_userclk_tx_srcclk_out[0:0],gtwiz_userclk_tx_usrclk_out[0:0],gtwiz_userclk_tx_usrclk2_out[0:0],gtwiz_userclk_tx_active_out[0:0],gtwiz_userclk_rx_reset_in[0:0],gtwiz_userclk_rx_srcclk_out[0:0],gtwiz_userclk_rx_usrclk_out[0:0],gtwiz_userclk_rx_usrclk2_out[0:0],gtwiz_userclk_rx_active_out[0:0],gtwiz_reset_clk_freerun_in[0:0],gtwiz_reset_all_in[0:0],gtwiz_reset_tx_pll_and_datapath_in[0:0],gtwiz_reset_tx_datapath_in[0:0],gtwiz_reset_rx_pll_and_datapath_in[0:0],gtwiz_reset_rx_datapath_in[0:0],gtwiz_reset_rx_cdr_stable_out[0:0],gtwiz_reset_tx_done_out[0:0],gtwiz_reset_rx_done_out[0:0],gtwiz_userdata_tx_in[31:0],gtwiz_userdata_rx_out[31:0],drpclk_in[0:0],gthrxn_in[0:0],gthrxp_in[0:0],gtrefclk0_in[0:0],rx8b10ben_in[0:0],rxbufreset_in[0:0],rxcommadeten_in[0:0],rxlpmen_in[0:0],rxmcommaalignen_in[0:0],rxpcommaalignen_in[0:0],tx8b10ben_in[0:0],txctrl0_in[15:0],txctrl1_in[15:0],txctrl2_in[7:0],txdiffctrl_in[4:0],txpostcursor_in[4:0],txprecursor_in[4:0],gthtxn_out[0:0],gthtxp_out[0:0],gtpowergood_out[0:0],rxbufstatus_out[2:0],rxbyteisaligned_out[0:0],rxbyterealign_out[0:0],rxclkcorcnt_out[1:0],rxcommadet_out[0:0],rxctrl0_out[15:0],rxctrl1_out[15:0],rxctrl2_out[7:0],rxctrl3_out[7:0],rxpmaresetdone_out[0:0],txpmaresetdone_out[0:0]";
+  attribute black_box_pad_pin of stub : architecture is "gtwiz_userclk_tx_reset_in[0:0],gtwiz_userclk_tx_srcclk_out[0:0],gtwiz_userclk_tx_usrclk_out[0:0],gtwiz_userclk_tx_usrclk2_out[0:0],gtwiz_userclk_tx_active_out[0:0],gtwiz_userclk_rx_reset_in[0:0],gtwiz_userclk_rx_srcclk_out[0:0],gtwiz_userclk_rx_usrclk_out[0:0],gtwiz_userclk_rx_usrclk2_out[0:0],gtwiz_userclk_rx_active_out[0:0],gtwiz_reset_clk_freerun_in[0:0],gtwiz_reset_all_in[0:0],gtwiz_reset_tx_pll_and_datapath_in[0:0],gtwiz_reset_tx_datapath_in[0:0],gtwiz_reset_rx_pll_and_datapath_in[0:0],gtwiz_reset_rx_datapath_in[0:0],gtwiz_reset_rx_cdr_stable_out[0:0],gtwiz_reset_tx_done_out[0:0],gtwiz_reset_rx_done_out[0:0],gtwiz_userdata_tx_in[31:0],gtwiz_userdata_rx_out[31:0],drpclk_in[0:0],gthrxn_in[0:0],gthrxp_in[0:0],gtrefclk0_in[0:0],loopback_in[2:0],rx8b10ben_in[0:0],rxbufreset_in[0:0],rxcommadeten_in[0:0],rxlpmen_in[0:0],rxmcommaalignen_in[0:0],rxpcommaalignen_in[0:0],tx8b10ben_in[0:0],txctrl0_in[15:0],txctrl1_in[15:0],txctrl2_in[7:0],txdiffctrl_in[4:0],txpostcursor_in[4:0],txprecursor_in[4:0],gthtxn_out[0:0],gthtxp_out[0:0],gtpowergood_out[0:0],rxbufstatus_out[2:0],rxbyteisaligned_out[0:0],rxbyterealign_out[0:0],rxclkcorcnt_out[1:0],rxcommadet_out[0:0],rxctrl0_out[15:0],rxctrl1_out[15:0],rxctrl2_out[7:0],rxctrl3_out[7:0],rxpmaresetdone_out[0:0],txpmaresetdone_out[0:0]";
   attribute X_CORE_INFO : string;
   attribute X_CORE_INFO of stub : architecture is "gtwizard_ultrascale_1_gtwizard_top,Vivado 2024.2";
 begin

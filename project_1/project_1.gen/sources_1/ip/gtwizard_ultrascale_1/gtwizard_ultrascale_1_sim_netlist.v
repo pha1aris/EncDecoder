@@ -2,7 +2,7 @@
 // Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-// Date        : Sat Nov  1 15:13:32 2025
+// Date        : Fri Nov  7 10:44:54 2025
 // Host        : FSO-A running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
 //               c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_1/gtwizard_ultrascale_1_sim_netlist.v
@@ -41,6 +41,7 @@ module gtwizard_ultrascale_1
     gthrxn_in,
     gthrxp_in,
     gtrefclk0_in,
+    loopback_in,
     rx8b10ben_in,
     rxbufreset_in,
     rxcommadeten_in,
@@ -93,6 +94,7 @@ module gtwizard_ultrascale_1
   input [0:0]gthrxn_in;
   input [0:0]gthrxp_in;
   input [0:0]gtrefclk0_in;
+  input [2:0]loopback_in;
   input [0:0]rx8b10ben_in;
   input [0:0]rxbufreset_in;
   input [0:0]rxcommadeten_in;
@@ -149,6 +151,7 @@ module gtwizard_ultrascale_1
   wire [0:0]gtwiz_userclk_tx_usrclk_out;
   wire [31:0]gtwiz_userdata_rx_out;
   wire [31:0]gtwiz_userdata_tx_in;
+  wire [2:0]loopback_in;
   wire [0:0]rx8b10ben_in;
   wire [0:0]rxbufreset_in;
   wire [2:0]rxbufstatus_out;
@@ -541,7 +544,7 @@ module gtwizard_ultrascale_1
         .gtytxn_out(NLW_inst_gtytxn_out_UNCONNECTED[0]),
         .gtytxp_out(NLW_inst_gtytxp_out_UNCONNECTED[0]),
         .incpctrl_in(1'b0),
-        .loopback_in({1'b0,1'b0,1'b0}),
+        .loopback_in(loopback_in),
         .looprsvd_in(1'b0),
         .lpbkrxtxseren_in(1'b0),
         .lpbktxrxseren_in(1'b0),
@@ -991,6 +994,7 @@ module gtwizard_ultrascale_1_gthe4_channel_wrapper
     Q,
     txctrl0_in,
     txctrl1_in,
+    loopback_in,
     \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_2 ,
     txdiffctrl_in,
     txpostcursor_in,
@@ -1059,6 +1063,7 @@ module gtwizard_ultrascale_1_gthe4_channel_wrapper
   input [15:0]Q;
   input [15:0]txctrl0_in;
   input [15:0]txctrl1_in;
+  input [2:0]loopback_in;
   input [2:0]\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_2 ;
   input [4:0]txdiffctrl_in;
   input [4:0]txpostcursor_in;
@@ -1106,6 +1111,7 @@ module gtwizard_ultrascale_1_gthe4_channel_wrapper
   wire [0:0]gtwiz_userclk_tx_usrclk2_out;
   wire [31:0]gtwiz_userdata_rx_out;
   wire [31:0]gtwiz_userdata_tx_in;
+  wire [2:0]loopback_in;
   wire lopt;
   wire lopt_1;
   wire lopt_2;
@@ -1176,6 +1182,7 @@ module gtwizard_ultrascale_1_gthe4_channel_wrapper
         .gtwiz_userclk_tx_usrclk2_out(gtwiz_userclk_tx_usrclk2_out),
         .gtwiz_userdata_rx_out(gtwiz_userdata_rx_out),
         .gtwiz_userdata_tx_in(gtwiz_userdata_tx_in),
+        .loopback_in(loopback_in),
         .lopt(lopt),
         .lopt_1(lopt_1),
         .lopt_2(lopt_2),
@@ -1253,6 +1260,7 @@ module gtwizard_ultrascale_1_gtwizard_gthe4
     gtwiz_userdata_tx_in,
     txctrl0_in,
     txctrl1_in,
+    loopback_in,
     txdiffctrl_in,
     txpostcursor_in,
     txprecursor_in,
@@ -1303,6 +1311,7 @@ module gtwizard_ultrascale_1_gtwizard_gthe4
   input [31:0]gtwiz_userdata_tx_in;
   input [15:0]txctrl0_in;
   input [15:0]txctrl1_in;
+  input [2:0]loopback_in;
   input [4:0]txdiffctrl_in;
   input [4:0]txpostcursor_in;
   input [4:0]txprecursor_in;
@@ -1371,6 +1380,7 @@ module gtwizard_ultrascale_1_gtwizard_gthe4
   wire [0:0]gtwiz_userclk_tx_usrclk2_out;
   wire [31:0]gtwiz_userdata_rx_out;
   wire [31:0]gtwiz_userdata_tx_in;
+  wire [2:0]loopback_in;
   wire lopt;
   wire lopt_1;
   wire lopt_2;
@@ -1436,6 +1446,7 @@ module gtwizard_ultrascale_1_gtwizard_gthe4
         .gtwiz_userclk_tx_usrclk2_out(gtwiz_userclk_tx_usrclk2_out),
         .gtwiz_userdata_rx_out(gtwiz_userdata_rx_out),
         .gtwiz_userdata_tx_in(gtwiz_userdata_tx_in),
+        .loopback_in(loopback_in),
         .lopt(lopt),
         .lopt_1(gtwiz_userclk_tx_reset_in),
         .lopt_2(lopt_1),
@@ -2681,6 +2692,7 @@ module gtwizard_ultrascale_1_gtwizard_top
   wire [0:0]gtwiz_userclk_tx_usrclk2_out;
   wire [31:0]gtwiz_userdata_rx_out;
   wire [31:0]gtwiz_userdata_tx_in;
+  wire [2:0]loopback_in;
   wire [0:0]rx8b10ben_in;
   wire [0:0]rxbufreset_in;
   wire [2:0]rxbufstatus_out;
@@ -3188,6 +3200,7 @@ module gtwizard_ultrascale_1_gtwizard_top
         .gtwiz_userclk_tx_usrclk2_out(gtwiz_userclk_tx_usrclk2_out),
         .gtwiz_userdata_rx_out(gtwiz_userdata_rx_out),
         .gtwiz_userdata_tx_in(gtwiz_userdata_tx_in),
+        .loopback_in(loopback_in),
         .rx8b10ben_in(rx8b10ben_in),
         .rxbufreset_in(rxbufreset_in),
         .rxbufstatus_out(rxbufstatus_out),
@@ -6934,6 +6947,7 @@ module gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_channel
     Q,
     txctrl0_in,
     txctrl1_in,
+    loopback_in,
     \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3 ,
     txdiffctrl_in,
     txpostcursor_in,
@@ -7002,6 +7016,7 @@ module gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_channel
   input [15:0]Q;
   input [15:0]txctrl0_in;
   input [15:0]txctrl1_in;
+  input [2:0]loopback_in;
   input [2:0]\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3 ;
   input [4:0]txdiffctrl_in;
   input [4:0]txpostcursor_in;
@@ -7312,6 +7327,7 @@ module gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_channel
   wire [0:0]gtwiz_userclk_tx_usrclk2_out;
   wire [31:0]gtwiz_userdata_rx_out;
   wire [31:0]gtwiz_userdata_tx_in;
+  wire [2:0]loopback_in;
   wire lopt;
   wire lopt_1;
   wire \^lopt_2 ;
@@ -7936,7 +7952,7 @@ module gtwizard_ultrascale_1_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .GTTXRESET(\gen_gtwizard_gthe4.gttxreset_int ),
         .GTTXRESETSEL(1'b0),
         .INCPCTRL(1'b0),
-        .LOOPBACK({1'b0,1'b0,1'b0}),
+        .LOOPBACK(loopback_in),
         .PCIEEQRXEQADAPTDONE(1'b0),
         .PCIERATEGEN3(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_12 ),
         .PCIERATEIDLE(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_13 ),

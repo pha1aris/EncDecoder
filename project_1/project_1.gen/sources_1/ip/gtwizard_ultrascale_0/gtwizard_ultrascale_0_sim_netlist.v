@@ -2,7 +2,7 @@
 // Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-// Date        : Sat Sep 27 17:13:14 2025
+// Date        : Sat Nov  8 16:12:34 2025
 // Host        : FSO-A running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
 //               c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/gtwizard_ultrascale_0_sim_netlist.v
@@ -16,9 +16,7 @@
 (* CHECK_LICENSE_TYPE = "gtwizard_ultrascale_0,gtwizard_ultrascale_0_gtwizard_top,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* X_CORE_INFO = "gtwizard_ultrascale_0_gtwizard_top,Vivado 2024.2" *) 
 (* NotValidForBitStream *)
 module gtwizard_ultrascale_0
-   (gtwiz_userclk_tx_reset_in,
-    gtwiz_userclk_tx_active_in,
-    gtwiz_userclk_rx_reset_in,
+   (gtwiz_userclk_tx_active_in,
     gtwiz_userclk_rx_active_in,
     gtwiz_reset_clk_freerun_in,
     gtwiz_reset_all_in,
@@ -34,16 +32,19 @@ module gtwizard_ultrascale_0
     gtrefclk00_in,
     qpll0outclk_out,
     qpll0outrefclk_out,
-    drpclk_in,
     gthrxn_in,
     gthrxp_in,
-    gtrefclk0_in,
+    loopback_in,
+    rxcdrhold_in,
+    rxlpmen_in,
+    rxpolarity_in,
+    rxslide_in,
     rxusrclk_in,
     rxusrclk2_in,
-    tx8b10ben_in,
-    txctrl0_in,
-    txctrl1_in,
-    txctrl2_in,
+    txdiffctrl_in,
+    txpolarity_in,
+    txpostcursor_in,
+    txprecursor_in,
     txusrclk_in,
     txusrclk2_in,
     gthtxn_out,
@@ -53,9 +54,7 @@ module gtwizard_ultrascale_0
     rxpmaresetdone_out,
     txoutclk_out,
     txpmaresetdone_out);
-  input [0:0]gtwiz_userclk_tx_reset_in;
   input [0:0]gtwiz_userclk_tx_active_in;
-  input [0:0]gtwiz_userclk_rx_reset_in;
   input [0:0]gtwiz_userclk_rx_active_in;
   input [0:0]gtwiz_reset_clk_freerun_in;
   input [0:0]gtwiz_reset_all_in;
@@ -71,16 +70,19 @@ module gtwizard_ultrascale_0
   input [0:0]gtrefclk00_in;
   output [0:0]qpll0outclk_out;
   output [0:0]qpll0outrefclk_out;
-  input [0:0]drpclk_in;
   input [0:0]gthrxn_in;
   input [0:0]gthrxp_in;
-  input [0:0]gtrefclk0_in;
+  input [2:0]loopback_in;
+  input [0:0]rxcdrhold_in;
+  input [0:0]rxlpmen_in;
+  input [0:0]rxpolarity_in;
+  input [0:0]rxslide_in;
   input [0:0]rxusrclk_in;
   input [0:0]rxusrclk2_in;
-  input [0:0]tx8b10ben_in;
-  input [15:0]txctrl0_in;
-  input [15:0]txctrl1_in;
-  input [7:0]txctrl2_in;
+  input [4:0]txdiffctrl_in;
+  input [0:0]txpolarity_in;
+  input [4:0]txpostcursor_in;
+  input [4:0]txprecursor_in;
   input [0:0]txusrclk_in;
   input [0:0]txusrclk2_in;
   output [0:0]gthtxn_out;
@@ -91,14 +93,12 @@ module gtwizard_ultrascale_0
   output [0:0]txoutclk_out;
   output [0:0]txpmaresetdone_out;
 
-  wire [0:0]drpclk_in;
   wire [0:0]gthrxn_in;
   wire [0:0]gthrxp_in;
   wire [0:0]gthtxn_out;
   wire [0:0]gthtxp_out;
   wire [0:0]gtpowergood_out;
   wire [0:0]gtrefclk00_in;
-  wire [0:0]gtrefclk0_in;
   wire [0:0]gtwiz_reset_all_in;
   wire [0:0]gtwiz_reset_clk_freerun_in;
   wire [0:0]gtwiz_reset_rx_cdr_stable_out;
@@ -109,23 +109,26 @@ module gtwizard_ultrascale_0
   wire [0:0]gtwiz_reset_tx_done_out;
   wire [0:0]gtwiz_reset_tx_pll_and_datapath_in;
   wire [0:0]gtwiz_userclk_rx_active_in;
-  wire [0:0]gtwiz_userclk_rx_reset_in;
   wire [0:0]gtwiz_userclk_tx_active_in;
-  wire [0:0]gtwiz_userclk_tx_reset_in;
   wire [31:0]gtwiz_userdata_rx_out;
   wire [31:0]gtwiz_userdata_tx_in;
+  wire [2:0]loopback_in;
   wire [0:0]qpll0outclk_out;
   wire [0:0]qpll0outrefclk_out;
+  wire [0:0]rxcdrhold_in;
+  wire [0:0]rxlpmen_in;
   wire [0:0]rxoutclk_out;
   wire [0:0]rxpmaresetdone_out;
+  wire [0:0]rxpolarity_in;
+  wire [0:0]rxslide_in;
   wire [0:0]rxusrclk2_in;
   wire [0:0]rxusrclk_in;
-  wire [0:0]tx8b10ben_in;
-  wire [15:0]txctrl0_in;
-  wire [15:0]txctrl1_in;
-  wire [7:0]txctrl2_in;
+  wire [4:0]txdiffctrl_in;
   wire [0:0]txoutclk_out;
   wire [0:0]txpmaresetdone_out;
+  wire [0:0]txpolarity_in;
+  wire [4:0]txpostcursor_in;
+  wire [4:0]txprecursor_in;
   wire [0:0]txusrclk2_in;
   wire [0:0]txusrclk_in;
   wire [0:0]NLW_inst_bufgtce_out_UNCONNECTED;
@@ -275,12 +278,12 @@ module gtwizard_ultrascale_0
   wire [0:0]NLW_inst_ubrsvdout_out_UNCONNECTED;
   wire [0:0]NLW_inst_ubtxuart_out_UNCONNECTED;
 
-  (* C_CHANNEL_ENABLE = "192'b000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" *) 
+  (* C_CHANNEL_ENABLE = "192'b000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" *) 
   (* C_COMMON_SCALING_FACTOR = "1" *) 
-  (* C_CPLL_VCO_FREQUENCY = "2000.000000" *) 
+  (* C_CPLL_VCO_FREQUENCY = "2578.125000" *) 
   (* C_ENABLE_COMMON_USRCLK = "0" *) 
   (* C_FORCE_COMMONS = "0" *) 
-  (* C_FREERUN_FREQUENCY = "15.625000" *) 
+  (* C_FREERUN_FREQUENCY = "39.062500" *) 
   (* C_GT_REV = "57" *) 
   (* C_GT_TYPE = "2" *) 
   (* C_INCLUDE_CPLL_CAL = "2" *) 
@@ -319,12 +322,12 @@ module gtwizard_ultrascale_0
   (* C_RX_DATA_DECODING = "0" *) 
   (* C_RX_ENABLE = "1" *) 
   (* C_RX_INT_DATA_WIDTH = "32" *) 
-  (* C_RX_LINE_RATE = "0.500000" *) 
-  (* C_RX_MASTER_CHANNEL_IDX = "100" *) 
+  (* C_RX_LINE_RATE = "1.250000" *) 
+  (* C_RX_MASTER_CHANNEL_IDX = "102" *) 
   (* C_RX_OUTCLK_BUFG_GT_DIV = "1" *) 
-  (* C_RX_OUTCLK_FREQUENCY = "15.625000" *) 
+  (* C_RX_OUTCLK_FREQUENCY = "39.062500" *) 
   (* C_RX_OUTCLK_SOURCE = "1" *) 
-  (* C_RX_PLL_TYPE = "2" *) 
+  (* C_RX_PLL_TYPE = "0" *) 
   (* C_RX_RECCLK_OUTPUT = "192'b000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" *) 
   (* C_RX_REFCLK_FREQUENCY = "125.000000" *) 
   (* C_RX_SLIDE_MODE = "0" *) 
@@ -334,8 +337,8 @@ module gtwizard_ultrascale_0
   (* C_RX_USER_CLOCKING_RATIO_FUSRCLK_FUSRCLK2 = "1" *) 
   (* C_RX_USER_CLOCKING_SOURCE = "0" *) 
   (* C_RX_USER_DATA_WIDTH = "32" *) 
-  (* C_RX_USRCLK2_FREQUENCY = "15.625000" *) 
-  (* C_RX_USRCLK_FREQUENCY = "15.625000" *) 
+  (* C_RX_USRCLK2_FREQUENCY = "39.062500" *) 
+  (* C_RX_USRCLK_FREQUENCY = "39.062500" *) 
   (* C_SECONDARY_QPLL_ENABLE = "0" *) 
   (* C_SECONDARY_QPLL_REFCLK_FREQUENCY = "257.812500" *) 
   (* C_SIM_CPLL_CAL_BYPASS = "1" *) 
@@ -344,17 +347,17 @@ module gtwizard_ultrascale_0
   (* C_TOTAL_NUM_COMMONS_EXAMPLE = "0" *) 
   (* C_TXPROGDIV_FREQ_ENABLE = "0" *) 
   (* C_TXPROGDIV_FREQ_SOURCE = "0" *) 
-  (* C_TXPROGDIV_FREQ_VAL = "75.000000" *) 
+  (* C_TXPROGDIV_FREQ_VAL = "78.125000" *) 
   (* C_TX_BUFFBYPASS_MODE = "0" *) 
   (* C_TX_BUFFER_BYPASS_INSTANCE_CTRL = "0" *) 
   (* C_TX_BUFFER_MODE = "1" *) 
-  (* C_TX_DATA_ENCODING = "1" *) 
+  (* C_TX_DATA_ENCODING = "0" *) 
   (* C_TX_ENABLE = "1" *) 
-  (* C_TX_INT_DATA_WIDTH = "40" *) 
-  (* C_TX_LINE_RATE = "0.750000" *) 
-  (* C_TX_MASTER_CHANNEL_IDX = "100" *) 
+  (* C_TX_INT_DATA_WIDTH = "32" *) 
+  (* C_TX_LINE_RATE = "1.250000" *) 
+  (* C_TX_MASTER_CHANNEL_IDX = "102" *) 
   (* C_TX_OUTCLK_BUFG_GT_DIV = "1" *) 
-  (* C_TX_OUTCLK_FREQUENCY = "18.750000" *) 
+  (* C_TX_OUTCLK_FREQUENCY = "39.062500" *) 
   (* C_TX_OUTCLK_SOURCE = "1" *) 
   (* C_TX_PLL_TYPE = "0" *) 
   (* C_TX_REFCLK_FREQUENCY = "125.000000" *) 
@@ -364,8 +367,8 @@ module gtwizard_ultrascale_0
   (* C_TX_USER_CLOCKING_RATIO_FUSRCLK_FUSRCLK2 = "1" *) 
   (* C_TX_USER_CLOCKING_SOURCE = "0" *) 
   (* C_TX_USER_DATA_WIDTH = "32" *) 
-  (* C_TX_USRCLK2_FREQUENCY = "18.750000" *) 
-  (* C_TX_USRCLK_FREQUENCY = "18.750000" *) 
+  (* C_TX_USRCLK2_FREQUENCY = "39.062500" *) 
+  (* C_TX_USRCLK_FREQUENCY = "39.062500" *) 
   (* C_USER_GTPOWERGOOD_DELAY_EN = "1" *) 
   gtwizard_ultrascale_0_gtwizard_top inst
        (.bgbypassb_in(1'b1),
@@ -388,11 +391,11 @@ module gtwizard_ultrascale_0
         .cpllfreqlock_in(1'b0),
         .cplllock_out(NLW_inst_cplllock_out_UNCONNECTED[0]),
         .cplllockdetclk_in(1'b0),
-        .cplllocken_in(1'b1),
-        .cpllpd_in(1'b0),
+        .cplllocken_in(1'b0),
+        .cpllpd_in(1'b1),
         .cpllrefclklost_out(NLW_inst_cpllrefclklost_out_UNCONNECTED[0]),
         .cpllrefclksel_in({1'b0,1'b0,1'b1}),
-        .cpllreset_in(1'b0),
+        .cpllreset_in(1'b1),
         .dmonfiforeset_in(1'b0),
         .dmonitorclk_in(1'b0),
         .dmonitorout_out(NLW_inst_dmonitorout_out_UNCONNECTED[15:0]),
@@ -400,7 +403,7 @@ module gtwizard_ultrascale_0
         .drpaddr_common_in({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
         .drpaddr_in({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
         .drpclk_common_in(1'b0),
-        .drpclk_in(drpclk_in),
+        .drpclk_in(1'b0),
         .drpdi_common_in({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
         .drpdi_in({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
         .drpdo_common_out(NLW_inst_drpdo_common_out_UNCONNECTED[15:0]),
@@ -441,7 +444,7 @@ module gtwizard_ultrascale_0
         .gtpowergood_out(gtpowergood_out),
         .gtrefclk00_in(gtrefclk00_in),
         .gtrefclk01_in(1'b0),
-        .gtrefclk0_in(gtrefclk0_in),
+        .gtrefclk0_in(1'b0),
         .gtrefclk10_in(1'b0),
         .gtrefclk11_in(1'b0),
         .gtrefclk1_in(1'b0),
@@ -492,13 +495,13 @@ module gtwizard_ultrascale_0
         .gtwiz_reset_tx_pll_and_datapath_in(gtwiz_reset_tx_pll_and_datapath_in),
         .gtwiz_userclk_rx_active_in(gtwiz_userclk_rx_active_in),
         .gtwiz_userclk_rx_active_out(NLW_inst_gtwiz_userclk_rx_active_out_UNCONNECTED[0]),
-        .gtwiz_userclk_rx_reset_in(gtwiz_userclk_rx_reset_in),
+        .gtwiz_userclk_rx_reset_in(1'b0),
         .gtwiz_userclk_rx_srcclk_out(NLW_inst_gtwiz_userclk_rx_srcclk_out_UNCONNECTED[0]),
         .gtwiz_userclk_rx_usrclk2_out(NLW_inst_gtwiz_userclk_rx_usrclk2_out_UNCONNECTED[0]),
         .gtwiz_userclk_rx_usrclk_out(NLW_inst_gtwiz_userclk_rx_usrclk_out_UNCONNECTED[0]),
         .gtwiz_userclk_tx_active_in(gtwiz_userclk_tx_active_in),
         .gtwiz_userclk_tx_active_out(NLW_inst_gtwiz_userclk_tx_active_out_UNCONNECTED[0]),
-        .gtwiz_userclk_tx_reset_in(gtwiz_userclk_tx_reset_in),
+        .gtwiz_userclk_tx_reset_in(1'b0),
         .gtwiz_userclk_tx_srcclk_out(NLW_inst_gtwiz_userclk_tx_srcclk_out_UNCONNECTED[0]),
         .gtwiz_userclk_tx_usrclk2_out(NLW_inst_gtwiz_userclk_tx_usrclk2_out_UNCONNECTED[0]),
         .gtwiz_userclk_tx_usrclk_out(NLW_inst_gtwiz_userclk_tx_usrclk_out_UNCONNECTED[0]),
@@ -509,7 +512,7 @@ module gtwizard_ultrascale_0
         .gtytxn_out(NLW_inst_gtytxn_out_UNCONNECTED[0]),
         .gtytxp_out(NLW_inst_gtytxp_out_UNCONNECTED[0]),
         .incpctrl_in(1'b0),
-        .loopback_in({1'b0,1'b0,1'b0}),
+        .loopback_in(loopback_in),
         .looprsvd_in(1'b0),
         .lpbkrxtxseren_in(1'b0),
         .lpbktxrxseren_in(1'b0),
@@ -589,7 +592,7 @@ module gtwizard_ultrascale_0
         .rxbyteisaligned_out(NLW_inst_rxbyteisaligned_out_UNCONNECTED[0]),
         .rxbyterealign_out(NLW_inst_rxbyterealign_out_UNCONNECTED[0]),
         .rxcdrfreqreset_in(1'b0),
-        .rxcdrhold_in(1'b0),
+        .rxcdrhold_in(rxcdrhold_in),
         .rxcdrlock_out(NLW_inst_rxcdrlock_out_UNCONNECTED[0]),
         .rxcdrovrden_in(1'b0),
         .rxcdrphdone_out(NLW_inst_rxcdrphdone_out_UNCONNECTED[0]),
@@ -683,7 +686,7 @@ module gtwizard_ultrascale_0
         .rxlfpstresetdet_out(NLW_inst_rxlfpstresetdet_out_UNCONNECTED[0]),
         .rxlfpsu2lpexitdet_out(NLW_inst_rxlfpsu2lpexitdet_out_UNCONNECTED[0]),
         .rxlfpsu3wakedet_out(NLW_inst_rxlfpsu3wakedet_out_UNCONNECTED[0]),
-        .rxlpmen_in(1'b1),
+        .rxlpmen_in(rxlpmen_in),
         .rxlpmgchold_in(1'b0),
         .rxlpmgcovrden_in(1'b0),
         .rxlpmhfhold_in(1'b0),
@@ -723,10 +726,10 @@ module gtwizard_ultrascale_0
         .rxphdlypd_in(1'b1),
         .rxphdlyreset_in(1'b0),
         .rxphovrden_in(1'b0),
-        .rxpllclksel_in({1'b0,1'b0}),
+        .rxpllclksel_in({1'b1,1'b1}),
         .rxpmareset_in(1'b0),
         .rxpmaresetdone_out(rxpmaresetdone_out),
-        .rxpolarity_in(1'b0),
+        .rxpolarity_in(rxpolarity_in),
         .rxprbscntreset_in(1'b0),
         .rxprbserr_out(NLW_inst_rxprbserr_out_UNCONNECTED[0]),
         .rxprbslocked_out(NLW_inst_rxprbslocked_out_UNCONNECTED[0]),
@@ -745,7 +748,7 @@ module gtwizard_ultrascale_0
         .rxrecclk1sel_out(NLW_inst_rxrecclk1sel_out_UNCONNECTED[1:0]),
         .rxrecclkout_out(NLW_inst_rxrecclkout_out_UNCONNECTED[0]),
         .rxresetdone_out(NLW_inst_rxresetdone_out_UNCONNECTED[0]),
-        .rxslide_in(1'b0),
+        .rxslide_in(rxslide_in),
         .rxsliderdy_out(NLW_inst_rxsliderdy_out_UNCONNECTED[0]),
         .rxslipdone_out(NLW_inst_rxslipdone_out_UNCONNECTED[0]),
         .rxslipoutclk_in(1'b0),
@@ -759,7 +762,7 @@ module gtwizard_ultrascale_0
         .rxsyncin_in(1'b0),
         .rxsyncmode_in(1'b0),
         .rxsyncout_out(NLW_inst_rxsyncout_out_UNCONNECTED[0]),
-        .rxsysclksel_in({1'b0,1'b0}),
+        .rxsysclksel_in({1'b1,1'b0}),
         .rxtermination_in(1'b0),
         .rxuserrdy_in(1'b1),
         .rxusrclk2_in(rxusrclk2_in),
@@ -786,16 +789,16 @@ module gtwizard_ultrascale_0
         .tconrsvdout0_out(NLW_inst_tconrsvdout0_out_UNCONNECTED[0]),
         .tstin_in({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
         .tx8b10bbypass_in({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .tx8b10ben_in(tx8b10ben_in),
+        .tx8b10ben_in(1'b0),
         .txbufdiffctrl_in(1'b0),
         .txbufstatus_out(NLW_inst_txbufstatus_out_UNCONNECTED[1:0]),
         .txcomfinish_out(NLW_inst_txcomfinish_out_UNCONNECTED[0]),
         .txcominit_in(1'b0),
         .txcomsas_in(1'b0),
         .txcomwake_in(1'b0),
-        .txctrl0_in(txctrl0_in),
-        .txctrl1_in(txctrl1_in),
-        .txctrl2_in(txctrl2_in),
+        .txctrl0_in({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .txctrl1_in({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .txctrl2_in({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
         .txdata_in({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
         .txdataextendrsvd_in({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
         .txdccdone_out(NLW_inst_txdccdone_out_UNCONNECTED[0]),
@@ -803,7 +806,7 @@ module gtwizard_ultrascale_0
         .txdccreset_in(1'b0),
         .txdeemph_in({1'b0,1'b0}),
         .txdetectrx_in(1'b0),
-        .txdiffctrl_in({1'b1,1'b1,1'b0,1'b0,1'b0}),
+        .txdiffctrl_in(txdiffctrl_in),
         .txdiffpd_in(1'b0),
         .txdlybypass_in(1'b1),
         .txdlyen_in(1'b0),
@@ -850,12 +853,12 @@ module gtwizard_ultrascale_0
         .txpllclksel_in({1'b1,1'b1}),
         .txpmareset_in(1'b0),
         .txpmaresetdone_out(txpmaresetdone_out),
-        .txpolarity_in(1'b0),
-        .txpostcursor_in({1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .txpolarity_in(txpolarity_in),
+        .txpostcursor_in(txpostcursor_in),
         .txpostcursorinv_in(1'b0),
         .txprbsforceerr_in(1'b0),
         .txprbssel_in({1'b0,1'b0,1'b0,1'b0}),
-        .txprecursor_in({1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .txprecursor_in(txprecursor_in),
         .txprecursorinv_in(1'b0),
         .txprgdivresetdone_out(NLW_inst_txprgdivresetdone_out_UNCONNECTED[0]),
         .txprogdivreset_in(1'b0),
@@ -905,250 +908,166 @@ module gtwizard_ultrascale_0
 endmodule
 
 module gtwizard_ultrascale_0_gthe4_channel_wrapper
-   (in0,
-    \gen_gtwizard_gthe4.drprdy_int ,
-    gthtxn_out,
+   (gthtxn_out,
     gthtxp_out,
     \gen_gtwizard_gthe4.gtpowergood_int ,
     rxcdrlock_out,
     rxoutclk_out,
     rxoutclkpcs_out,
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST ,
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_0 ,
+    rxpmaresetdone_out,
     rxresetdone_out,
     txoutclk_out,
     txpmaresetdone_out,
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_1 ,
     txresetdone_out,
     gtwiz_userdata_rx_out,
-    D,
-    rxpmaresetdone_out,
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_2 ,
-    \gen_gtwizard_gthe4.cpllpd_ch_int ,
-    \gen_gtwizard_gthe4.cpllreset_ch_int ,
-    drpclk_in,
-    DEN_O,
-    DWE_O,
+    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST ,
     gthrxn_in,
     gthrxp_in,
-    gtrefclk0_in,
     \gen_gtwizard_gthe4.gtrxreset_ch_int ,
     \gen_gtwizard_gthe4.gttxreset_int ,
     qpll0outclk_out,
     qpll0outrefclk_out,
     qpll1outclk_out,
     qpll1outrefclk_out,
-    \gen_gtwizard_gthe4.rxcdrhold_ch_int ,
-    \gen_gtwizard_gthe4.rxprogdivreset_ch_int ,
+    rxcdrhold_in,
+    rxlpmen_in,
+    rxpolarity_in,
+    \gen_gtwizard_gthe4.rxprogdivreset_int ,
     RXRATE,
+    rxslide_in,
     \gen_gtwizard_gthe4.rxuserrdy_int ,
     rxusrclk_in,
     rxusrclk2_in,
-    tx8b10ben_in,
-    \gen_gtwizard_gthe4.txprogdivreset_ch_int ,
+    txpolarity_in,
+    \gen_gtwizard_gthe4.txprogdivreset_int ,
     \gen_gtwizard_gthe4.txuserrdy_int ,
     txusrclk_in,
     txusrclk2_in,
     gtwiz_userdata_tx_in,
-    Q,
-    txctrl0_in,
-    txctrl1_in,
-    RXOUTCLKSEL,
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3 ,
-    txctrl2_in,
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_4 ,
-    cal_on_rx_debug_out,
-    lopt,
-    lopt_1,
-    lopt_2,
-    lopt_3,
-    lopt_4,
-    lopt_5,
-    lopt_6,
-    lopt_7);
-  output in0;
-  output \gen_gtwizard_gthe4.drprdy_int ;
+    loopback_in,
+    txdiffctrl_in,
+    txpostcursor_in,
+    txprecursor_in);
   output [0:0]gthtxn_out;
   output [0:0]gthtxp_out;
   output \gen_gtwizard_gthe4.gtpowergood_int ;
   output [0:0]rxcdrlock_out;
   output [0:0]rxoutclk_out;
   output [0:0]rxoutclkpcs_out;
-  output \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST ;
-  output \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_0 ;
+  output [0:0]rxpmaresetdone_out;
   output [0:0]rxresetdone_out;
   output [0:0]txoutclk_out;
   output [0:0]txpmaresetdone_out;
-  output \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_1 ;
   output [0:0]txresetdone_out;
   output [31:0]gtwiz_userdata_rx_out;
-  output [15:0]D;
-  output [0:0]rxpmaresetdone_out;
-  output \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_2 ;
-  input \gen_gtwizard_gthe4.cpllpd_ch_int ;
-  input \gen_gtwizard_gthe4.cpllreset_ch_int ;
-  input [0:0]drpclk_in;
-  input DEN_O;
-  input DWE_O;
+  output \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST ;
   input [0:0]gthrxn_in;
   input [0:0]gthrxp_in;
-  input [0:0]gtrefclk0_in;
   input \gen_gtwizard_gthe4.gtrxreset_ch_int ;
   input \gen_gtwizard_gthe4.gttxreset_int ;
   input [0:0]qpll0outclk_out;
   input [0:0]qpll0outrefclk_out;
   input [0:0]qpll1outclk_out;
   input [0:0]qpll1outrefclk_out;
-  input \gen_gtwizard_gthe4.rxcdrhold_ch_int ;
-  input \gen_gtwizard_gthe4.rxprogdivreset_ch_int ;
+  input [0:0]rxcdrhold_in;
+  input [0:0]rxlpmen_in;
+  input [0:0]rxpolarity_in;
+  input \gen_gtwizard_gthe4.rxprogdivreset_int ;
   input [0:0]RXRATE;
+  input [0:0]rxslide_in;
   input \gen_gtwizard_gthe4.rxuserrdy_int ;
   input [0:0]rxusrclk_in;
   input [0:0]rxusrclk2_in;
-  input [0:0]tx8b10ben_in;
-  input \gen_gtwizard_gthe4.txprogdivreset_ch_int ;
+  input [0:0]txpolarity_in;
+  input \gen_gtwizard_gthe4.txprogdivreset_int ;
   input \gen_gtwizard_gthe4.txuserrdy_int ;
   input [0:0]txusrclk_in;
   input [0:0]txusrclk2_in;
   input [31:0]gtwiz_userdata_tx_in;
-  input [15:0]Q;
-  input [15:0]txctrl0_in;
-  input [15:0]txctrl1_in;
-  input [1:0]RXOUTCLKSEL;
-  input [2:0]\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3 ;
-  input [7:0]txctrl2_in;
-  input [2:0]\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_4 ;
-  input [0:0]cal_on_rx_debug_out;
-  input lopt;
-  input lopt_1;
-  output lopt_2;
-  output lopt_3;
-  input lopt_4;
-  input lopt_5;
-  output lopt_6;
-  output lopt_7;
+  input [2:0]loopback_in;
+  input [4:0]txdiffctrl_in;
+  input [4:0]txpostcursor_in;
+  input [4:0]txprecursor_in;
 
-  wire [15:0]D;
-  wire DEN_O;
-  wire DWE_O;
-  wire [15:0]Q;
-  wire [1:0]RXOUTCLKSEL;
   wire [0:0]RXRATE;
-  wire [0:0]cal_on_rx_debug_out;
-  wire [0:0]drpclk_in;
-  wire \gen_gtwizard_gthe4.cpllpd_ch_int ;
-  wire \gen_gtwizard_gthe4.cpllreset_ch_int ;
-  wire \gen_gtwizard_gthe4.drprdy_int ;
   wire \gen_gtwizard_gthe4.gtpowergood_int ;
   wire \gen_gtwizard_gthe4.gtrxreset_ch_int ;
   wire \gen_gtwizard_gthe4.gttxreset_int ;
-  wire \gen_gtwizard_gthe4.rxcdrhold_ch_int ;
-  wire \gen_gtwizard_gthe4.rxprogdivreset_ch_int ;
+  wire \gen_gtwizard_gthe4.rxprogdivreset_int ;
   wire \gen_gtwizard_gthe4.rxuserrdy_int ;
-  wire \gen_gtwizard_gthe4.txprogdivreset_ch_int ;
+  wire \gen_gtwizard_gthe4.txprogdivreset_int ;
   wire \gen_gtwizard_gthe4.txuserrdy_int ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST ;
-  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_0 ;
-  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_1 ;
-  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_2 ;
-  wire [2:0]\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3 ;
-  wire [2:0]\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_4 ;
   wire [0:0]gthrxn_in;
   wire [0:0]gthrxp_in;
   wire [0:0]gthtxn_out;
   wire [0:0]gthtxp_out;
-  wire [0:0]gtrefclk0_in;
   wire [31:0]gtwiz_userdata_rx_out;
   wire [31:0]gtwiz_userdata_tx_in;
-  wire in0;
-  wire lopt;
-  wire lopt_1;
-  wire lopt_2;
-  wire lopt_3;
-  wire lopt_4;
-  wire lopt_5;
-  wire lopt_6;
-  wire lopt_7;
+  wire [2:0]loopback_in;
   wire [0:0]qpll0outclk_out;
   wire [0:0]qpll0outrefclk_out;
   wire [0:0]qpll1outclk_out;
   wire [0:0]qpll1outrefclk_out;
+  wire [0:0]rxcdrhold_in;
   wire [0:0]rxcdrlock_out;
+  wire [0:0]rxlpmen_in;
   wire [0:0]rxoutclk_out;
   wire [0:0]rxoutclkpcs_out;
   wire [0:0]rxpmaresetdone_out;
+  wire [0:0]rxpolarity_in;
   wire [0:0]rxresetdone_out;
+  wire [0:0]rxslide_in;
   wire [0:0]rxusrclk2_in;
   wire [0:0]rxusrclk_in;
-  wire [0:0]tx8b10ben_in;
-  wire [15:0]txctrl0_in;
-  wire [15:0]txctrl1_in;
-  wire [7:0]txctrl2_in;
+  wire [4:0]txdiffctrl_in;
   wire [0:0]txoutclk_out;
   wire [0:0]txpmaresetdone_out;
+  wire [0:0]txpolarity_in;
+  wire [4:0]txpostcursor_in;
+  wire [4:0]txprecursor_in;
   wire [0:0]txresetdone_out;
   wire [0:0]txusrclk2_in;
   wire [0:0]txusrclk_in;
 
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel channel_inst
-       (.D(D),
-        .DEN_O(DEN_O),
-        .DWE_O(DWE_O),
-        .Q(Q),
-        .RXOUTCLKSEL(RXOUTCLKSEL),
-        .RXRATE(RXRATE),
-        .cal_on_rx_debug_out(cal_on_rx_debug_out),
-        .drpclk_in(drpclk_in),
-        .\gen_gtwizard_gthe4.cpllpd_ch_int (\gen_gtwizard_gthe4.cpllpd_ch_int ),
-        .\gen_gtwizard_gthe4.cpllreset_ch_int (\gen_gtwizard_gthe4.cpllreset_ch_int ),
-        .\gen_gtwizard_gthe4.drprdy_int (\gen_gtwizard_gthe4.drprdy_int ),
+       (.RXRATE(RXRATE),
         .\gen_gtwizard_gthe4.gtpowergood_int (\gen_gtwizard_gthe4.gtpowergood_int ),
         .\gen_gtwizard_gthe4.gtrxreset_ch_int (\gen_gtwizard_gthe4.gtrxreset_ch_int ),
         .\gen_gtwizard_gthe4.gttxreset_int (\gen_gtwizard_gthe4.gttxreset_int ),
-        .\gen_gtwizard_gthe4.rxcdrhold_ch_int (\gen_gtwizard_gthe4.rxcdrhold_ch_int ),
-        .\gen_gtwizard_gthe4.rxprogdivreset_ch_int (\gen_gtwizard_gthe4.rxprogdivreset_ch_int ),
+        .\gen_gtwizard_gthe4.rxprogdivreset_int (\gen_gtwizard_gthe4.rxprogdivreset_int ),
         .\gen_gtwizard_gthe4.rxuserrdy_int (\gen_gtwizard_gthe4.rxuserrdy_int ),
-        .\gen_gtwizard_gthe4.txprogdivreset_ch_int (\gen_gtwizard_gthe4.txprogdivreset_ch_int ),
+        .\gen_gtwizard_gthe4.txprogdivreset_int (\gen_gtwizard_gthe4.txprogdivreset_int ),
         .\gen_gtwizard_gthe4.txuserrdy_int (\gen_gtwizard_gthe4.txuserrdy_int ),
         .\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_0 (\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST ),
-        .\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_1 (\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_0 ),
-        .\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_2 (\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_1 ),
-        .\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3 (\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_2 ),
-        .\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_4 (\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3 ),
-        .\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_5 (\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_4 ),
         .gthrxn_in(gthrxn_in),
         .gthrxp_in(gthrxp_in),
         .gthtxn_out(gthtxn_out),
         .gthtxp_out(gthtxp_out),
-        .gtrefclk0_in(gtrefclk0_in),
         .gtwiz_userdata_rx_out(gtwiz_userdata_rx_out),
         .gtwiz_userdata_tx_in(gtwiz_userdata_tx_in),
-        .in0(in0),
-        .lopt(lopt),
-        .lopt_1(lopt_1),
-        .lopt_2(lopt_2),
-        .lopt_3(lopt_3),
-        .lopt_4(lopt_4),
-        .lopt_5(lopt_5),
-        .lopt_6(lopt_6),
-        .lopt_7(lopt_7),
+        .loopback_in(loopback_in),
         .qpll0outclk_out(qpll0outclk_out),
         .qpll0outrefclk_out(qpll0outrefclk_out),
         .qpll1outclk_out(qpll1outclk_out),
         .qpll1outrefclk_out(qpll1outrefclk_out),
+        .rxcdrhold_in(rxcdrhold_in),
         .rxcdrlock_out(rxcdrlock_out),
+        .rxlpmen_in(rxlpmen_in),
         .rxoutclk_out(rxoutclk_out),
         .rxoutclkpcs_out(rxoutclkpcs_out),
         .rxpmaresetdone_out(rxpmaresetdone_out),
+        .rxpolarity_in(rxpolarity_in),
         .rxresetdone_out(rxresetdone_out),
+        .rxslide_in(rxslide_in),
         .rxusrclk2_in(rxusrclk2_in),
         .rxusrclk_in(rxusrclk_in),
-        .tx8b10ben_in(tx8b10ben_in),
-        .txctrl0_in(txctrl0_in),
-        .txctrl1_in(txctrl1_in),
-        .txctrl2_in(txctrl2_in),
+        .txdiffctrl_in(txdiffctrl_in),
         .txoutclk_out(txoutclk_out),
         .txpmaresetdone_out(txpmaresetdone_out),
+        .txpolarity_in(txpolarity_in),
+        .txpostcursor_in(txpostcursor_in),
+        .txprecursor_in(txprecursor_in),
         .txresetdone_out(txresetdone_out),
         .txusrclk2_in(txusrclk2_in),
         .txusrclk_in(txusrclk_in));
@@ -1198,30 +1117,31 @@ module gtwizard_ultrascale_0_gtwizard_gthe4
     gthtxn_out,
     gthtxp_out,
     rxoutclk_out,
+    rxpmaresetdone_out,
     txoutclk_out,
     txpmaresetdone_out,
     gtwiz_userdata_rx_out,
-    rxpmaresetdone_out,
     gtpowergood_out,
     gtwiz_reset_tx_done_out,
     gtwiz_reset_rx_cdr_stable_out,
     gtwiz_reset_rx_done_out,
     gtrefclk00_in,
-    drpclk_in,
     gthrxn_in,
     gthrxp_in,
-    gtrefclk0_in,
+    rxcdrhold_in,
+    rxlpmen_in,
+    rxpolarity_in,
+    rxslide_in,
     rxusrclk_in,
     rxusrclk2_in,
-    tx8b10ben_in,
+    txpolarity_in,
     txusrclk_in,
     txusrclk2_in,
     gtwiz_userdata_tx_in,
-    txctrl0_in,
-    txctrl1_in,
-    txctrl2_in,
-    gtwiz_userclk_tx_reset_in,
-    gtwiz_userclk_rx_reset_in,
+    loopback_in,
+    txdiffctrl_in,
+    txpostcursor_in,
+    txprecursor_in,
     gtwiz_userclk_tx_active_in,
     gtwiz_userclk_rx_active_in,
     gtwiz_reset_clk_freerun_in,
@@ -1235,30 +1155,31 @@ module gtwizard_ultrascale_0_gtwizard_gthe4
   output [0:0]gthtxn_out;
   output [0:0]gthtxp_out;
   output [0:0]rxoutclk_out;
+  output [0:0]rxpmaresetdone_out;
   output [0:0]txoutclk_out;
   output [0:0]txpmaresetdone_out;
   output [31:0]gtwiz_userdata_rx_out;
-  output [0:0]rxpmaresetdone_out;
   output [0:0]gtpowergood_out;
   output [0:0]gtwiz_reset_tx_done_out;
   output [0:0]gtwiz_reset_rx_cdr_stable_out;
   output [0:0]gtwiz_reset_rx_done_out;
   input [0:0]gtrefclk00_in;
-  input [0:0]drpclk_in;
   input [0:0]gthrxn_in;
   input [0:0]gthrxp_in;
-  input [0:0]gtrefclk0_in;
+  input [0:0]rxcdrhold_in;
+  input [0:0]rxlpmen_in;
+  input [0:0]rxpolarity_in;
+  input [0:0]rxslide_in;
   input [0:0]rxusrclk_in;
   input [0:0]rxusrclk2_in;
-  input [0:0]tx8b10ben_in;
+  input [0:0]txpolarity_in;
   input [0:0]txusrclk_in;
   input [0:0]txusrclk2_in;
   input [31:0]gtwiz_userdata_tx_in;
-  input [15:0]txctrl0_in;
-  input [15:0]txctrl1_in;
-  input [7:0]txctrl2_in;
-  input [0:0]gtwiz_userclk_tx_reset_in;
-  input [0:0]gtwiz_userclk_rx_reset_in;
+  input [2:0]loopback_in;
+  input [4:0]txdiffctrl_in;
+  input [4:0]txpostcursor_in;
+  input [4:0]txprecursor_in;
   input [0:0]gtwiz_userclk_tx_active_in;
   input [0:0]gtwiz_userclk_rx_active_in;
   input [0:0]gtwiz_reset_clk_freerun_in;
@@ -1268,75 +1189,24 @@ module gtwizard_ultrascale_0_gtwizard_gthe4
   input [0:0]gtwiz_reset_rx_datapath_in;
   input [0:0]gtwiz_reset_rx_pll_and_datapath_in;
 
-  wire cal_on_rx_cal_done;
-  wire cal_on_rx_cal_fail;
-  wire [13:9]cal_on_rx_debug_out;
-  wire [15:15]cal_on_rx_dout;
-  wire cal_on_rx_drpen_out;
-  wire cal_on_rx_drpwe_out;
-  wire cal_on_rx_reset_in_sync;
-  wire [0:0]drpclk_in;
-  wire \gen_cal_rx_en.cal_fail_store_i_1_n_0 ;
-  wire \gen_cal_rx_en.den_i_1_n_0 ;
-  wire \gen_cal_rx_en.dwe_i_1_n_0 ;
-  wire \gen_cal_rx_en.freq_counter_rst_i_1_n_0 ;
-  wire \gen_cal_rx_en.gtrxreset_int_i_1_n_0 ;
-  wire \gen_cal_rx_en.mask_user_in_i_1_n_0 ;
-  wire \gen_cal_rx_en.rd_i_1_n_0 ;
-  wire \gen_cal_rx_en.rxcdrhold_int_i_1_n_0 ;
-  wire \gen_cal_rx_en.rxprogdivreset_int_i_1_n_0 ;
-  wire \gen_cal_rx_en.status_store_i_1_n_0 ;
-  wire \gen_cal_rx_en.wr_i_1_n_0 ;
-  wire \gen_gtwizard_gthe4.cplllock_ch_int ;
-  wire \gen_gtwizard_gthe4.cpllpd_ch_int ;
-  wire \gen_gtwizard_gthe4.cpllreset_ch_int ;
-  wire [15:0]\gen_gtwizard_gthe4.drpdo_int ;
-  wire \gen_gtwizard_gthe4.drpen_ch_int ;
-  wire \gen_gtwizard_gthe4.drprdy_int ;
-  wire \gen_gtwizard_gthe4.drpwe_ch_int ;
   wire \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_10 ;
-  wire \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_14 ;
+  wire \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_3 ;
+  wire \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_43 ;
   wire \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_5 ;
-  wire \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_64 ;
   wire \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_7 ;
   wire \gen_gtwizard_gthe4.gen_common.gen_common_container[25].gen_enabled_common.gthe4_common_wrapper_inst_n_0 ;
   wire \gen_gtwizard_gthe4.gen_common.gen_common_container[25].gen_enabled_common.gthe4_common_wrapper_inst_n_3 ;
   wire \gen_gtwizard_gthe4.gen_common.gen_common_container[25].gen_enabled_common.gthe4_common_wrapper_inst_n_4 ;
-  wire [8:2]\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.drpaddr_cpll_cal_int ;
-  wire [15:0]\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.drpdi_cpll_cal_int ;
-  wire \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_10 ;
-  wire \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_11 ;
-  wire \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_19 ;
-  wire \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_33 ;
-  wire \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_34 ;
-  wire \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_35 ;
-  wire \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_36 ;
-  wire \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_38 ;
-  wire \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_39 ;
-  wire \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_40 ;
-  wire \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_41 ;
-  wire \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_42 ;
-  wire \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_43 ;
-  wire \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_44 ;
-  wire [2:1]\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.rxoutclksel_cpll_cal_int ;
-  wire [2:0]\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.txoutclksel_cpll_cal_int ;
-  wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_inst_n_4 ;
-  wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_rx_int ;
+  wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gen_ch_xrd[0].bit_synchronizer_rxresetdone_inst_n_1 ;
+  wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_inst_n_10 ;
   wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ;
   wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync ;
   wire \gen_gtwizard_gthe4.gtpowergood_int ;
   wire \gen_gtwizard_gthe4.gtrxreset_ch_int ;
-  wire \gen_gtwizard_gthe4.gtrxreset_int ;
   wire \gen_gtwizard_gthe4.gttxreset_int ;
-  wire \gen_gtwizard_gthe4.rxcdrhold_ch_int ;
-  wire \gen_gtwizard_gthe4.rxpmaresetdone_int ;
-  wire \gen_gtwizard_gthe4.rxprgdivresetdone_int ;
-  wire \gen_gtwizard_gthe4.rxprogdivreset_ch_int ;
   wire \gen_gtwizard_gthe4.rxprogdivreset_int ;
   wire \gen_gtwizard_gthe4.rxratemode_ch_int ;
   wire \gen_gtwizard_gthe4.rxuserrdy_int ;
-  wire \gen_gtwizard_gthe4.txprgdivresetdone_int ;
-  wire \gen_gtwizard_gthe4.txprogdivreset_ch_int ;
   wire \gen_gtwizard_gthe4.txprogdivreset_int ;
   wire \gen_gtwizard_gthe4.txuserrdy_int ;
   wire [0:0]gthrxn_in;
@@ -1345,7 +1215,6 @@ module gtwizard_ultrascale_0_gtwizard_gthe4
   wire [0:0]gthtxp_out;
   wire [0:0]gtpowergood_out;
   wire [0:0]gtrefclk00_in;
-  wire [0:0]gtrefclk0_in;
   wire [0:0]gtwiz_reset_all_in;
   wire [0:0]gtwiz_reset_clk_freerun_in;
   wire [0:0]gtwiz_reset_rx_cdr_stable_out;
@@ -1356,214 +1225,74 @@ module gtwizard_ultrascale_0_gtwizard_gthe4
   wire [0:0]gtwiz_reset_tx_done_out;
   wire [0:0]gtwiz_reset_tx_pll_and_datapath_in;
   wire [0:0]gtwiz_userclk_rx_active_in;
-  wire [0:0]gtwiz_userclk_rx_reset_in;
   wire [0:0]gtwiz_userclk_tx_active_in;
-  wire [0:0]gtwiz_userclk_tx_reset_in;
   wire [31:0]gtwiz_userdata_rx_out;
   wire [31:0]gtwiz_userdata_tx_in;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.cal_fail_store__0 ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.drp_done ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.gtrxreset_int ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.rd ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.rxcdrhold_int ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.rxprogdivreset_int ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.wr ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_0_in ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_0_in0_in ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_10_in ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_14_in ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_17_in ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_18_in ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_1_in ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_1_in2_in ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_20_in ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_2_in ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_2_in1_in ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_3_in ;
-  wire \gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_4_in ;
-  wire lopt;
-  wire lopt_1;
-  wire lopt_2;
-  wire lopt_3;
-  wire lopt_4;
-  wire lopt_5;
+  wire [2:0]loopback_in;
   wire [0:0]qpll0outclk_out;
   wire [0:0]qpll0outrefclk_out;
   wire rst_in0;
+  wire [0:0]rxcdrhold_in;
+  wire [0:0]rxlpmen_in;
   wire [0:0]rxoutclk_out;
   wire [0:0]rxpmaresetdone_out;
+  wire [0:0]rxpolarity_in;
+  wire [0:0]rxslide_in;
   wire [0:0]rxusrclk2_in;
   wire [0:0]rxusrclk_in;
-  wire [0:0]tx8b10ben_in;
-  wire [15:0]txctrl0_in;
-  wire [15:0]txctrl1_in;
-  wire [7:0]txctrl2_in;
+  wire [0:0]sm_reset_rx;
+  wire [4:0]txdiffctrl_in;
   wire [0:0]txoutclk_out;
   wire [0:0]txpmaresetdone_out;
+  wire [0:0]txpolarity_in;
+  wire [4:0]txpostcursor_in;
+  wire [4:0]txprecursor_in;
   wire [0:0]txusrclk2_in;
   wire [0:0]txusrclk_in;
 
-  LUT6 #(
-    .INIT(64'hFFFFDFDF30331010)) 
-    \gen_cal_rx_en.cal_fail_store_i_1 
-       (.I0(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_43 ),
-        .I1(cal_on_rx_reset_in_sync),
-        .I2(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_42 ),
-        .I3(cal_on_rx_debug_out[13]),
-        .I4(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_4_in ),
-        .I5(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.cal_fail_store__0 ),
-        .O(\gen_cal_rx_en.cal_fail_store_i_1_n_0 ));
-  LUT5 #(
-    .INIT(32'hFFCDFFCC)) 
-    \gen_cal_rx_en.den_i_1 
-       (.I0(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_38 ),
-        .I1(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_39 ),
-        .I2(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_40 ),
-        .I3(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_41 ),
-        .I4(cal_on_rx_drpen_out),
-        .O(\gen_cal_rx_en.den_i_1_n_0 ));
-  LUT3 #(
-    .INIT(8'hBA)) 
-    \gen_cal_rx_en.dwe_i_1 
-       (.I0(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_39 ),
-        .I1(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_38 ),
-        .I2(cal_on_rx_drpwe_out),
-        .O(\gen_cal_rx_en.dwe_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFFEFE00303232)) 
-    \gen_cal_rx_en.freq_counter_rst_i_1 
-       (.I0(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_18_in ),
-        .I1(cal_on_rx_reset_in_sync),
-        .I2(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_17_in ),
-        .I3(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_34 ),
-        .I4(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_44 ),
-        .I5(cal_on_rx_debug_out[10]),
-        .O(\gen_cal_rx_en.freq_counter_rst_i_1_n_0 ));
-  LUT3 #(
-    .INIT(8'hB8)) 
-    \gen_cal_rx_en.gtrxreset_int_i_1 
-       (.I0(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_35 ),
-        .I1(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_14_in ),
-        .I2(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.gtrxreset_int ),
-        .O(\gen_cal_rx_en.gtrxreset_int_i_1_n_0 ));
-  LUT5 #(
-    .INIT(32'hEEEFEEEE)) 
-    \gen_cal_rx_en.mask_user_in_i_1 
-       (.I0(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_33 ),
-        .I1(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_1_in2_in ),
-        .I2(cal_on_rx_cal_fail),
-        .I3(cal_on_rx_cal_done),
-        .I4(cal_on_rx_debug_out[9]),
-        .O(\gen_cal_rx_en.mask_user_in_i_1_n_0 ));
-  LUT5 #(
-    .INIT(32'h55575554)) 
-    \gen_cal_rx_en.rd_i_1 
-       (.I0(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.drp_done ),
-        .I1(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_1_in ),
-        .I2(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_2_in1_in ),
-        .I3(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_1_in2_in ),
-        .I4(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.rd ),
-        .O(\gen_cal_rx_en.rd_i_1_n_0 ));
-  LUT4 #(
-    .INIT(16'hABAA)) 
-    \gen_cal_rx_en.rxcdrhold_int_i_1 
-       (.I0(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_20_in ),
-        .I1(cal_on_rx_cal_fail),
-        .I2(cal_on_rx_cal_done),
-        .I3(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.rxcdrhold_int ),
-        .O(\gen_cal_rx_en.rxcdrhold_int_i_1_n_0 ));
-  LUT5 #(
-    .INIT(32'hECEFECE0)) 
-    \gen_cal_rx_en.rxprogdivreset_int_i_1 
-       (.I0(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_35 ),
-        .I1(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_36 ),
-        .I2(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_19 ),
-        .I3(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_10_in ),
-        .I4(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.rxprogdivreset_int ),
-        .O(\gen_cal_rx_en.rxprogdivreset_int_i_1_n_0 ));
-  LUT5 #(
-    .INIT(32'hFFBF0080)) 
-    \gen_cal_rx_en.status_store_i_1 
-       (.I0(cal_on_rx_dout),
-        .I1(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_1_in2_in ),
-        .I2(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.drp_done ),
-        .I3(cal_on_rx_reset_in_sync),
-        .I4(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_10 ),
-        .O(\gen_cal_rx_en.status_store_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h5555555755555554)) 
-    \gen_cal_rx_en.wr_i_1 
-       (.I0(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.drp_done ),
-        .I1(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_2_in ),
-        .I2(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_0_in ),
-        .I3(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_3_in ),
-        .I4(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_0_in0_in ),
-        .I5(\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.wr ),
-        .O(\gen_cal_rx_en.wr_i_1_n_0 ));
   gtwizard_ultrascale_0_gthe4_channel_wrapper \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst 
-       (.D(\gen_gtwizard_gthe4.drpdo_int ),
-        .DEN_O(\gen_gtwizard_gthe4.drpen_ch_int ),
-        .DWE_O(\gen_gtwizard_gthe4.drpwe_ch_int ),
-        .Q(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.drpdi_cpll_cal_int ),
-        .RXOUTCLKSEL(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.rxoutclksel_cpll_cal_int ),
-        .RXRATE(\gen_gtwizard_gthe4.rxratemode_ch_int ),
-        .cal_on_rx_debug_out(cal_on_rx_debug_out[9]),
-        .drpclk_in(drpclk_in),
-        .\gen_gtwizard_gthe4.cpllpd_ch_int (\gen_gtwizard_gthe4.cpllpd_ch_int ),
-        .\gen_gtwizard_gthe4.cpllreset_ch_int (\gen_gtwizard_gthe4.cpllreset_ch_int ),
-        .\gen_gtwizard_gthe4.drprdy_int (\gen_gtwizard_gthe4.drprdy_int ),
+       (.RXRATE(\gen_gtwizard_gthe4.rxratemode_ch_int ),
         .\gen_gtwizard_gthe4.gtpowergood_int (\gen_gtwizard_gthe4.gtpowergood_int ),
         .\gen_gtwizard_gthe4.gtrxreset_ch_int (\gen_gtwizard_gthe4.gtrxreset_ch_int ),
         .\gen_gtwizard_gthe4.gttxreset_int (\gen_gtwizard_gthe4.gttxreset_int ),
-        .\gen_gtwizard_gthe4.rxcdrhold_ch_int (\gen_gtwizard_gthe4.rxcdrhold_ch_int ),
-        .\gen_gtwizard_gthe4.rxprogdivreset_ch_int (\gen_gtwizard_gthe4.rxprogdivreset_ch_int ),
+        .\gen_gtwizard_gthe4.rxprogdivreset_int (\gen_gtwizard_gthe4.rxprogdivreset_int ),
         .\gen_gtwizard_gthe4.rxuserrdy_int (\gen_gtwizard_gthe4.rxuserrdy_int ),
-        .\gen_gtwizard_gthe4.txprogdivreset_ch_int (\gen_gtwizard_gthe4.txprogdivreset_ch_int ),
+        .\gen_gtwizard_gthe4.txprogdivreset_int (\gen_gtwizard_gthe4.txprogdivreset_int ),
         .\gen_gtwizard_gthe4.txuserrdy_int (\gen_gtwizard_gthe4.txuserrdy_int ),
-        .\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST (\gen_gtwizard_gthe4.rxpmaresetdone_int ),
-        .\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_0 (\gen_gtwizard_gthe4.rxprgdivresetdone_int ),
-        .\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_1 (\gen_gtwizard_gthe4.txprgdivresetdone_int ),
-        .\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_2 (\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_64 ),
-        .\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3 (\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.txoutclksel_cpll_cal_int ),
-        .\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_4 ({\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.drpaddr_cpll_cal_int [8:7],\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.drpaddr_cpll_cal_int [2]}),
+        .\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST (\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_43 ),
         .gthrxn_in(gthrxn_in),
         .gthrxp_in(gthrxp_in),
         .gthtxn_out(gthtxn_out),
         .gthtxp_out(gthtxp_out),
-        .gtrefclk0_in(gtrefclk0_in),
         .gtwiz_userdata_rx_out(gtwiz_userdata_rx_out),
         .gtwiz_userdata_tx_in(gtwiz_userdata_tx_in),
-        .in0(\gen_gtwizard_gthe4.cplllock_ch_int ),
-        .lopt(lopt),
-        .lopt_1(gtwiz_userclk_rx_reset_in),
-        .lopt_2(lopt_1),
-        .lopt_3(lopt_2),
-        .lopt_4(lopt_3),
-        .lopt_5(gtwiz_userclk_tx_reset_in),
-        .lopt_6(lopt_4),
-        .lopt_7(lopt_5),
+        .loopback_in(loopback_in),
         .qpll0outclk_out(qpll0outclk_out),
         .qpll0outrefclk_out(qpll0outrefclk_out),
         .qpll1outclk_out(\gen_gtwizard_gthe4.gen_common.gen_common_container[25].gen_enabled_common.gthe4_common_wrapper_inst_n_3 ),
         .qpll1outrefclk_out(\gen_gtwizard_gthe4.gen_common.gen_common_container[25].gen_enabled_common.gthe4_common_wrapper_inst_n_4 ),
-        .rxcdrlock_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_5 ),
+        .rxcdrhold_in(rxcdrhold_in),
+        .rxcdrlock_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_3 ),
+        .rxlpmen_in(rxlpmen_in),
         .rxoutclk_out(rxoutclk_out),
-        .rxoutclkpcs_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_7 ),
+        .rxoutclkpcs_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_5 ),
         .rxpmaresetdone_out(rxpmaresetdone_out),
-        .rxresetdone_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_10 ),
+        .rxpolarity_in(rxpolarity_in),
+        .rxresetdone_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_7 ),
+        .rxslide_in(rxslide_in),
         .rxusrclk2_in(rxusrclk2_in),
         .rxusrclk_in(rxusrclk_in),
-        .tx8b10ben_in(tx8b10ben_in),
-        .txctrl0_in(txctrl0_in),
-        .txctrl1_in(txctrl1_in),
-        .txctrl2_in(txctrl2_in),
+        .txdiffctrl_in(txdiffctrl_in),
         .txoutclk_out(txoutclk_out),
         .txpmaresetdone_out(txpmaresetdone_out),
-        .txresetdone_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_14 ),
+        .txpolarity_in(txpolarity_in),
+        .txpostcursor_in(txpostcursor_in),
+        .txprecursor_in(txprecursor_in),
+        .txresetdone_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_10 ),
         .txusrclk2_in(txusrclk2_in),
         .txusrclk_in(txusrclk_in));
   gtwizard_ultrascale_0_gthe4_common_wrapper \gen_gtwizard_gthe4.gen_common.gen_common_container[25].gen_enabled_common.gthe4_common_wrapper_inst 
-       (.\gthe4_common_gen.GTHE4_COMMON_PRIM_INST (\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_inst_n_4 ),
+       (.\gthe4_common_gen.GTHE4_COMMON_PRIM_INST (\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_inst_n_10 ),
         .gtrefclk00_in(gtrefclk00_in),
         .qpll0lock_out(\gen_gtwizard_gthe4.gen_common.gen_common_container[25].gen_enabled_common.gthe4_common_wrapper_inst_n_0 ),
         .qpll0outclk_out(qpll0outclk_out),
@@ -1571,95 +1300,32 @@ module gtwizard_ultrascale_0_gtwizard_gthe4
         .qpll1outclk_out(\gen_gtwizard_gthe4.gen_common.gen_common_container[25].gen_enabled_common.gthe4_common_wrapper_inst_n_3 ),
         .qpll1outrefclk_out(\gen_gtwizard_gthe4.gen_common.gen_common_container[25].gen_enabled_common.gthe4_common_wrapper_inst_n_4 ),
         .rst_in0(rst_in0));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal \gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst 
-       (.DADDR_O({\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.drpaddr_cpll_cal_int [8:7],\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.drpaddr_cpll_cal_int [2]}),
-        .DEN_O(\gen_gtwizard_gthe4.drpen_ch_int ),
-        .DI_O(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.drpdi_cpll_cal_int ),
-        .DO_I(\gen_gtwizard_gthe4.drpdo_int ),
-        .DO_USR_O(cal_on_rx_dout),
-        .DWE_O(\gen_gtwizard_gthe4.drpwe_ch_int ),
-        .Q({cal_on_rx_cal_done,cal_on_rx_cal_fail,\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_19 ,\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_4_in ,\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_3_in ,\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_2_in ,\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_2_in1_in ,\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_10_in ,\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_14_in ,\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_17_in ,\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_18_in ,\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_20_in ,\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_0_in ,\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_0_in0_in ,\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_1_in ,\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/p_1_in2_in ,\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_33 }),
-        .RXOUTCLKSEL(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.rxoutclksel_cpll_cal_int ),
-        .cal_on_rx_drpen_out(cal_on_rx_drpen_out),
-        .cal_on_rx_drpwe_out(cal_on_rx_drpwe_out),
-        .cal_on_rx_reset_in(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_rx_int ),
-        .cal_on_rx_reset_in_sync(cal_on_rx_reset_in_sync),
-        .drpclk_in(drpclk_in),
-        .\gen_cal_rx_en.USER_CPLLLOCK_OUT_reg (\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_11 ),
-        .\gen_cal_rx_en.cal_fail_store__0 (\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.cal_fail_store__0 ),
-        .\gen_cal_rx_en.cal_fail_store_reg (\gen_cal_rx_en.cal_fail_store_i_1_n_0 ),
-        .\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0 (\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_43 ),
-        .\gen_cal_rx_en.cpll_cal_state_reg[17] (\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_36 ),
-        .\gen_cal_rx_en.cpll_cal_state_reg[18] (\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_44 ),
-        .\gen_cal_rx_en.den_reg (\gen_cal_rx_en.den_i_1_n_0 ),
-        .\gen_cal_rx_en.drp_state_reg[6] ({\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.drp_done ,\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_38 ,\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_39 ,\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_40 ,\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_41 }),
-        .\gen_cal_rx_en.dwe_reg (\gen_cal_rx_en.dwe_i_1_n_0 ),
-        .\gen_cal_rx_en.freq_counter_rst_reg (\gen_cal_rx_en.freq_counter_rst_i_1_n_0 ),
-        .\gen_cal_rx_en.gtrxreset_int (\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.gtrxreset_int ),
-        .\gen_cal_rx_en.gtrxreset_int_reg (\gen_cal_rx_en.gtrxreset_int_i_1_n_0 ),
-        .\gen_cal_rx_en.mask_user_in_reg (\gen_cal_rx_en.mask_user_in_i_1_n_0 ),
-        .\gen_cal_rx_en.rd (\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.rd ),
-        .\gen_cal_rx_en.rd_reg (\gen_cal_rx_en.rd_i_1_n_0 ),
-        .\gen_cal_rx_en.repeat_ctr_reg[3] (\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_42 ),
-        .\gen_cal_rx_en.rxcdrhold_int (\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.rxcdrhold_int ),
-        .\gen_cal_rx_en.rxcdrhold_int_reg (\gen_cal_rx_en.rxcdrhold_int_i_1_n_0 ),
-        .\gen_cal_rx_en.rxprogdivreset_int (\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.rxprogdivreset_int ),
-        .\gen_cal_rx_en.rxprogdivreset_int_reg (\gen_cal_rx_en.rxprogdivreset_int_i_1_n_0 ),
-        .\gen_cal_rx_en.status_store_reg (\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_10 ),
-        .\gen_cal_rx_en.status_store_reg_0 (\gen_cal_rx_en.status_store_i_1_n_0 ),
-        .\gen_cal_rx_en.wait_ctr_reg[14] (\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_34 ),
-        .\gen_cal_rx_en.wait_ctr_reg[5] (\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_35 ),
-        .\gen_cal_rx_en.wr (\gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.wr ),
-        .\gen_cal_rx_en.wr_reg (\gen_cal_rx_en.wr_i_1_n_0 ),
-        .\gen_gtwizard_gthe4.cpllpd_ch_int (\gen_gtwizard_gthe4.cpllpd_ch_int ),
-        .\gen_gtwizard_gthe4.cpllreset_ch_int (\gen_gtwizard_gthe4.cpllreset_ch_int ),
-        .\gen_gtwizard_gthe4.drprdy_int (\gen_gtwizard_gthe4.drprdy_int ),
-        .\gen_gtwizard_gthe4.gtpowergood_int (\gen_gtwizard_gthe4.gtpowergood_int ),
-        .\gen_gtwizard_gthe4.gtrxreset_ch_int (\gen_gtwizard_gthe4.gtrxreset_ch_int ),
-        .\gen_gtwizard_gthe4.gtrxreset_int (\gen_gtwizard_gthe4.gtrxreset_int ),
-        .\gen_gtwizard_gthe4.rxcdrhold_ch_int (\gen_gtwizard_gthe4.rxcdrhold_ch_int ),
-        .\gen_gtwizard_gthe4.rxprogdivreset_ch_int (\gen_gtwizard_gthe4.rxprogdivreset_ch_int ),
-        .\gen_gtwizard_gthe4.rxprogdivreset_int (\gen_gtwizard_gthe4.rxprogdivreset_int ),
-        .\gen_gtwizard_gthe4.txprogdivreset_ch_int (\gen_gtwizard_gthe4.txprogdivreset_ch_int ),
-        .gtwiz_userclk_rx_reset_in(gtwiz_userclk_rx_reset_in),
-        .gtwiz_userclk_tx_reset_in(gtwiz_userclk_tx_reset_in),
-        .i_in_meta_reg(\gen_gtwizard_gthe4.txprogdivreset_int ),
-        .i_in_meta_reg_0(\gen_gtwizard_gthe4.txprgdivresetdone_int ),
-        .i_in_meta_reg_1(\gen_gtwizard_gthe4.rxpmaresetdone_int ),
-        .i_in_meta_reg_2(\gen_gtwizard_gthe4.rxprgdivresetdone_int ),
-        .i_in_out_reg({cal_on_rx_debug_out[13],cal_on_rx_debug_out[10:9]}),
-        .in0(\gen_gtwizard_gthe4.cplllock_ch_int ),
-        .lopt(lopt),
-        .lopt_1(lopt_1),
-        .lopt_2(lopt_2),
-        .lopt_3(lopt_3),
-        .lopt_4(lopt_4),
-        .lopt_5(lopt_5),
-        .\non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[2] (\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.txoutclksel_cpll_cal_int ),
-        .out(gtpowergood_out),
-        .rxoutclk_out(rxoutclk_out),
-        .txoutclk_out(txoutclk_out));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_delay_powergood \gen_gtwizard_gthe4.gen_pwrgood_delay_inst[0].delay_powergood_inst 
        (.RXRATE(\gen_gtwizard_gthe4.rxratemode_ch_int ),
-        .\gen_powergood_delay.intclk_rrst_n_r_reg[4]_0 (\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_64 ),
+        .\gen_powergood_delay.intclk_rrst_n_r_reg[4]_0 (\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_43 ),
         .out(gtpowergood_out),
-        .rxoutclkpcs_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_7 ));
+        .rxoutclkpcs_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_5 ));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gen_ch_xrd[0].bit_synchronizer_rxresetdone_inst 
-       (.\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync (\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ),
+       (.Q(sm_reset_rx),
+        .\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync (\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ),
         .gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in),
-        .rxresetdone_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_10 ));
+        .i_in_out_reg_0(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gen_ch_xrd[0].bit_synchronizer_rxresetdone_inst_n_1 ),
+        .rxresetdone_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_7 ));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_0 \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gen_ch_xrd[0].bit_synchronizer_txresetdone_inst 
        (.\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync (\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync ),
         .gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in),
-        .txresetdone_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_14 ));
+        .txresetdone_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_10 ));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_inst 
-       (.cal_on_rx_reset_in(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_rx_int ),
+       (.\FSM_sequential_sm_reset_rx_reg[0]_0 (\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gen_ch_xrd[0].bit_synchronizer_rxresetdone_inst_n_1 ),
+        .Q(sm_reset_rx),
         .\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync (\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ),
         .\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync (\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync ),
-        .\gen_gtwizard_gthe4.gtrxreset_int (\gen_gtwizard_gthe4.gtrxreset_int ),
+        .\gen_gtwizard_gthe4.gtpowergood_int (\gen_gtwizard_gthe4.gtpowergood_int ),
+        .\gen_gtwizard_gthe4.gtrxreset_ch_int (\gen_gtwizard_gthe4.gtrxreset_ch_int ),
         .\gen_gtwizard_gthe4.gttxreset_int (\gen_gtwizard_gthe4.gttxreset_int ),
         .\gen_gtwizard_gthe4.rxprogdivreset_int (\gen_gtwizard_gthe4.rxprogdivreset_int ),
         .\gen_gtwizard_gthe4.rxuserrdy_int (\gen_gtwizard_gthe4.rxuserrdy_int ),
+        .\gen_gtwizard_gthe4.txprogdivreset_int (\gen_gtwizard_gthe4.txprogdivreset_int ),
         .\gen_gtwizard_gthe4.txuserrdy_int (\gen_gtwizard_gthe4.txuserrdy_int ),
         .gtpowergood_out(gtpowergood_out),
         .gtwiz_reset_all_in(gtwiz_reset_all_in),
@@ -1672,19 +1338,17 @@ module gtwizard_ultrascale_0_gtwizard_gthe4
         .gtwiz_reset_tx_pll_and_datapath_in(gtwiz_reset_tx_pll_and_datapath_in),
         .gtwiz_userclk_rx_active_in(gtwiz_userclk_rx_active_in),
         .gtwiz_userclk_tx_active_in(gtwiz_userclk_tx_active_in),
-        .i_in_meta_reg(\gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst_n_11 ),
         .i_in_out_reg(gtwiz_reset_rx_cdr_stable_out),
-        .pllreset_tx_out_reg_0(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_inst_n_4 ),
+        .pllreset_tx_out_reg_0(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_inst_n_10 ),
         .qpll0lock_out(\gen_gtwizard_gthe4.gen_common.gen_common_container[25].gen_enabled_common.gthe4_common_wrapper_inst_n_0 ),
         .rst_in0(rst_in0),
-        .rst_in_out_reg(\gen_gtwizard_gthe4.txprogdivreset_int ),
-        .rxcdrlock_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_5 ),
+        .rxcdrlock_out(\gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_3 ),
         .rxusrclk2_in(rxusrclk2_in),
         .txusrclk2_in(txusrclk2_in));
 endmodule
 
-(* C_CHANNEL_ENABLE = "192'b000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" *) (* C_COMMON_SCALING_FACTOR = "1" *) (* C_CPLL_VCO_FREQUENCY = "2000.000000" *) 
-(* C_ENABLE_COMMON_USRCLK = "0" *) (* C_FORCE_COMMONS = "0" *) (* C_FREERUN_FREQUENCY = "15.625000" *) 
+(* C_CHANNEL_ENABLE = "192'b000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" *) (* C_COMMON_SCALING_FACTOR = "1" *) (* C_CPLL_VCO_FREQUENCY = "2578.125000" *) 
+(* C_ENABLE_COMMON_USRCLK = "0" *) (* C_FORCE_COMMONS = "0" *) (* C_FREERUN_FREQUENCY = "39.062500" *) 
 (* C_GT_REV = "57" *) (* C_GT_TYPE = "2" *) (* C_INCLUDE_CPLL_CAL = "2" *) 
 (* C_LOCATE_COMMON = "0" *) (* C_LOCATE_IN_SYSTEM_IBERT_CORE = "2" *) (* C_LOCATE_RESET_CONTROLLER = "0" *) 
 (* C_LOCATE_RX_BUFFER_BYPASS_CONTROLLER = "0" *) (* C_LOCATE_RX_USER_CLOCKING = "1" *) (* C_LOCATE_TX_BUFFER_BYPASS_CONTROLLER = "0" *) 
@@ -1697,23 +1361,23 @@ endmodule
 (* C_RX_CC_LEN_SEQ = "1" *) (* C_RX_CC_NUM_SEQ = "0" *) (* C_RX_CC_PERIODICITY = "5000" *) 
 (* C_RX_CC_VAL = "80'b00000000000000000000000000000000000000000000000000000000000000000000000000000000" *) (* C_RX_COMMA_M_ENABLE = "0" *) (* C_RX_COMMA_M_VAL = "10'b1010000011" *) 
 (* C_RX_COMMA_P_ENABLE = "0" *) (* C_RX_COMMA_P_VAL = "10'b0101111100" *) (* C_RX_DATA_DECODING = "0" *) 
-(* C_RX_ENABLE = "1" *) (* C_RX_INT_DATA_WIDTH = "32" *) (* C_RX_LINE_RATE = "0.500000" *) 
-(* C_RX_MASTER_CHANNEL_IDX = "100" *) (* C_RX_OUTCLK_BUFG_GT_DIV = "1" *) (* C_RX_OUTCLK_FREQUENCY = "15.625000" *) 
-(* C_RX_OUTCLK_SOURCE = "1" *) (* C_RX_PLL_TYPE = "2" *) (* C_RX_RECCLK_OUTPUT = "192'b000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" *) 
+(* C_RX_ENABLE = "1" *) (* C_RX_INT_DATA_WIDTH = "32" *) (* C_RX_LINE_RATE = "1.250000" *) 
+(* C_RX_MASTER_CHANNEL_IDX = "102" *) (* C_RX_OUTCLK_BUFG_GT_DIV = "1" *) (* C_RX_OUTCLK_FREQUENCY = "39.062500" *) 
+(* C_RX_OUTCLK_SOURCE = "1" *) (* C_RX_PLL_TYPE = "0" *) (* C_RX_RECCLK_OUTPUT = "192'b000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" *) 
 (* C_RX_REFCLK_FREQUENCY = "125.000000" *) (* C_RX_SLIDE_MODE = "0" *) (* C_RX_USER_CLOCKING_CONTENTS = "0" *) 
 (* C_RX_USER_CLOCKING_INSTANCE_CTRL = "0" *) (* C_RX_USER_CLOCKING_RATIO_FSRC_FUSRCLK = "1" *) (* C_RX_USER_CLOCKING_RATIO_FUSRCLK_FUSRCLK2 = "1" *) 
-(* C_RX_USER_CLOCKING_SOURCE = "0" *) (* C_RX_USER_DATA_WIDTH = "32" *) (* C_RX_USRCLK2_FREQUENCY = "15.625000" *) 
-(* C_RX_USRCLK_FREQUENCY = "15.625000" *) (* C_SECONDARY_QPLL_ENABLE = "0" *) (* C_SECONDARY_QPLL_REFCLK_FREQUENCY = "257.812500" *) 
+(* C_RX_USER_CLOCKING_SOURCE = "0" *) (* C_RX_USER_DATA_WIDTH = "32" *) (* C_RX_USRCLK2_FREQUENCY = "39.062500" *) 
+(* C_RX_USRCLK_FREQUENCY = "39.062500" *) (* C_SECONDARY_QPLL_ENABLE = "0" *) (* C_SECONDARY_QPLL_REFCLK_FREQUENCY = "257.812500" *) 
 (* C_SIM_CPLL_CAL_BYPASS = "1" *) (* C_TOTAL_NUM_CHANNELS = "1" *) (* C_TOTAL_NUM_COMMONS = "1" *) 
 (* C_TOTAL_NUM_COMMONS_EXAMPLE = "0" *) (* C_TXPROGDIV_FREQ_ENABLE = "0" *) (* C_TXPROGDIV_FREQ_SOURCE = "0" *) 
-(* C_TXPROGDIV_FREQ_VAL = "75.000000" *) (* C_TX_BUFFBYPASS_MODE = "0" *) (* C_TX_BUFFER_BYPASS_INSTANCE_CTRL = "0" *) 
-(* C_TX_BUFFER_MODE = "1" *) (* C_TX_DATA_ENCODING = "1" *) (* C_TX_ENABLE = "1" *) 
-(* C_TX_INT_DATA_WIDTH = "40" *) (* C_TX_LINE_RATE = "0.750000" *) (* C_TX_MASTER_CHANNEL_IDX = "100" *) 
-(* C_TX_OUTCLK_BUFG_GT_DIV = "1" *) (* C_TX_OUTCLK_FREQUENCY = "18.750000" *) (* C_TX_OUTCLK_SOURCE = "1" *) 
+(* C_TXPROGDIV_FREQ_VAL = "78.125000" *) (* C_TX_BUFFBYPASS_MODE = "0" *) (* C_TX_BUFFER_BYPASS_INSTANCE_CTRL = "0" *) 
+(* C_TX_BUFFER_MODE = "1" *) (* C_TX_DATA_ENCODING = "0" *) (* C_TX_ENABLE = "1" *) 
+(* C_TX_INT_DATA_WIDTH = "32" *) (* C_TX_LINE_RATE = "1.250000" *) (* C_TX_MASTER_CHANNEL_IDX = "102" *) 
+(* C_TX_OUTCLK_BUFG_GT_DIV = "1" *) (* C_TX_OUTCLK_FREQUENCY = "39.062500" *) (* C_TX_OUTCLK_SOURCE = "1" *) 
 (* C_TX_PLL_TYPE = "0" *) (* C_TX_REFCLK_FREQUENCY = "125.000000" *) (* C_TX_USER_CLOCKING_CONTENTS = "0" *) 
 (* C_TX_USER_CLOCKING_INSTANCE_CTRL = "0" *) (* C_TX_USER_CLOCKING_RATIO_FSRC_FUSRCLK = "1" *) (* C_TX_USER_CLOCKING_RATIO_FUSRCLK_FUSRCLK2 = "1" *) 
-(* C_TX_USER_CLOCKING_SOURCE = "0" *) (* C_TX_USER_DATA_WIDTH = "32" *) (* C_TX_USRCLK2_FREQUENCY = "18.750000" *) 
-(* C_TX_USRCLK_FREQUENCY = "18.750000" *) (* C_USER_GTPOWERGOOD_DELAY_EN = "1" *) 
+(* C_TX_USER_CLOCKING_SOURCE = "0" *) (* C_TX_USER_DATA_WIDTH = "32" *) (* C_TX_USRCLK2_FREQUENCY = "39.062500" *) 
+(* C_TX_USRCLK_FREQUENCY = "39.062500" *) (* C_USER_GTPOWERGOOD_DELAY_EN = "1" *) 
 module gtwizard_ultrascale_0_gtwizard_top
    (gtwiz_userclk_tx_reset_in,
     gtwiz_userclk_tx_active_in,
@@ -2785,14 +2449,12 @@ module gtwizard_ultrascale_0_gtwizard_top
   output [0:0]txsyncout_out;
 
   wire \<const0> ;
-  wire [0:0]drpclk_in;
   wire [0:0]gthrxn_in;
   wire [0:0]gthrxp_in;
   wire [0:0]gthtxn_out;
   wire [0:0]gthtxp_out;
   wire [0:0]gtpowergood_out;
   wire [0:0]gtrefclk00_in;
-  wire [0:0]gtrefclk0_in;
   wire [0:0]gtwiz_reset_all_in;
   wire [0:0]gtwiz_reset_clk_freerun_in;
   wire [0:0]gtwiz_reset_rx_cdr_stable_out;
@@ -2803,23 +2465,26 @@ module gtwizard_ultrascale_0_gtwizard_top
   wire [0:0]gtwiz_reset_tx_done_out;
   wire [0:0]gtwiz_reset_tx_pll_and_datapath_in;
   wire [0:0]gtwiz_userclk_rx_active_in;
-  wire [0:0]gtwiz_userclk_rx_reset_in;
   wire [0:0]gtwiz_userclk_tx_active_in;
-  wire [0:0]gtwiz_userclk_tx_reset_in;
   wire [31:0]gtwiz_userdata_rx_out;
   wire [31:0]gtwiz_userdata_tx_in;
+  wire [2:0]loopback_in;
   wire [0:0]qpll0outclk_out;
   wire [0:0]qpll0outrefclk_out;
+  wire [0:0]rxcdrhold_in;
+  wire [0:0]rxlpmen_in;
   wire [0:0]rxoutclk_out;
   wire [0:0]rxpmaresetdone_out;
+  wire [0:0]rxpolarity_in;
+  wire [0:0]rxslide_in;
   wire [0:0]rxusrclk2_in;
   wire [0:0]rxusrclk_in;
-  wire [0:0]tx8b10ben_in;
-  wire [15:0]txctrl0_in;
-  wire [15:0]txctrl1_in;
-  wire [7:0]txctrl2_in;
+  wire [4:0]txdiffctrl_in;
   wire [0:0]txoutclk_out;
   wire [0:0]txpmaresetdone_out;
+  wire [0:0]txpolarity_in;
+  wire [4:0]txpostcursor_in;
+  wire [4:0]txprecursor_in;
   wire [0:0]txusrclk2_in;
   wire [0:0]txusrclk_in;
 
@@ -3337,14 +3002,12 @@ module gtwizard_ultrascale_0_gtwizard_top
   GND GND
        (.G(\<const0> ));
   gtwizard_ultrascale_0_gtwizard_gthe4 \gen_gtwizard_gthe4_top.gtwizard_ultrascale_0_gtwizard_gthe4_inst 
-       (.drpclk_in(drpclk_in),
-        .gthrxn_in(gthrxn_in),
+       (.gthrxn_in(gthrxn_in),
         .gthrxp_in(gthrxp_in),
         .gthtxn_out(gthtxn_out),
         .gthtxp_out(gthtxp_out),
         .gtpowergood_out(gtpowergood_out),
         .gtrefclk00_in(gtrefclk00_in),
-        .gtrefclk0_in(gtrefclk0_in),
         .gtwiz_reset_all_in(gtwiz_reset_all_in),
         .gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in),
         .gtwiz_reset_rx_cdr_stable_out(gtwiz_reset_rx_cdr_stable_out),
@@ -3355,23 +3018,26 @@ module gtwizard_ultrascale_0_gtwizard_top
         .gtwiz_reset_tx_done_out(gtwiz_reset_tx_done_out),
         .gtwiz_reset_tx_pll_and_datapath_in(gtwiz_reset_tx_pll_and_datapath_in),
         .gtwiz_userclk_rx_active_in(gtwiz_userclk_rx_active_in),
-        .gtwiz_userclk_rx_reset_in(gtwiz_userclk_rx_reset_in),
         .gtwiz_userclk_tx_active_in(gtwiz_userclk_tx_active_in),
-        .gtwiz_userclk_tx_reset_in(gtwiz_userclk_tx_reset_in),
         .gtwiz_userdata_rx_out(gtwiz_userdata_rx_out),
         .gtwiz_userdata_tx_in(gtwiz_userdata_tx_in),
+        .loopback_in(loopback_in),
         .qpll0outclk_out(qpll0outclk_out),
         .qpll0outrefclk_out(qpll0outrefclk_out),
+        .rxcdrhold_in(rxcdrhold_in),
+        .rxlpmen_in(rxlpmen_in),
         .rxoutclk_out(rxoutclk_out),
         .rxpmaresetdone_out(rxpmaresetdone_out),
+        .rxpolarity_in(rxpolarity_in),
+        .rxslide_in(rxslide_in),
         .rxusrclk2_in(rxusrclk2_in),
         .rxusrclk_in(rxusrclk_in),
-        .tx8b10ben_in(tx8b10ben_in),
-        .txctrl0_in(txctrl0_in),
-        .txctrl1_in(txctrl1_in),
-        .txctrl2_in(txctrl2_in),
+        .txdiffctrl_in(txdiffctrl_in),
         .txoutclk_out(txoutclk_out),
         .txpmaresetdone_out(txpmaresetdone_out),
+        .txpolarity_in(txpolarity_in),
+        .txpostcursor_in(txpostcursor_in),
+        .txprecursor_in(txprecursor_in),
         .txusrclk2_in(txusrclk2_in),
         .txusrclk_in(txusrclk_in));
 endmodule
@@ -3379,20 +3045,32 @@ endmodule
 (* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
 module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer
    (\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ,
+    i_in_out_reg_0,
     rxresetdone_out,
-    gtwiz_reset_clk_freerun_in);
+    gtwiz_reset_clk_freerun_in,
+    Q);
   output \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ;
+  output i_in_out_reg_0;
   input [0:0]rxresetdone_out;
   input [0:0]gtwiz_reset_clk_freerun_in;
+  input [0:0]Q;
 
+  wire [0:0]Q;
   wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ;
   wire [0:0]gtwiz_reset_clk_freerun_in;
   (* async_reg = "true" *) wire i_in_meta;
+  wire i_in_out_reg_0;
   (* async_reg = "true" *) wire i_in_sync1;
   (* async_reg = "true" *) wire i_in_sync2;
   (* async_reg = "true" *) wire i_in_sync3;
   wire [0:0]rxresetdone_out;
 
+  LUT2 #(
+    .INIT(4'h2)) 
+    \FSM_sequential_sm_reset_rx[2]_i_4 
+       (.I0(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ),
+        .I1(Q),
+        .O(i_in_out_reg_0));
   (* ASYNC_REG *) 
   (* KEEP = "yes" *) 
   FDRE #(
@@ -3595,27 +3273,27 @@ endmodule
 (* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
 module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_10
    (i_in_out_reg_0,
-    \FSM_sequential_sm_reset_rx_reg[2] ,
     \FSM_sequential_sm_reset_rx_reg[0] ,
     sm_reset_rx_cdr_to_sat_reg,
+    \FSM_sequential_sm_reset_rx_reg[2] ,
     rxcdrlock_out,
     gtwiz_reset_clk_freerun_in,
-    sm_reset_rx_cdr_to_clr_reg,
     Q,
+    sm_reset_rx_cdr_to_sat,
+    sm_reset_rx_cdr_to_clr_reg,
     plllock_rx_sync,
-    sm_reset_rx_cdr_to_clr,
-    sm_reset_rx_cdr_to_sat);
+    sm_reset_rx_cdr_to_clr);
   output i_in_out_reg_0;
-  output \FSM_sequential_sm_reset_rx_reg[2] ;
   output \FSM_sequential_sm_reset_rx_reg[0] ;
   output sm_reset_rx_cdr_to_sat_reg;
+  output \FSM_sequential_sm_reset_rx_reg[2] ;
   input [0:0]rxcdrlock_out;
   input [0:0]gtwiz_reset_clk_freerun_in;
-  input sm_reset_rx_cdr_to_clr_reg;
   input [2:0]Q;
+  input sm_reset_rx_cdr_to_sat;
+  input sm_reset_rx_cdr_to_clr_reg;
   input plllock_rx_sync;
   input sm_reset_rx_cdr_to_clr;
-  input sm_reset_rx_cdr_to_sat;
 
   wire \FSM_sequential_sm_reset_rx_reg[0] ;
   wire \FSM_sequential_sm_reset_rx_reg[2] ;
@@ -3634,10 +3312,10 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_10
   wire sm_reset_rx_cdr_to_sat;
   wire sm_reset_rx_cdr_to_sat_reg;
 
-  (* SOFT_HLUTNM = "soft_lutpair55" *) 
+  (* SOFT_HLUTNM = "soft_lutpair2" *) 
   LUT5 #(
     .INIT(32'h00005400)) 
-    \FSM_sequential_sm_reset_rx[2]_i_4 
+    \FSM_sequential_sm_reset_rx[2]_i_7 
        (.I0(Q[0]),
         .I1(sm_reset_rx_cdr_to_sat),
         .I2(i_in_out_reg_0),
@@ -3708,7 +3386,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_10
         .I4(Q[0]),
         .I5(sm_reset_rx_cdr_to_clr),
         .O(\FSM_sequential_sm_reset_rx_reg[2] ));
-  (* SOFT_HLUTNM = "soft_lutpair55" *) 
+  (* SOFT_HLUTNM = "soft_lutpair2" *) 
   LUT4 #(
     .INIT(16'h00EF)) 
     sm_reset_rx_cdr_to_clr_i_2
@@ -3720,92 +3398,38 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_10
 endmodule
 
 (* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_19
-   (drprst_in_sync,
-    drpclk_in);
-  output drprst_in_sync;
-  input [0:0]drpclk_in;
-
-  wire [0:0]drpclk_in;
-  wire drprst_in_sync;
-  (* async_reg = "true" *) wire i_in_meta;
-  (* async_reg = "true" *) wire i_in_sync1;
-  (* async_reg = "true" *) wire i_in_sync2;
-  (* async_reg = "true" *) wire i_in_sync3;
-  wire n_0_0;
-
-  LUT1 #(
-    .INIT(2'h2)) 
-    i_0
-       (.I0(1'b0),
-        .O(n_0_0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_meta_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(n_0_0),
-        .Q(i_in_meta),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_out_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync3),
-        .Q(drprst_in_sync),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync1_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_meta),
-        .Q(i_in_sync1),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync2_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync1),
-        .Q(i_in_sync2),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync3_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync2),
-        .Q(i_in_sync3),
-        .R(1'b0));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
 module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_2
-   (gtwiz_reset_rx_datapath_dly,
+   (\FSM_sequential_sm_reset_rx_reg[0] ,
     in0,
-    gtwiz_reset_clk_freerun_in);
-  output gtwiz_reset_rx_datapath_dly;
+    gtwiz_reset_clk_freerun_in,
+    Q,
+    gtwiz_reset_rx_pll_and_datapath_dly);
+  output \FSM_sequential_sm_reset_rx_reg[0] ;
   input in0;
   input [0:0]gtwiz_reset_clk_freerun_in;
+  input [2:0]Q;
+  input gtwiz_reset_rx_pll_and_datapath_dly;
 
+  wire \FSM_sequential_sm_reset_rx_reg[0] ;
+  wire [2:0]Q;
   wire [0:0]gtwiz_reset_clk_freerun_in;
   wire gtwiz_reset_rx_datapath_dly;
+  wire gtwiz_reset_rx_pll_and_datapath_dly;
   (* async_reg = "true" *) wire i_in_meta;
   (* async_reg = "true" *) wire i_in_sync1;
   (* async_reg = "true" *) wire i_in_sync2;
   (* async_reg = "true" *) wire i_in_sync3;
   wire in0;
 
+  LUT5 #(
+    .INIT(32'h01010100)) 
+    \FSM_sequential_sm_reset_rx[2]_i_8 
+       (.I0(Q[0]),
+        .I1(Q[1]),
+        .I2(Q[2]),
+        .I3(gtwiz_reset_rx_datapath_dly),
+        .I4(gtwiz_reset_rx_pll_and_datapath_dly),
+        .O(\FSM_sequential_sm_reset_rx_reg[0] ));
   (* ASYNC_REG *) 
   (* KEEP = "yes" *) 
   FDRE #(
@@ -3857,395 +3481,6 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_2
 endmodule
 
 (* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_22
-   (in0,
-    drpclk_in);
-  input in0;
-  input [0:0]drpclk_in;
-
-  wire [0:0]drpclk_in;
-  (* async_reg = "true" *) wire i_in_meta;
-  (* async_reg = "true" *) wire i_in_sync1;
-  (* async_reg = "true" *) wire i_in_sync2;
-  (* async_reg = "true" *) wire i_in_sync3;
-  wire in0;
-
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_meta_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(in0),
-        .Q(i_in_meta),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync1_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_meta),
-        .Q(i_in_sync1),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync2_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync1),
-        .Q(i_in_sync2),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync3_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync2),
-        .Q(i_in_sync3),
-        .R(1'b0));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_23
-   (D,
-    drpclk_in);
-  output [0:0]D;
-  input [0:0]drpclk_in;
-
-  wire [0:0]D;
-  wire [0:0]drpclk_in;
-  (* async_reg = "true" *) wire i_in_meta;
-  (* async_reg = "true" *) wire i_in_sync1;
-  (* async_reg = "true" *) wire i_in_sync2;
-  (* async_reg = "true" *) wire i_in_sync3;
-  wire n_0_0;
-
-  LUT1 #(
-    .INIT(2'h2)) 
-    i_0
-       (.I0(1'b0),
-        .O(n_0_0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_meta_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(n_0_0),
-        .Q(i_in_meta),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_out_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync3),
-        .Q(D),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync1_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_meta),
-        .Q(i_in_sync1),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync2_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync1),
-        .Q(i_in_sync2),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync3_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync2),
-        .Q(i_in_sync3),
-        .R(1'b0));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_24
-   (D,
-    drpclk_in);
-  output [0:0]D;
-  input [0:0]drpclk_in;
-
-  wire [0:0]D;
-  wire [0:0]drpclk_in;
-  (* async_reg = "true" *) wire i_in_meta;
-  (* async_reg = "true" *) wire i_in_sync1;
-  (* async_reg = "true" *) wire i_in_sync2;
-  (* async_reg = "true" *) wire i_in_sync3;
-  wire n_0_0;
-
-  LUT1 #(
-    .INIT(2'h2)) 
-    i_0
-       (.I0(1'b1),
-        .O(n_0_0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_meta_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(n_0_0),
-        .Q(i_in_meta),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_out_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync3),
-        .Q(D),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync1_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_meta),
-        .Q(i_in_sync1),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync2_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync1),
-        .Q(i_in_sync2),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync3_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync2),
-        .Q(i_in_sync3),
-        .R(1'b0));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_25
-   (D,
-    drpclk_in);
-  output [0:0]D;
-  input [0:0]drpclk_in;
-
-  wire [0:0]D;
-  wire [0:0]drpclk_in;
-  (* async_reg = "true" *) wire i_in_meta;
-  (* async_reg = "true" *) wire i_in_sync1;
-  (* async_reg = "true" *) wire i_in_sync2;
-  (* async_reg = "true" *) wire i_in_sync3;
-  wire n_0_0;
-
-  LUT1 #(
-    .INIT(2'h2)) 
-    i_0
-       (.I0(1'b0),
-        .O(n_0_0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_meta_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(n_0_0),
-        .Q(i_in_meta),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_out_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync3),
-        .Q(D),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync1_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_meta),
-        .Q(i_in_sync1),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync2_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync1),
-        .Q(i_in_sync2),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync3_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync2),
-        .Q(i_in_sync3),
-        .R(1'b0));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_26
-   (i_in_meta_reg_0,
-    drpclk_in);
-  input i_in_meta_reg_0;
-  input [0:0]drpclk_in;
-
-  wire [0:0]drpclk_in;
-  (* async_reg = "true" *) wire i_in_meta;
-  wire i_in_meta_reg_0;
-  (* async_reg = "true" *) wire i_in_sync1;
-  (* async_reg = "true" *) wire i_in_sync2;
-  (* async_reg = "true" *) wire i_in_sync3;
-
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_meta_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_meta_reg_0),
-        .Q(i_in_meta),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync1_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_meta),
-        .Q(i_in_sync1),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync2_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync1),
-        .Q(i_in_sync2),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync3_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync2),
-        .Q(i_in_sync3),
-        .R(1'b0));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_27
-   (user_txprogdivreset_sync,
-    i_in_meta_reg_0,
-    drpclk_in);
-  output user_txprogdivreset_sync;
-  input i_in_meta_reg_0;
-  input [0:0]drpclk_in;
-
-  wire [0:0]drpclk_in;
-  (* async_reg = "true" *) wire i_in_meta;
-  wire i_in_meta_reg_0;
-  (* async_reg = "true" *) wire i_in_sync1;
-  (* async_reg = "true" *) wire i_in_sync2;
-  (* async_reg = "true" *) wire i_in_sync3;
-  wire user_txprogdivreset_sync;
-
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_meta_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_meta_reg_0),
-        .Q(i_in_meta),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_out_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync3),
-        .Q(user_txprogdivreset_sync),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync1_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_meta),
-        .Q(i_in_sync1),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync2_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync1),
-        .Q(i_in_sync2),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync3_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync2),
-        .Q(i_in_sync3),
-        .R(1'b0));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
 module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_3
    (gtwiz_reset_rx_pll_and_datapath_dly,
     D,
@@ -4268,7 +3503,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_3
   (* async_reg = "true" *) wire i_in_sync3;
   wire in0;
 
-  (* SOFT_HLUTNM = "soft_lutpair53" *) 
+  (* SOFT_HLUTNM = "soft_lutpair0" *) 
   LUT4 #(
     .INIT(16'h0F3E)) 
     \FSM_sequential_sm_reset_rx[0]_i_1 
@@ -4277,7 +3512,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_3
         .I2(Q[0]),
         .I3(Q[2]),
         .O(D[0]));
-  (* SOFT_HLUTNM = "soft_lutpair53" *) 
+  (* SOFT_HLUTNM = "soft_lutpair0" *) 
   LUT4 #(
     .INIT(16'h0FF1)) 
     \FSM_sequential_sm_reset_rx[1]_i_1 
@@ -4330,334 +3565,6 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_3
     .INIT(1'b0)) 
     i_in_sync3_reg
        (.C(gtwiz_reset_clk_freerun_in),
-        .CE(1'b1),
-        .D(i_in_sync2),
-        .Q(i_in_sync3),
-        .R(1'b0));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_30
-   (i_in_out_reg_0,
-    \gen_cal_rx_en.cpll_cal_state_reg[0] ,
-    in0,
-    drpclk_in,
-    Q,
-    SS,
-    \gen_cal_rx_en.USER_CPLLLOCK_OUT_reg );
-  output [0:0]i_in_out_reg_0;
-  output \gen_cal_rx_en.cpll_cal_state_reg[0] ;
-  input in0;
-  input [0:0]drpclk_in;
-  input [1:0]Q;
-  input [0:0]SS;
-  input \gen_cal_rx_en.USER_CPLLLOCK_OUT_reg ;
-
-  wire [1:0]Q;
-  wire [0:0]SS;
-  wire [0:0]drpclk_in;
-  wire \gen_cal_rx_en.USER_CPLLLOCK_OUT_reg ;
-  wire \gen_cal_rx_en.cpll_cal_state_reg[0] ;
-  (* async_reg = "true" *) wire i_in_meta;
-  wire [0:0]i_in_out_reg_0;
-  (* async_reg = "true" *) wire i_in_sync1;
-  (* async_reg = "true" *) wire i_in_sync2;
-  (* async_reg = "true" *) wire i_in_sync3;
-  wire in0;
-
-  LUT5 #(
-    .INIT(32'h00000004)) 
-    \gen_cal_rx_en.USER_CPLLLOCK_OUT_i_1 
-       (.I0(Q[0]),
-        .I1(i_in_out_reg_0),
-        .I2(SS),
-        .I3(Q[1]),
-        .I4(\gen_cal_rx_en.USER_CPLLLOCK_OUT_reg ),
-        .O(\gen_cal_rx_en.cpll_cal_state_reg[0] ));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_meta_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(in0),
-        .Q(i_in_meta),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_out_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync3),
-        .Q(i_in_out_reg_0),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync1_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_meta),
-        .Q(i_in_sync1),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync2_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync1),
-        .Q(i_in_sync2),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync3_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync2),
-        .Q(i_in_sync3),
-        .R(1'b0));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_31
-   (D,
-    i_in_meta_reg_0,
-    drpclk_in,
-    \gen_cal_rx_en.cpll_cal_state_reg[14] ,
-    Q,
-    \gen_cal_rx_en.cpll_cal_state_reg[17] );
-  output [3:0]D;
-  input i_in_meta_reg_0;
-  input [0:0]drpclk_in;
-  input \gen_cal_rx_en.cpll_cal_state_reg[14] ;
-  input [3:0]Q;
-  input \gen_cal_rx_en.cpll_cal_state_reg[17] ;
-
-  wire [3:0]D;
-  wire [3:0]Q;
-  wire [0:0]drpclk_in;
-  wire \gen_cal_rx_en.cpll_cal_state_reg[14] ;
-  wire \gen_cal_rx_en.cpll_cal_state_reg[17] ;
-  (* async_reg = "true" *) wire i_in_meta;
-  wire i_in_meta_reg_0;
-  wire i_in_out;
-  (* async_reg = "true" *) wire i_in_sync1;
-  (* async_reg = "true" *) wire i_in_sync2;
-  (* async_reg = "true" *) wire i_in_sync3;
-
-  (* SOFT_HLUTNM = "soft_lutpair23" *) 
-  LUT4 #(
-    .INIT(16'h4F44)) 
-    \gen_cal_rx_en.cpll_cal_state[14]_i_1 
-       (.I0(\gen_cal_rx_en.cpll_cal_state_reg[14] ),
-        .I1(Q[0]),
-        .I2(i_in_out),
-        .I3(Q[1]),
-        .O(D[0]));
-  (* SOFT_HLUTNM = "soft_lutpair23" *) 
-  LUT3 #(
-    .INIT(8'hA8)) 
-    \gen_cal_rx_en.cpll_cal_state[15]_i_1 
-       (.I0(i_in_out),
-        .I1(Q[1]),
-        .I2(Q[2]),
-        .O(D[1]));
-  (* SOFT_HLUTNM = "soft_lutpair24" *) 
-  LUT3 #(
-    .INIT(8'h0E)) 
-    \gen_cal_rx_en.cpll_cal_state[16]_i_1 
-       (.I0(Q[3]),
-        .I1(Q[2]),
-        .I2(i_in_out),
-        .O(D[2]));
-  (* SOFT_HLUTNM = "soft_lutpair24" *) 
-  LUT3 #(
-    .INIT(8'hF8)) 
-    \gen_cal_rx_en.cpll_cal_state[17]_i_1 
-       (.I0(Q[3]),
-        .I1(i_in_out),
-        .I2(\gen_cal_rx_en.cpll_cal_state_reg[17] ),
-        .O(D[3]));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_meta_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_meta_reg_0),
-        .Q(i_in_meta),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_out_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync3),
-        .Q(i_in_out),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync1_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_meta),
-        .Q(i_in_sync1),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync2_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync1),
-        .Q(i_in_sync2),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync3_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync2),
-        .Q(i_in_sync3),
-        .R(1'b0));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_32
-   (\gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ,
-    D,
-    \gen_cal_rx_en.cpll_cal_state_reg[18] ,
-    i_in_meta_reg_0,
-    drpclk_in,
-    Q,
-    \gen_cal_rx_en.cal_fail_store__0 ,
-    \gen_cal_rx_en.cpll_cal_state_reg[25] ,
-    \gen_cal_rx_en.freq_counter_rst_reg ,
-    \gen_cal_rx_en.cpll_cal_state_reg[18]_0 );
-  output \gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ;
-  output [3:0]D;
-  output \gen_cal_rx_en.cpll_cal_state_reg[18] ;
-  input i_in_meta_reg_0;
-  input [0:0]drpclk_in;
-  input [6:0]Q;
-  input \gen_cal_rx_en.cal_fail_store__0 ;
-  input \gen_cal_rx_en.cpll_cal_state_reg[25] ;
-  input \gen_cal_rx_en.freq_counter_rst_reg ;
-  input \gen_cal_rx_en.cpll_cal_state_reg[18]_0 ;
-
-  wire [3:0]D;
-  wire [6:0]Q;
-  wire [0:0]drpclk_in;
-  wire \gen_cal_rx_en.cal_fail_store__0 ;
-  wire \gen_cal_rx_en.cpll_cal_state_reg[18] ;
-  wire \gen_cal_rx_en.cpll_cal_state_reg[18]_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state_reg[25] ;
-  wire \gen_cal_rx_en.freq_counter_rst_reg ;
-  wire \gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ;
-  (* async_reg = "true" *) wire i_in_meta;
-  wire i_in_meta_reg_0;
-  (* async_reg = "true" *) wire i_in_sync1;
-  (* async_reg = "true" *) wire i_in_sync2;
-  (* async_reg = "true" *) wire i_in_sync3;
-
-  LUT4 #(
-    .INIT(16'h8F88)) 
-    \gen_cal_rx_en.cpll_cal_state[18]_i_1 
-       (.I0(\gen_cal_rx_en.cpll_cal_state_reg[18]_0 ),
-        .I1(Q[1]),
-        .I2(\gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ),
-        .I3(Q[2]),
-        .O(D[0]));
-  LUT4 #(
-    .INIT(16'h4F44)) 
-    \gen_cal_rx_en.cpll_cal_state[25]_i_1 
-       (.I0(\gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ),
-        .I1(Q[4]),
-        .I2(\gen_cal_rx_en.cpll_cal_state_reg[25] ),
-        .I3(Q[3]),
-        .O(D[1]));
-  (* SOFT_HLUTNM = "soft_lutpair25" *) 
-  LUT4 #(
-    .INIT(16'hEAAA)) 
-    \gen_cal_rx_en.cpll_cal_state[26]_i_1 
-       (.I0(Q[5]),
-        .I1(\gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ),
-        .I2(Q[4]),
-        .I3(\gen_cal_rx_en.cal_fail_store__0 ),
-        .O(D[2]));
-  (* SOFT_HLUTNM = "soft_lutpair25" *) 
-  LUT4 #(
-    .INIT(16'hAAEA)) 
-    \gen_cal_rx_en.cpll_cal_state[27]_i_1 
-       (.I0(Q[6]),
-        .I1(\gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ),
-        .I2(Q[4]),
-        .I3(\gen_cal_rx_en.cal_fail_store__0 ),
-        .O(D[3]));
-  LUT4 #(
-    .INIT(16'h7077)) 
-    \gen_cal_rx_en.freq_counter_rst_i_2 
-       (.I0(Q[2]),
-        .I1(\gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ),
-        .I2(\gen_cal_rx_en.freq_counter_rst_reg ),
-        .I3(Q[0]),
-        .O(\gen_cal_rx_en.cpll_cal_state_reg[18] ));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_meta_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_meta_reg_0),
-        .Q(i_in_meta),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_out_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync3),
-        .Q(\gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync1_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_meta),
-        .Q(i_in_sync1),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync2_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(i_in_sync1),
-        .Q(i_in_sync2),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    i_in_sync3_reg
-       (.C(drpclk_in),
         .CE(1'b1),
         .D(i_in_sync2),
         .Q(i_in_sync3),
@@ -4754,7 +3661,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_5
   (* async_reg = "true" *) wire i_in_sync3;
   wire in0;
 
-  (* SOFT_HLUTNM = "soft_lutpair54" *) 
+  (* SOFT_HLUTNM = "soft_lutpair1" *) 
   LUT4 #(
     .INIT(16'h0F3E)) 
     \FSM_sequential_sm_reset_tx[0]_i_1 
@@ -4763,7 +3670,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_5
         .I2(Q[0]),
         .I3(Q[2]),
         .O(D[0]));
-  (* SOFT_HLUTNM = "soft_lutpair54" *) 
+  (* SOFT_HLUTNM = "soft_lutpair1" *) 
   LUT4 #(
     .INIT(16'h0FF1)) 
     \FSM_sequential_sm_reset_tx[1]_i_1 
@@ -4824,70 +3731,63 @@ endmodule
 
 (* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
 module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_6
-   (\FSM_sequential_sm_reset_rx_reg[0] ,
+   (E,
+    \FSM_sequential_sm_reset_rx_reg[0] ,
     \FSM_sequential_sm_reset_rx_reg[2] ,
-    E,
     gtwiz_userclk_rx_active_in,
     gtwiz_reset_clk_freerun_in,
-    sm_reset_rx_timer_clr_reg,
+    \FSM_sequential_sm_reset_rx_reg[0]_0 ,
+    \FSM_sequential_sm_reset_rx_reg[0]_1 ,
+    \FSM_sequential_sm_reset_rx_reg[0]_2 ,
+    \FSM_sequential_sm_reset_rx_reg[0]_3 ,
+    \FSM_sequential_sm_reset_rx_reg[0]_4 ,
     Q,
+    \FSM_sequential_sm_reset_rx_reg[0]_5 ,
+    sm_reset_rx_pll_timer_sat,
+    sm_reset_rx_timer_clr_reg,
+    sm_reset_rx_timer_sat,
     sm_reset_rx_timer_clr_reg_0,
     gtwiz_reset_rx_any_sync,
-    \gen_gtwizard_gthe4.rxuserrdy_int ,
-    \FSM_sequential_sm_reset_rx_reg[0]_0 ,
-    gtwiz_reset_rx_pll_and_datapath_dly,
-    gtwiz_reset_rx_datapath_dly,
-    sm_reset_rx_pll_timer_clr,
-    \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ,
-    \FSM_sequential_sm_reset_rx_reg[0]_1 ,
-    plllock_rx_sync,
-    \FSM_sequential_sm_reset_rx[2]_i_3_0 ,
-    sm_reset_rx_pll_timer_sat,
-    sm_reset_rx_timer_sat);
+    \gen_gtwizard_gthe4.rxuserrdy_int );
+  output [0:0]E;
   output \FSM_sequential_sm_reset_rx_reg[0] ;
   output \FSM_sequential_sm_reset_rx_reg[2] ;
-  output [0:0]E;
   input [0:0]gtwiz_userclk_rx_active_in;
   input [0:0]gtwiz_reset_clk_freerun_in;
-  input sm_reset_rx_timer_clr_reg;
+  input \FSM_sequential_sm_reset_rx_reg[0]_0 ;
+  input \FSM_sequential_sm_reset_rx_reg[0]_1 ;
+  input \FSM_sequential_sm_reset_rx_reg[0]_2 ;
+  input \FSM_sequential_sm_reset_rx_reg[0]_3 ;
+  input \FSM_sequential_sm_reset_rx_reg[0]_4 ;
   input [2:0]Q;
+  input \FSM_sequential_sm_reset_rx_reg[0]_5 ;
+  input sm_reset_rx_pll_timer_sat;
+  input sm_reset_rx_timer_clr_reg;
+  input sm_reset_rx_timer_sat;
   input sm_reset_rx_timer_clr_reg_0;
   input gtwiz_reset_rx_any_sync;
   input \gen_gtwizard_gthe4.rxuserrdy_int ;
-  input \FSM_sequential_sm_reset_rx_reg[0]_0 ;
-  input gtwiz_reset_rx_pll_and_datapath_dly;
-  input gtwiz_reset_rx_datapath_dly;
-  input sm_reset_rx_pll_timer_clr;
-  input \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ;
-  input \FSM_sequential_sm_reset_rx_reg[0]_1 ;
-  input plllock_rx_sync;
-  input \FSM_sequential_sm_reset_rx[2]_i_3_0 ;
-  input sm_reset_rx_pll_timer_sat;
-  input sm_reset_rx_timer_sat;
 
   wire [0:0]E;
-  wire \FSM_sequential_sm_reset_rx[2]_i_3_0 ;
   wire \FSM_sequential_sm_reset_rx[2]_i_3_n_0 ;
-  wire \FSM_sequential_sm_reset_rx[2]_i_6_n_0 ;
   wire \FSM_sequential_sm_reset_rx_reg[0] ;
   wire \FSM_sequential_sm_reset_rx_reg[0]_0 ;
   wire \FSM_sequential_sm_reset_rx_reg[0]_1 ;
+  wire \FSM_sequential_sm_reset_rx_reg[0]_2 ;
+  wire \FSM_sequential_sm_reset_rx_reg[0]_3 ;
+  wire \FSM_sequential_sm_reset_rx_reg[0]_4 ;
+  wire \FSM_sequential_sm_reset_rx_reg[0]_5 ;
   wire \FSM_sequential_sm_reset_rx_reg[2] ;
   wire [2:0]Q;
-  wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ;
   wire \gen_gtwizard_gthe4.rxuserrdy_int ;
   wire [0:0]gtwiz_reset_clk_freerun_in;
   wire gtwiz_reset_rx_any_sync;
-  wire gtwiz_reset_rx_datapath_dly;
-  wire gtwiz_reset_rx_pll_and_datapath_dly;
   wire gtwiz_reset_userclk_rx_active_sync;
   wire [0:0]gtwiz_userclk_rx_active_in;
   (* async_reg = "true" *) wire i_in_meta;
   (* async_reg = "true" *) wire i_in_sync1;
   (* async_reg = "true" *) wire i_in_sync2;
   (* async_reg = "true" *) wire i_in_sync3;
-  wire plllock_rx_sync;
-  wire sm_reset_rx_pll_timer_clr;
   wire sm_reset_rx_pll_timer_sat;
   wire sm_reset_rx_timer_clr_i_2_n_0;
   wire sm_reset_rx_timer_clr_reg;
@@ -4895,35 +3795,25 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_6
   wire sm_reset_rx_timer_sat;
 
   LUT6 #(
-    .INIT(64'hEEEEEEEEFFFEEEEE)) 
+    .INIT(64'hFFFFFFFFFFFFFFEA)) 
     \FSM_sequential_sm_reset_rx[2]_i_1 
        (.I0(\FSM_sequential_sm_reset_rx[2]_i_3_n_0 ),
         .I1(\FSM_sequential_sm_reset_rx_reg[0]_0 ),
-        .I2(gtwiz_reset_rx_pll_and_datapath_dly),
-        .I3(gtwiz_reset_rx_datapath_dly),
-        .I4(sm_reset_rx_pll_timer_clr),
-        .I5(Q[0]),
+        .I2(\FSM_sequential_sm_reset_rx_reg[0]_1 ),
+        .I3(\FSM_sequential_sm_reset_rx_reg[0]_2 ),
+        .I4(\FSM_sequential_sm_reset_rx_reg[0]_3 ),
+        .I5(\FSM_sequential_sm_reset_rx_reg[0]_4 ),
         .O(E));
   LUT6 #(
-    .INIT(64'hAAEAAAEAFAFAAAFA)) 
-    \FSM_sequential_sm_reset_rx[2]_i_3 
-       (.I0(\FSM_sequential_sm_reset_rx[2]_i_6_n_0 ),
-        .I1(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ),
-        .I2(\FSM_sequential_sm_reset_rx_reg[0]_1 ),
-        .I3(Q[0]),
-        .I4(plllock_rx_sync),
-        .I5(Q[2]),
-        .O(\FSM_sequential_sm_reset_rx[2]_i_3_n_0 ));
-  LUT6 #(
     .INIT(64'h2023202000000000)) 
-    \FSM_sequential_sm_reset_rx[2]_i_6 
+    \FSM_sequential_sm_reset_rx[2]_i_3 
        (.I0(sm_reset_rx_timer_clr_i_2_n_0),
         .I1(Q[1]),
         .I2(Q[2]),
-        .I3(\FSM_sequential_sm_reset_rx[2]_i_3_0 ),
+        .I3(\FSM_sequential_sm_reset_rx_reg[0]_5 ),
         .I4(sm_reset_rx_pll_timer_sat),
         .I5(Q[0]),
-        .O(\FSM_sequential_sm_reset_rx[2]_i_6_n_0 ));
+        .O(\FSM_sequential_sm_reset_rx[2]_i_3_n_0 ));
   (* ASYNC_REG *) 
   (* KEEP = "yes" *) 
   FDRE #(
@@ -4986,16 +3876,16 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_6
     .INIT(64'hFCEFCCFE0CE0CC0E)) 
     sm_reset_rx_timer_clr_i_1
        (.I0(sm_reset_rx_timer_clr_i_2_n_0),
-        .I1(sm_reset_rx_timer_clr_reg),
+        .I1(sm_reset_rx_timer_clr_reg_0),
         .I2(Q[0]),
         .I3(Q[1]),
         .I4(Q[2]),
-        .I5(sm_reset_rx_timer_clr_reg_0),
+        .I5(sm_reset_rx_timer_clr_reg),
         .O(\FSM_sequential_sm_reset_rx_reg[0] ));
   LUT3 #(
     .INIT(8'h40)) 
     sm_reset_rx_timer_clr_i_2
-       (.I0(sm_reset_rx_timer_clr_reg_0),
+       (.I0(sm_reset_rx_timer_clr_reg),
         .I1(sm_reset_rx_timer_sat),
         .I2(gtwiz_reset_userclk_rx_active_sync),
         .O(sm_reset_rx_timer_clr_i_2_n_0));
@@ -5003,46 +3893,46 @@ endmodule
 
 (* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
 module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_7
-   (\FSM_sequential_sm_reset_tx_reg[2] ,
+   (E,
+    \FSM_sequential_sm_reset_tx_reg[2] ,
     \FSM_sequential_sm_reset_tx_reg[1] ,
-    E,
     gtwiz_userclk_tx_active_in,
     gtwiz_reset_clk_freerun_in,
-    Q,
-    sm_reset_tx_timer_clr_reg,
-    gtwiz_reset_tx_any_sync,
-    \gen_gtwizard_gthe4.txuserrdy_int ,
     \FSM_sequential_sm_reset_tx_reg[0] ,
     gtwiz_reset_tx_pll_and_datapath_dly,
     gtwiz_reset_tx_datapath_dly,
     sm_reset_tx_pll_timer_clr,
+    Q,
     \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync ,
-    sm_reset_tx_timer_clr_reg_0,
+    sm_reset_tx_timer_clr_reg,
     plllock_tx_sync,
     \FSM_sequential_sm_reset_tx_reg[0]_0 ,
     \FSM_sequential_sm_reset_tx_reg[0]_1 ,
     sm_reset_tx_pll_timer_sat,
-    sm_reset_tx_timer_sat);
+    sm_reset_tx_timer_sat,
+    sm_reset_tx_timer_clr_reg_0,
+    gtwiz_reset_tx_any_sync,
+    \gen_gtwizard_gthe4.txuserrdy_int );
+  output [0:0]E;
   output \FSM_sequential_sm_reset_tx_reg[2] ;
   output \FSM_sequential_sm_reset_tx_reg[1] ;
-  output [0:0]E;
   input [0:0]gtwiz_userclk_tx_active_in;
   input [0:0]gtwiz_reset_clk_freerun_in;
-  input [2:0]Q;
-  input sm_reset_tx_timer_clr_reg;
-  input gtwiz_reset_tx_any_sync;
-  input \gen_gtwizard_gthe4.txuserrdy_int ;
   input \FSM_sequential_sm_reset_tx_reg[0] ;
   input gtwiz_reset_tx_pll_and_datapath_dly;
   input gtwiz_reset_tx_datapath_dly;
   input sm_reset_tx_pll_timer_clr;
+  input [2:0]Q;
   input \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync ;
-  input sm_reset_tx_timer_clr_reg_0;
+  input sm_reset_tx_timer_clr_reg;
   input plllock_tx_sync;
   input \FSM_sequential_sm_reset_tx_reg[0]_0 ;
   input \FSM_sequential_sm_reset_tx_reg[0]_1 ;
   input sm_reset_tx_pll_timer_sat;
   input sm_reset_tx_timer_sat;
+  input sm_reset_tx_timer_clr_reg_0;
+  input gtwiz_reset_tx_any_sync;
+  input \gen_gtwizard_gthe4.txuserrdy_int ;
 
   wire [0:0]E;
   wire \FSM_sequential_sm_reset_tx[2]_i_3_n_0 ;
@@ -5148,14 +4038,14 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_7
         .I1(Q[2]),
         .I2(Q[1]),
         .I3(Q[0]),
-        .I4(sm_reset_tx_timer_clr_reg),
+        .I4(sm_reset_tx_timer_clr_reg_0),
         .O(\FSM_sequential_sm_reset_tx_reg[2] ));
   LUT6 #(
     .INIT(64'hA0C0A0C0F0F000F0)) 
     sm_reset_tx_timer_clr_i_2
        (.I0(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync ),
         .I1(gtwiz_reset_userclk_tx_active_sync),
-        .I2(sm_reset_tx_timer_clr_reg_0),
+        .I2(sm_reset_tx_timer_clr_reg),
         .I3(Q[0]),
         .I4(plllock_tx_sync),
         .I5(Q[2]),
@@ -5174,7 +4064,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_7
     .INIT(32'h00200000)) 
     txuserrdy_out_i_2
        (.I0(sm_reset_tx_timer_sat),
-        .I1(sm_reset_tx_timer_clr_reg),
+        .I1(sm_reset_tx_timer_clr_reg_0),
         .I2(Q[2]),
         .I3(Q[1]),
         .I4(gtwiz_reset_userclk_tx_active_sync),
@@ -5184,60 +4074,73 @@ endmodule
 (* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
 module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_8
    (plllock_rx_sync,
-    i_in_out_reg_0,
     \FSM_sequential_sm_reset_rx_reg[1] ,
+    \FSM_sequential_sm_reset_rx_reg[2] ,
+    i_in_out_reg_0,
     i_in_out_reg_1,
-    i_in_meta_reg_0,
+    qpll0lock_out,
     gtwiz_reset_clk_freerun_in,
-    gtwiz_reset_rx_done_int_reg,
-    \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ,
     Q,
+    \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ,
+    gtwiz_reset_rx_done_int_reg,
     gtwiz_reset_rx_done_int_reg_0,
-    gtwiz_reset_rx_done_int_reg_1,
-    gtrxreset_out_reg,
-    sm_reset_rx_timer_sat);
+    sm_reset_rx_timer_sat,
+    \FSM_sequential_sm_reset_rx_reg[0] ,
+    gtwiz_reset_rx_done_int_reg_1);
   output plllock_rx_sync;
-  output i_in_out_reg_0;
   output \FSM_sequential_sm_reset_rx_reg[1] ;
+  output \FSM_sequential_sm_reset_rx_reg[2] ;
+  output i_in_out_reg_0;
   output i_in_out_reg_1;
-  input i_in_meta_reg_0;
+  input [0:0]qpll0lock_out;
   input [0:0]gtwiz_reset_clk_freerun_in;
-  input gtwiz_reset_rx_done_int_reg;
-  input \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ;
   input [2:0]Q;
+  input \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ;
+  input gtwiz_reset_rx_done_int_reg;
   input gtwiz_reset_rx_done_int_reg_0;
-  input gtwiz_reset_rx_done_int_reg_1;
-  input gtrxreset_out_reg;
   input sm_reset_rx_timer_sat;
+  input \FSM_sequential_sm_reset_rx_reg[0] ;
+  input gtwiz_reset_rx_done_int_reg_1;
 
+  wire \FSM_sequential_sm_reset_rx_reg[0] ;
   wire \FSM_sequential_sm_reset_rx_reg[1] ;
+  wire \FSM_sequential_sm_reset_rx_reg[2] ;
   wire [2:0]Q;
   wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ;
-  wire gtrxreset_out_reg;
   wire [0:0]gtwiz_reset_clk_freerun_in;
   wire gtwiz_reset_rx_done_int;
   wire gtwiz_reset_rx_done_int_reg;
   wire gtwiz_reset_rx_done_int_reg_0;
   wire gtwiz_reset_rx_done_int_reg_1;
   (* async_reg = "true" *) wire i_in_meta;
-  wire i_in_meta_reg_0;
   wire i_in_out_reg_0;
   wire i_in_out_reg_1;
   (* async_reg = "true" *) wire i_in_sync1;
   (* async_reg = "true" *) wire i_in_sync2;
   (* async_reg = "true" *) wire i_in_sync3;
   wire plllock_rx_sync;
+  wire [0:0]qpll0lock_out;
   wire sm_reset_rx_timer_sat;
 
+  LUT6 #(
+    .INIT(64'h0000000045000000)) 
+    \FSM_sequential_sm_reset_rx[2]_i_6 
+       (.I0(Q[2]),
+        .I1(plllock_rx_sync),
+        .I2(Q[0]),
+        .I3(Q[1]),
+        .I4(sm_reset_rx_timer_sat),
+        .I5(\FSM_sequential_sm_reset_rx_reg[0] ),
+        .O(\FSM_sequential_sm_reset_rx_reg[2] ));
   LUT5 #(
     .INIT(32'h20FFFF00)) 
     gtrxreset_out_i_2
        (.I0(plllock_rx_sync),
-        .I1(gtrxreset_out_reg),
+        .I1(\FSM_sequential_sm_reset_rx_reg[0] ),
         .I2(sm_reset_rx_timer_sat),
         .I3(Q[1]),
         .I4(Q[0]),
-        .O(i_in_out_reg_1));
+        .O(i_in_out_reg_0));
   LUT6 #(
     .INIT(64'hAAC0FFFFAAC00000)) 
     gtwiz_reset_rx_done_int_i_1
@@ -5246,14 +4149,14 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_8
         .I2(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ),
         .I3(Q[0]),
         .I4(gtwiz_reset_rx_done_int),
-        .I5(gtwiz_reset_rx_done_int_reg_0),
-        .O(i_in_out_reg_0));
+        .I5(gtwiz_reset_rx_done_int_reg_1),
+        .O(i_in_out_reg_1));
   LUT6 #(
     .INIT(64'h44F0440000000000)) 
     gtwiz_reset_rx_done_int_i_3
        (.I0(plllock_rx_sync),
         .I1(Q[1]),
-        .I2(gtwiz_reset_rx_done_int_reg_1),
+        .I2(gtwiz_reset_rx_done_int_reg_0),
         .I3(Q[0]),
         .I4(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ),
         .I5(Q[2]),
@@ -5265,7 +4168,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_8
     i_in_meta_reg
        (.C(gtwiz_reset_clk_freerun_in),
         .CE(1'b1),
-        .D(i_in_meta_reg_0),
+        .D(qpll0lock_out),
         .Q(i_in_meta),
         .R(1'b0));
   FDRE #(
@@ -5321,31 +4224,31 @@ endmodule
 (* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_bit_synchronizer" *) 
 module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_9
    (plllock_tx_sync,
-    gtwiz_reset_tx_done_int_reg,
     i_in_out_reg_0,
     sm_reset_tx_timer_sat_reg,
+    gtwiz_reset_tx_done_int_reg,
     qpll0lock_out,
     gtwiz_reset_clk_freerun_in,
-    gtwiz_reset_tx_done_int_reg_0,
     Q,
     \FSM_sequential_sm_reset_tx_reg[0] ,
     \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync ,
     sm_reset_tx_timer_sat,
     gttxreset_out_reg,
-    gtwiz_reset_tx_any_sync);
+    gtwiz_reset_tx_any_sync,
+    gtwiz_reset_tx_done_int_reg_0);
   output plllock_tx_sync;
-  output gtwiz_reset_tx_done_int_reg;
   output i_in_out_reg_0;
   output sm_reset_tx_timer_sat_reg;
+  output gtwiz_reset_tx_done_int_reg;
   input [0:0]qpll0lock_out;
   input [0:0]gtwiz_reset_clk_freerun_in;
-  input gtwiz_reset_tx_done_int_reg_0;
   input [2:0]Q;
   input \FSM_sequential_sm_reset_tx_reg[0] ;
   input \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync ;
   input sm_reset_tx_timer_sat;
   input gttxreset_out_reg;
   input gtwiz_reset_tx_any_sync;
+  input gtwiz_reset_tx_done_int_reg_0;
 
   wire \FSM_sequential_sm_reset_tx_reg[0] ;
   wire [2:0]Q;
@@ -5464,1847 +4367,98 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_9
         .R(1'b0));
 endmodule
 
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_gte4_drp_arb" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gte4_drp_arb
-   (Q,
-    cal_on_rx_drdy,
-    DEN_O,
-    DWE_O,
-    DADDR_O,
-    DI_O,
-    drprst_in_sync,
-    drpclk_in,
-    DO_I,
-    \addr_i_reg[18]_0 ,
-    \addr_i_reg[18]_1 ,
-    \data_i_reg[31]_0 ,
-    cal_on_rx_drpwe_out,
-    \gen_gtwizard_gthe4.drprdy_int );
-  output [15:0]Q;
-  output cal_on_rx_drdy;
-  output DEN_O;
-  output DWE_O;
-  output [2:0]DADDR_O;
-  output [15:0]DI_O;
-  input drprst_in_sync;
-  input [0:0]drpclk_in;
-  input [15:0]DO_I;
-  input \addr_i_reg[18]_0 ;
-  input [2:0]\addr_i_reg[18]_1 ;
-  input [15:0]\data_i_reg[31]_0 ;
-  input cal_on_rx_drpwe_out;
-  input \gen_gtwizard_gthe4.drprdy_int ;
-
-  wire [0:0]B;
-  wire CEB2;
-  wire [2:0]DADDR_O;
-  wire \DADDR_O[8]_i_1_n_0 ;
-  wire DEN_O;
-  wire DEN_O_i_1_n_0;
-  wire DEN_O_i_2_n_0;
-  wire [15:0]DI_O;
-  wire \DI_O[15]_i_1_n_0 ;
-  wire [15:0]DO_I;
-  wire [31:16]DO_USR_O0;
-  wire \DO_USR_O[31]_i_1_n_0 ;
-  wire \DRDY_USR_O[1]_i_1_n_0 ;
-  wire DWE_O;
-  wire [15:0]Q;
-  wire [18:12]addr_i;
-  wire \addr_i_reg[18]_0 ;
-  wire [2:0]\addr_i_reg[18]_1 ;
-  wire [3:0]arb_state;
-  wire \arb_state[3]_i_2_n_0 ;
-  wire cal_on_rx_drdy;
-  wire cal_on_rx_drpwe_out;
-  wire [8:2]daddr;
-  wire [8:2]daddr0;
-  wire [31:16]data_i;
-  wire [15:0]\data_i_reg[31]_0 ;
-  wire di;
-  wire \di[0]_i_1_n_0 ;
-  wire \di[10]_i_1_n_0 ;
-  wire \di[11]_i_1_n_0 ;
-  wire \di[12]_i_1_n_0 ;
-  wire \di[13]_i_1_n_0 ;
-  wire \di[14]_i_1_n_0 ;
-  wire \di[15]_i_1_n_0 ;
-  wire \di[1]_i_1_n_0 ;
-  wire \di[2]_i_1_n_0 ;
-  wire \di[3]_i_1_n_0 ;
-  wire \di[4]_i_1_n_0 ;
-  wire \di[5]_i_1_n_0 ;
-  wire \di[6]_i_1_n_0 ;
-  wire \di[7]_i_1_n_0 ;
-  wire \di[8]_i_1_n_0 ;
-  wire \di[9]_i_1_n_0 ;
-  wire \di_reg_n_0_[0] ;
-  wire \di_reg_n_0_[10] ;
-  wire \di_reg_n_0_[11] ;
-  wire \di_reg_n_0_[12] ;
-  wire \di_reg_n_0_[13] ;
-  wire \di_reg_n_0_[14] ;
-  wire \di_reg_n_0_[15] ;
-  wire \di_reg_n_0_[1] ;
-  wire \di_reg_n_0_[2] ;
-  wire \di_reg_n_0_[3] ;
-  wire \di_reg_n_0_[4] ;
-  wire \di_reg_n_0_[5] ;
-  wire \di_reg_n_0_[6] ;
-  wire \di_reg_n_0_[7] ;
-  wire \di_reg_n_0_[8] ;
-  wire \di_reg_n_0_[9] ;
-  wire done_i_1_n_0;
-  wire done_i_2_n_0;
-  wire done_i_3_n_0;
-  wire done_reg_n_0;
-  wire [6:0]drp_state;
-  wire \drp_state[0]_i_2_n_0 ;
-  wire \drp_state[1]_i_2_n_0 ;
-  wire \drp_state[4]_i_2_n_0 ;
-  wire \drp_state[5]_i_2_n_0 ;
-  wire \drp_state[6]_i_2_n_0 ;
-  wire \drp_state[6]_i_3_n_0 ;
-  wire \drp_state[6]_i_4_n_0 ;
-  wire \drp_state_reg_n_0_[0] ;
-  wire \drp_state_reg_n_0_[1] ;
-  wire \drp_state_reg_n_0_[2] ;
-  wire \drp_state_reg_n_0_[4] ;
-  wire \drp_state_reg_n_0_[5] ;
-  wire \drp_state_reg_n_0_[6] ;
-  wire [0:0]drpclk_in;
-  wire drprst_in_sync;
-  wire [1:1]en;
-  wire \en[1]_i_2_n_0 ;
-  wire \gen_gtwizard_gthe4.drprdy_int ;
-  wire [0:0]idx;
-  wire \idx[0]_i_2_n_0 ;
-  wire \idx[1]_i_1_n_0 ;
-  wire \idx_reg_n_0_[0] ;
-  wire \idx_reg_n_0_[1] ;
-  wire [3:0]p_0_in;
-  wire rd;
-  wire rd_i_1_n_0;
-  wire rd_reg_n_0;
-  wire [7:0]timeout_cntr;
-  wire \timeout_cntr[5]_i_2_n_0 ;
-  wire \timeout_cntr[7]_i_1_n_0 ;
-  wire \timeout_cntr[7]_i_3_n_0 ;
-  wire \timeout_cntr[7]_i_4_n_0 ;
-  wire \timeout_cntr_reg_n_0_[0] ;
-  wire \timeout_cntr_reg_n_0_[1] ;
-  wire \timeout_cntr_reg_n_0_[2] ;
-  wire \timeout_cntr_reg_n_0_[3] ;
-  wire \timeout_cntr_reg_n_0_[4] ;
-  wire \timeout_cntr_reg_n_0_[5] ;
-  wire \timeout_cntr_reg_n_0_[6] ;
-  wire \timeout_cntr_reg_n_0_[7] ;
-  wire [1:1]we;
-  wire \we[1]_i_1_n_0 ;
-  wire \we_reg_n_0_[1] ;
-  wire wr;
-  wire wr_reg_n_0;
-
-  LUT6 #(
-    .INIT(64'h0000000100010000)) 
-    \DADDR_O[8]_i_1 
-       (.I0(\drp_state_reg_n_0_[2] ),
-        .I1(\drp_state_reg_n_0_[5] ),
-        .I2(\drp_state_reg_n_0_[0] ),
-        .I3(\drp_state_reg_n_0_[6] ),
-        .I4(\drp_state_reg_n_0_[4] ),
-        .I5(\drp_state_reg_n_0_[1] ),
-        .O(\DADDR_O[8]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DADDR_O_reg[2] 
-       (.C(drpclk_in),
-        .CE(\DADDR_O[8]_i_1_n_0 ),
-        .D(daddr[2]),
-        .Q(DADDR_O[0]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DADDR_O_reg[7] 
-       (.C(drpclk_in),
-        .CE(\DADDR_O[8]_i_1_n_0 ),
-        .D(daddr[7]),
-        .Q(DADDR_O[1]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DADDR_O_reg[8] 
-       (.C(drpclk_in),
-        .CE(\DADDR_O[8]_i_1_n_0 ),
-        .D(daddr[8]),
-        .Q(DADDR_O[2]),
-        .R(drprst_in_sync));
-  LUT6 #(
-    .INIT(64'h0000000000000116)) 
-    DEN_O_i_1
-       (.I0(\drp_state_reg_n_0_[4] ),
-        .I1(\drp_state_reg_n_0_[1] ),
-        .I2(\drp_state_reg_n_0_[5] ),
-        .I3(\drp_state_reg_n_0_[2] ),
-        .I4(\drp_state_reg_n_0_[6] ),
-        .I5(\drp_state_reg_n_0_[0] ),
-        .O(DEN_O_i_1_n_0));
-  LUT2 #(
-    .INIT(4'h1)) 
-    DEN_O_i_2
-       (.I0(\drp_state_reg_n_0_[5] ),
-        .I1(\drp_state_reg_n_0_[2] ),
-        .O(DEN_O_i_2_n_0));
-  FDRE #(
-    .INIT(1'b0)) 
-    DEN_O_reg
-       (.C(drpclk_in),
-        .CE(DEN_O_i_1_n_0),
-        .D(DEN_O_i_2_n_0),
-        .Q(DEN_O),
-        .R(drprst_in_sync));
-  LUT6 #(
-    .INIT(64'h0000000000000004)) 
-    \DI_O[15]_i_1 
-       (.I0(\drp_state_reg_n_0_[1] ),
-        .I1(\drp_state_reg_n_0_[4] ),
-        .I2(\drp_state_reg_n_0_[2] ),
-        .I3(\drp_state_reg_n_0_[5] ),
-        .I4(\drp_state_reg_n_0_[0] ),
-        .I5(\drp_state_reg_n_0_[6] ),
-        .O(\DI_O[15]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[0] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[0] ),
-        .Q(DI_O[0]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[10] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[10] ),
-        .Q(DI_O[10]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[11] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[11] ),
-        .Q(DI_O[11]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[12] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[12] ),
-        .Q(DI_O[12]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[13] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[13] ),
-        .Q(DI_O[13]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[14] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[14] ),
-        .Q(DI_O[14]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[15] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[15] ),
-        .Q(DI_O[15]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[1] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[1] ),
-        .Q(DI_O[1]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[2] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[2] ),
-        .Q(DI_O[2]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[3] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[3] ),
-        .Q(DI_O[3]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[4] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[4] ),
-        .Q(DI_O[4]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[5] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[5] ),
-        .Q(DI_O[5]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[6] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[6] ),
-        .Q(DI_O[6]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[7] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[7] ),
-        .Q(DI_O[7]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[8] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[8] ),
-        .Q(DI_O[8]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DI_O_reg[9] 
-       (.C(drpclk_in),
-        .CE(\DI_O[15]_i_1_n_0 ),
-        .D(\di_reg_n_0_[9] ),
-        .Q(DI_O[9]),
-        .R(drprst_in_sync));
-  LUT6 #(
-    .INIT(64'h0000001000000000)) 
-    \DO_USR_O[31]_i_1 
-       (.I0(arb_state[0]),
-        .I1(arb_state[3]),
-        .I2(arb_state[2]),
-        .I3(arb_state[1]),
-        .I4(\idx_reg_n_0_[1] ),
-        .I5(idx),
-        .O(\DO_USR_O[31]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[16] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[16]),
-        .Q(Q[0]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[17] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[17]),
-        .Q(Q[1]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[18] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[18]),
-        .Q(Q[2]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[19] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[19]),
-        .Q(Q[3]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[20] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[20]),
-        .Q(Q[4]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[21] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[21]),
-        .Q(Q[5]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[22] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[22]),
-        .Q(Q[6]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[23] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[23]),
-        .Q(Q[7]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[24] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[24]),
-        .Q(Q[8]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[25] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[25]),
-        .Q(Q[9]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[26] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[26]),
-        .Q(Q[10]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[27] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[27]),
-        .Q(Q[11]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[28] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[28]),
-        .Q(Q[12]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[29] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[29]),
-        .Q(Q[13]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[30] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[30]),
-        .Q(Q[14]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DO_USR_O_reg[31] 
-       (.C(drpclk_in),
-        .CE(\DO_USR_O[31]_i_1_n_0 ),
-        .D(DO_USR_O0[31]),
-        .Q(Q[15]),
-        .R(drprst_in_sync));
-  LUT6 #(
-    .INIT(64'hFFFFFEFF00000010)) 
-    \DRDY_USR_O[1]_i_1 
-       (.I0(\arb_state[3]_i_2_n_0 ),
-        .I1(arb_state[1]),
-        .I2(arb_state[2]),
-        .I3(arb_state[3]),
-        .I4(arb_state[0]),
-        .I5(cal_on_rx_drdy),
-        .O(\DRDY_USR_O[1]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \DRDY_USR_O_reg[1] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\DRDY_USR_O[1]_i_1_n_0 ),
-        .Q(cal_on_rx_drdy),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    DWE_O_reg
-       (.C(drpclk_in),
-        .CE(DEN_O_i_1_n_0),
-        .D(\drp_state_reg_n_0_[4] ),
-        .Q(DWE_O),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \addr_i_reg[12] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\addr_i_reg[18]_1 [0]),
-        .Q(addr_i[12]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \addr_i_reg[17] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\addr_i_reg[18]_1 [1]),
-        .Q(addr_i[17]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \addr_i_reg[18] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\addr_i_reg[18]_1 [2]),
-        .Q(addr_i[18]),
-        .R(drprst_in_sync));
-  LUT4 #(
-    .INIT(16'hFEEB)) 
-    \arb_state[0]_i_1 
-       (.I0(arb_state[3]),
-        .I1(arb_state[0]),
-        .I2(arb_state[1]),
-        .I3(arb_state[2]),
-        .O(p_0_in[0]));
-  LUT6 #(
-    .INIT(64'hFFFFFFFF00010000)) 
-    \arb_state[1]_i_1 
-       (.I0(arb_state[0]),
-        .I1(arb_state[3]),
-        .I2(done_reg_n_0),
-        .I3(arb_state[2]),
-        .I4(arb_state[1]),
-        .I5(di),
-        .O(p_0_in[1]));
-  LUT5 #(
-    .INIT(32'h00000008)) 
-    \arb_state[2]_i_1 
-       (.I0(arb_state[1]),
-        .I1(done_reg_n_0),
-        .I2(arb_state[2]),
-        .I3(arb_state[3]),
-        .I4(arb_state[0]),
-        .O(p_0_in[2]));
-  LUT6 #(
-    .INIT(64'h00000000000F0B00)) 
-    \arb_state[3]_i_1 
-       (.I0(\arb_state[3]_i_2_n_0 ),
-        .I1(en),
-        .I2(arb_state[3]),
-        .I3(arb_state[0]),
-        .I4(arb_state[2]),
-        .I5(arb_state[1]),
-        .O(p_0_in[3]));
-  (* SOFT_HLUTNM = "soft_lutpair8" *) 
-  LUT2 #(
-    .INIT(4'hB)) 
-    \arb_state[3]_i_2 
-       (.I0(\idx_reg_n_0_[1] ),
-        .I1(\idx_reg_n_0_[0] ),
-        .O(\arb_state[3]_i_2_n_0 ));
-  (* FSM_ENCODED_STATES = "ARB_START:0001,ARB_INC:1000,ARB_WAIT:0010,ARB_REPORT:0100" *) 
-  FDSE #(
-    .INIT(1'b1)) 
-    \arb_state_reg[0] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in[0]),
-        .Q(arb_state[0]),
-        .S(drprst_in_sync));
-  (* FSM_ENCODED_STATES = "ARB_START:0001,ARB_INC:1000,ARB_WAIT:0010,ARB_REPORT:0100" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    \arb_state_reg[1] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in[1]),
-        .Q(arb_state[1]),
-        .R(drprst_in_sync));
-  (* FSM_ENCODED_STATES = "ARB_START:0001,ARB_INC:1000,ARB_WAIT:0010,ARB_REPORT:0100" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    \arb_state_reg[2] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in[2]),
-        .Q(arb_state[2]),
-        .R(drprst_in_sync));
-  (* FSM_ENCODED_STATES = "ARB_START:0001,ARB_INC:1000,ARB_WAIT:0010,ARB_REPORT:0100" *) 
-  FDRE #(
-    .INIT(1'b0)) 
-    \arb_state_reg[3] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in[3]),
-        .Q(arb_state[3]),
-        .R(drprst_in_sync));
-  (* SOFT_HLUTNM = "soft_lutpair16" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \daddr[2]_i_1 
-       (.I0(addr_i[12]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(daddr0[2]));
-  (* SOFT_HLUTNM = "soft_lutpair17" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \daddr[7]_i_1 
-       (.I0(addr_i[17]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(daddr0[7]));
-  LUT6 #(
-    .INIT(64'h0000000000100000)) 
-    \daddr[8]_i_1 
-       (.I0(arb_state[1]),
-        .I1(arb_state[2]),
-        .I2(arb_state[0]),
-        .I3(arb_state[3]),
-        .I4(en),
-        .I5(\arb_state[3]_i_2_n_0 ),
-        .O(di));
-  (* SOFT_HLUTNM = "soft_lutpair17" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \daddr[8]_i_2 
-       (.I0(addr_i[18]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(daddr0[8]));
-  FDRE #(
-    .INIT(1'b0)) 
-    \daddr_reg[2] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(daddr0[2]),
-        .Q(daddr[2]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \daddr_reg[7] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(daddr0[7]),
-        .Q(daddr[7]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \daddr_reg[8] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(daddr0[8]),
-        .Q(daddr[8]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[16] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [0]),
-        .Q(data_i[16]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[17] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [1]),
-        .Q(data_i[17]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[18] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [2]),
-        .Q(data_i[18]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[19] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [3]),
-        .Q(data_i[19]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[20] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [4]),
-        .Q(data_i[20]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[21] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [5]),
-        .Q(data_i[21]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[22] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [6]),
-        .Q(data_i[22]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[23] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [7]),
-        .Q(data_i[23]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[24] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [8]),
-        .Q(data_i[24]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[25] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [9]),
-        .Q(data_i[25]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[26] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [10]),
-        .Q(data_i[26]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[27] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [11]),
-        .Q(data_i[27]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[28] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [12]),
-        .Q(data_i[28]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[29] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [13]),
-        .Q(data_i[29]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[30] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [14]),
-        .Q(data_i[30]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \data_i_reg[31] 
-       (.C(drpclk_in),
-        .CE(\addr_i_reg[18]_0 ),
-        .D(\data_i_reg[31]_0 [15]),
-        .Q(data_i[31]),
-        .R(drprst_in_sync));
-  (* SOFT_HLUTNM = "soft_lutpair8" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[0]_i_1 
-       (.I0(data_i[16]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair13" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[10]_i_1 
-       (.I0(data_i[26]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[10]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair14" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[11]_i_1 
-       (.I0(data_i[27]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[11]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair14" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[12]_i_1 
-       (.I0(data_i[28]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[12]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair15" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[13]_i_1 
-       (.I0(data_i[29]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[13]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair15" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[14]_i_1 
-       (.I0(data_i[30]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[14]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair16" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[15]_i_1 
-       (.I0(data_i[31]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[15]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair9" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[1]_i_1 
-       (.I0(data_i[17]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair9" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[2]_i_1 
-       (.I0(data_i[18]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[2]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair10" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[3]_i_1 
-       (.I0(data_i[19]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[3]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair10" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[4]_i_1 
-       (.I0(data_i[20]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[4]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair11" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[5]_i_1 
-       (.I0(data_i[21]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[5]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair11" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[6]_i_1 
-       (.I0(data_i[22]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[6]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair12" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[7]_i_1 
-       (.I0(data_i[23]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[7]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair12" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[8]_i_1 
-       (.I0(data_i[24]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[8]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair13" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \di[9]_i_1 
-       (.I0(data_i[25]),
-        .I1(\idx_reg_n_0_[0] ),
-        .I2(\idx_reg_n_0_[1] ),
-        .O(\di[9]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[0] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[0]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[0] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[10] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[10]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[10] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[11] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[11]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[11] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[12] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[12]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[12] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[13] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[13]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[13] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[14] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[14]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[14] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[15] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[15]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[15] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[1] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[1]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[1] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[2] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[2]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[2] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[3] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[3]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[3] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[4] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[4]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[4] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[5] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[5]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[5] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[6] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[6]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[6] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[7] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[7]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[7] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[8] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[8]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[8] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \di_reg[9] 
-       (.C(drpclk_in),
-        .CE(di),
-        .D(\di[9]_i_1_n_0 ),
-        .Q(\di_reg_n_0_[9] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[0] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[0]),
-        .Q(DO_USR_O0[16]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[10] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[10]),
-        .Q(DO_USR_O0[26]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[11] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[11]),
-        .Q(DO_USR_O0[27]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[12] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[12]),
-        .Q(DO_USR_O0[28]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[13] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[13]),
-        .Q(DO_USR_O0[29]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[14] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[14]),
-        .Q(DO_USR_O0[30]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[15] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[15]),
-        .Q(DO_USR_O0[31]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[1] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[1]),
-        .Q(DO_USR_O0[17]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[2] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[2]),
-        .Q(DO_USR_O0[18]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[3] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[3]),
-        .Q(DO_USR_O0[19]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[4] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[4]),
-        .Q(DO_USR_O0[20]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[5] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[5]),
-        .Q(DO_USR_O0[21]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[6] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[6]),
-        .Q(DO_USR_O0[22]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[7] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[7]),
-        .Q(DO_USR_O0[23]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[8] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[8]),
-        .Q(DO_USR_O0[24]),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \do_r_reg[9] 
-       (.C(drpclk_in),
-        .CE(drp_state[6]),
-        .D(DO_I[9]),
-        .Q(DO_USR_O0[25]),
-        .R(drprst_in_sync));
-  LUT5 #(
-    .INIT(32'hAAABAAA8)) 
-    done_i_1
-       (.I0(done_i_2_n_0),
-        .I1(drp_state[6]),
-        .I2(\DADDR_O[8]_i_1_n_0 ),
-        .I3(done_i_3_n_0),
-        .I4(done_reg_n_0),
-        .O(done_i_1_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair4" *) 
-  LUT4 #(
-    .INIT(16'h0100)) 
-    done_i_2
-       (.I0(\drp_state_reg_n_0_[6] ),
-        .I1(\drp_state_reg_n_0_[1] ),
-        .I2(\drp_state_reg_n_0_[4] ),
-        .I3(\drp_state[6]_i_3_n_0 ),
-        .O(done_i_2_n_0));
-  LUT6 #(
-    .INIT(64'h0000000000000004)) 
-    done_i_3
-       (.I0(\drp_state_reg_n_0_[0] ),
-        .I1(\drp_state_reg_n_0_[6] ),
-        .I2(\drp_state_reg_n_0_[2] ),
-        .I3(\drp_state_reg_n_0_[5] ),
-        .I4(\drp_state_reg_n_0_[1] ),
-        .I5(\drp_state_reg_n_0_[4] ),
-        .O(done_i_3_n_0));
-  FDRE #(
-    .INIT(1'b0)) 
-    done_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(done_i_1_n_0),
-        .Q(done_reg_n_0),
-        .R(drprst_in_sync));
-  LUT6 #(
-    .INIT(64'hFFFFFFFFFFFEFEF8)) 
-    \drp_state[0]_i_1 
-       (.I0(\drp_state_reg_n_0_[4] ),
-        .I1(\drp_state_reg_n_0_[1] ),
-        .I2(\drp_state_reg_n_0_[6] ),
-        .I3(\drp_state_reg_n_0_[2] ),
-        .I4(\drp_state_reg_n_0_[5] ),
-        .I5(\drp_state[0]_i_2_n_0 ),
-        .O(drp_state[0]));
-  LUT6 #(
-    .INIT(64'hF0F0F0F0F0F0F01F)) 
-    \drp_state[0]_i_2 
-       (.I0(wr_reg_n_0),
-        .I1(rd_reg_n_0),
-        .I2(\drp_state_reg_n_0_[0] ),
-        .I3(\drp_state_reg_n_0_[4] ),
-        .I4(\drp_state_reg_n_0_[1] ),
-        .I5(\drp_state[1]_i_2_n_0 ),
-        .O(\drp_state[0]_i_2_n_0 ));
-  LUT6 #(
-    .INIT(64'h0000000000000008)) 
-    \drp_state[1]_i_1 
-       (.I0(rd_reg_n_0),
-        .I1(\drp_state_reg_n_0_[0] ),
-        .I2(\drp_state_reg_n_0_[6] ),
-        .I3(\drp_state[1]_i_2_n_0 ),
-        .I4(\drp_state_reg_n_0_[1] ),
-        .I5(\drp_state_reg_n_0_[4] ),
-        .O(drp_state[1]));
-  (* SOFT_HLUTNM = "soft_lutpair7" *) 
-  LUT2 #(
-    .INIT(4'hE)) 
-    \drp_state[1]_i_2 
-       (.I0(\drp_state_reg_n_0_[2] ),
-        .I1(\drp_state_reg_n_0_[5] ),
-        .O(\drp_state[1]_i_2_n_0 ));
-  LUT6 #(
-    .INIT(64'h00000000000C0400)) 
-    \drp_state[2]_i_1 
-       (.I0(\drp_state[6]_i_3_n_0 ),
-        .I1(\drp_state[5]_i_2_n_0 ),
-        .I2(\drp_state_reg_n_0_[5] ),
-        .I3(\drp_state_reg_n_0_[2] ),
-        .I4(\drp_state_reg_n_0_[1] ),
-        .I5(\drp_state_reg_n_0_[4] ),
-        .O(drp_state[2]));
-  (* SOFT_HLUTNM = "soft_lutpair1" *) 
-  LUT5 #(
-    .INIT(32'h00000020)) 
-    \drp_state[4]_i_1 
-       (.I0(\drp_state_reg_n_0_[0] ),
-        .I1(\drp_state_reg_n_0_[6] ),
-        .I2(wr_reg_n_0),
-        .I3(rd_reg_n_0),
-        .I4(\drp_state[4]_i_2_n_0 ),
-        .O(drp_state[4]));
-  (* SOFT_HLUTNM = "soft_lutpair5" *) 
-  LUT4 #(
-    .INIT(16'hFFFE)) 
-    \drp_state[4]_i_2 
-       (.I0(\drp_state_reg_n_0_[4] ),
-        .I1(\drp_state_reg_n_0_[1] ),
-        .I2(\drp_state_reg_n_0_[5] ),
-        .I3(\drp_state_reg_n_0_[2] ),
-        .O(\drp_state[4]_i_2_n_0 ));
-  LUT6 #(
-    .INIT(64'h00000000000C0040)) 
-    \drp_state[5]_i_1 
-       (.I0(\drp_state[6]_i_3_n_0 ),
-        .I1(\drp_state[5]_i_2_n_0 ),
-        .I2(\drp_state_reg_n_0_[5] ),
-        .I3(\drp_state_reg_n_0_[2] ),
-        .I4(\drp_state_reg_n_0_[4] ),
-        .I5(\drp_state_reg_n_0_[1] ),
-        .O(drp_state[5]));
-  (* SOFT_HLUTNM = "soft_lutpair1" *) 
-  LUT2 #(
-    .INIT(4'h1)) 
-    \drp_state[5]_i_2 
-       (.I0(\drp_state_reg_n_0_[0] ),
-        .I1(\drp_state_reg_n_0_[6] ),
-        .O(\drp_state[5]_i_2_n_0 ));
-  LUT6 #(
-    .INIT(64'h0000000600000000)) 
-    \drp_state[6]_i_1 
-       (.I0(\drp_state_reg_n_0_[2] ),
-        .I1(\drp_state_reg_n_0_[5] ),
-        .I2(\drp_state_reg_n_0_[6] ),
-        .I3(\drp_state_reg_n_0_[0] ),
-        .I4(\drp_state[6]_i_2_n_0 ),
-        .I5(\drp_state[6]_i_3_n_0 ),
-        .O(drp_state[6]));
-  (* SOFT_HLUTNM = "soft_lutpair4" *) 
-  LUT2 #(
-    .INIT(4'hE)) 
-    \drp_state[6]_i_2 
-       (.I0(\drp_state_reg_n_0_[1] ),
-        .I1(\drp_state_reg_n_0_[4] ),
-        .O(\drp_state[6]_i_2_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFFFFF80000000)) 
-    \drp_state[6]_i_3 
-       (.I0(\drp_state[6]_i_4_n_0 ),
-        .I1(\timeout_cntr_reg_n_0_[7] ),
-        .I2(\timeout_cntr_reg_n_0_[6] ),
-        .I3(\timeout_cntr_reg_n_0_[0] ),
-        .I4(\timeout_cntr_reg_n_0_[1] ),
-        .I5(\gen_gtwizard_gthe4.drprdy_int ),
-        .O(\drp_state[6]_i_3_n_0 ));
-  LUT4 #(
-    .INIT(16'h8000)) 
-    \drp_state[6]_i_4 
-       (.I0(\timeout_cntr_reg_n_0_[3] ),
-        .I1(\timeout_cntr_reg_n_0_[2] ),
-        .I2(\timeout_cntr_reg_n_0_[5] ),
-        .I3(\timeout_cntr_reg_n_0_[4] ),
-        .O(\drp_state[6]_i_4_n_0 ));
-  FDSE #(
-    .INIT(1'b1)) 
-    \drp_state_reg[0] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(drp_state[0]),
-        .Q(\drp_state_reg_n_0_[0] ),
-        .S(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \drp_state_reg[1] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(drp_state[1]),
-        .Q(\drp_state_reg_n_0_[1] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \drp_state_reg[2] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(drp_state[2]),
-        .Q(\drp_state_reg_n_0_[2] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \drp_state_reg[4] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(drp_state[4]),
-        .Q(\drp_state_reg_n_0_[4] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \drp_state_reg[5] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(drp_state[5]),
-        .Q(\drp_state_reg_n_0_[5] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \drp_state_reg[6] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(drp_state[6]),
-        .Q(\drp_state_reg_n_0_[6] ),
-        .R(drprst_in_sync));
-  LUT4 #(
-    .INIT(16'hAEAA)) 
-    \en[1]_i_1 
-       (.I0(\addr_i_reg[18]_0 ),
-        .I1(done_reg_n_0),
-        .I2(\idx_reg_n_0_[1] ),
-        .I3(\idx_reg_n_0_[0] ),
-        .O(we));
-  (* SOFT_HLUTNM = "soft_lutpair6" *) 
-  LUT4 #(
-    .INIT(16'hDF00)) 
-    \en[1]_i_2 
-       (.I0(done_reg_n_0),
-        .I1(\idx_reg_n_0_[1] ),
-        .I2(\idx_reg_n_0_[0] ),
-        .I3(\addr_i_reg[18]_0 ),
-        .O(\en[1]_i_2_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \en_reg[1] 
-       (.C(drpclk_in),
-        .CE(we),
-        .D(\en[1]_i_2_n_0 ),
-        .Q(en),
-        .R(drprst_in_sync));
-  LUT2 #(
-    .INIT(4'h1)) 
-    \idx[0]__0_i_1 
-       (.I0(\idx_reg_n_0_[1] ),
-        .I1(\idx_reg_n_0_[0] ),
-        .O(B));
-  LUT4 #(
-    .INIT(16'h0004)) 
-    \idx[0]_i_1 
-       (.I0(arb_state[0]),
-        .I1(arb_state[3]),
-        .I2(arb_state[2]),
-        .I3(arb_state[1]),
-        .O(CEB2));
-  (* SOFT_HLUTNM = "soft_lutpair18" *) 
-  LUT2 #(
-    .INIT(4'h1)) 
-    \idx[0]_i_2 
-       (.I0(\idx_reg_n_0_[0] ),
-        .I1(\idx_reg_n_0_[1] ),
-        .O(\idx[0]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair18" *) 
-  LUT2 #(
-    .INIT(4'h2)) 
-    \idx[1]_i_1 
-       (.I0(\idx_reg_n_0_[0] ),
-        .I1(\idx_reg_n_0_[1] ),
-        .O(\idx[1]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \idx_reg[0] 
-       (.C(drpclk_in),
-        .CE(CEB2),
-        .D(\idx[0]_i_2_n_0 ),
-        .Q(\idx_reg_n_0_[0] ),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \idx_reg[0]__0 
-       (.C(drpclk_in),
-        .CE(CEB2),
-        .D(B),
-        .Q(idx),
-        .R(drprst_in_sync));
-  FDRE #(
-    .INIT(1'b0)) 
-    \idx_reg[1] 
-       (.C(drpclk_in),
-        .CE(CEB2),
-        .D(\idx[1]_i_1_n_0 ),
-        .Q(\idx_reg_n_0_[1] ),
-        .R(drprst_in_sync));
-  (* SOFT_HLUTNM = "soft_lutpair2" *) 
-  LUT5 #(
-    .INIT(32'h00100000)) 
-    rd_i_1
-       (.I0(arb_state[1]),
-        .I1(\we_reg_n_0_[1] ),
-        .I2(en),
-        .I3(\idx_reg_n_0_[1] ),
-        .I4(\idx_reg_n_0_[0] ),
-        .O(rd_i_1_n_0));
-  FDRE #(
-    .INIT(1'b0)) 
-    rd_reg
-       (.C(drpclk_in),
-        .CE(rd),
-        .D(rd_i_1_n_0),
-        .Q(rd_reg_n_0),
-        .R(drprst_in_sync));
-  (* SOFT_HLUTNM = "soft_lutpair7" *) 
-  LUT3 #(
-    .INIT(8'h0E)) 
-    \timeout_cntr[0]_i_1 
-       (.I0(\drp_state_reg_n_0_[5] ),
-        .I1(\drp_state_reg_n_0_[2] ),
-        .I2(\timeout_cntr_reg_n_0_[0] ),
-        .O(timeout_cntr[0]));
-  (* SOFT_HLUTNM = "soft_lutpair3" *) 
-  LUT4 #(
-    .INIT(16'h0EE0)) 
-    \timeout_cntr[1]_i_1 
-       (.I0(\drp_state_reg_n_0_[2] ),
-        .I1(\drp_state_reg_n_0_[5] ),
-        .I2(\timeout_cntr_reg_n_0_[0] ),
-        .I3(\timeout_cntr_reg_n_0_[1] ),
-        .O(timeout_cntr[1]));
-  (* SOFT_HLUTNM = "soft_lutpair3" *) 
-  LUT5 #(
-    .INIT(32'h77708880)) 
-    \timeout_cntr[2]_i_1 
-       (.I0(\timeout_cntr_reg_n_0_[1] ),
-        .I1(\timeout_cntr_reg_n_0_[0] ),
-        .I2(\drp_state_reg_n_0_[5] ),
-        .I3(\drp_state_reg_n_0_[2] ),
-        .I4(\timeout_cntr_reg_n_0_[2] ),
-        .O(timeout_cntr[2]));
-  LUT6 #(
-    .INIT(64'h7F7F7F0080808000)) 
-    \timeout_cntr[3]_i_1 
-       (.I0(\timeout_cntr_reg_n_0_[2] ),
-        .I1(\timeout_cntr_reg_n_0_[0] ),
-        .I2(\timeout_cntr_reg_n_0_[1] ),
-        .I3(\drp_state_reg_n_0_[5] ),
-        .I4(\drp_state_reg_n_0_[2] ),
-        .I5(\timeout_cntr_reg_n_0_[3] ),
-        .O(timeout_cntr[3]));
-  LUT6 #(
-    .INIT(64'h7FFF000080000000)) 
-    \timeout_cntr[4]_i_1 
-       (.I0(\timeout_cntr_reg_n_0_[1] ),
-        .I1(\timeout_cntr_reg_n_0_[0] ),
-        .I2(\timeout_cntr_reg_n_0_[2] ),
-        .I3(\timeout_cntr_reg_n_0_[3] ),
-        .I4(\drp_state[1]_i_2_n_0 ),
-        .I5(\timeout_cntr_reg_n_0_[4] ),
-        .O(timeout_cntr[4]));
-  LUT6 #(
-    .INIT(64'hFF7F000000800000)) 
-    \timeout_cntr[5]_i_1 
-       (.I0(\timeout_cntr_reg_n_0_[4] ),
-        .I1(\timeout_cntr_reg_n_0_[3] ),
-        .I2(\timeout_cntr_reg_n_0_[2] ),
-        .I3(\timeout_cntr[5]_i_2_n_0 ),
-        .I4(\drp_state[1]_i_2_n_0 ),
-        .I5(\timeout_cntr_reg_n_0_[5] ),
-        .O(timeout_cntr[5]));
-  LUT2 #(
-    .INIT(4'h7)) 
-    \timeout_cntr[5]_i_2 
-       (.I0(\timeout_cntr_reg_n_0_[1] ),
-        .I1(\timeout_cntr_reg_n_0_[0] ),
-        .O(\timeout_cntr[5]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair0" *) 
-  LUT4 #(
-    .INIT(16'hA854)) 
-    \timeout_cntr[6]_i_1 
-       (.I0(\timeout_cntr[7]_i_4_n_0 ),
-        .I1(\drp_state_reg_n_0_[5] ),
-        .I2(\drp_state_reg_n_0_[2] ),
-        .I3(\timeout_cntr_reg_n_0_[6] ),
-        .O(timeout_cntr[6]));
-  LUT5 #(
-    .INIT(32'h0000055C)) 
-    \timeout_cntr[7]_i_1 
-       (.I0(\drp_state[4]_i_2_n_0 ),
-        .I1(\timeout_cntr[7]_i_3_n_0 ),
-        .I2(\drp_state_reg_n_0_[6] ),
-        .I3(\drp_state_reg_n_0_[0] ),
-        .I4(drprst_in_sync),
-        .O(\timeout_cntr[7]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair0" *) 
-  LUT5 #(
-    .INIT(32'hBBB04440)) 
-    \timeout_cntr[7]_i_2 
-       (.I0(\timeout_cntr[7]_i_4_n_0 ),
-        .I1(\timeout_cntr_reg_n_0_[6] ),
-        .I2(\drp_state_reg_n_0_[5] ),
-        .I3(\drp_state_reg_n_0_[2] ),
-        .I4(\timeout_cntr_reg_n_0_[7] ),
-        .O(timeout_cntr[7]));
-  (* SOFT_HLUTNM = "soft_lutpair5" *) 
-  LUT4 #(
-    .INIT(16'h0116)) 
-    \timeout_cntr[7]_i_3 
-       (.I0(\drp_state_reg_n_0_[2] ),
-        .I1(\drp_state_reg_n_0_[5] ),
-        .I2(\drp_state_reg_n_0_[1] ),
-        .I3(\drp_state_reg_n_0_[4] ),
-        .O(\timeout_cntr[7]_i_3_n_0 ));
-  LUT6 #(
-    .INIT(64'h7FFFFFFFFFFFFFFF)) 
-    \timeout_cntr[7]_i_4 
-       (.I0(\timeout_cntr_reg_n_0_[1] ),
-        .I1(\timeout_cntr_reg_n_0_[0] ),
-        .I2(\timeout_cntr_reg_n_0_[2] ),
-        .I3(\timeout_cntr_reg_n_0_[3] ),
-        .I4(\timeout_cntr_reg_n_0_[4] ),
-        .I5(\timeout_cntr_reg_n_0_[5] ),
-        .O(\timeout_cntr[7]_i_4_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \timeout_cntr_reg[0] 
-       (.C(drpclk_in),
-        .CE(\timeout_cntr[7]_i_1_n_0 ),
-        .D(timeout_cntr[0]),
-        .Q(\timeout_cntr_reg_n_0_[0] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \timeout_cntr_reg[1] 
-       (.C(drpclk_in),
-        .CE(\timeout_cntr[7]_i_1_n_0 ),
-        .D(timeout_cntr[1]),
-        .Q(\timeout_cntr_reg_n_0_[1] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \timeout_cntr_reg[2] 
-       (.C(drpclk_in),
-        .CE(\timeout_cntr[7]_i_1_n_0 ),
-        .D(timeout_cntr[2]),
-        .Q(\timeout_cntr_reg_n_0_[2] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \timeout_cntr_reg[3] 
-       (.C(drpclk_in),
-        .CE(\timeout_cntr[7]_i_1_n_0 ),
-        .D(timeout_cntr[3]),
-        .Q(\timeout_cntr_reg_n_0_[3] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \timeout_cntr_reg[4] 
-       (.C(drpclk_in),
-        .CE(\timeout_cntr[7]_i_1_n_0 ),
-        .D(timeout_cntr[4]),
-        .Q(\timeout_cntr_reg_n_0_[4] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \timeout_cntr_reg[5] 
-       (.C(drpclk_in),
-        .CE(\timeout_cntr[7]_i_1_n_0 ),
-        .D(timeout_cntr[5]),
-        .Q(\timeout_cntr_reg_n_0_[5] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \timeout_cntr_reg[6] 
-       (.C(drpclk_in),
-        .CE(\timeout_cntr[7]_i_1_n_0 ),
-        .D(timeout_cntr[6]),
-        .Q(\timeout_cntr_reg_n_0_[6] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \timeout_cntr_reg[7] 
-       (.C(drpclk_in),
-        .CE(\timeout_cntr[7]_i_1_n_0 ),
-        .D(timeout_cntr[7]),
-        .Q(\timeout_cntr_reg_n_0_[7] ),
-        .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair6" *) 
-  LUT4 #(
-    .INIT(16'hDF00)) 
-    \we[1]_i_1 
-       (.I0(done_reg_n_0),
-        .I1(\idx_reg_n_0_[1] ),
-        .I2(\idx_reg_n_0_[0] ),
-        .I3(cal_on_rx_drpwe_out),
-        .O(\we[1]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \we_reg[1] 
-       (.C(drpclk_in),
-        .CE(we),
-        .D(\we[1]_i_1_n_0 ),
-        .Q(\we_reg_n_0_[1] ),
-        .R(drprst_in_sync));
-  LUT4 #(
-    .INIT(16'h0012)) 
-    wr_i_1
-       (.I0(arb_state[1]),
-        .I1(arb_state[2]),
-        .I2(arb_state[0]),
-        .I3(arb_state[3]),
-        .O(rd));
-  (* SOFT_HLUTNM = "soft_lutpair2" *) 
-  LUT5 #(
-    .INIT(32'h00400000)) 
-    wr_i_2
-       (.I0(arb_state[1]),
-        .I1(\we_reg_n_0_[1] ),
-        .I2(en),
-        .I3(\idx_reg_n_0_[1] ),
-        .I4(\idx_reg_n_0_[0] ),
-        .O(wr));
-  FDRE #(
-    .INIT(1'b0)) 
-    wr_reg
-       (.C(drpclk_in),
-        .CE(rd),
-        .D(wr),
-        .Q(wr_reg_n_0),
-        .R(drprst_in_sync));
-endmodule
-
 (* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_gthe4_channel" *) 
 module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
-   (in0,
-    \gen_gtwizard_gthe4.drprdy_int ,
-    gthtxn_out,
+   (gthtxn_out,
     gthtxp_out,
     \gen_gtwizard_gthe4.gtpowergood_int ,
     rxcdrlock_out,
     rxoutclk_out,
     rxoutclkpcs_out,
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_0 ,
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_1 ,
+    rxpmaresetdone_out,
     rxresetdone_out,
     txoutclk_out,
     txpmaresetdone_out,
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_2 ,
     txresetdone_out,
     gtwiz_userdata_rx_out,
-    D,
-    rxpmaresetdone_out,
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3 ,
-    \gen_gtwizard_gthe4.cpllpd_ch_int ,
-    \gen_gtwizard_gthe4.cpllreset_ch_int ,
-    drpclk_in,
-    DEN_O,
-    DWE_O,
+    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_0 ,
     gthrxn_in,
     gthrxp_in,
-    gtrefclk0_in,
     \gen_gtwizard_gthe4.gtrxreset_ch_int ,
     \gen_gtwizard_gthe4.gttxreset_int ,
     qpll0outclk_out,
     qpll0outrefclk_out,
     qpll1outclk_out,
     qpll1outrefclk_out,
-    \gen_gtwizard_gthe4.rxcdrhold_ch_int ,
-    \gen_gtwizard_gthe4.rxprogdivreset_ch_int ,
+    rxcdrhold_in,
+    rxlpmen_in,
+    rxpolarity_in,
+    \gen_gtwizard_gthe4.rxprogdivreset_int ,
     RXRATE,
+    rxslide_in,
     \gen_gtwizard_gthe4.rxuserrdy_int ,
     rxusrclk_in,
     rxusrclk2_in,
-    tx8b10ben_in,
-    \gen_gtwizard_gthe4.txprogdivreset_ch_int ,
+    txpolarity_in,
+    \gen_gtwizard_gthe4.txprogdivreset_int ,
     \gen_gtwizard_gthe4.txuserrdy_int ,
     txusrclk_in,
     txusrclk2_in,
     gtwiz_userdata_tx_in,
-    Q,
-    txctrl0_in,
-    txctrl1_in,
-    RXOUTCLKSEL,
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_4 ,
-    txctrl2_in,
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_5 ,
-    cal_on_rx_debug_out,
-    lopt,
-    lopt_1,
-    lopt_2,
-    lopt_3,
-    lopt_4,
-    lopt_5,
-    lopt_6,
-    lopt_7);
-  output in0;
-  output \gen_gtwizard_gthe4.drprdy_int ;
+    loopback_in,
+    txdiffctrl_in,
+    txpostcursor_in,
+    txprecursor_in);
   output [0:0]gthtxn_out;
   output [0:0]gthtxp_out;
   output \gen_gtwizard_gthe4.gtpowergood_int ;
   output [0:0]rxcdrlock_out;
   output [0:0]rxoutclk_out;
   output [0:0]rxoutclkpcs_out;
-  output \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_0 ;
-  output \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_1 ;
+  output [0:0]rxpmaresetdone_out;
   output [0:0]rxresetdone_out;
   output [0:0]txoutclk_out;
   output [0:0]txpmaresetdone_out;
-  output \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_2 ;
   output [0:0]txresetdone_out;
   output [31:0]gtwiz_userdata_rx_out;
-  output [15:0]D;
-  output [0:0]rxpmaresetdone_out;
-  output \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3 ;
-  input \gen_gtwizard_gthe4.cpllpd_ch_int ;
-  input \gen_gtwizard_gthe4.cpllreset_ch_int ;
-  input [0:0]drpclk_in;
-  input DEN_O;
-  input DWE_O;
+  output \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_0 ;
   input [0:0]gthrxn_in;
   input [0:0]gthrxp_in;
-  input [0:0]gtrefclk0_in;
   input \gen_gtwizard_gthe4.gtrxreset_ch_int ;
   input \gen_gtwizard_gthe4.gttxreset_int ;
   input [0:0]qpll0outclk_out;
   input [0:0]qpll0outrefclk_out;
   input [0:0]qpll1outclk_out;
   input [0:0]qpll1outrefclk_out;
-  input \gen_gtwizard_gthe4.rxcdrhold_ch_int ;
-  input \gen_gtwizard_gthe4.rxprogdivreset_ch_int ;
+  input [0:0]rxcdrhold_in;
+  input [0:0]rxlpmen_in;
+  input [0:0]rxpolarity_in;
+  input \gen_gtwizard_gthe4.rxprogdivreset_int ;
   input [0:0]RXRATE;
+  input [0:0]rxslide_in;
   input \gen_gtwizard_gthe4.rxuserrdy_int ;
   input [0:0]rxusrclk_in;
   input [0:0]rxusrclk2_in;
-  input [0:0]tx8b10ben_in;
-  input \gen_gtwizard_gthe4.txprogdivreset_ch_int ;
+  input [0:0]txpolarity_in;
+  input \gen_gtwizard_gthe4.txprogdivreset_int ;
   input \gen_gtwizard_gthe4.txuserrdy_int ;
   input [0:0]txusrclk_in;
   input [0:0]txusrclk2_in;
   input [31:0]gtwiz_userdata_tx_in;
-  input [15:0]Q;
-  input [15:0]txctrl0_in;
-  input [15:0]txctrl1_in;
-  input [1:0]RXOUTCLKSEL;
-  input [2:0]\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_4 ;
-  input [7:0]txctrl2_in;
-  input [2:0]\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_5 ;
-  input [0:0]cal_on_rx_debug_out;
-  input lopt;
-  input lopt_1;
-  output lopt_2;
-  output lopt_3;
-  input lopt_4;
-  input lopt_5;
-  output lopt_6;
-  output lopt_7;
+  input [2:0]loopback_in;
+  input [4:0]txdiffctrl_in;
+  input [4:0]txpostcursor_in;
+  input [4:0]txprecursor_in;
 
-  wire [15:0]D;
-  wire DEN_O;
-  wire DWE_O;
-  wire [15:0]Q;
-  wire [1:0]RXOUTCLKSEL;
   wire [0:0]RXRATE;
-  wire [0:0]cal_on_rx_debug_out;
-  wire [0:0]drpclk_in;
-  wire \gen_gtwizard_gthe4.cpllpd_ch_int ;
-  wire \gen_gtwizard_gthe4.cpllreset_ch_int ;
-  wire \gen_gtwizard_gthe4.drprdy_int ;
   wire \gen_gtwizard_gthe4.gtpowergood_int ;
   wire \gen_gtwizard_gthe4.gtrxreset_ch_int ;
   wire \gen_gtwizard_gthe4.gttxreset_int ;
-  wire \gen_gtwizard_gthe4.rxcdrhold_ch_int ;
-  wire \gen_gtwizard_gthe4.rxprogdivreset_ch_int ;
+  wire \gen_gtwizard_gthe4.rxprogdivreset_int ;
   wire \gen_gtwizard_gthe4.rxuserrdy_int ;
-  wire \gen_gtwizard_gthe4.txprogdivreset_ch_int ;
+  wire \gen_gtwizard_gthe4.txprogdivreset_int ;
   wire \gen_gtwizard_gthe4.txuserrdy_int ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_0 ;
-  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_1 ;
-  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_2 ;
-  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3 ;
-  wire [2:0]\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_4 ;
-  wire [2:0]\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_5 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_0 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_1 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_100 ;
@@ -7411,6 +4565,22 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_220 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_221 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_222 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_223 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_224 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_225 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_226 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_227 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_228 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_229 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_230 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_231 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_232 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_233 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_234 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_235 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_236 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_237 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_238 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_239 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_24 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_240 ;
@@ -7478,6 +4648,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_297 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_298 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_299 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_3 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_30 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_300 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_301 ;
@@ -7578,6 +4749,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_48 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_49 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_5 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_50 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_51 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_52 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_53 ;
@@ -7586,6 +4758,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_57 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_58 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_59 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_6 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_60 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_61 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_62 ;
@@ -7597,6 +4770,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_69 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_7 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_70 ;
+  wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_72 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_73 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_74 ;
   wire \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_75 ;
@@ -7627,64 +4801,39 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
   wire [0:0]gthrxp_in;
   wire [0:0]gthtxn_out;
   wire [0:0]gthtxp_out;
-  wire [0:0]gtrefclk0_in;
   wire [31:0]gtwiz_userdata_rx_out;
   wire [31:0]gtwiz_userdata_tx_in;
-  wire in0;
-  wire lopt;
-  wire lopt_1;
-  wire \^lopt_2 ;
-  wire \^lopt_3 ;
+  wire [2:0]loopback_in;
   wire [0:0]qpll0outclk_out;
   wire [0:0]qpll0outrefclk_out;
   wire [0:0]qpll1outclk_out;
   wire [0:0]qpll1outrefclk_out;
+  wire [0:0]rxcdrhold_in;
   wire [0:0]rxcdrlock_out;
+  wire [0:0]rxlpmen_in;
   wire [0:0]rxoutclk_out;
   wire [0:0]rxoutclkpcs_out;
   wire [0:0]rxpmaresetdone_out;
+  wire [0:0]rxpolarity_in;
   wire [0:0]rxresetdone_out;
+  wire [0:0]rxslide_in;
   wire [0:0]rxusrclk2_in;
   wire [0:0]rxusrclk_in;
-  wire [0:0]tx8b10ben_in;
-  wire [15:0]txctrl0_in;
-  wire [15:0]txctrl1_in;
-  wire [7:0]txctrl2_in;
+  wire [4:0]txdiffctrl_in;
   wire [0:0]txoutclk_out;
   wire [0:0]txpmaresetdone_out;
+  wire [0:0]txpolarity_in;
+  wire [4:0]txpostcursor_in;
+  wire [4:0]txprecursor_in;
   wire [0:0]txresetdone_out;
   wire [0:0]txusrclk2_in;
   wire [0:0]txusrclk_in;
-  wire xlnx_opt_;
-  wire xlnx_opt__1;
-  wire xlnx_opt__2;
-  wire xlnx_opt__3;
 
-  assign \^lopt_2  = lopt_4;
-  assign \^lopt_3  = lopt_5;
-  assign lopt_2 = xlnx_opt_;
-  assign lopt_3 = xlnx_opt__1;
-  assign lopt_6 = xlnx_opt__2;
-  assign lopt_7 = xlnx_opt__3;
-  (* OPT_MODIFIED = "MLO" *) 
-  BUFG_GT_SYNC BUFG_GT_SYNC
-       (.CE(lopt),
-        .CESYNC(xlnx_opt_),
-        .CLK(rxoutclk_out),
-        .CLR(lopt_1),
-        .CLRSYNC(xlnx_opt__1));
-  (* OPT_MODIFIED = "MLO" *) 
-  BUFG_GT_SYNC BUFG_GT_SYNC_1
-       (.CE(\^lopt_2 ),
-        .CESYNC(xlnx_opt__2),
-        .CLK(txoutclk_out),
-        .CLR(\^lopt_3 ),
-        .CLRSYNC(xlnx_opt__3));
   LUT1 #(
     .INIT(2'h1)) 
     \gen_powergood_delay.intclk_rrst_n_r[4]_i_2 
        (.I0(\gen_gtwizard_gthe4.gtpowergood_int ),
-        .O(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_3 ));
+        .O(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_0 ));
   (* BOX_TYPE = "PRIMITIVE" *) 
   GTHE4_CHANNEL #(
     .ACJTAG_DEBUG_MODE(1'b0),
@@ -7723,7 +4872,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
     .CHAN_BOND_SEQ_2_ENABLE(4'b1111),
     .CHAN_BOND_SEQ_2_USE("FALSE"),
     .CHAN_BOND_SEQ_LEN(1),
-    .CH_HSPMUX(16'h443C),
+    .CH_HSPMUX(16'h2424),
     .CKCAL1_CFG_0(16'b1100000011000000),
     .CKCAL1_CFG_1(16'b0101000011000000),
     .CKCAL1_CFG_2(16'b0000000000001010),
@@ -7757,8 +4906,8 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
     .CPLL_CFG1(16'h0023),
     .CPLL_CFG2(16'h0002),
     .CPLL_CFG3(16'h0000),
-    .CPLL_FBDIV(4),
-    .CPLL_FBDIV_45(4),
+    .CPLL_FBDIV(2),
+    .CPLL_FBDIV_45(5),
     .CPLL_INIT_CFG0(16'h02B2),
     .CPLL_LOCK_CFG(16'h01E8),
     .CPLL_REFCLK_DIV(1),
@@ -7979,8 +5128,8 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
     .RXPHSLIP_CFG(16'h9933),
     .RXPH_MONITOR_SEL(5'b00000),
     .RXPI_AUTO_BW_SEL_BYPASS(1'b0),
-    .RXPI_CFG0(16'h3300),
-    .RXPI_CFG1(16'b0000000011111101),
+    .RXPI_CFG0(16'h0102),
+    .RXPI_CFG1(16'b0000000000010101),
     .RXPI_LPM(1'b0),
     .RXPI_SEL_LC(2'b00),
     .RXPI_STARTCODE(2'b00),
@@ -8083,19 +5232,19 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
     .TXFIFO_ADDR_CFG("LOW"),
     .TXGBOX_FIFO_INIT_RD_ADDR(4),
     .TXGEARBOX_EN("FALSE"),
-    .TXOUT_DIV(16),
+    .TXOUT_DIV(8),
     .TXPCSRESET_TIME(5'b00011),
     .TXPHDLY_CFG0(16'h6070),
     .TXPHDLY_CFG1(16'h000F),
     .TXPH_CFG(16'h0723),
     .TXPH_CFG2(16'h0000),
     .TXPH_MONITOR_SEL(5'b00000),
-    .TXPI_CFG(16'h0000),
+    .TXPI_CFG(16'h0054),
     .TXPI_CFG0(2'b00),
     .TXPI_CFG1(2'b00),
     .TXPI_CFG2(2'b00),
-    .TXPI_CFG3(1'b1),
-    .TXPI_CFG4(1'b0),
+    .TXPI_CFG3(1'b0),
+    .TXPI_CFG4(1'b1),
     .TXPI_CFG5(3'b000),
     .TXPI_GRAY_SEL(1'b0),
     .TXPI_INVSTROBE_SEL(1'b0),
@@ -8112,7 +5261,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
     .TXSYNC_SKIP_DA(1'b0),
     .TX_CLK25_DIV(5),
     .TX_CLKMUX_EN(1'b1),
-    .TX_DATA_WIDTH(40),
+    .TX_DATA_WIDTH(32),
     .TX_DCC_LOOP_RST_CFG(16'h0004),
     .TX_DEEMPH0(6'b000000),
     .TX_DEEMPH1(6'b000000),
@@ -8142,7 +5291,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
     .TX_PHICAL_CFG0(16'h0000),
     .TX_PHICAL_CFG1(16'h7E00),
     .TX_PHICAL_CFG2(16'h0201),
-    .TX_PI_BIASSET(2),
+    .TX_PI_BIASSET(1),
     .TX_PI_IBIAS_MID(2'b00),
     .TX_PMADATA_OPT(1'b0),
     .TX_PMA_POWER_SAVE(1'b0),
@@ -8205,25 +5354,25 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .CLKRSVD1(1'b0),
         .CPLLFBCLKLOST(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_2 ),
         .CPLLFREQLOCK(1'b0),
-        .CPLLLOCK(in0),
+        .CPLLLOCK(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_3 ),
         .CPLLLOCKDETCLK(1'b0),
-        .CPLLLOCKEN(1'b1),
-        .CPLLPD(\gen_gtwizard_gthe4.cpllpd_ch_int ),
+        .CPLLLOCKEN(1'b0),
+        .CPLLPD(1'b1),
         .CPLLREFCLKLOST(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_4 ),
         .CPLLREFCLKSEL({1'b0,1'b0,1'b1}),
-        .CPLLRESET(\gen_gtwizard_gthe4.cpllreset_ch_int ),
+        .CPLLRESET(1'b1),
         .DMONFIFORESET(1'b0),
         .DMONITORCLK(1'b0),
         .DMONITOROUT({\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_207 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_208 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_209 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_210 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_211 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_212 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_213 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_214 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_215 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_216 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_217 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_218 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_219 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_220 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_221 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_222 }),
         .DMONITOROUTCLK(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_5 ),
-        .DRPADDR({1'b0,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_5 [2:1],\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_5 [1],1'b0,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_5 [2],1'b0,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_5 [0],\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_5 [1],1'b0}),
-        .DRPCLK(drpclk_in),
-        .DRPDI(Q),
-        .DRPDO(D),
-        .DRPEN(DEN_O),
-        .DRPRDY(\gen_gtwizard_gthe4.drprdy_int ),
+        .DRPADDR({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .DRPCLK(1'b0),
+        .DRPDI({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .DRPDO({\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_223 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_224 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_225 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_226 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_227 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_228 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_229 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_230 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_231 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_232 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_233 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_234 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_235 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_236 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_237 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_238 }),
+        .DRPEN(1'b0),
+        .DRPRDY(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_6 ),
         .DRPRST(1'b0),
-        .DRPWE(DWE_O),
+        .DRPWE(1'b0),
         .EYESCANDATAERROR(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_7 ),
         .EYESCANRESET(1'b0),
         .EYESCANTRIGGER(1'b0),
@@ -8236,7 +5385,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .GTNORTHREFCLK0(1'b0),
         .GTNORTHREFCLK1(1'b0),
         .GTPOWERGOOD(\gen_gtwizard_gthe4.gtpowergood_int ),
-        .GTREFCLK0(gtrefclk0_in),
+        .GTREFCLK0(1'b0),
         .GTREFCLK1(1'b0),
         .GTREFCLKMONITOR(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_11 ),
         .GTRSVD({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
@@ -8247,7 +5396,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .GTTXRESET(\gen_gtwizard_gthe4.gttxreset_int ),
         .GTTXRESETSEL(1'b0),
         .INCPCTRL(1'b0),
-        .LOOPBACK({1'b0,1'b0,1'b0}),
+        .LOOPBACK(loopback_in),
         .PCIEEQRXEQADAPTDONE(1'b0),
         .PCIERATEGEN3(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_12 ),
         .PCIERATEIDLE(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_13 ),
@@ -8280,7 +5429,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .RXBYTEISALIGNED(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_21 ),
         .RXBYTEREALIGN(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_22 ),
         .RXCDRFREQRESET(1'b0),
-        .RXCDRHOLD(\gen_gtwizard_gthe4.rxcdrhold_ch_int ),
+        .RXCDRHOLD(rxcdrhold_in),
         .RXCDRLOCK(rxcdrlock_out),
         .RXCDROVRDEN(1'b0),
         .RXCDRPHDONE(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_24 ),
@@ -8371,7 +5520,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .RXLFPSTRESETDET(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_35 ),
         .RXLFPSU2LPEXITDET(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_36 ),
         .RXLFPSU3WAKEDET(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_37 ),
-        .RXLPMEN(1'b1),
+        .RXLPMEN(rxlpmen_in),
         .RXLPMGCHOLD(1'b0),
         .RXLPMGCOVRDEN(1'b0),
         .RXLPMHFHOLD(1'b0),
@@ -8394,7 +5543,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .RXOUTCLK(rxoutclk_out),
         .RXOUTCLKFABRIC(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_43 ),
         .RXOUTCLKPCS(rxoutclkpcs_out),
-        .RXOUTCLKSEL({RXOUTCLKSEL,RXOUTCLKSEL[1]}),
+        .RXOUTCLKSEL({1'b0,1'b1,1'b0}),
         .RXPCOMMAALIGNEN(1'b0),
         .RXPCSRESET(1'b0),
         .RXPD({RXRATE,RXRATE}),
@@ -8405,16 +5554,16 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .RXPHDLYPD(1'b1),
         .RXPHDLYRESET(1'b0),
         .RXPHOVRDEN(1'b0),
-        .RXPLLCLKSEL({1'b0,1'b0}),
+        .RXPLLCLKSEL({1'b1,1'b1}),
         .RXPMARESET(1'b0),
-        .RXPMARESETDONE(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_0 ),
-        .RXPOLARITY(1'b0),
+        .RXPMARESETDONE(rxpmaresetdone_out),
+        .RXPOLARITY(rxpolarity_in),
         .RXPRBSCNTRESET(1'b0),
         .RXPRBSERR(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_48 ),
         .RXPRBSLOCKED(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_49 ),
         .RXPRBSSEL({1'b0,1'b0,1'b0,1'b0}),
-        .RXPRGDIVRESETDONE(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_1 ),
-        .RXPROGDIVRESET(\gen_gtwizard_gthe4.rxprogdivreset_ch_int ),
+        .RXPRGDIVRESETDONE(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_50 ),
+        .RXPROGDIVRESET(\gen_gtwizard_gthe4.rxprogdivreset_int ),
         .RXQPIEN(1'b0),
         .RXQPISENN(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_51 ),
         .RXQPISENP(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_52 ),
@@ -8423,7 +5572,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .RXRATEMODE(RXRATE),
         .RXRECCLKOUT(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_54 ),
         .RXRESETDONE(rxresetdone_out),
-        .RXSLIDE(1'b0),
+        .RXSLIDE(rxslide_in),
         .RXSLIDERDY(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_56 ),
         .RXSLIPDONE(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_57 ),
         .RXSLIPOUTCLK(1'b0),
@@ -8437,7 +5586,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .RXSYNCIN(1'b0),
         .RXSYNCMODE(1'b0),
         .RXSYNCOUT(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_61 ),
-        .RXSYSCLKSEL({1'b0,1'b0}),
+        .RXSYSCLKSEL({1'b1,1'b0}),
         .RXTERMINATION(1'b0),
         .RXUSERRDY(\gen_gtwizard_gthe4.rxuserrdy_int ),
         .RXUSRCLK(rxusrclk_in),
@@ -8446,15 +5595,15 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .SIGVALIDCLK(1'b0),
         .TSTIN({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
         .TX8B10BBYPASS({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .TX8B10BEN(tx8b10ben_in),
+        .TX8B10BEN(1'b0),
         .TXBUFSTATUS({\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_315 ,\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_316 }),
         .TXCOMFINISH(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_63 ),
         .TXCOMINIT(1'b0),
         .TXCOMSAS(1'b0),
         .TXCOMWAKE(1'b0),
-        .TXCTRL0(txctrl0_in),
-        .TXCTRL1(txctrl1_in),
-        .TXCTRL2(txctrl2_in),
+        .TXCTRL0({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .TXCTRL1({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .TXCTRL2({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
         .TXDATA({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,gtwiz_userdata_tx_in}),
         .TXDATAEXTENDRSVD({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
         .TXDCCDONE(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_64 ),
@@ -8462,7 +5611,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .TXDCCRESET(1'b0),
         .TXDEEMPH({1'b0,1'b0}),
         .TXDETECTRX(1'b0),
-        .TXDIFFCTRL({1'b1,1'b1,1'b0,1'b0,1'b0}),
+        .TXDIFFCTRL(txdiffctrl_in),
         .TXDLYBYPASS(1'b1),
         .TXDLYEN(1'b0),
         .TXDLYHOLD(1'b0),
@@ -8485,7 +5634,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .TXOUTCLK(txoutclk_out),
         .TXOUTCLKFABRIC(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_67 ),
         .TXOUTCLKPCS(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_68 ),
-        .TXOUTCLKSEL(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_4 ),
+        .TXOUTCLKSEL({1'b0,1'b1,1'b0}),
         .TXPCSRESET(1'b0),
         .TXPD({1'b0,1'b0}),
         .TXPDELECIDLEMODE(1'b0),
@@ -8507,13 +5656,13 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .TXPLLCLKSEL({1'b1,1'b1}),
         .TXPMARESET(1'b0),
         .TXPMARESETDONE(txpmaresetdone_out),
-        .TXPOLARITY(1'b0),
-        .TXPOSTCURSOR({1'b0,1'b0,1'b0,1'b0,1'b0}),
+        .TXPOLARITY(txpolarity_in),
+        .TXPOSTCURSOR(txpostcursor_in),
         .TXPRBSFORCEERR(1'b0),
         .TXPRBSSEL({1'b0,1'b0,1'b0,1'b0}),
-        .TXPRECURSOR({1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .TXPRGDIVRESETDONE(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_2 ),
-        .TXPROGDIVRESET(\gen_gtwizard_gthe4.txprogdivreset_ch_int ),
+        .TXPRECURSOR(txprecursor_in),
+        .TXPRGDIVRESETDONE(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_72 ),
+        .TXPROGDIVRESET(\gen_gtwizard_gthe4.txprogdivreset_int ),
         .TXQPIBIASEN(1'b0),
         .TXQPISENN(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_73 ),
         .TXQPISENP(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_74 ),
@@ -8533,12 +5682,6 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel
         .TXUSERRDY(\gen_gtwizard_gthe4.txuserrdy_int ),
         .TXUSRCLK(txusrclk_in),
         .TXUSRCLK2(txusrclk2_in));
-  LUT2 #(
-    .INIT(4'h2)) 
-    \rxpmaresetdone_out[0]_INST_0 
-       (.I0(\gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_0 ),
-        .I1(cal_on_rx_debug_out),
-        .O(rxpmaresetdone_out));
 endmodule
 
 (* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_gthe4_common" *) 
@@ -8697,7 +5840,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_common
     .COMMON_CFG0(16'h0000),
     .COMMON_CFG1(16'h0000),
     .POR_CFG(16'h0000),
-    .PPF0_CFG(16'h0800),
+    .PPF0_CFG(16'h0600),
     .PPF1_CFG(16'h0600),
     .QPLL0CLKOUT_RATE("HALF"),
     .QPLL0_CFG0(16'h331C),
@@ -8706,10 +5849,10 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_common
     .QPLL0_CFG2(16'h87C3),
     .QPLL0_CFG2_G3(16'h87C3),
     .QPLL0_CFG3(16'h0120),
-    .QPLL0_CFG4(16'h0004),
+    .QPLL0_CFG4(16'h0003),
     .QPLL0_CP(10'b0011111111),
     .QPLL0_CP_G3(10'b0000001111),
-    .QPLL0_FBDIV(96),
+    .QPLL0_FBDIV(80),
     .QPLL0_FBDIV_G3(128),
     .QPLL0_INIT_CFG0(16'h02B2),
     .QPLL0_INIT_CFG1(8'h00),
@@ -8855,4223 +5998,6 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_common
     rst_in_meta_i_1__4
        (.I0(qpll0lock_out),
         .O(rst_in0));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal
-   (\gen_gtwizard_gthe4.txprogdivreset_ch_int ,
-    i_in_out_reg,
-    \gen_cal_rx_en.cal_fail_store__0 ,
-    cal_on_rx_reset_in_sync,
-    \gen_gtwizard_gthe4.cpllpd_ch_int ,
-    \gen_gtwizard_gthe4.cpllreset_ch_int ,
-    \gen_cal_rx_en.wr ,
-    \gen_cal_rx_en.rd ,
-    \gen_cal_rx_en.status_store_reg ,
-    \gen_cal_rx_en.USER_CPLLLOCK_OUT_reg ,
-    \gen_cal_rx_en.rxprogdivreset_int ,
-    cal_on_rx_drpen_out,
-    cal_on_rx_drpwe_out,
-    \gen_cal_rx_en.gtrxreset_int ,
-    \gen_cal_rx_en.rxcdrhold_int ,
-    Q,
-    \gen_cal_rx_en.wait_ctr_reg[14] ,
-    \gen_cal_rx_en.wait_ctr_reg[5] ,
-    \gen_cal_rx_en.cpll_cal_state_reg[17] ,
-    \gen_cal_rx_en.drp_state_reg[6] ,
-    \gen_cal_rx_en.repeat_ctr_reg[3] ,
-    \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0 ,
-    \gen_cal_rx_en.cpll_cal_state_reg[18] ,
-    RXOUTCLKSEL,
-    \gen_gtwizard_gthe4.rxprogdivreset_ch_int ,
-    \gen_gtwizard_gthe4.gtrxreset_ch_int ,
-    \gen_gtwizard_gthe4.rxcdrhold_ch_int ,
-    \non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[2] ,
-    DO_USR_O,
-    DEN_O,
-    DWE_O,
-    DADDR_O,
-    DI_O,
-    in0,
-    i_in_meta_reg,
-    i_in_meta_reg_0,
-    txoutclk_out,
-    gtwiz_userclk_tx_reset_in,
-    drpclk_in,
-    i_in_meta_reg_1,
-    i_in_meta_reg_2,
-    rxoutclk_out,
-    gtwiz_userclk_rx_reset_in,
-    \gen_cal_rx_en.cal_fail_store_reg ,
-    \gen_cal_rx_en.freq_counter_rst_reg ,
-    \gen_cal_rx_en.mask_user_in_reg ,
-    \gen_cal_rx_en.wr_reg ,
-    \gen_cal_rx_en.rd_reg ,
-    \gen_cal_rx_en.status_store_reg_0 ,
-    \gen_cal_rx_en.rxprogdivreset_int_reg ,
-    \gen_cal_rx_en.den_reg ,
-    \gen_cal_rx_en.dwe_reg ,
-    \gen_cal_rx_en.gtrxreset_int_reg ,
-    \gen_cal_rx_en.rxcdrhold_int_reg ,
-    \gen_gtwizard_gthe4.rxprogdivreset_int ,
-    \gen_gtwizard_gthe4.gtrxreset_int ,
-    out,
-    \gen_gtwizard_gthe4.gtpowergood_int ,
-    cal_on_rx_reset_in,
-    DO_I,
-    \gen_gtwizard_gthe4.drprdy_int ,
-    lopt,
-    lopt_1,
-    lopt_2,
-    lopt_3,
-    lopt_4,
-    lopt_5);
-  output \gen_gtwizard_gthe4.txprogdivreset_ch_int ;
-  output [2:0]i_in_out_reg;
-  output \gen_cal_rx_en.cal_fail_store__0 ;
-  output cal_on_rx_reset_in_sync;
-  output \gen_gtwizard_gthe4.cpllpd_ch_int ;
-  output \gen_gtwizard_gthe4.cpllreset_ch_int ;
-  output \gen_cal_rx_en.wr ;
-  output \gen_cal_rx_en.rd ;
-  output \gen_cal_rx_en.status_store_reg ;
-  output \gen_cal_rx_en.USER_CPLLLOCK_OUT_reg ;
-  output \gen_cal_rx_en.rxprogdivreset_int ;
-  output cal_on_rx_drpen_out;
-  output cal_on_rx_drpwe_out;
-  output \gen_cal_rx_en.gtrxreset_int ;
-  output \gen_cal_rx_en.rxcdrhold_int ;
-  output [16:0]Q;
-  output \gen_cal_rx_en.wait_ctr_reg[14] ;
-  output \gen_cal_rx_en.wait_ctr_reg[5] ;
-  output \gen_cal_rx_en.cpll_cal_state_reg[17] ;
-  output [4:0]\gen_cal_rx_en.drp_state_reg[6] ;
-  output \gen_cal_rx_en.repeat_ctr_reg[3] ;
-  output \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0 ;
-  output \gen_cal_rx_en.cpll_cal_state_reg[18] ;
-  output [1:0]RXOUTCLKSEL;
-  output \gen_gtwizard_gthe4.rxprogdivreset_ch_int ;
-  output \gen_gtwizard_gthe4.gtrxreset_ch_int ;
-  output \gen_gtwizard_gthe4.rxcdrhold_ch_int ;
-  output [2:0]\non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[2] ;
-  output [0:0]DO_USR_O;
-  output DEN_O;
-  output DWE_O;
-  output [2:0]DADDR_O;
-  output [15:0]DI_O;
-  input in0;
-  input i_in_meta_reg;
-  input i_in_meta_reg_0;
-  input [0:0]txoutclk_out;
-  input [0:0]gtwiz_userclk_tx_reset_in;
-  input [0:0]drpclk_in;
-  input i_in_meta_reg_1;
-  input i_in_meta_reg_2;
-  input [0:0]rxoutclk_out;
-  input [0:0]gtwiz_userclk_rx_reset_in;
-  input \gen_cal_rx_en.cal_fail_store_reg ;
-  input \gen_cal_rx_en.freq_counter_rst_reg ;
-  input \gen_cal_rx_en.mask_user_in_reg ;
-  input \gen_cal_rx_en.wr_reg ;
-  input \gen_cal_rx_en.rd_reg ;
-  input \gen_cal_rx_en.status_store_reg_0 ;
-  input \gen_cal_rx_en.rxprogdivreset_int_reg ;
-  input \gen_cal_rx_en.den_reg ;
-  input \gen_cal_rx_en.dwe_reg ;
-  input \gen_cal_rx_en.gtrxreset_int_reg ;
-  input \gen_cal_rx_en.rxcdrhold_int_reg ;
-  input \gen_gtwizard_gthe4.rxprogdivreset_int ;
-  input \gen_gtwizard_gthe4.gtrxreset_int ;
-  input out;
-  input \gen_gtwizard_gthe4.gtpowergood_int ;
-  input cal_on_rx_reset_in;
-  input [15:0]DO_I;
-  input \gen_gtwizard_gthe4.drprdy_int ;
-  output lopt;
-  input lopt_1;
-  input lopt_2;
-  output lopt_3;
-  input lopt_4;
-  input lopt_5;
-
-  wire [2:0]DADDR_O;
-  wire DEN_O;
-  wire [15:0]DI_O;
-  wire [15:0]DO_I;
-  wire [0:0]DO_USR_O;
-  wire DWE_O;
-  wire [16:0]Q;
-  wire [1:0]RXOUTCLKSEL;
-  wire [14:0]cal_on_rx_dout;
-  wire cal_on_rx_drdy;
-  wire [8:2]cal_on_rx_drpaddr_out;
-  wire [15:0]cal_on_rx_drpdi_out;
-  wire cal_on_rx_drpen_out;
-  wire cal_on_rx_drpwe_out;
-  wire cal_on_rx_reset_in;
-  wire cal_on_rx_reset_in_sync;
-  wire [0:0]drpclk_in;
-  wire drprst_in_sync;
-  wire \gen_cal_rx_en.USER_CPLLLOCK_OUT_reg ;
-  wire \gen_cal_rx_en.cal_fail_store__0 ;
-  wire \gen_cal_rx_en.cal_fail_store_reg ;
-  wire \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0 ;
-  wire \gen_cal_rx_en.cpll_cal_state_reg[17] ;
-  wire \gen_cal_rx_en.cpll_cal_state_reg[18] ;
-  wire \gen_cal_rx_en.den_reg ;
-  wire [4:0]\gen_cal_rx_en.drp_state_reg[6] ;
-  wire \gen_cal_rx_en.dwe_reg ;
-  wire \gen_cal_rx_en.freq_counter_rst_reg ;
-  wire \gen_cal_rx_en.gtrxreset_int ;
-  wire \gen_cal_rx_en.gtrxreset_int_reg ;
-  wire \gen_cal_rx_en.mask_user_in_reg ;
-  wire \gen_cal_rx_en.rd ;
-  wire \gen_cal_rx_en.rd_reg ;
-  wire \gen_cal_rx_en.repeat_ctr_reg[3] ;
-  wire \gen_cal_rx_en.rxcdrhold_int ;
-  wire \gen_cal_rx_en.rxcdrhold_int_reg ;
-  wire \gen_cal_rx_en.rxprogdivreset_int ;
-  wire \gen_cal_rx_en.rxprogdivreset_int_reg ;
-  wire \gen_cal_rx_en.status_store_reg ;
-  wire \gen_cal_rx_en.status_store_reg_0 ;
-  wire \gen_cal_rx_en.wait_ctr_reg[14] ;
-  wire \gen_cal_rx_en.wait_ctr_reg[5] ;
-  wire \gen_cal_rx_en.wr ;
-  wire \gen_cal_rx_en.wr_reg ;
-  wire \gen_gtwizard_gthe4.cpllpd_ch_int ;
-  wire \gen_gtwizard_gthe4.cpllreset_ch_int ;
-  wire \gen_gtwizard_gthe4.drprdy_int ;
-  wire \gen_gtwizard_gthe4.gtpowergood_int ;
-  wire \gen_gtwizard_gthe4.gtrxreset_ch_int ;
-  wire \gen_gtwizard_gthe4.gtrxreset_int ;
-  wire \gen_gtwizard_gthe4.rxcdrhold_ch_int ;
-  wire \gen_gtwizard_gthe4.rxprogdivreset_ch_int ;
-  wire \gen_gtwizard_gthe4.rxprogdivreset_int ;
-  wire \gen_gtwizard_gthe4.txprogdivreset_ch_int ;
-  wire [0:0]gtwiz_userclk_rx_reset_in;
-  wire [0:0]gtwiz_userclk_tx_reset_in;
-  wire i_in_meta_reg;
-  wire i_in_meta_reg_0;
-  wire i_in_meta_reg_1;
-  wire i_in_meta_reg_2;
-  wire [2:0]i_in_out_reg;
-  wire in0;
-  wire lopt;
-  wire lopt_1;
-  wire lopt_2;
-  wire lopt_3;
-  wire lopt_4;
-  wire lopt_5;
-  wire [2:0]\non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[2] ;
-  wire out;
-  wire [0:0]rxoutclk_out;
-  wire [0:0]txoutclk_out;
-
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_19 bit_synchronizer_drprst_inst
-       (.drpclk_in(drpclk_in),
-        .drprst_in_sync(drprst_in_sync));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gte4_drp_arb gtwizard_ultrascale_v1_7_19_gte4_drp_arb_i
-       (.DADDR_O(DADDR_O),
-        .DEN_O(DEN_O),
-        .DI_O(DI_O),
-        .DO_I(DO_I),
-        .DWE_O(DWE_O),
-        .Q({DO_USR_O,cal_on_rx_dout}),
-        .\addr_i_reg[18]_0 (cal_on_rx_drpen_out),
-        .\addr_i_reg[18]_1 ({cal_on_rx_drpaddr_out[8:7],cal_on_rx_drpaddr_out[2]}),
-        .cal_on_rx_drdy(cal_on_rx_drdy),
-        .cal_on_rx_drpwe_out(cal_on_rx_drpwe_out),
-        .\data_i_reg[31]_0 (cal_on_rx_drpdi_out),
-        .drpclk_in(drpclk_in),
-        .drprst_in_sync(drprst_in_sync),
-        .\gen_gtwizard_gthe4.drprdy_int (\gen_gtwizard_gthe4.drprdy_int ));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i
-       (.AS(i_in_out_reg[1]),
-        .Q(Q),
-        .RXOUTCLKSEL(RXOUTCLKSEL),
-        .SS(cal_on_rx_reset_in_sync),
-        .cal_on_rx_drdy(cal_on_rx_drdy),
-        .cal_on_rx_drpen_out(cal_on_rx_drpen_out),
-        .cal_on_rx_drpwe_out(cal_on_rx_drpwe_out),
-        .drpclk_in(drpclk_in),
-        .\gen_cal_rx_en.USER_CPLLLOCK_OUT_reg_0 (\gen_cal_rx_en.USER_CPLLLOCK_OUT_reg ),
-        .\gen_cal_rx_en.cal_fail_store__0 (\gen_cal_rx_en.cal_fail_store__0 ),
-        .\gen_cal_rx_en.cal_fail_store_reg_0 (\gen_cal_rx_en.cal_fail_store_reg ),
-        .\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0_0 (\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0 ),
-        .\gen_cal_rx_en.cpll_cal_state_reg[17]_0 (\gen_cal_rx_en.cpll_cal_state_reg[17] ),
-        .\gen_cal_rx_en.cpll_cal_state_reg[18]_0 (\gen_cal_rx_en.cpll_cal_state_reg[18] ),
-        .\gen_cal_rx_en.daddr_reg[8]_0 ({cal_on_rx_drpaddr_out[8:7],cal_on_rx_drpaddr_out[2]}),
-        .\gen_cal_rx_en.den_reg_0 (\gen_cal_rx_en.den_reg ),
-        .\gen_cal_rx_en.di_reg[15]_0 (cal_on_rx_drpdi_out),
-        .\gen_cal_rx_en.drp_state_reg[6]_0 (\gen_cal_rx_en.drp_state_reg[6] ),
-        .\gen_cal_rx_en.dwe_reg_0 (\gen_cal_rx_en.dwe_reg ),
-        .\gen_cal_rx_en.freq_counter_rst_reg_0 (\gen_cal_rx_en.freq_counter_rst_reg ),
-        .\gen_cal_rx_en.gtrxreset_int (\gen_cal_rx_en.gtrxreset_int ),
-        .\gen_cal_rx_en.gtrxreset_int_reg_0 (\gen_cal_rx_en.gtrxreset_int_reg ),
-        .\gen_cal_rx_en.mask_user_in_reg_0 (\gen_cal_rx_en.mask_user_in_reg ),
-        .\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 ({DO_USR_O,cal_on_rx_dout}),
-        .\gen_cal_rx_en.rd_reg_0 (\gen_cal_rx_en.rd ),
-        .\gen_cal_rx_en.rd_reg_1 (\gen_cal_rx_en.rd_reg ),
-        .\gen_cal_rx_en.repeat_ctr_reg[3]_0 (\gen_cal_rx_en.repeat_ctr_reg[3] ),
-        .\gen_cal_rx_en.rxcdrhold_int (\gen_cal_rx_en.rxcdrhold_int ),
-        .\gen_cal_rx_en.rxcdrhold_int_reg_0 (\gen_cal_rx_en.rxcdrhold_int_reg ),
-        .\gen_cal_rx_en.rxprogdivreset_int (\gen_cal_rx_en.rxprogdivreset_int ),
-        .\gen_cal_rx_en.rxprogdivreset_int_reg_0 (\gen_cal_rx_en.rxprogdivreset_int_reg ),
-        .\gen_cal_rx_en.status_store_reg_0 (\gen_cal_rx_en.status_store_reg ),
-        .\gen_cal_rx_en.status_store_reg_1 (\gen_cal_rx_en.status_store_reg_0 ),
-        .\gen_cal_rx_en.wait_ctr_reg[14]_0 (\gen_cal_rx_en.wait_ctr_reg[14] ),
-        .\gen_cal_rx_en.wait_ctr_reg[5]_0 (\gen_cal_rx_en.wait_ctr_reg[5] ),
-        .\gen_cal_rx_en.wr (\gen_cal_rx_en.wr ),
-        .\gen_cal_rx_en.wr_reg_0 (\gen_cal_rx_en.wr_reg ),
-        .\gen_gtwizard_gthe4.cpllpd_ch_int (\gen_gtwizard_gthe4.cpllpd_ch_int ),
-        .\gen_gtwizard_gthe4.cpllreset_ch_int (\gen_gtwizard_gthe4.cpllreset_ch_int ),
-        .\gen_gtwizard_gthe4.gtpowergood_int (\gen_gtwizard_gthe4.gtpowergood_int ),
-        .\gen_gtwizard_gthe4.gtrxreset_ch_int (\gen_gtwizard_gthe4.gtrxreset_ch_int ),
-        .\gen_gtwizard_gthe4.gtrxreset_int (\gen_gtwizard_gthe4.gtrxreset_int ),
-        .\gen_gtwizard_gthe4.rxcdrhold_ch_int (\gen_gtwizard_gthe4.rxcdrhold_ch_int ),
-        .\gen_gtwizard_gthe4.rxprogdivreset_ch_int (\gen_gtwizard_gthe4.rxprogdivreset_ch_int ),
-        .\gen_gtwizard_gthe4.rxprogdivreset_int (\gen_gtwizard_gthe4.rxprogdivreset_int ),
-        .gtwiz_userclk_rx_reset_in(gtwiz_userclk_rx_reset_in),
-        .i_in_meta_reg(i_in_meta_reg_1),
-        .i_in_meta_reg_0(i_in_meta_reg_2),
-        .i_in_out_reg({i_in_out_reg[2],i_in_out_reg[0]}),
-        .in0(in0),
-        .lopt(lopt),
-        .lopt_1(lopt_1),
-        .lopt_2(lopt_2),
-        .out(out),
-        .rxoutclk_out(rxoutclk_out));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_tx gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_tx_i
-       (.drpclk_in(drpclk_in),
-        .\gen_gtwizard_gthe4.txprogdivreset_ch_int (\gen_gtwizard_gthe4.txprogdivreset_ch_int ),
-        .gtwiz_userclk_tx_reset_in(gtwiz_userclk_tx_reset_in),
-        .i_in_meta_reg(i_in_meta_reg),
-        .i_in_meta_reg_0(i_in_meta_reg_0),
-        .in0(in0),
-        .lopt(lopt_3),
-        .lopt_1(lopt_4),
-        .lopt_2(lopt_5),
-        .\non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[2]_0 (\non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[2] ),
-        .txoutclk_out(txoutclk_out));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_20 reset_synchronizer_resetin_rx_inst
-       (.cal_on_rx_reset_in(cal_on_rx_reset_in),
-        .cal_on_rx_reset_in_sync(cal_on_rx_reset_in_sync),
-        .drpclk_in(drpclk_in));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_21 reset_synchronizer_resetin_tx_inst
-       (.drpclk_in(drpclk_in));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_freq_counter" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_freq_counter
-   (txoutclkmon,
-    drpclk_in);
-  input txoutclkmon;
-  input [0:0]drpclk_in;
-
-  wire clear;
-  wire [0:0]drpclk_in;
-  wire \hold_clk[5]_i_1_n_0 ;
-  wire [5:0]hold_clk_reg;
-  wire [5:0]p_0_in;
-  wire [15:0]p_0_in__0;
-  wire refclk_cnt0_carry__0_n_2;
-  wire refclk_cnt0_carry__0_n_3;
-  wire refclk_cnt0_carry__0_n_4;
-  wire refclk_cnt0_carry__0_n_5;
-  wire refclk_cnt0_carry__0_n_6;
-  wire refclk_cnt0_carry__0_n_7;
-  wire refclk_cnt0_carry_n_0;
-  wire refclk_cnt0_carry_n_1;
-  wire refclk_cnt0_carry_n_2;
-  wire refclk_cnt0_carry_n_3;
-  wire refclk_cnt0_carry_n_4;
-  wire refclk_cnt0_carry_n_5;
-  wire refclk_cnt0_carry_n_6;
-  wire refclk_cnt0_carry_n_7;
-  wire [15:0]refclk_cnt_reg;
-  wire \state[0]_i_1_n_0 ;
-  wire \state[1]_i_1_n_0 ;
-  wire \state[1]_i_2_n_0 ;
-  wire \state[2]_i_1_n_0 ;
-  wire \state[2]_i_2_n_0 ;
-  wire \state[2]_i_3_n_0 ;
-  wire \state[2]_i_4_n_0 ;
-  wire \state[2]_i_5_n_0 ;
-  wire \state_reg_n_0_[2] ;
-  wire testclk_en;
-  (* async_reg = "true" *) wire testclk_en_dly1;
-  (* async_reg = "true" *) wire testclk_en_dly2;
-  wire testclk_rst;
-  (* async_reg = "true" *) wire tstclk_rst_dly1;
-  (* async_reg = "true" *) wire tstclk_rst_dly2;
-  wire txoutclkmon;
-  wire [7:6]NLW_refclk_cnt0_carry__0_CO_UNCONNECTED;
-  wire [7:7]NLW_refclk_cnt0_carry__0_O_UNCONNECTED;
-
-  LUT1 #(
-    .INIT(2'h1)) 
-    \hold_clk[0]_i_1 
-       (.I0(hold_clk_reg[0]),
-        .O(p_0_in[0]));
-  (* SOFT_HLUTNM = "soft_lutpair52" *) 
-  LUT2 #(
-    .INIT(4'h6)) 
-    \hold_clk[1]_i_1 
-       (.I0(hold_clk_reg[0]),
-        .I1(hold_clk_reg[1]),
-        .O(p_0_in[1]));
-  (* SOFT_HLUTNM = "soft_lutpair52" *) 
-  LUT3 #(
-    .INIT(8'h78)) 
-    \hold_clk[2]_i_1 
-       (.I0(hold_clk_reg[0]),
-        .I1(hold_clk_reg[1]),
-        .I2(hold_clk_reg[2]),
-        .O(p_0_in[2]));
-  (* SOFT_HLUTNM = "soft_lutpair51" *) 
-  LUT4 #(
-    .INIT(16'h7F80)) 
-    \hold_clk[3]_i_1 
-       (.I0(hold_clk_reg[1]),
-        .I1(hold_clk_reg[0]),
-        .I2(hold_clk_reg[2]),
-        .I3(hold_clk_reg[3]),
-        .O(p_0_in[3]));
-  (* SOFT_HLUTNM = "soft_lutpair51" *) 
-  LUT5 #(
-    .INIT(32'h7FFF8000)) 
-    \hold_clk[4]_i_1 
-       (.I0(hold_clk_reg[2]),
-        .I1(hold_clk_reg[0]),
-        .I2(hold_clk_reg[1]),
-        .I3(hold_clk_reg[3]),
-        .I4(hold_clk_reg[4]),
-        .O(p_0_in[4]));
-  LUT2 #(
-    .INIT(4'h1)) 
-    \hold_clk[5]_i_1 
-       (.I0(testclk_rst),
-        .I1(\state_reg_n_0_[2] ),
-        .O(\hold_clk[5]_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h7FFFFFFF80000000)) 
-    \hold_clk[5]_i_2 
-       (.I0(hold_clk_reg[3]),
-        .I1(hold_clk_reg[1]),
-        .I2(hold_clk_reg[0]),
-        .I3(hold_clk_reg[2]),
-        .I4(hold_clk_reg[4]),
-        .I5(hold_clk_reg[5]),
-        .O(p_0_in[5]));
-  FDRE #(
-    .INIT(1'b0)) 
-    \hold_clk_reg[0] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in[0]),
-        .Q(hold_clk_reg[0]),
-        .R(\hold_clk[5]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \hold_clk_reg[1] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in[1]),
-        .Q(hold_clk_reg[1]),
-        .R(\hold_clk[5]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \hold_clk_reg[2] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in[2]),
-        .Q(hold_clk_reg[2]),
-        .R(\hold_clk[5]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \hold_clk_reg[3] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in[3]),
-        .Q(hold_clk_reg[3]),
-        .R(\hold_clk[5]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \hold_clk_reg[4] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in[4]),
-        .Q(hold_clk_reg[4]),
-        .R(\hold_clk[5]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \hold_clk_reg[5] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in[5]),
-        .Q(hold_clk_reg[5]),
-        .R(\hold_clk[5]_i_1_n_0 ));
-  (* ADDER_THRESHOLD = "35" *) 
-  CARRY8 refclk_cnt0_carry
-       (.CI(refclk_cnt_reg[0]),
-        .CI_TOP(1'b0),
-        .CO({refclk_cnt0_carry_n_0,refclk_cnt0_carry_n_1,refclk_cnt0_carry_n_2,refclk_cnt0_carry_n_3,refclk_cnt0_carry_n_4,refclk_cnt0_carry_n_5,refclk_cnt0_carry_n_6,refclk_cnt0_carry_n_7}),
-        .DI({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .O(p_0_in__0[8:1]),
-        .S(refclk_cnt_reg[8:1]));
-  (* ADDER_THRESHOLD = "35" *) 
-  CARRY8 refclk_cnt0_carry__0
-       (.CI(refclk_cnt0_carry_n_0),
-        .CI_TOP(1'b0),
-        .CO({NLW_refclk_cnt0_carry__0_CO_UNCONNECTED[7:6],refclk_cnt0_carry__0_n_2,refclk_cnt0_carry__0_n_3,refclk_cnt0_carry__0_n_4,refclk_cnt0_carry__0_n_5,refclk_cnt0_carry__0_n_6,refclk_cnt0_carry__0_n_7}),
-        .DI({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .O({NLW_refclk_cnt0_carry__0_O_UNCONNECTED[7],p_0_in__0[15:9]}),
-        .S({1'b0,refclk_cnt_reg[15:9]}));
-  LUT1 #(
-    .INIT(2'h1)) 
-    \refclk_cnt[0]_i_1 
-       (.I0(refclk_cnt_reg[0]),
-        .O(p_0_in__0[0]));
-  LUT1 #(
-    .INIT(2'h1)) 
-    \refclk_cnt[15]_i_1 
-       (.I0(testclk_en),
-        .O(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[0] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[0]),
-        .Q(refclk_cnt_reg[0]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[10] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[10]),
-        .Q(refclk_cnt_reg[10]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[11] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[11]),
-        .Q(refclk_cnt_reg[11]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[12] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[12]),
-        .Q(refclk_cnt_reg[12]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[13] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[13]),
-        .Q(refclk_cnt_reg[13]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[14] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[14]),
-        .Q(refclk_cnt_reg[14]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[15] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[15]),
-        .Q(refclk_cnt_reg[15]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[1] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[1]),
-        .Q(refclk_cnt_reg[1]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[2] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[2]),
-        .Q(refclk_cnt_reg[2]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[3] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[3]),
-        .Q(refclk_cnt_reg[3]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[4] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[4]),
-        .Q(refclk_cnt_reg[4]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[5] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[5]),
-        .Q(refclk_cnt_reg[5]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[6] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[6]),
-        .Q(refclk_cnt_reg[6]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[7] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[7]),
-        .Q(refclk_cnt_reg[7]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[8] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[8]),
-        .Q(refclk_cnt_reg[8]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[9] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__0[9]),
-        .Q(refclk_cnt_reg[9]),
-        .R(clear));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_28 reset_synchronizer_testclk_rst_inst
-       (.out(testclk_rst),
-        .txoutclkmon(txoutclkmon));
-  LUT2 #(
-    .INIT(4'h8)) 
-    \state[0]_i_1 
-       (.I0(testclk_rst),
-        .I1(\state[1]_i_2_n_0 ),
-        .O(\state[0]_i_1_n_0 ));
-  LUT4 #(
-    .INIT(16'h4F44)) 
-    \state[1]_i_1 
-       (.I0(\state[1]_i_2_n_0 ),
-        .I1(testclk_rst),
-        .I2(\state[2]_i_2_n_0 ),
-        .I3(testclk_en),
-        .O(\state[1]_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h7FFFFFFFFFFFFFFF)) 
-    \state[1]_i_2 
-       (.I0(hold_clk_reg[5]),
-        .I1(hold_clk_reg[4]),
-        .I2(hold_clk_reg[1]),
-        .I3(hold_clk_reg[0]),
-        .I4(hold_clk_reg[3]),
-        .I5(hold_clk_reg[2]),
-        .O(\state[1]_i_2_n_0 ));
-  LUT4 #(
-    .INIT(16'hF888)) 
-    \state[2]_i_1 
-       (.I0(\state[2]_i_2_n_0 ),
-        .I1(testclk_en),
-        .I2(\state[2]_i_3_n_0 ),
-        .I3(\state_reg_n_0_[2] ),
-        .O(\state[2]_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h0000000000000020)) 
-    \state[2]_i_2 
-       (.I0(refclk_cnt_reg[13]),
-        .I1(refclk_cnt_reg[14]),
-        .I2(refclk_cnt_reg[12]),
-        .I3(refclk_cnt_reg[15]),
-        .I4(\state[2]_i_4_n_0 ),
-        .I5(\state[2]_i_5_n_0 ),
-        .O(\state[2]_i_2_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFF7FFFFFFFFFFFF)) 
-    \state[2]_i_3 
-       (.I0(hold_clk_reg[0]),
-        .I1(hold_clk_reg[1]),
-        .I2(hold_clk_reg[4]),
-        .I3(hold_clk_reg[5]),
-        .I4(hold_clk_reg[3]),
-        .I5(hold_clk_reg[2]),
-        .O(\state[2]_i_3_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFFFFFFFFFFFFE)) 
-    \state[2]_i_4 
-       (.I0(refclk_cnt_reg[0]),
-        .I1(refclk_cnt_reg[1]),
-        .I2(refclk_cnt_reg[2]),
-        .I3(refclk_cnt_reg[3]),
-        .I4(refclk_cnt_reg[4]),
-        .I5(refclk_cnt_reg[5]),
-        .O(\state[2]_i_4_n_0 ));
-  LUT6 #(
-    .INIT(64'hFBFFFFFFFFFFFFFF)) 
-    \state[2]_i_5 
-       (.I0(refclk_cnt_reg[6]),
-        .I1(refclk_cnt_reg[7]),
-        .I2(refclk_cnt_reg[8]),
-        .I3(refclk_cnt_reg[10]),
-        .I4(refclk_cnt_reg[11]),
-        .I5(refclk_cnt_reg[9]),
-        .O(\state[2]_i_5_n_0 ));
-  FDPE #(
-    .INIT(1'b1)) 
-    \state_reg[0] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\state[0]_i_1_n_0 ),
-        .PRE(1'b1),
-        .Q(testclk_rst));
-  FDCE #(
-    .INIT(1'b0)) 
-    \state_reg[1] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .CLR(1'b1),
-        .D(\state[1]_i_1_n_0 ),
-        .Q(testclk_en));
-  FDCE #(
-    .INIT(1'b0)) 
-    \state_reg[2] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .CLR(1'b1),
-        .D(\state[2]_i_1_n_0 ),
-        .Q(\state_reg_n_0_[2] ));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE testclk_en_dly1_reg
-       (.C(txoutclkmon),
-        .CE(1'b1),
-        .D(testclk_en),
-        .Q(testclk_en_dly1),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE testclk_en_dly2_reg
-       (.C(txoutclkmon),
-        .CE(1'b1),
-        .D(testclk_en_dly1),
-        .Q(testclk_en_dly2),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE tstclk_rst_dly1_reg
-       (.C(txoutclkmon),
-        .CE(1'b1),
-        .D(testclk_rst),
-        .Q(tstclk_rst_dly1),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE tstclk_rst_dly2_reg
-       (.C(txoutclkmon),
-        .CE(1'b1),
-        .D(tstclk_rst_dly1),
-        .Q(tstclk_rst_dly2),
-        .R(1'b0));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_freq_counter" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_freq_counter_29
-   (rst_in_out_reg,
-    D,
-    \gen_cal_rx_en.repeat_ctr_reg[3] ,
-    \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0 ,
-    DI,
-    \freq_cnt_o_reg[15]_0 ,
-    S,
-    \freq_cnt_o_reg[13]_0 ,
-    \freq_cnt_o_reg[0]_0 ,
-    \freq_cnt_o_reg[14]_0 ,
-    \freq_cnt_o_reg[17]_0 ,
-    \freq_cnt_o_reg[16]_0 ,
-    \gen_cal_rx_en.cal_fail_store_reg ,
-    drpclk_in,
-    AR,
-    \gen_cal_rx_en.rxoutclkmon ,
-    SS,
-    CO,
-    \gen_cal_rx_en.repeat_ctr_reg[3]_0 ,
-    \gen_cal_rx_en.repeat_ctr_reg[3]_1 ,
-    Q,
-    \gen_cal_rx_en.cpll_cal_state_reg[20] ,
-    \gen_cal_rx_en.cal_fail_store_reg_0 ,
-    \gen_cal_rx_en.cpll_cal_state_reg[8] ,
-    \gen_cal_rx_en.gthe4_rxprgdivresetdone_sync );
-  output rst_in_out_reg;
-  output [2:0]D;
-  output \gen_cal_rx_en.repeat_ctr_reg[3] ;
-  output \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0 ;
-  output [3:0]DI;
-  output [0:0]\freq_cnt_o_reg[15]_0 ;
-  output [7:0]S;
-  output [5:0]\freq_cnt_o_reg[13]_0 ;
-  output \freq_cnt_o_reg[0]_0 ;
-  output [7:0]\freq_cnt_o_reg[14]_0 ;
-  output [0:0]\freq_cnt_o_reg[17]_0 ;
-  output [0:0]\freq_cnt_o_reg[16]_0 ;
-  input [3:0]\gen_cal_rx_en.cal_fail_store_reg ;
-  input [0:0]drpclk_in;
-  input [0:0]AR;
-  input \gen_cal_rx_en.rxoutclkmon ;
-  input [0:0]SS;
-  input [0:0]CO;
-  input [0:0]\gen_cal_rx_en.repeat_ctr_reg[3]_0 ;
-  input \gen_cal_rx_en.repeat_ctr_reg[3]_1 ;
-  input [5:0]Q;
-  input [0:0]\gen_cal_rx_en.cpll_cal_state_reg[20] ;
-  input \gen_cal_rx_en.cal_fail_store_reg_0 ;
-  input \gen_cal_rx_en.cpll_cal_state_reg[8] ;
-  input \gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ;
-
-  wire [0:0]AR;
-  wire [0:0]CO;
-  wire [2:0]D;
-  wire [3:0]DI;
-  wire [5:0]Q;
-  wire [7:0]S;
-  wire [0:0]SS;
-  wire [17:0]cal_on_rx_cal_freq_cnt;
-  wire [11:11]cal_on_rx_debug_out;
-  wire clear;
-  wire [0:0]drpclk_in;
-  wire \freq_cnt_o[17]_i_1_n_0 ;
-  wire \freq_cnt_o_reg[0]_0 ;
-  wire [5:0]\freq_cnt_o_reg[13]_0 ;
-  wire [7:0]\freq_cnt_o_reg[14]_0 ;
-  wire [0:0]\freq_cnt_o_reg[15]_0 ;
-  wire [0:0]\freq_cnt_o_reg[16]_0 ;
-  wire [0:0]\freq_cnt_o_reg[17]_0 ;
-  wire [3:0]\gen_cal_rx_en.cal_fail_store_reg ;
-  wire \gen_cal_rx_en.cal_fail_store_reg_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[20]_i_2_n_0 ;
-  wire [0:0]\gen_cal_rx_en.cpll_cal_state_reg[20] ;
-  wire \gen_cal_rx_en.cpll_cal_state_reg[8] ;
-  wire \gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ;
-  wire \gen_cal_rx_en.repeat_ctr[3]_i_4_n_0 ;
-  wire \gen_cal_rx_en.repeat_ctr_reg[3] ;
-  wire [0:0]\gen_cal_rx_en.repeat_ctr_reg[3]_0 ;
-  wire \gen_cal_rx_en.repeat_ctr_reg[3]_1 ;
-  wire \gen_cal_rx_en.rxoutclkmon ;
-  wire \hold_clk[2]_i_1__0_n_0 ;
-  wire \hold_clk[5]_i_1__0_n_0 ;
-  wire [5:0]hold_clk_reg;
-  wire [5:0]p_0_in__1;
-  wire [15:1]p_0_in__2;
-  wire p_1_in;
-  wire refclk_cnt0_carry__0_n_2;
-  wire refclk_cnt0_carry__0_n_3;
-  wire refclk_cnt0_carry__0_n_4;
-  wire refclk_cnt0_carry__0_n_5;
-  wire refclk_cnt0_carry__0_n_6;
-  wire refclk_cnt0_carry__0_n_7;
-  wire refclk_cnt0_carry_n_0;
-  wire refclk_cnt0_carry_n_1;
-  wire refclk_cnt0_carry_n_2;
-  wire refclk_cnt0_carry_n_3;
-  wire refclk_cnt0_carry_n_4;
-  wire refclk_cnt0_carry_n_5;
-  wire refclk_cnt0_carry_n_6;
-  wire refclk_cnt0_carry_n_7;
-  wire \refclk_cnt[0]_i_1__0_n_0 ;
-  wire [15:0]refclk_cnt_reg;
-  wire rst_in_out;
-  wire rst_in_out_reg;
-  wire \state[0]_i_1__0_n_0 ;
-  wire \state[1]_i_1__0_n_0 ;
-  wire \state[1]_i_2__0_n_0 ;
-  wire \state[2]_i_1__0_n_0 ;
-  wire \state[2]_i_2__0_n_0 ;
-  wire \state[2]_i_3__0_n_0 ;
-  wire \state[2]_i_4__0_n_0 ;
-  wire \state[2]_i_5__0_n_0 ;
-  wire \state[3]_i_1_n_0 ;
-  wire \state[3]_i_2_n_0 ;
-  wire \state[4]_i_1_n_0 ;
-  wire \state_reg_n_0_[2] ;
-  wire \state_reg_n_0_[4] ;
-  wire testclk_cnt0_n_0;
-  wire \testclk_cnt[0]_i_2_n_0 ;
-  wire [17:0]testclk_cnt_reg;
-  wire \testclk_cnt_reg[0]_i_1_n_0 ;
-  wire \testclk_cnt_reg[0]_i_1_n_1 ;
-  wire \testclk_cnt_reg[0]_i_1_n_10 ;
-  wire \testclk_cnt_reg[0]_i_1_n_11 ;
-  wire \testclk_cnt_reg[0]_i_1_n_12 ;
-  wire \testclk_cnt_reg[0]_i_1_n_13 ;
-  wire \testclk_cnt_reg[0]_i_1_n_14 ;
-  wire \testclk_cnt_reg[0]_i_1_n_15 ;
-  wire \testclk_cnt_reg[0]_i_1_n_2 ;
-  wire \testclk_cnt_reg[0]_i_1_n_3 ;
-  wire \testclk_cnt_reg[0]_i_1_n_4 ;
-  wire \testclk_cnt_reg[0]_i_1_n_5 ;
-  wire \testclk_cnt_reg[0]_i_1_n_6 ;
-  wire \testclk_cnt_reg[0]_i_1_n_7 ;
-  wire \testclk_cnt_reg[0]_i_1_n_8 ;
-  wire \testclk_cnt_reg[0]_i_1_n_9 ;
-  wire \testclk_cnt_reg[16]_i_1_n_14 ;
-  wire \testclk_cnt_reg[16]_i_1_n_15 ;
-  wire \testclk_cnt_reg[16]_i_1_n_7 ;
-  wire \testclk_cnt_reg[8]_i_1_n_0 ;
-  wire \testclk_cnt_reg[8]_i_1_n_1 ;
-  wire \testclk_cnt_reg[8]_i_1_n_10 ;
-  wire \testclk_cnt_reg[8]_i_1_n_11 ;
-  wire \testclk_cnt_reg[8]_i_1_n_12 ;
-  wire \testclk_cnt_reg[8]_i_1_n_13 ;
-  wire \testclk_cnt_reg[8]_i_1_n_14 ;
-  wire \testclk_cnt_reg[8]_i_1_n_15 ;
-  wire \testclk_cnt_reg[8]_i_1_n_2 ;
-  wire \testclk_cnt_reg[8]_i_1_n_3 ;
-  wire \testclk_cnt_reg[8]_i_1_n_4 ;
-  wire \testclk_cnt_reg[8]_i_1_n_5 ;
-  wire \testclk_cnt_reg[8]_i_1_n_6 ;
-  wire \testclk_cnt_reg[8]_i_1_n_7 ;
-  wire \testclk_cnt_reg[8]_i_1_n_8 ;
-  wire \testclk_cnt_reg[8]_i_1_n_9 ;
-  wire [3:0]testclk_div4;
-  wire testclk_en;
-  (* async_reg = "true" *) wire testclk_en_dly1;
-  (* async_reg = "true" *) wire testclk_en_dly2;
-  wire testclk_rst;
-  (* async_reg = "true" *) wire tstclk_rst_dly1;
-  (* async_reg = "true" *) wire tstclk_rst_dly2;
-  wire [7:6]NLW_refclk_cnt0_carry__0_CO_UNCONNECTED;
-  wire [7:7]NLW_refclk_cnt0_carry__0_O_UNCONNECTED;
-  wire [7:1]\NLW_testclk_cnt_reg[16]_i_1_CO_UNCONNECTED ;
-  wire [7:2]\NLW_testclk_cnt_reg[16]_i_1_O_UNCONNECTED ;
-
-  FDCE done_o_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .CLR(AR),
-        .D(\state_reg_n_0_[4] ),
-        .Q(cal_on_rx_debug_out));
-  LUT2 #(
-    .INIT(4'h2)) 
-    \freq_cnt_o[17]_i_1 
-       (.I0(p_1_in),
-        .I1(AR),
-        .O(\freq_cnt_o[17]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[0] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[0]),
-        .Q(cal_on_rx_cal_freq_cnt[0]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[10] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[10]),
-        .Q(cal_on_rx_cal_freq_cnt[10]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[11] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[11]),
-        .Q(cal_on_rx_cal_freq_cnt[11]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[12] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[12]),
-        .Q(cal_on_rx_cal_freq_cnt[12]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[13] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[13]),
-        .Q(cal_on_rx_cal_freq_cnt[13]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[14] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[14]),
-        .Q(cal_on_rx_cal_freq_cnt[14]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[15] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[15]),
-        .Q(\freq_cnt_o_reg[15]_0 ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[16] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[16]),
-        .Q(cal_on_rx_cal_freq_cnt[16]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[17] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[17]),
-        .Q(cal_on_rx_cal_freq_cnt[17]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[1] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[1]),
-        .Q(cal_on_rx_cal_freq_cnt[1]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[2] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[2]),
-        .Q(cal_on_rx_cal_freq_cnt[2]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[3] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[3]),
-        .Q(cal_on_rx_cal_freq_cnt[3]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[4] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[4]),
-        .Q(cal_on_rx_cal_freq_cnt[4]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[5] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[5]),
-        .Q(cal_on_rx_cal_freq_cnt[5]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[6] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[6]),
-        .Q(cal_on_rx_cal_freq_cnt[6]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[7] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[7]),
-        .Q(cal_on_rx_cal_freq_cnt[7]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[8] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[8]),
-        .Q(cal_on_rx_cal_freq_cnt[8]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \freq_cnt_o_reg[9] 
-       (.C(drpclk_in),
-        .CE(\freq_cnt_o[17]_i_1_n_0 ),
-        .D(testclk_cnt_reg[9]),
-        .Q(cal_on_rx_cal_freq_cnt[9]),
-        .R(1'b0));
-  LUT2 #(
-    .INIT(4'h8)) 
-    \gen_cal_rx_en.cal_fail_store_i_2 
-       (.I0(CO),
-        .I1(\gen_cal_rx_en.repeat_ctr_reg[3]_0 ),
-        .O(\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0 ));
-  LUT6 #(
-    .INIT(64'hF888000000000000)) 
-    \gen_cal_rx_en.cal_fail_store_i_3 
-       (.I0(CO),
-        .I1(\gen_cal_rx_en.repeat_ctr_reg[3]_0 ),
-        .I2(\gen_cal_rx_en.cal_fail_store_reg [3]),
-        .I3(\gen_cal_rx_en.cal_fail_store_reg_0 ),
-        .I4(Q[4]),
-        .I5(cal_on_rx_debug_out),
-        .O(\gen_cal_rx_en.repeat_ctr_reg[3] ));
-  LUT2 #(
-    .INIT(4'h1)) 
-    \gen_cal_rx_en.cpll_cal_state2_carry_i_1 
-       (.I0(cal_on_rx_cal_freq_cnt[0]),
-        .I1(cal_on_rx_cal_freq_cnt[1]),
-        .O(\freq_cnt_o_reg[0]_0 ));
-  LUT2 #(
-    .INIT(4'h2)) 
-    \gen_cal_rx_en.cpll_cal_state2_carry_i_10 
-       (.I0(cal_on_rx_cal_freq_cnt[8]),
-        .I1(cal_on_rx_cal_freq_cnt[9]),
-        .O(S[3]));
-  LUT2 #(
-    .INIT(4'h1)) 
-    \gen_cal_rx_en.cpll_cal_state2_carry_i_11 
-       (.I0(cal_on_rx_cal_freq_cnt[6]),
-        .I1(cal_on_rx_cal_freq_cnt[7]),
-        .O(S[2]));
-  LUT2 #(
-    .INIT(4'h1)) 
-    \gen_cal_rx_en.cpll_cal_state2_carry_i_12 
-       (.I0(cal_on_rx_cal_freq_cnt[4]),
-        .I1(cal_on_rx_cal_freq_cnt[5]),
-        .O(S[1]));
-  LUT2 #(
-    .INIT(4'h1)) 
-    \gen_cal_rx_en.cpll_cal_state2_carry_i_13 
-       (.I0(cal_on_rx_cal_freq_cnt[2]),
-        .I1(cal_on_rx_cal_freq_cnt[3]),
-        .O(S[0]));
-  LUT2 #(
-    .INIT(4'h1)) 
-    \gen_cal_rx_en.cpll_cal_state2_carry_i_2 
-       (.I0(cal_on_rx_cal_freq_cnt[14]),
-        .I1(\freq_cnt_o_reg[15]_0 ),
-        .O(DI[3]));
-  LUT1 #(
-    .INIT(2'h1)) 
-    \gen_cal_rx_en.cpll_cal_state2_carry_i_3 
-       (.I0(cal_on_rx_cal_freq_cnt[13]),
-        .O(DI[2]));
-  LUT2 #(
-    .INIT(4'h1)) 
-    \gen_cal_rx_en.cpll_cal_state2_carry_i_4 
-       (.I0(cal_on_rx_cal_freq_cnt[11]),
-        .I1(cal_on_rx_cal_freq_cnt[10]),
-        .O(DI[1]));
-  LUT2 #(
-    .INIT(4'h1)) 
-    \gen_cal_rx_en.cpll_cal_state2_carry_i_5 
-       (.I0(cal_on_rx_cal_freq_cnt[8]),
-        .I1(cal_on_rx_cal_freq_cnt[9]),
-        .O(DI[0]));
-  LUT2 #(
-    .INIT(4'h1)) 
-    \gen_cal_rx_en.cpll_cal_state2_carry_i_6 
-       (.I0(cal_on_rx_cal_freq_cnt[16]),
-        .I1(cal_on_rx_cal_freq_cnt[17]),
-        .O(S[7]));
-  LUT2 #(
-    .INIT(4'h2)) 
-    \gen_cal_rx_en.cpll_cal_state2_carry_i_7 
-       (.I0(cal_on_rx_cal_freq_cnt[14]),
-        .I1(\freq_cnt_o_reg[15]_0 ),
-        .O(S[6]));
-  LUT2 #(
-    .INIT(4'h2)) 
-    \gen_cal_rx_en.cpll_cal_state2_carry_i_8 
-       (.I0(cal_on_rx_cal_freq_cnt[13]),
-        .I1(cal_on_rx_cal_freq_cnt[12]),
-        .O(S[5]));
-  LUT2 #(
-    .INIT(4'h2)) 
-    \gen_cal_rx_en.cpll_cal_state2_carry_i_9 
-       (.I0(cal_on_rx_cal_freq_cnt[10]),
-        .I1(cal_on_rx_cal_freq_cnt[11]),
-        .O(S[4]));
-  LUT4 #(
-    .INIT(16'hF444)) 
-    \gen_cal_rx_en.cpll_cal_state[19]_i_1 
-       (.I0(cal_on_rx_debug_out),
-        .I1(Q[4]),
-        .I2(Q[3]),
-        .I3(\gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ),
-        .O(D[1]));
-  (* SOFT_HLUTNM = "soft_lutpair19" *) 
-  LUT5 #(
-    .INIT(32'h08FF0808)) 
-    \gen_cal_rx_en.cpll_cal_state[20]_i_1 
-       (.I0(cal_on_rx_debug_out),
-        .I1(Q[4]),
-        .I2(\gen_cal_rx_en.cpll_cal_state[20]_i_2_n_0 ),
-        .I3(\gen_cal_rx_en.cpll_cal_state_reg[20] ),
-        .I4(Q[5]),
-        .O(D[2]));
-  LUT6 #(
-    .INIT(64'h00007FFF7FFF7FFF)) 
-    \gen_cal_rx_en.cpll_cal_state[20]_i_2 
-       (.I0(\gen_cal_rx_en.cal_fail_store_reg [1]),
-        .I1(\gen_cal_rx_en.cal_fail_store_reg [0]),
-        .I2(\gen_cal_rx_en.cal_fail_store_reg [2]),
-        .I3(\gen_cal_rx_en.cal_fail_store_reg [3]),
-        .I4(\gen_cal_rx_en.repeat_ctr_reg[3]_0 ),
-        .I5(CO),
-        .O(\gen_cal_rx_en.cpll_cal_state[20]_i_2_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFFFFFF8888888)) 
-    \gen_cal_rx_en.cpll_cal_state[8]_i_1 
-       (.I0(\gen_cal_rx_en.cpll_cal_state_reg[8] ),
-        .I1(Q[2]),
-        .I2(\gen_cal_rx_en.cpll_cal_state[20]_i_2_n_0 ),
-        .I3(Q[4]),
-        .I4(cal_on_rx_debug_out),
-        .I5(Q[1]),
-        .O(D[0]));
-  LUT6 #(
-    .INIT(64'h5555555500001500)) 
-    \gen_cal_rx_en.repeat_ctr[3]_i_1 
-       (.I0(SS),
-        .I1(CO),
-        .I2(\gen_cal_rx_en.repeat_ctr_reg[3]_0 ),
-        .I3(\gen_cal_rx_en.repeat_ctr_reg[3]_1 ),
-        .I4(\gen_cal_rx_en.repeat_ctr[3]_i_4_n_0 ),
-        .I5(Q[0]),
-        .O(rst_in_out_reg));
-  (* SOFT_HLUTNM = "soft_lutpair19" *) 
-  LUT2 #(
-    .INIT(4'h7)) 
-    \gen_cal_rx_en.repeat_ctr[3]_i_4 
-       (.I0(cal_on_rx_debug_out),
-        .I1(Q[4]),
-        .O(\gen_cal_rx_en.repeat_ctr[3]_i_4_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair22" *) 
-  LUT1 #(
-    .INIT(2'h1)) 
-    \hold_clk[0]_i_1__0 
-       (.I0(hold_clk_reg[0]),
-        .O(p_0_in__1[0]));
-  (* SOFT_HLUTNM = "soft_lutpair22" *) 
-  LUT2 #(
-    .INIT(4'h6)) 
-    \hold_clk[1]_i_1__0 
-       (.I0(hold_clk_reg[0]),
-        .I1(hold_clk_reg[1]),
-        .O(p_0_in__1[1]));
-  (* SOFT_HLUTNM = "soft_lutpair21" *) 
-  LUT3 #(
-    .INIT(8'h78)) 
-    \hold_clk[2]_i_1__0 
-       (.I0(hold_clk_reg[0]),
-        .I1(hold_clk_reg[1]),
-        .I2(hold_clk_reg[2]),
-        .O(\hold_clk[2]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair20" *) 
-  LUT4 #(
-    .INIT(16'h7F80)) 
-    \hold_clk[3]_i_1__0 
-       (.I0(hold_clk_reg[1]),
-        .I1(hold_clk_reg[0]),
-        .I2(hold_clk_reg[2]),
-        .I3(hold_clk_reg[3]),
-        .O(p_0_in__1[3]));
-  (* SOFT_HLUTNM = "soft_lutpair20" *) 
-  LUT5 #(
-    .INIT(32'h7FFF8000)) 
-    \hold_clk[4]_i_1__0 
-       (.I0(hold_clk_reg[2]),
-        .I1(hold_clk_reg[0]),
-        .I2(hold_clk_reg[1]),
-        .I3(hold_clk_reg[3]),
-        .I4(hold_clk_reg[4]),
-        .O(p_0_in__1[4]));
-  LUT2 #(
-    .INIT(4'h1)) 
-    \hold_clk[5]_i_1__0 
-       (.I0(testclk_rst),
-        .I1(\state_reg_n_0_[2] ),
-        .O(\hold_clk[5]_i_1__0_n_0 ));
-  LUT6 #(
-    .INIT(64'h7FFFFFFF80000000)) 
-    \hold_clk[5]_i_2__0 
-       (.I0(hold_clk_reg[3]),
-        .I1(hold_clk_reg[1]),
-        .I2(hold_clk_reg[0]),
-        .I3(hold_clk_reg[2]),
-        .I4(hold_clk_reg[4]),
-        .I5(hold_clk_reg[5]),
-        .O(p_0_in__1[5]));
-  FDRE #(
-    .INIT(1'b0)) 
-    \hold_clk_reg[0] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__1[0]),
-        .Q(hold_clk_reg[0]),
-        .R(\hold_clk[5]_i_1__0_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \hold_clk_reg[1] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__1[1]),
-        .Q(hold_clk_reg[1]),
-        .R(\hold_clk[5]_i_1__0_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \hold_clk_reg[2] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\hold_clk[2]_i_1__0_n_0 ),
-        .Q(hold_clk_reg[2]),
-        .R(\hold_clk[5]_i_1__0_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \hold_clk_reg[3] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__1[3]),
-        .Q(hold_clk_reg[3]),
-        .R(\hold_clk[5]_i_1__0_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \hold_clk_reg[4] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__1[4]),
-        .Q(hold_clk_reg[4]),
-        .R(\hold_clk[5]_i_1__0_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \hold_clk_reg[5] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__1[5]),
-        .Q(hold_clk_reg[5]),
-        .R(\hold_clk[5]_i_1__0_n_0 ));
-  LUT2 #(
-    .INIT(4'hE)) 
-    i__carry__0_i_1
-       (.I0(cal_on_rx_cal_freq_cnt[17]),
-        .I1(cal_on_rx_cal_freq_cnt[16]),
-        .O(\freq_cnt_o_reg[17]_0 ));
-  LUT2 #(
-    .INIT(4'h1)) 
-    i__carry__0_i_2
-       (.I0(cal_on_rx_cal_freq_cnt[16]),
-        .I1(cal_on_rx_cal_freq_cnt[17]),
-        .O(\freq_cnt_o_reg[16]_0 ));
-  LUT2 #(
-    .INIT(4'h8)) 
-    i__carry_i_1
-       (.I0(cal_on_rx_cal_freq_cnt[13]),
-        .I1(cal_on_rx_cal_freq_cnt[12]),
-        .O(\freq_cnt_o_reg[13]_0 [5]));
-  LUT2 #(
-    .INIT(4'h8)) 
-    i__carry_i_10
-       (.I0(cal_on_rx_cal_freq_cnt[8]),
-        .I1(cal_on_rx_cal_freq_cnt[9]),
-        .O(\freq_cnt_o_reg[14]_0 [4]));
-  LUT2 #(
-    .INIT(4'h1)) 
-    i__carry_i_11
-       (.I0(cal_on_rx_cal_freq_cnt[6]),
-        .I1(cal_on_rx_cal_freq_cnt[7]),
-        .O(\freq_cnt_o_reg[14]_0 [3]));
-  LUT2 #(
-    .INIT(4'h1)) 
-    i__carry_i_12
-       (.I0(cal_on_rx_cal_freq_cnt[4]),
-        .I1(cal_on_rx_cal_freq_cnt[5]),
-        .O(\freq_cnt_o_reg[14]_0 [2]));
-  LUT2 #(
-    .INIT(4'h1)) 
-    i__carry_i_13
-       (.I0(cal_on_rx_cal_freq_cnt[2]),
-        .I1(cal_on_rx_cal_freq_cnt[3]),
-        .O(\freq_cnt_o_reg[14]_0 [1]));
-  LUT2 #(
-    .INIT(4'h1)) 
-    i__carry_i_14
-       (.I0(cal_on_rx_cal_freq_cnt[0]),
-        .I1(cal_on_rx_cal_freq_cnt[1]),
-        .O(\freq_cnt_o_reg[14]_0 [0]));
-  LUT2 #(
-    .INIT(4'hE)) 
-    i__carry_i_2
-       (.I0(cal_on_rx_cal_freq_cnt[10]),
-        .I1(cal_on_rx_cal_freq_cnt[11]),
-        .O(\freq_cnt_o_reg[13]_0 [4]));
-  LUT2 #(
-    .INIT(4'hE)) 
-    i__carry_i_3
-       (.I0(cal_on_rx_cal_freq_cnt[7]),
-        .I1(cal_on_rx_cal_freq_cnt[6]),
-        .O(\freq_cnt_o_reg[13]_0 [3]));
-  LUT2 #(
-    .INIT(4'hE)) 
-    i__carry_i_4
-       (.I0(cal_on_rx_cal_freq_cnt[5]),
-        .I1(cal_on_rx_cal_freq_cnt[4]),
-        .O(\freq_cnt_o_reg[13]_0 [2]));
-  LUT2 #(
-    .INIT(4'hE)) 
-    i__carry_i_5
-       (.I0(cal_on_rx_cal_freq_cnt[3]),
-        .I1(cal_on_rx_cal_freq_cnt[2]),
-        .O(\freq_cnt_o_reg[13]_0 [1]));
-  LUT2 #(
-    .INIT(4'hE)) 
-    i__carry_i_6
-       (.I0(cal_on_rx_cal_freq_cnt[1]),
-        .I1(cal_on_rx_cal_freq_cnt[0]),
-        .O(\freq_cnt_o_reg[13]_0 [0]));
-  LUT2 #(
-    .INIT(4'h2)) 
-    i__carry_i_7
-       (.I0(cal_on_rx_cal_freq_cnt[14]),
-        .I1(\freq_cnt_o_reg[15]_0 ),
-        .O(\freq_cnt_o_reg[14]_0 [7]));
-  LUT2 #(
-    .INIT(4'h2)) 
-    i__carry_i_8
-       (.I0(cal_on_rx_cal_freq_cnt[13]),
-        .I1(cal_on_rx_cal_freq_cnt[12]),
-        .O(\freq_cnt_o_reg[14]_0 [6]));
-  LUT2 #(
-    .INIT(4'h1)) 
-    i__carry_i_9
-       (.I0(cal_on_rx_cal_freq_cnt[11]),
-        .I1(cal_on_rx_cal_freq_cnt[10]),
-        .O(\freq_cnt_o_reg[14]_0 [5]));
-  (* ADDER_THRESHOLD = "35" *) 
-  CARRY8 refclk_cnt0_carry
-       (.CI(refclk_cnt_reg[0]),
-        .CI_TOP(1'b0),
-        .CO({refclk_cnt0_carry_n_0,refclk_cnt0_carry_n_1,refclk_cnt0_carry_n_2,refclk_cnt0_carry_n_3,refclk_cnt0_carry_n_4,refclk_cnt0_carry_n_5,refclk_cnt0_carry_n_6,refclk_cnt0_carry_n_7}),
-        .DI({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .O(p_0_in__2[8:1]),
-        .S(refclk_cnt_reg[8:1]));
-  (* ADDER_THRESHOLD = "35" *) 
-  CARRY8 refclk_cnt0_carry__0
-       (.CI(refclk_cnt0_carry_n_0),
-        .CI_TOP(1'b0),
-        .CO({NLW_refclk_cnt0_carry__0_CO_UNCONNECTED[7:6],refclk_cnt0_carry__0_n_2,refclk_cnt0_carry__0_n_3,refclk_cnt0_carry__0_n_4,refclk_cnt0_carry__0_n_5,refclk_cnt0_carry__0_n_6,refclk_cnt0_carry__0_n_7}),
-        .DI({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .O({NLW_refclk_cnt0_carry__0_O_UNCONNECTED[7],p_0_in__2[15:9]}),
-        .S({1'b0,refclk_cnt_reg[15:9]}));
-  LUT1 #(
-    .INIT(2'h1)) 
-    \refclk_cnt[0]_i_1__0 
-       (.I0(refclk_cnt_reg[0]),
-        .O(\refclk_cnt[0]_i_1__0_n_0 ));
-  LUT1 #(
-    .INIT(2'h1)) 
-    \refclk_cnt[15]_i_1__0 
-       (.I0(testclk_en),
-        .O(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[0] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\refclk_cnt[0]_i_1__0_n_0 ),
-        .Q(refclk_cnt_reg[0]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[10] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[10]),
-        .Q(refclk_cnt_reg[10]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[11] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[11]),
-        .Q(refclk_cnt_reg[11]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[12] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[12]),
-        .Q(refclk_cnt_reg[12]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[13] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[13]),
-        .Q(refclk_cnt_reg[13]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[14] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[14]),
-        .Q(refclk_cnt_reg[14]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[15] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[15]),
-        .Q(refclk_cnt_reg[15]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[1] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[1]),
-        .Q(refclk_cnt_reg[1]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[2] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[2]),
-        .Q(refclk_cnt_reg[2]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[3] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[3]),
-        .Q(refclk_cnt_reg[3]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[4] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[4]),
-        .Q(refclk_cnt_reg[4]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[5] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[5]),
-        .Q(refclk_cnt_reg[5]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[6] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[6]),
-        .Q(refclk_cnt_reg[6]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[7] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[7]),
-        .Q(refclk_cnt_reg[7]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[8] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[8]),
-        .Q(refclk_cnt_reg[8]),
-        .R(clear));
-  FDRE #(
-    .INIT(1'b0)) 
-    \refclk_cnt_reg[9] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(p_0_in__2[9]),
-        .Q(refclk_cnt_reg[9]),
-        .R(clear));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_33 reset_synchronizer_testclk_rst_inst
-       (.\gen_cal_rx_en.rxoutclkmon (\gen_cal_rx_en.rxoutclkmon ),
-        .out(testclk_rst),
-        .rst_in_out(rst_in_out));
-  LUT6 #(
-    .INIT(64'hAA2AAAAAAAAAAAAA)) 
-    \state[0]_i_1__0 
-       (.I0(testclk_rst),
-        .I1(hold_clk_reg[2]),
-        .I2(hold_clk_reg[3]),
-        .I3(\state[3]_i_2_n_0 ),
-        .I4(hold_clk_reg[4]),
-        .I5(hold_clk_reg[5]),
-        .O(\state[0]_i_1__0_n_0 ));
-  LUT4 #(
-    .INIT(16'h4F44)) 
-    \state[1]_i_1__0 
-       (.I0(\state[1]_i_2__0_n_0 ),
-        .I1(testclk_rst),
-        .I2(\state[2]_i_2__0_n_0 ),
-        .I3(testclk_en),
-        .O(\state[1]_i_1__0_n_0 ));
-  LUT6 #(
-    .INIT(64'h7FFFFFFFFFFFFFFF)) 
-    \state[1]_i_2__0 
-       (.I0(hold_clk_reg[5]),
-        .I1(hold_clk_reg[4]),
-        .I2(hold_clk_reg[1]),
-        .I3(hold_clk_reg[0]),
-        .I4(hold_clk_reg[3]),
-        .I5(hold_clk_reg[2]),
-        .O(\state[1]_i_2__0_n_0 ));
-  LUT4 #(
-    .INIT(16'hF888)) 
-    \state[2]_i_1__0 
-       (.I0(\state[2]_i_2__0_n_0 ),
-        .I1(testclk_en),
-        .I2(\state[2]_i_3__0_n_0 ),
-        .I3(\state_reg_n_0_[2] ),
-        .O(\state[2]_i_1__0_n_0 ));
-  LUT6 #(
-    .INIT(64'h0000000000000020)) 
-    \state[2]_i_2__0 
-       (.I0(refclk_cnt_reg[13]),
-        .I1(refclk_cnt_reg[14]),
-        .I2(refclk_cnt_reg[12]),
-        .I3(refclk_cnt_reg[15]),
-        .I4(\state[2]_i_4__0_n_0 ),
-        .I5(\state[2]_i_5__0_n_0 ),
-        .O(\state[2]_i_2__0_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFF7FFFFFFFFFFFF)) 
-    \state[2]_i_3__0 
-       (.I0(hold_clk_reg[0]),
-        .I1(hold_clk_reg[1]),
-        .I2(hold_clk_reg[4]),
-        .I3(hold_clk_reg[5]),
-        .I4(hold_clk_reg[3]),
-        .I5(hold_clk_reg[2]),
-        .O(\state[2]_i_3__0_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFFFFFFFFFFFFE)) 
-    \state[2]_i_4__0 
-       (.I0(refclk_cnt_reg[0]),
-        .I1(refclk_cnt_reg[1]),
-        .I2(refclk_cnt_reg[2]),
-        .I3(refclk_cnt_reg[3]),
-        .I4(refclk_cnt_reg[4]),
-        .I5(refclk_cnt_reg[5]),
-        .O(\state[2]_i_4__0_n_0 ));
-  LUT6 #(
-    .INIT(64'hFBFFFFFFFFFFFFFF)) 
-    \state[2]_i_5__0 
-       (.I0(refclk_cnt_reg[6]),
-        .I1(refclk_cnt_reg[7]),
-        .I2(refclk_cnt_reg[8]),
-        .I3(refclk_cnt_reg[10]),
-        .I4(refclk_cnt_reg[11]),
-        .I5(refclk_cnt_reg[9]),
-        .O(\state[2]_i_5__0_n_0 ));
-  LUT6 #(
-    .INIT(64'h0000000000000080)) 
-    \state[3]_i_1 
-       (.I0(\state_reg_n_0_[2] ),
-        .I1(hold_clk_reg[2]),
-        .I2(hold_clk_reg[3]),
-        .I3(\state[3]_i_2_n_0 ),
-        .I4(hold_clk_reg[4]),
-        .I5(hold_clk_reg[5]),
-        .O(\state[3]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair21" *) 
-  LUT2 #(
-    .INIT(4'h7)) 
-    \state[3]_i_2 
-       (.I0(hold_clk_reg[1]),
-        .I1(hold_clk_reg[0]),
-        .O(\state[3]_i_2_n_0 ));
-  LUT2 #(
-    .INIT(4'hE)) 
-    \state[4]_i_1 
-       (.I0(p_1_in),
-        .I1(\state_reg_n_0_[4] ),
-        .O(\state[4]_i_1_n_0 ));
-  FDPE #(
-    .INIT(1'b1)) 
-    \state_reg[0] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\state[0]_i_1__0_n_0 ),
-        .PRE(AR),
-        .Q(testclk_rst));
-  FDCE #(
-    .INIT(1'b0)) 
-    \state_reg[1] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .CLR(AR),
-        .D(\state[1]_i_1__0_n_0 ),
-        .Q(testclk_en));
-  FDCE #(
-    .INIT(1'b0)) 
-    \state_reg[2] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .CLR(AR),
-        .D(\state[2]_i_1__0_n_0 ),
-        .Q(\state_reg_n_0_[2] ));
-  FDCE #(
-    .INIT(1'b0)) 
-    \state_reg[3] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .CLR(AR),
-        .D(\state[3]_i_1_n_0 ),
-        .Q(p_1_in));
-  FDCE #(
-    .INIT(1'b0)) 
-    \state_reg[4] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .CLR(AR),
-        .D(\state[4]_i_1_n_0 ),
-        .Q(\state_reg_n_0_[4] ));
-  LUT5 #(
-    .INIT(32'h00000020)) 
-    testclk_cnt0
-       (.I0(testclk_en_dly2),
-        .I1(testclk_div4[1]),
-        .I2(testclk_div4[3]),
-        .I3(testclk_div4[2]),
-        .I4(testclk_div4[0]),
-        .O(testclk_cnt0_n_0));
-  LUT1 #(
-    .INIT(2'h1)) 
-    \testclk_cnt[0]_i_2 
-       (.I0(testclk_cnt_reg[0]),
-        .O(\testclk_cnt[0]_i_2_n_0 ));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[0] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[0]_i_1_n_15 ),
-        .Q(testclk_cnt_reg[0]));
-  (* ADDER_THRESHOLD = "16" *) 
-  CARRY8 \testclk_cnt_reg[0]_i_1 
-       (.CI(1'b0),
-        .CI_TOP(1'b0),
-        .CO({\testclk_cnt_reg[0]_i_1_n_0 ,\testclk_cnt_reg[0]_i_1_n_1 ,\testclk_cnt_reg[0]_i_1_n_2 ,\testclk_cnt_reg[0]_i_1_n_3 ,\testclk_cnt_reg[0]_i_1_n_4 ,\testclk_cnt_reg[0]_i_1_n_5 ,\testclk_cnt_reg[0]_i_1_n_6 ,\testclk_cnt_reg[0]_i_1_n_7 }),
-        .DI({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b1}),
-        .O({\testclk_cnt_reg[0]_i_1_n_8 ,\testclk_cnt_reg[0]_i_1_n_9 ,\testclk_cnt_reg[0]_i_1_n_10 ,\testclk_cnt_reg[0]_i_1_n_11 ,\testclk_cnt_reg[0]_i_1_n_12 ,\testclk_cnt_reg[0]_i_1_n_13 ,\testclk_cnt_reg[0]_i_1_n_14 ,\testclk_cnt_reg[0]_i_1_n_15 }),
-        .S({testclk_cnt_reg[7:1],\testclk_cnt[0]_i_2_n_0 }));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[10] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[8]_i_1_n_13 ),
-        .Q(testclk_cnt_reg[10]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[11] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[8]_i_1_n_12 ),
-        .Q(testclk_cnt_reg[11]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[12] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[8]_i_1_n_11 ),
-        .Q(testclk_cnt_reg[12]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[13] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[8]_i_1_n_10 ),
-        .Q(testclk_cnt_reg[13]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[14] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[8]_i_1_n_9 ),
-        .Q(testclk_cnt_reg[14]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[15] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[8]_i_1_n_8 ),
-        .Q(testclk_cnt_reg[15]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[16] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[16]_i_1_n_15 ),
-        .Q(testclk_cnt_reg[16]));
-  (* ADDER_THRESHOLD = "16" *) 
-  CARRY8 \testclk_cnt_reg[16]_i_1 
-       (.CI(\testclk_cnt_reg[8]_i_1_n_0 ),
-        .CI_TOP(1'b0),
-        .CO({\NLW_testclk_cnt_reg[16]_i_1_CO_UNCONNECTED [7:1],\testclk_cnt_reg[16]_i_1_n_7 }),
-        .DI({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .O({\NLW_testclk_cnt_reg[16]_i_1_O_UNCONNECTED [7:2],\testclk_cnt_reg[16]_i_1_n_14 ,\testclk_cnt_reg[16]_i_1_n_15 }),
-        .S({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,testclk_cnt_reg[17:16]}));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[17] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[16]_i_1_n_14 ),
-        .Q(testclk_cnt_reg[17]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[1] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[0]_i_1_n_14 ),
-        .Q(testclk_cnt_reg[1]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[2] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[0]_i_1_n_13 ),
-        .Q(testclk_cnt_reg[2]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[3] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[0]_i_1_n_12 ),
-        .Q(testclk_cnt_reg[3]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[4] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[0]_i_1_n_11 ),
-        .Q(testclk_cnt_reg[4]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[5] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[0]_i_1_n_10 ),
-        .Q(testclk_cnt_reg[5]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[6] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[0]_i_1_n_9 ),
-        .Q(testclk_cnt_reg[6]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[7] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[0]_i_1_n_8 ),
-        .Q(testclk_cnt_reg[7]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[8] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[8]_i_1_n_15 ),
-        .Q(testclk_cnt_reg[8]));
-  (* ADDER_THRESHOLD = "16" *) 
-  CARRY8 \testclk_cnt_reg[8]_i_1 
-       (.CI(\testclk_cnt_reg[0]_i_1_n_0 ),
-        .CI_TOP(1'b0),
-        .CO({\testclk_cnt_reg[8]_i_1_n_0 ,\testclk_cnt_reg[8]_i_1_n_1 ,\testclk_cnt_reg[8]_i_1_n_2 ,\testclk_cnt_reg[8]_i_1_n_3 ,\testclk_cnt_reg[8]_i_1_n_4 ,\testclk_cnt_reg[8]_i_1_n_5 ,\testclk_cnt_reg[8]_i_1_n_6 ,\testclk_cnt_reg[8]_i_1_n_7 }),
-        .DI({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .O({\testclk_cnt_reg[8]_i_1_n_8 ,\testclk_cnt_reg[8]_i_1_n_9 ,\testclk_cnt_reg[8]_i_1_n_10 ,\testclk_cnt_reg[8]_i_1_n_11 ,\testclk_cnt_reg[8]_i_1_n_12 ,\testclk_cnt_reg[8]_i_1_n_13 ,\testclk_cnt_reg[8]_i_1_n_14 ,\testclk_cnt_reg[8]_i_1_n_15 }),
-        .S(testclk_cnt_reg[15:8]));
-  FDCE #(
-    .INIT(1'b0)) 
-    \testclk_cnt_reg[9] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(testclk_cnt0_n_0),
-        .CLR(rst_in_out),
-        .D(\testclk_cnt_reg[8]_i_1_n_14 ),
-        .Q(testclk_cnt_reg[9]));
-  FDSE #(
-    .INIT(1'b1)) 
-    \testclk_div4_reg[0] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(1'b1),
-        .D(testclk_div4[3]),
-        .Q(testclk_div4[0]),
-        .S(tstclk_rst_dly2));
-  FDRE #(
-    .INIT(1'b0)) 
-    \testclk_div4_reg[1] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(1'b1),
-        .D(testclk_div4[0]),
-        .Q(testclk_div4[1]),
-        .R(tstclk_rst_dly2));
-  FDRE #(
-    .INIT(1'b0)) 
-    \testclk_div4_reg[2] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(1'b1),
-        .D(testclk_div4[1]),
-        .Q(testclk_div4[2]),
-        .R(tstclk_rst_dly2));
-  FDRE #(
-    .INIT(1'b0)) 
-    \testclk_div4_reg[3] 
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(1'b1),
-        .D(testclk_div4[2]),
-        .Q(testclk_div4[3]),
-        .R(tstclk_rst_dly2));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE testclk_en_dly1_reg
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(1'b1),
-        .D(testclk_en),
-        .Q(testclk_en_dly1),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE testclk_en_dly2_reg
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(1'b1),
-        .D(testclk_en_dly1),
-        .Q(testclk_en_dly2),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE tstclk_rst_dly1_reg
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(1'b1),
-        .D(testclk_rst),
-        .Q(tstclk_rst_dly1),
-        .R(1'b0));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDRE tstclk_rst_dly2_reg
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(1'b1),
-        .D(tstclk_rst_dly1),
-        .Q(tstclk_rst_dly2),
-        .R(1'b0));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx
-   (AS,
-    i_in_out_reg,
-    \gen_cal_rx_en.cal_fail_store__0 ,
-    \gen_gtwizard_gthe4.cpllpd_ch_int ,
-    \gen_gtwizard_gthe4.cpllreset_ch_int ,
-    \gen_cal_rx_en.wr ,
-    \gen_cal_rx_en.rd_reg_0 ,
-    \gen_cal_rx_en.status_store_reg_0 ,
-    \gen_cal_rx_en.USER_CPLLLOCK_OUT_reg_0 ,
-    \gen_cal_rx_en.rxprogdivreset_int ,
-    cal_on_rx_drpen_out,
-    cal_on_rx_drpwe_out,
-    \gen_cal_rx_en.gtrxreset_int ,
-    \gen_cal_rx_en.rxcdrhold_int ,
-    Q,
-    \gen_cal_rx_en.wait_ctr_reg[14]_0 ,
-    \gen_cal_rx_en.wait_ctr_reg[5]_0 ,
-    \gen_cal_rx_en.cpll_cal_state_reg[17]_0 ,
-    \gen_cal_rx_en.drp_state_reg[6]_0 ,
-    \gen_cal_rx_en.repeat_ctr_reg[3]_0 ,
-    \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0_0 ,
-    \gen_cal_rx_en.cpll_cal_state_reg[18]_0 ,
-    RXOUTCLKSEL,
-    \gen_gtwizard_gthe4.rxprogdivreset_ch_int ,
-    \gen_gtwizard_gthe4.gtrxreset_ch_int ,
-    \gen_gtwizard_gthe4.rxcdrhold_ch_int ,
-    \gen_cal_rx_en.daddr_reg[8]_0 ,
-    \gen_cal_rx_en.di_reg[15]_0 ,
-    in0,
-    i_in_meta_reg,
-    i_in_meta_reg_0,
-    rxoutclk_out,
-    gtwiz_userclk_rx_reset_in,
-    drpclk_in,
-    \gen_cal_rx_en.cal_fail_store_reg_0 ,
-    \gen_cal_rx_en.freq_counter_rst_reg_0 ,
-    SS,
-    \gen_cal_rx_en.mask_user_in_reg_0 ,
-    \gen_cal_rx_en.wr_reg_0 ,
-    \gen_cal_rx_en.rd_reg_1 ,
-    \gen_cal_rx_en.status_store_reg_1 ,
-    \gen_cal_rx_en.rxprogdivreset_int_reg_0 ,
-    \gen_cal_rx_en.den_reg_0 ,
-    \gen_cal_rx_en.dwe_reg_0 ,
-    \gen_cal_rx_en.gtrxreset_int_reg_0 ,
-    \gen_cal_rx_en.rxcdrhold_int_reg_0 ,
-    \gen_gtwizard_gthe4.rxprogdivreset_int ,
-    \gen_gtwizard_gthe4.gtrxreset_int ,
-    out,
-    \gen_gtwizard_gthe4.gtpowergood_int ,
-    cal_on_rx_drdy,
-    \gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 ,
-    lopt,
-    lopt_1,
-    lopt_2);
-  output [0:0]AS;
-  output [1:0]i_in_out_reg;
-  output \gen_cal_rx_en.cal_fail_store__0 ;
-  output \gen_gtwizard_gthe4.cpllpd_ch_int ;
-  output \gen_gtwizard_gthe4.cpllreset_ch_int ;
-  output \gen_cal_rx_en.wr ;
-  output \gen_cal_rx_en.rd_reg_0 ;
-  output \gen_cal_rx_en.status_store_reg_0 ;
-  output \gen_cal_rx_en.USER_CPLLLOCK_OUT_reg_0 ;
-  output \gen_cal_rx_en.rxprogdivreset_int ;
-  output cal_on_rx_drpen_out;
-  output cal_on_rx_drpwe_out;
-  output \gen_cal_rx_en.gtrxreset_int ;
-  output \gen_cal_rx_en.rxcdrhold_int ;
-  output [16:0]Q;
-  output \gen_cal_rx_en.wait_ctr_reg[14]_0 ;
-  output \gen_cal_rx_en.wait_ctr_reg[5]_0 ;
-  output \gen_cal_rx_en.cpll_cal_state_reg[17]_0 ;
-  output [4:0]\gen_cal_rx_en.drp_state_reg[6]_0 ;
-  output \gen_cal_rx_en.repeat_ctr_reg[3]_0 ;
-  output \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0_0 ;
-  output \gen_cal_rx_en.cpll_cal_state_reg[18]_0 ;
-  output [1:0]RXOUTCLKSEL;
-  output \gen_gtwizard_gthe4.rxprogdivreset_ch_int ;
-  output \gen_gtwizard_gthe4.gtrxreset_ch_int ;
-  output \gen_gtwizard_gthe4.rxcdrhold_ch_int ;
-  output [2:0]\gen_cal_rx_en.daddr_reg[8]_0 ;
-  output [15:0]\gen_cal_rx_en.di_reg[15]_0 ;
-  input in0;
-  input i_in_meta_reg;
-  input i_in_meta_reg_0;
-  input [0:0]rxoutclk_out;
-  input [0:0]gtwiz_userclk_rx_reset_in;
-  input [0:0]drpclk_in;
-  input \gen_cal_rx_en.cal_fail_store_reg_0 ;
-  input \gen_cal_rx_en.freq_counter_rst_reg_0 ;
-  input [0:0]SS;
-  input \gen_cal_rx_en.mask_user_in_reg_0 ;
-  input \gen_cal_rx_en.wr_reg_0 ;
-  input \gen_cal_rx_en.rd_reg_1 ;
-  input \gen_cal_rx_en.status_store_reg_1 ;
-  input \gen_cal_rx_en.rxprogdivreset_int_reg_0 ;
-  input \gen_cal_rx_en.den_reg_0 ;
-  input \gen_cal_rx_en.dwe_reg_0 ;
-  input \gen_cal_rx_en.gtrxreset_int_reg_0 ;
-  input \gen_cal_rx_en.rxcdrhold_int_reg_0 ;
-  input \gen_gtwizard_gthe4.rxprogdivreset_int ;
-  input \gen_gtwizard_gthe4.gtrxreset_int ;
-  input out;
-  input \gen_gtwizard_gthe4.gtpowergood_int ;
-  input cal_on_rx_drdy;
-  input [15:0]\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 ;
-  output lopt;
-  input lopt_1;
-  input lopt_2;
-
-  wire \<const1> ;
-  wire [0:0]AS;
-  wire [16:0]Q;
-  wire [1:0]RXOUTCLKSEL;
-  wire [0:0]SS;
-  wire [15:15]cal_on_rx_cal_freq_cnt;
-  wire [3:0]cal_on_rx_debug_out;
-  wire cal_on_rx_drdy;
-  wire cal_on_rx_drpen_out;
-  wire cal_on_rx_drpwe_out;
-  wire [0:0]drpclk_in;
-  wire \gen_cal_rx_en.USER_CPLLLOCK_OUT_reg_0 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_0 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_1 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_11 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_12 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_13 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_14 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_15 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_16 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_17 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_18 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_19 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_2 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_20 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_21 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_22 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_23 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_24 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_25 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_26 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_27 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_28 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_29 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_3 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_30 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_31 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_32 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_33 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_34 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_35 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_6 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_7 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_8 ;
-  wire \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_9 ;
-  wire \gen_cal_rx_en.bit_synchronizer_cplllock_inst_n_1 ;
-  wire \gen_cal_rx_en.bit_synchronizer_rxpmaresetdone_inst_n_0 ;
-  wire \gen_cal_rx_en.bit_synchronizer_rxpmaresetdone_inst_n_1 ;
-  wire \gen_cal_rx_en.bit_synchronizer_rxpmaresetdone_inst_n_2 ;
-  wire \gen_cal_rx_en.bit_synchronizer_rxpmaresetdone_inst_n_3 ;
-  wire \gen_cal_rx_en.bit_synchronizer_rxprgdivresetdone_inst_n_1 ;
-  wire \gen_cal_rx_en.bit_synchronizer_rxprgdivresetdone_inst_n_2 ;
-  wire \gen_cal_rx_en.bit_synchronizer_rxprgdivresetdone_inst_n_3 ;
-  wire \gen_cal_rx_en.bit_synchronizer_rxprgdivresetdone_inst_n_4 ;
-  wire \gen_cal_rx_en.cal_fail_store__0 ;
-  wire \gen_cal_rx_en.cal_fail_store_i_4_n_0 ;
-  wire \gen_cal_rx_en.cal_fail_store_reg_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state2 ;
-  wire \gen_cal_rx_en.cpll_cal_state27_in ;
-  wire \gen_cal_rx_en.cpll_cal_state2_carry_n_1 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_carry_n_2 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_carry_n_3 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_carry_n_4 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_carry_n_5 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_carry_n_6 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_carry_n_7 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_1 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_2 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_3 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_4 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_5 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_6 ;
-  wire \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_7 ;
-  wire \gen_cal_rx_en.cpll_cal_state[10]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[11]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[12]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[12]_i_2_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[12]_i_3_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[12]_i_4_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[13]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[18]_i_2_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[1]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[21]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[22]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[23]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[24]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[25]_i_3_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[25]_i_4_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[25]_i_5_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[25]_i_6_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[25]_i_7_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[2]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[3]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[4]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[5]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[6]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state[9]_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state_reg[17]_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state_reg[18]_0 ;
-  wire \gen_cal_rx_en.cpll_cal_state_reg_n_0_[25] ;
-  wire \gen_cal_rx_en.cpll_cal_state_reg_n_0_[6] ;
-  wire \gen_cal_rx_en.cpllpd_int_i_1_n_0 ;
-  wire \gen_cal_rx_en.cpllreset_int_i_1_n_0 ;
-  wire [7:2]\gen_cal_rx_en.daddr ;
-  wire \gen_cal_rx_en.daddr[8]_i_1_n_0 ;
-  wire \gen_cal_rx_en.daddr[8]_i_2_n_0 ;
-  wire [2:0]\gen_cal_rx_en.daddr_reg[8]_0 ;
-  wire \gen_cal_rx_en.den_reg_0 ;
-  wire \gen_cal_rx_en.di_msk[12]_i_1_n_0 ;
-  wire \gen_cal_rx_en.di_msk[12]_i_2_n_0 ;
-  wire \gen_cal_rx_en.di_msk[13]_i_1_n_0 ;
-  wire \gen_cal_rx_en.di_msk[14]_i_1_n_0 ;
-  wire \gen_cal_rx_en.di_msk[15]_i_1_n_0 ;
-  wire \gen_cal_rx_en.di_msk[15]_i_2_n_0 ;
-  wire \gen_cal_rx_en.di_msk[1]_i_1_n_0 ;
-  wire \gen_cal_rx_en.di_msk[5]_i_1_n_0 ;
-  wire \gen_cal_rx_en.di_msk[6]_i_1_n_0 ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[0] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[10] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[11] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[12] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[13] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[14] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[15] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[1] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[2] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[3] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[4] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[5] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[6] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[7] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[8] ;
-  wire \gen_cal_rx_en.di_msk_reg_n_0_[9] ;
-  wire [15:0]\gen_cal_rx_en.di_reg[15]_0 ;
-  wire \gen_cal_rx_en.drp_state[0]_i_1_n_0 ;
-  wire \gen_cal_rx_en.drp_state[1]_i_1_n_0 ;
-  wire \gen_cal_rx_en.drp_state[2]_i_1_n_0 ;
-  wire \gen_cal_rx_en.drp_state[3]_i_1_n_0 ;
-  wire \gen_cal_rx_en.drp_state[4]_i_1_n_0 ;
-  wire \gen_cal_rx_en.drp_state[5]_i_1_n_0 ;
-  wire \gen_cal_rx_en.drp_state[6]_i_1_n_0 ;
-  wire [4:0]\gen_cal_rx_en.drp_state_reg[6]_0 ;
-  wire \gen_cal_rx_en.drp_state_reg_n_0_[0] ;
-  wire \gen_cal_rx_en.drp_state_reg_n_0_[3] ;
-  wire \gen_cal_rx_en.dwe_reg_0 ;
-  wire \gen_cal_rx_en.freq_counter_rst_reg_0 ;
-  wire \gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ;
-  wire \gen_cal_rx_en.gtrxreset_int ;
-  wire \gen_cal_rx_en.gtrxreset_int_reg_0 ;
-  wire \gen_cal_rx_en.mask_user_in_reg_0 ;
-  wire \gen_cal_rx_en.progdiv_cfg_store ;
-  wire \gen_cal_rx_en.progdiv_cfg_store[15]_i_1_n_0 ;
-  wire [15:0]\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[0] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[10] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[11] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[12] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[13] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[14] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[15] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[1] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[2] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[3] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[4] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[5] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[6] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[7] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[8] ;
-  wire \gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[9] ;
-  wire \gen_cal_rx_en.rd_reg_0 ;
-  wire \gen_cal_rx_en.rd_reg_1 ;
-  wire \gen_cal_rx_en.repeat_ctr[0]_i_1_n_0 ;
-  wire \gen_cal_rx_en.repeat_ctr[1]_i_1_n_0 ;
-  wire \gen_cal_rx_en.repeat_ctr[2]_i_1_n_0 ;
-  wire \gen_cal_rx_en.repeat_ctr[3]_i_2_n_0 ;
-  wire \gen_cal_rx_en.repeat_ctr[3]_i_3_n_0 ;
-  wire \gen_cal_rx_en.repeat_ctr_reg[3]_0 ;
-  wire \gen_cal_rx_en.rxcdrhold_int ;
-  wire \gen_cal_rx_en.rxcdrhold_int_reg_0 ;
-  wire \gen_cal_rx_en.rxoutclkmon ;
-  wire [2:2]\gen_cal_rx_en.rxoutclksel_int ;
-  wire \gen_cal_rx_en.rxoutclksel_int[2]_i_1_n_0 ;
-  wire \gen_cal_rx_en.rxprogdivreset_int ;
-  wire \gen_cal_rx_en.rxprogdivreset_int_reg_0 ;
-  wire \gen_cal_rx_en.status_store_reg_0 ;
-  wire \gen_cal_rx_en.status_store_reg_1 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_1 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_10 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_11 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_12 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_13 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_14 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_15 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_2 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_3 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_4 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_5 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_6 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_7 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_8 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__0_n_9 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_1 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_10 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_11 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_12 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_13 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_14 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_15 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_2 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_3 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_4 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_5 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_6 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_7 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_8 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry__1_n_9 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_1 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_10 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_11 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_12 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_13 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_14 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_15 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_2 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_3 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_4 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_5 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_6 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_7 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_8 ;
-  wire \gen_cal_rx_en.wait_ctr0_carry_n_9 ;
-  wire \gen_cal_rx_en.wait_ctr[0]_i_1_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr[24]_i_10_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr[24]_i_11_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr[24]_i_12_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr[24]_i_13_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr[24]_i_14_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr[24]_i_15_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr[24]_i_4_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr[24]_i_6_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr[24]_i_7_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr[24]_i_8_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr[24]_i_9_n_0 ;
-  wire \gen_cal_rx_en.wait_ctr_reg[14]_0 ;
-  wire \gen_cal_rx_en.wait_ctr_reg[5]_0 ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[0] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[10] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[11] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[12] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[13] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[14] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[15] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[16] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[17] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[18] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[19] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[1] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[20] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[21] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[22] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[23] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[24] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[2] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[3] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[4] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[5] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[6] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[7] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[8] ;
-  wire \gen_cal_rx_en.wait_ctr_reg_n_0_[9] ;
-  wire \gen_cal_rx_en.wr ;
-  wire \gen_cal_rx_en.wr_reg_0 ;
-  wire \gen_gtwizard_gthe4.cpllpd_ch_int ;
-  wire \gen_gtwizard_gthe4.cpllreset_ch_int ;
-  wire \gen_gtwizard_gthe4.gtpowergood_int ;
-  wire \gen_gtwizard_gthe4.gtrxreset_ch_int ;
-  wire \gen_gtwizard_gthe4.gtrxreset_int ;
-  wire \gen_gtwizard_gthe4.rxcdrhold_ch_int ;
-  wire \gen_gtwizard_gthe4.rxprogdivreset_ch_int ;
-  wire \gen_gtwizard_gthe4.rxprogdivreset_int ;
-  wire [0:0]gtwiz_userclk_rx_reset_in;
-  wire i_in_meta_reg;
-  wire i_in_meta_reg_0;
-  wire [1:0]i_in_out_reg;
-  wire in0;
-  wire \^lopt ;
-  wire \^lopt_1 ;
-  wire out;
-  wire p_11_in;
-  wire p_12_in;
-  wire p_13_in;
-  wire p_15_in;
-  wire p_16_in;
-  wire p_19_in;
-  wire p_25_in;
-  wire p_8_in;
-  wire p_9_in;
-  wire [0:0]rxoutclk_out;
-  wire [7:0]\NLW_gen_cal_rx_en.cpll_cal_state2_carry_O_UNCONNECTED ;
-  wire [7:0]\NLW_gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_O_UNCONNECTED ;
-  wire [7:1]\NLW_gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0_CO_UNCONNECTED ;
-  wire [7:0]\NLW_gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0_O_UNCONNECTED ;
-  wire [7:7]\NLW_gen_cal_rx_en.wait_ctr0_carry__1_CO_UNCONNECTED ;
-
-  assign \^lopt  = lopt_1;
-  assign \^lopt_1  = lopt_2;
-  assign lopt = \<const1> ;
-  VCC VCC
-       (.P(\<const1> ));
-  FDRE \gen_cal_rx_en.USER_CPLLLOCK_OUT_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.bit_synchronizer_cplllock_inst_n_1 ),
-        .Q(\gen_cal_rx_en.USER_CPLLLOCK_OUT_reg_0 ),
-        .R(1'b0));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_freq_counter_29 \gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER 
-       (.AR(AS),
-        .CO(\gen_cal_rx_en.cpll_cal_state2 ),
-        .D({\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_1 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_2 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_3 }),
-        .DI({\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_6 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_7 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_8 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_9 }),
-        .Q({Q[10],p_8_in,p_9_in,p_19_in,Q[5],Q[0]}),
-        .S({\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_11 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_12 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_13 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_14 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_15 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_16 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_17 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_18 }),
-        .SS(SS),
-        .drpclk_in(drpclk_in),
-        .\freq_cnt_o_reg[0]_0 (\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_25 ),
-        .\freq_cnt_o_reg[13]_0 ({\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_19 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_20 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_21 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_22 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_23 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_24 }),
-        .\freq_cnt_o_reg[14]_0 ({\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_26 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_27 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_28 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_29 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_30 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_31 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_32 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_33 }),
-        .\freq_cnt_o_reg[15]_0 (cal_on_rx_cal_freq_cnt),
-        .\freq_cnt_o_reg[16]_0 (\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_35 ),
-        .\freq_cnt_o_reg[17]_0 (\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_34 ),
-        .\gen_cal_rx_en.cal_fail_store_reg (cal_on_rx_debug_out),
-        .\gen_cal_rx_en.cal_fail_store_reg_0 (\gen_cal_rx_en.cal_fail_store_i_4_n_0 ),
-        .\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0 (\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0_0 ),
-        .\gen_cal_rx_en.cpll_cal_state_reg[20] (\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .\gen_cal_rx_en.cpll_cal_state_reg[8] (\gen_cal_rx_en.wait_ctr_reg[5]_0 ),
-        .\gen_cal_rx_en.gthe4_rxprgdivresetdone_sync (\gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ),
-        .\gen_cal_rx_en.repeat_ctr_reg[3] (\gen_cal_rx_en.repeat_ctr_reg[3]_0 ),
-        .\gen_cal_rx_en.repeat_ctr_reg[3]_0 (\gen_cal_rx_en.cpll_cal_state27_in ),
-        .\gen_cal_rx_en.repeat_ctr_reg[3]_1 (\gen_cal_rx_en.repeat_ctr[3]_i_3_n_0 ),
-        .\gen_cal_rx_en.rxoutclkmon (\gen_cal_rx_en.rxoutclkmon ),
-        .rst_in_out_reg(\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_0 ));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_30 \gen_cal_rx_en.bit_synchronizer_cplllock_inst 
-       (.Q({Q[15],Q[0]}),
-        .SS(SS),
-        .drpclk_in(drpclk_in),
-        .\gen_cal_rx_en.USER_CPLLLOCK_OUT_reg (i_in_out_reg[0]),
-        .\gen_cal_rx_en.cpll_cal_state_reg[0] (\gen_cal_rx_en.bit_synchronizer_cplllock_inst_n_1 ),
-        .i_in_out_reg_0(i_in_out_reg[1]),
-        .in0(in0));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_31 \gen_cal_rx_en.bit_synchronizer_rxpmaresetdone_inst 
-       (.D({\gen_cal_rx_en.bit_synchronizer_rxpmaresetdone_inst_n_0 ,\gen_cal_rx_en.bit_synchronizer_rxpmaresetdone_inst_n_1 ,\gen_cal_rx_en.bit_synchronizer_rxpmaresetdone_inst_n_2 ,\gen_cal_rx_en.bit_synchronizer_rxpmaresetdone_inst_n_3 }),
-        .Q({p_11_in,p_12_in,p_13_in,Q[8]}),
-        .drpclk_in(drpclk_in),
-        .\gen_cal_rx_en.cpll_cal_state_reg[14] (\gen_cal_rx_en.wait_ctr_reg[5]_0 ),
-        .\gen_cal_rx_en.cpll_cal_state_reg[17] (\gen_cal_rx_en.cpll_cal_state_reg[17]_0 ),
-        .i_in_meta_reg_0(i_in_meta_reg));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_32 \gen_cal_rx_en.bit_synchronizer_rxprgdivresetdone_inst 
-       (.D({\gen_cal_rx_en.bit_synchronizer_rxprgdivresetdone_inst_n_1 ,\gen_cal_rx_en.bit_synchronizer_rxprgdivresetdone_inst_n_2 ,\gen_cal_rx_en.bit_synchronizer_rxprgdivresetdone_inst_n_3 ,\gen_cal_rx_en.bit_synchronizer_rxprgdivresetdone_inst_n_4 }),
-        .Q({Q[16:15],\gen_cal_rx_en.cpll_cal_state_reg_n_0_[25] ,Q[14],p_9_in,Q[9],Q[6]}),
-        .drpclk_in(drpclk_in),
-        .\gen_cal_rx_en.cal_fail_store__0 (\gen_cal_rx_en.cal_fail_store__0 ),
-        .\gen_cal_rx_en.cpll_cal_state_reg[18] (\gen_cal_rx_en.cpll_cal_state_reg[18]_0 ),
-        .\gen_cal_rx_en.cpll_cal_state_reg[18]_0 (\gen_cal_rx_en.cpll_cal_state[18]_i_2_n_0 ),
-        .\gen_cal_rx_en.cpll_cal_state_reg[25] (\gen_cal_rx_en.wait_ctr_reg[5]_0 ),
-        .\gen_cal_rx_en.freq_counter_rst_reg (\gen_cal_rx_en.cpll_cal_state[12]_i_2_n_0 ),
-        .\gen_cal_rx_en.gthe4_rxprgdivresetdone_sync (\gen_cal_rx_en.gthe4_rxprgdivresetdone_sync ),
-        .i_in_meta_reg_0(i_in_meta_reg_0));
-  (* BOX_TYPE = "PRIMITIVE" *) 
-  (* OPT_MODIFIED = "MLO" *) 
-  BUFG_GT #(
-    .SIM_DEVICE("ULTRASCALE"),
-    .STARTUP_SYNC("FALSE")) 
-    \gen_cal_rx_en.bufg_gt_rxoutclkmon_inst 
-       (.CE(\^lopt ),
-        .CEMASK(1'b1),
-        .CLR(\^lopt_1 ),
-        .CLRMASK(1'b1),
-        .DIV({1'b0,1'b0,1'b0}),
-        .I(rxoutclk_out),
-        .O(\gen_cal_rx_en.rxoutclkmon ));
-  (* SOFT_HLUTNM = "soft_lutpair38" *) 
-  LUT3 #(
-    .INIT(8'h80)) 
-    \gen_cal_rx_en.cal_fail_store_i_4 
-       (.I0(cal_on_rx_debug_out[1]),
-        .I1(cal_on_rx_debug_out[0]),
-        .I2(cal_on_rx_debug_out[2]),
-        .O(\gen_cal_rx_en.cal_fail_store_i_4_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cal_fail_store_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cal_fail_store_reg_0 ),
-        .Q(\gen_cal_rx_en.cal_fail_store__0 ),
-        .R(1'b0));
-  (* COMPARATOR_THRESHOLD = "11" *) 
-  CARRY8 \gen_cal_rx_en.cpll_cal_state2_carry 
-       (.CI(\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_25 ),
-        .CI_TOP(1'b0),
-        .CO({\gen_cal_rx_en.cpll_cal_state2 ,\gen_cal_rx_en.cpll_cal_state2_carry_n_1 ,\gen_cal_rx_en.cpll_cal_state2_carry_n_2 ,\gen_cal_rx_en.cpll_cal_state2_carry_n_3 ,\gen_cal_rx_en.cpll_cal_state2_carry_n_4 ,\gen_cal_rx_en.cpll_cal_state2_carry_n_5 ,\gen_cal_rx_en.cpll_cal_state2_carry_n_6 ,\gen_cal_rx_en.cpll_cal_state2_carry_n_7 }),
-        .DI({1'b0,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_6 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_7 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_8 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_9 ,1'b0,1'b0,1'b0}),
-        .O(\NLW_gen_cal_rx_en.cpll_cal_state2_carry_O_UNCONNECTED [7:0]),
-        .S({\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_11 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_12 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_13 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_14 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_15 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_16 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_17 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_18 }));
-  (* COMPARATOR_THRESHOLD = "11" *) 
-  CARRY8 \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry 
-       (.CI(1'b1),
-        .CI_TOP(1'b0),
-        .CO({\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_0 ,\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_1 ,\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_2 ,\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_3 ,\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_4 ,\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_5 ,\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_6 ,\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_7 }),
-        .DI({cal_on_rx_cal_freq_cnt,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_19 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_20 ,1'b0,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_21 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_22 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_23 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_24 }),
-        .O(\NLW_gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_O_UNCONNECTED [7:0]),
-        .S({\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_26 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_27 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_28 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_29 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_30 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_31 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_32 ,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_33 }));
-  (* COMPARATOR_THRESHOLD = "11" *) 
-  CARRY8 \gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0 
-       (.CI(\gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry_n_0 ),
-        .CI_TOP(1'b0),
-        .CO({\NLW_gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0_CO_UNCONNECTED [7:1],\gen_cal_rx_en.cpll_cal_state27_in }),
-        .DI({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_34 }),
-        .O(\NLW_gen_cal_rx_en.cpll_cal_state2_inferred__0/i__carry__0_O_UNCONNECTED [7:0]),
-        .S({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_35 }));
-  LUT4 #(
-    .INIT(16'hF222)) 
-    \gen_cal_rx_en.cpll_cal_state[10]_i_1 
-       (.I0(Q[6]),
-        .I1(\gen_cal_rx_en.cpll_cal_state[12]_i_2_n_0 ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg[14]_0 ),
-        .I3(Q[7]),
-        .O(\gen_cal_rx_en.cpll_cal_state[10]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair28" *) 
-  LUT4 #(
-    .INIT(16'hF444)) 
-    \gen_cal_rx_en.cpll_cal_state[11]_i_1 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg[14]_0 ),
-        .I1(Q[7]),
-        .I2(\gen_cal_rx_en.cpll_cal_state[12]_i_2_n_0 ),
-        .I3(p_16_in),
-        .O(\gen_cal_rx_en.cpll_cal_state[11]_i_1_n_0 ));
-  LUT4 #(
-    .INIT(16'hF222)) 
-    \gen_cal_rx_en.cpll_cal_state[12]_i_1 
-       (.I0(p_16_in),
-        .I1(\gen_cal_rx_en.cpll_cal_state[12]_i_2_n_0 ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg[14]_0 ),
-        .I3(p_15_in),
-        .O(\gen_cal_rx_en.cpll_cal_state[12]_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h1000100010001010)) 
-    \gen_cal_rx_en.cpll_cal_state[12]_i_2 
-       (.I0(\gen_cal_rx_en.cpll_cal_state[25]_i_6_n_0 ),
-        .I1(\gen_cal_rx_en.cpll_cal_state[25]_i_5_n_0 ),
-        .I2(\gen_cal_rx_en.cpll_cal_state[25]_i_4_n_0 ),
-        .I3(\gen_cal_rx_en.cpll_cal_state[12]_i_3_n_0 ),
-        .I4(\gen_cal_rx_en.wait_ctr[24]_i_9_n_0 ),
-        .I5(\gen_cal_rx_en.cpll_cal_state[12]_i_4_n_0 ),
-        .O(\gen_cal_rx_en.cpll_cal_state[12]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair29" *) 
-  LUT2 #(
-    .INIT(4'h7)) 
-    \gen_cal_rx_en.cpll_cal_state[12]_i_3 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg_n_0_[10] ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[9] ),
-        .O(\gen_cal_rx_en.cpll_cal_state[12]_i_3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair26" *) 
-  LUT5 #(
-    .INIT(32'h88808080)) 
-    \gen_cal_rx_en.cpll_cal_state[12]_i_4 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg_n_0_[3] ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[4] ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[2] ),
-        .I3(\gen_cal_rx_en.wait_ctr_reg_n_0_[0] ),
-        .I4(\gen_cal_rx_en.wait_ctr_reg_n_0_[1] ),
-        .O(\gen_cal_rx_en.cpll_cal_state[12]_i_4_n_0 ));
-  LUT4 #(
-    .INIT(16'hF444)) 
-    \gen_cal_rx_en.cpll_cal_state[13]_i_1 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg[14]_0 ),
-        .I1(p_15_in),
-        .I2(\gen_cal_rx_en.wait_ctr_reg[5]_0 ),
-        .I3(Q[8]),
-        .O(\gen_cal_rx_en.cpll_cal_state[13]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair29" *) 
-  LUT5 #(
-    .INIT(32'hFFFFFFFE)) 
-    \gen_cal_rx_en.cpll_cal_state[18]_i_2 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg_n_0_[4] ),
-        .I1(\gen_cal_rx_en.wait_ctr[24]_i_9_n_0 ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[9] ),
-        .I3(\gen_cal_rx_en.wait_ctr_reg_n_0_[10] ),
-        .I4(\gen_cal_rx_en.wait_ctr[24]_i_8_n_0 ),
-        .O(\gen_cal_rx_en.cpll_cal_state[18]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair43" *) 
-  LUT3 #(
-    .INIT(8'hBA)) 
-    \gen_cal_rx_en.cpll_cal_state[1]_i_1 
-       (.I0(Q[0]),
-        .I1(\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .I2(Q[1]),
-        .O(\gen_cal_rx_en.cpll_cal_state[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair42" *) 
-  LUT3 #(
-    .INIT(8'hB8)) 
-    \gen_cal_rx_en.cpll_cal_state[21]_i_1 
-       (.I0(Q[10]),
-        .I1(\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .I2(Q[11]),
-        .O(\gen_cal_rx_en.cpll_cal_state[21]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair42" *) 
-  LUT3 #(
-    .INIT(8'hB8)) 
-    \gen_cal_rx_en.cpll_cal_state[22]_i_1 
-       (.I0(Q[11]),
-        .I1(\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .I2(Q[12]),
-        .O(\gen_cal_rx_en.cpll_cal_state[22]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair37" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
-    \gen_cal_rx_en.cpll_cal_state[23]_i_1 
-       (.I0(\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .I1(Q[12]),
-        .O(\gen_cal_rx_en.cpll_cal_state[23]_i_1_n_0 ));
-  LUT3 #(
-    .INIT(8'hEA)) 
-    \gen_cal_rx_en.cpll_cal_state[24]_i_1 
-       (.I0(Q[13]),
-        .I1(\gen_cal_rx_en.wait_ctr_reg[5]_0 ),
-        .I2(Q[14]),
-        .O(\gen_cal_rx_en.cpll_cal_state[24]_i_1_n_0 ));
-  LUT5 #(
-    .INIT(32'h00000004)) 
-    \gen_cal_rx_en.cpll_cal_state[25]_i_2 
-       (.I0(\gen_cal_rx_en.cpll_cal_state[25]_i_3_n_0 ),
-        .I1(\gen_cal_rx_en.cpll_cal_state[25]_i_4_n_0 ),
-        .I2(\gen_cal_rx_en.cpll_cal_state[25]_i_5_n_0 ),
-        .I3(\gen_cal_rx_en.cpll_cal_state[25]_i_6_n_0 ),
-        .I4(\gen_cal_rx_en.cpll_cal_state[25]_i_7_n_0 ),
-        .O(\gen_cal_rx_en.wait_ctr_reg[5]_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFFFFFFFFFFFFE)) 
-    \gen_cal_rx_en.cpll_cal_state[25]_i_3 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg_n_0_[5] ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[6] ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[7] ),
-        .I3(\gen_cal_rx_en.wait_ctr_reg_n_0_[8] ),
-        .I4(\gen_cal_rx_en.wait_ctr_reg_n_0_[9] ),
-        .I5(\gen_cal_rx_en.wait_ctr_reg_n_0_[10] ),
-        .O(\gen_cal_rx_en.cpll_cal_state[25]_i_3_n_0 ));
-  LUT4 #(
-    .INIT(16'h0001)) 
-    \gen_cal_rx_en.cpll_cal_state[25]_i_4 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg_n_0_[23] ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[24] ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[21] ),
-        .I3(\gen_cal_rx_en.wait_ctr_reg_n_0_[22] ),
-        .O(\gen_cal_rx_en.cpll_cal_state[25]_i_4_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair27" *) 
-  LUT4 #(
-    .INIT(16'hFFFE)) 
-    \gen_cal_rx_en.cpll_cal_state[25]_i_5 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg_n_0_[19] ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[20] ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[17] ),
-        .I3(\gen_cal_rx_en.wait_ctr_reg_n_0_[18] ),
-        .O(\gen_cal_rx_en.cpll_cal_state[25]_i_5_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFFFFFFFFFFFFE)) 
-    \gen_cal_rx_en.cpll_cal_state[25]_i_6 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg_n_0_[11] ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[12] ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[14] ),
-        .I3(\gen_cal_rx_en.wait_ctr_reg_n_0_[13] ),
-        .I4(\gen_cal_rx_en.wait_ctr_reg_n_0_[16] ),
-        .I5(\gen_cal_rx_en.wait_ctr_reg_n_0_[15] ),
-        .O(\gen_cal_rx_en.cpll_cal_state[25]_i_6_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair26" *) 
-  LUT5 #(
-    .INIT(32'h88888880)) 
-    \gen_cal_rx_en.cpll_cal_state[25]_i_7 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg_n_0_[3] ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[4] ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[2] ),
-        .I3(\gen_cal_rx_en.wait_ctr_reg_n_0_[1] ),
-        .I4(\gen_cal_rx_en.wait_ctr_reg_n_0_[0] ),
-        .O(\gen_cal_rx_en.cpll_cal_state[25]_i_7_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair43" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
-    \gen_cal_rx_en.cpll_cal_state[2]_i_1 
-       (.I0(\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .I1(Q[1]),
-        .O(\gen_cal_rx_en.cpll_cal_state[2]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair41" *) 
-  LUT4 #(
-    .INIT(16'h4F44)) 
-    \gen_cal_rx_en.cpll_cal_state[3]_i_1 
-       (.I0(\gen_cal_rx_en.status_store_reg_0 ),
-        .I1(p_25_in),
-        .I2(\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .I3(Q[2]),
-        .O(\gen_cal_rx_en.cpll_cal_state[3]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair41" *) 
-  LUT3 #(
-    .INIT(8'hB8)) 
-    \gen_cal_rx_en.cpll_cal_state[4]_i_1 
-       (.I0(Q[2]),
-        .I1(\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .I2(Q[3]),
-        .O(\gen_cal_rx_en.cpll_cal_state[4]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair32" *) 
-  LUT5 #(
-    .INIT(32'hEAEAFFC0)) 
-    \gen_cal_rx_en.cpll_cal_state[5]_i_1 
-       (.I0(Q[3]),
-        .I1(\gen_cal_rx_en.status_store_reg_0 ),
-        .I2(p_25_in),
-        .I3(Q[4]),
-        .I4(\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .O(\gen_cal_rx_en.cpll_cal_state[5]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair32" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
-    \gen_cal_rx_en.cpll_cal_state[6]_i_1 
-       (.I0(\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .I1(Q[4]),
-        .O(\gen_cal_rx_en.cpll_cal_state[6]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair30" *) 
-  LUT4 #(
-    .INIT(16'hF444)) 
-    \gen_cal_rx_en.cpll_cal_state[9]_i_1 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg[5]_0 ),
-        .I1(p_19_in),
-        .I2(\gen_cal_rx_en.cpll_cal_state[12]_i_2_n_0 ),
-        .I3(Q[6]),
-        .O(\gen_cal_rx_en.cpll_cal_state[9]_i_1_n_0 ));
-  FDSE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[0] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(1'b0),
-        .Q(Q[0]),
-        .S(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[10] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[10]_i_1_n_0 ),
-        .Q(Q[7]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[11] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[11]_i_1_n_0 ),
-        .Q(p_16_in),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[12] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[12]_i_1_n_0 ),
-        .Q(p_15_in),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[13] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[13]_i_1_n_0 ),
-        .Q(Q[8]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[14] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.bit_synchronizer_rxpmaresetdone_inst_n_3 ),
-        .Q(p_13_in),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[15] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.bit_synchronizer_rxpmaresetdone_inst_n_2 ),
-        .Q(p_12_in),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[16] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.bit_synchronizer_rxpmaresetdone_inst_n_1 ),
-        .Q(p_11_in),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[17] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.bit_synchronizer_rxpmaresetdone_inst_n_0 ),
-        .Q(Q[9]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[18] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.bit_synchronizer_rxprgdivresetdone_inst_n_4 ),
-        .Q(p_9_in),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[19] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_2 ),
-        .Q(p_8_in),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[1] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[1]_i_1_n_0 ),
-        .Q(Q[1]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[20] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_1 ),
-        .Q(Q[10]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[21] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[21]_i_1_n_0 ),
-        .Q(Q[11]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[22] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[22]_i_1_n_0 ),
-        .Q(Q[12]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[23] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[23]_i_1_n_0 ),
-        .Q(Q[13]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[24] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[24]_i_1_n_0 ),
-        .Q(Q[14]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[25] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.bit_synchronizer_rxprgdivresetdone_inst_n_3 ),
-        .Q(\gen_cal_rx_en.cpll_cal_state_reg_n_0_[25] ),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[26] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.bit_synchronizer_rxprgdivresetdone_inst_n_2 ),
-        .Q(Q[15]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[27] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.bit_synchronizer_rxprgdivresetdone_inst_n_1 ),
-        .Q(Q[16]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[2] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[2]_i_1_n_0 ),
-        .Q(p_25_in),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[3] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[3]_i_1_n_0 ),
-        .Q(Q[2]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[4] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[4]_i_1_n_0 ),
-        .Q(Q[3]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[5] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[5]_i_1_n_0 ),
-        .Q(Q[4]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[6] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[6]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.cpll_cal_state_reg_n_0_[6] ),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[7] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state_reg_n_0_[6] ),
-        .Q(Q[5]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[8] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_3 ),
-        .Q(p_19_in),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpll_cal_state_reg[9] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpll_cal_state[9]_i_1_n_0 ),
-        .Q(Q[6]),
-        .R(SS));
-  (* SOFT_HLUTNM = "soft_lutpair30" *) 
-  LUT5 #(
-    .INIT(32'hFFDD2F00)) 
-    \gen_cal_rx_en.cpllpd_int_i_1 
-       (.I0(Q[6]),
-        .I1(\gen_cal_rx_en.cpll_cal_state[12]_i_2_n_0 ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg[5]_0 ),
-        .I3(p_19_in),
-        .I4(\gen_gtwizard_gthe4.cpllpd_ch_int ),
-        .O(\gen_cal_rx_en.cpllpd_int_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpllpd_int_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpllpd_int_i_1_n_0 ),
-        .Q(\gen_gtwizard_gthe4.cpllpd_ch_int ),
-        .R(SS));
-  (* SOFT_HLUTNM = "soft_lutpair28" *) 
-  LUT5 #(
-    .INIT(32'hFFDD2F00)) 
-    \gen_cal_rx_en.cpllreset_int_i_1 
-       (.I0(p_16_in),
-        .I1(\gen_cal_rx_en.cpll_cal_state[12]_i_2_n_0 ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg[14]_0 ),
-        .I3(Q[7]),
-        .I4(\gen_gtwizard_gthe4.cpllreset_ch_int ),
-        .O(\gen_cal_rx_en.cpllreset_int_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.cpllreset_int_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.cpllreset_int_i_1_n_0 ),
-        .Q(\gen_gtwizard_gthe4.cpllreset_ch_int ),
-        .R(SS));
-  LUT1 #(
-    .INIT(2'h1)) 
-    \gen_cal_rx_en.daddr[2]_i_1 
-       (.I0(Q[0]),
-        .O(\gen_cal_rx_en.daddr [2]));
-  (* SOFT_HLUTNM = "soft_lutpair31" *) 
-  LUT5 #(
-    .INIT(32'h00000001)) 
-    \gen_cal_rx_en.daddr[7]_i_1 
-       (.I0(Q[1]),
-        .I1(Q[10]),
-        .I2(Q[3]),
-        .I3(Q[12]),
-        .I4(Q[0]),
-        .O(\gen_cal_rx_en.daddr [7]));
-  LUT4 #(
-    .INIT(16'hFEFF)) 
-    \gen_cal_rx_en.daddr[8]_i_1 
-       (.I0(Q[4]),
-        .I1(Q[11]),
-        .I2(Q[2]),
-        .I3(\gen_cal_rx_en.daddr [7]),
-        .O(\gen_cal_rx_en.daddr[8]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair31" *) 
-  LUT5 #(
-    .INIT(32'h55555554)) 
-    \gen_cal_rx_en.daddr[8]_i_2 
-       (.I0(Q[0]),
-        .I1(Q[1]),
-        .I2(Q[10]),
-        .I3(Q[3]),
-        .I4(Q[12]),
-        .O(\gen_cal_rx_en.daddr[8]_i_2_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.daddr_reg[2] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.daddr[8]_i_1_n_0 ),
-        .D(\gen_cal_rx_en.daddr [2]),
-        .Q(\gen_cal_rx_en.daddr_reg[8]_0 [0]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.daddr_reg[7] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.daddr[8]_i_1_n_0 ),
-        .D(\gen_cal_rx_en.daddr [7]),
-        .Q(\gen_cal_rx_en.daddr_reg[8]_0 [1]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.daddr_reg[8] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.daddr[8]_i_1_n_0 ),
-        .D(\gen_cal_rx_en.daddr[8]_i_2_n_0 ),
-        .Q(\gen_cal_rx_en.daddr_reg[8]_0 [2]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.den_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.den_reg_0 ),
-        .Q(cal_on_rx_drpen_out),
-        .R(SS));
-  LUT6 #(
-    .INIT(64'h0000000000003332)) 
-    \gen_cal_rx_en.di_msk[12]_i_1 
-       (.I0(Q[0]),
-        .I1(Q[3]),
-        .I2(Q[12]),
-        .I3(Q[4]),
-        .I4(Q[11]),
-        .I5(SS),
-        .O(\gen_cal_rx_en.di_msk[12]_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h5555555555555554)) 
-    \gen_cal_rx_en.di_msk[12]_i_2 
-       (.I0(SS),
-        .I1(Q[11]),
-        .I2(Q[4]),
-        .I3(Q[12]),
-        .I4(Q[3]),
-        .I5(Q[0]),
-        .O(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair49" *) 
-  LUT3 #(
-    .INIT(8'hA8)) 
-    \gen_cal_rx_en.di_msk[13]_i_1 
-       (.I0(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[13] ),
-        .I1(Q[11]),
-        .I2(Q[3]),
-        .O(\gen_cal_rx_en.di_msk[13]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair49" *) 
-  LUT3 #(
-    .INIT(8'hA8)) 
-    \gen_cal_rx_en.di_msk[14]_i_1 
-       (.I0(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[14] ),
-        .I1(Q[11]),
-        .I2(Q[3]),
-        .O(\gen_cal_rx_en.di_msk[14]_i_1_n_0 ));
-  LUT2 #(
-    .INIT(4'h2)) 
-    \gen_cal_rx_en.di_msk[15]_i_1 
-       (.I0(Q[4]),
-        .I1(SS),
-        .O(\gen_cal_rx_en.di_msk[15]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair47" *) 
-  LUT3 #(
-    .INIT(8'hA8)) 
-    \gen_cal_rx_en.di_msk[15]_i_2 
-       (.I0(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[15] ),
-        .I1(Q[11]),
-        .I2(Q[3]),
-        .O(\gen_cal_rx_en.di_msk[15]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair47" *) 
-  LUT3 #(
-    .INIT(8'hA8)) 
-    \gen_cal_rx_en.di_msk[1]_i_1 
-       (.I0(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[1] ),
-        .I1(Q[11]),
-        .I2(Q[3]),
-        .O(\gen_cal_rx_en.di_msk[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair48" *) 
-  LUT3 #(
-    .INIT(8'hA8)) 
-    \gen_cal_rx_en.di_msk[5]_i_1 
-       (.I0(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[5] ),
-        .I1(Q[11]),
-        .I2(Q[3]),
-        .O(\gen_cal_rx_en.di_msk[5]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair48" *) 
-  LUT3 #(
-    .INIT(8'hA8)) 
-    \gen_cal_rx_en.di_msk[6]_i_1 
-       (.I0(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[6] ),
-        .I1(Q[11]),
-        .I2(Q[3]),
-        .O(\gen_cal_rx_en.di_msk[6]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.di_msk_reg[0] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[0] ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[0] ),
-        .R(\gen_cal_rx_en.di_msk[12]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.di_msk_reg[10] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[10] ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[10] ),
-        .R(\gen_cal_rx_en.di_msk[12]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.di_msk_reg[11] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[11] ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[11] ),
-        .R(\gen_cal_rx_en.di_msk[12]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.di_msk_reg[12] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[12] ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[12] ),
-        .R(\gen_cal_rx_en.di_msk[12]_i_1_n_0 ));
-  FDSE \gen_cal_rx_en.di_msk_reg[13] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.di_msk[13]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[13] ),
-        .S(\gen_cal_rx_en.di_msk[15]_i_1_n_0 ));
-  FDSE \gen_cal_rx_en.di_msk_reg[14] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.di_msk[14]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[14] ),
-        .S(\gen_cal_rx_en.di_msk[15]_i_1_n_0 ));
-  FDSE \gen_cal_rx_en.di_msk_reg[15] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.di_msk[15]_i_2_n_0 ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[15] ),
-        .S(\gen_cal_rx_en.di_msk[15]_i_1_n_0 ));
-  FDSE \gen_cal_rx_en.di_msk_reg[1] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.di_msk[1]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[1] ),
-        .S(\gen_cal_rx_en.di_msk[15]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.di_msk_reg[2] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[2] ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[2] ),
-        .R(\gen_cal_rx_en.di_msk[12]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.di_msk_reg[3] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[3] ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[3] ),
-        .R(\gen_cal_rx_en.di_msk[12]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.di_msk_reg[4] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[4] ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[4] ),
-        .R(\gen_cal_rx_en.di_msk[12]_i_1_n_0 ));
-  FDSE \gen_cal_rx_en.di_msk_reg[5] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.di_msk[5]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[5] ),
-        .S(\gen_cal_rx_en.di_msk[15]_i_1_n_0 ));
-  FDSE \gen_cal_rx_en.di_msk_reg[6] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.di_msk[6]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[6] ),
-        .S(\gen_cal_rx_en.di_msk[15]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.di_msk_reg[7] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[7] ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[7] ),
-        .R(\gen_cal_rx_en.di_msk[12]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.di_msk_reg[8] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[8] ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[8] ),
-        .R(\gen_cal_rx_en.di_msk[12]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.di_msk_reg[9] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.di_msk[12]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[9] ),
-        .Q(\gen_cal_rx_en.di_msk_reg_n_0_[9] ),
-        .R(\gen_cal_rx_en.di_msk[12]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[0] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[0] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [0]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[10] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[10] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [10]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[11] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[11] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [11]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[12] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[12] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [12]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[13] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[13] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [13]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[14] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[14] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [14]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[15] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[15] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [15]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[1] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[1] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [1]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[2] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[2] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [2]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[3] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[3] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [3]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[4] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[4] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [4]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[5] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[5] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [5]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[6] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[6] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [6]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[7] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[7] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [7]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[8] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[8] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [8]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.di_reg[9] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .D(\gen_cal_rx_en.di_msk_reg_n_0_[9] ),
-        .Q(\gen_cal_rx_en.di_reg[15]_0 [9]),
-        .R(SS));
-  LUT4 #(
-    .INIT(16'hAABA)) 
-    \gen_cal_rx_en.drp_state[0]_i_1 
-       (.I0(\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .I1(\gen_cal_rx_en.rd_reg_0 ),
-        .I2(\gen_cal_rx_en.drp_state_reg_n_0_[0] ),
-        .I3(\gen_cal_rx_en.wr ),
-        .O(\gen_cal_rx_en.drp_state[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair40" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
-    \gen_cal_rx_en.drp_state[1]_i_1 
-       (.I0(\gen_cal_rx_en.rd_reg_0 ),
-        .I1(\gen_cal_rx_en.drp_state_reg_n_0_[0] ),
-        .O(\gen_cal_rx_en.drp_state[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair45" *) 
-  LUT3 #(
-    .INIT(8'hBA)) 
-    \gen_cal_rx_en.drp_state[2]_i_1 
-       (.I0(\gen_cal_rx_en.drp_state_reg[6]_0 [0]),
-        .I1(cal_on_rx_drdy),
-        .I2(\gen_cal_rx_en.drp_state_reg[6]_0 [1]),
-        .O(\gen_cal_rx_en.drp_state[2]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair39" *) 
-  LUT3 #(
-    .INIT(8'h08)) 
-    \gen_cal_rx_en.drp_state[3]_i_1 
-       (.I0(\gen_cal_rx_en.drp_state_reg[6]_0 [1]),
-        .I1(cal_on_rx_drdy),
-        .I2(\gen_cal_rx_en.rd_reg_0 ),
-        .O(\gen_cal_rx_en.drp_state[3]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair40" *) 
-  LUT4 #(
-    .INIT(16'hBAAA)) 
-    \gen_cal_rx_en.drp_state[4]_i_1 
-       (.I0(\gen_cal_rx_en.drp_state_reg_n_0_[3] ),
-        .I1(\gen_cal_rx_en.rd_reg_0 ),
-        .I2(\gen_cal_rx_en.drp_state_reg_n_0_[0] ),
-        .I3(\gen_cal_rx_en.wr ),
-        .O(\gen_cal_rx_en.drp_state[4]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair45" *) 
-  LUT3 #(
-    .INIT(8'hBA)) 
-    \gen_cal_rx_en.drp_state[5]_i_1 
-       (.I0(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .I1(cal_on_rx_drdy),
-        .I2(\gen_cal_rx_en.drp_state_reg[6]_0 [3]),
-        .O(\gen_cal_rx_en.drp_state[5]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair39" *) 
-  LUT4 #(
-    .INIT(16'hA888)) 
-    \gen_cal_rx_en.drp_state[6]_i_1 
-       (.I0(cal_on_rx_drdy),
-        .I1(\gen_cal_rx_en.drp_state_reg[6]_0 [3]),
-        .I2(\gen_cal_rx_en.rd_reg_0 ),
-        .I3(\gen_cal_rx_en.drp_state_reg[6]_0 [1]),
-        .O(\gen_cal_rx_en.drp_state[6]_i_1_n_0 ));
-  FDSE #(
-    .INIT(1'b1)) 
-    \gen_cal_rx_en.drp_state_reg[0] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.drp_state[0]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.drp_state_reg_n_0_[0] ),
-        .S(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.drp_state_reg[1] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.drp_state[1]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.drp_state_reg[6]_0 [0]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.drp_state_reg[2] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.drp_state[2]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.drp_state_reg[6]_0 [1]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.drp_state_reg[3] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.drp_state[3]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.drp_state_reg_n_0_[3] ),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.drp_state_reg[4] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.drp_state[4]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.drp_state_reg[6]_0 [2]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.drp_state_reg[5] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.drp_state[5]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.drp_state_reg[6]_0 [3]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.drp_state_reg[6] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.drp_state[6]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.dwe_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.dwe_reg_0 ),
-        .Q(cal_on_rx_drpwe_out),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b1)) 
-    \gen_cal_rx_en.freq_counter_rst_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.freq_counter_rst_reg_0 ),
-        .Q(AS),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.gtrxreset_int_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.gtrxreset_int_reg_0 ),
-        .Q(\gen_cal_rx_en.gtrxreset_int ),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.mask_user_in_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.mask_user_in_reg_0 ),
-        .Q(i_in_out_reg[0]),
-        .R(SS));
-  LUT4 #(
-    .INIT(16'h4440)) 
-    \gen_cal_rx_en.progdiv_cfg_store[14]_i_1 
-       (.I0(SS),
-        .I1(\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .I2(Q[2]),
-        .I3(Q[10]),
-        .O(\gen_cal_rx_en.progdiv_cfg_store ));
-  LUT6 #(
-    .INIT(64'hFFEFFFFF30203000)) 
-    \gen_cal_rx_en.progdiv_cfg_store[15]_i_1 
-       (.I0(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [15]),
-        .I1(SS),
-        .I2(\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .I3(Q[2]),
-        .I4(Q[10]),
-        .I5(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[15] ),
-        .O(\gen_cal_rx_en.progdiv_cfg_store[15]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[0] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [0]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[0] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[10] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [10]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[10] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[11] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [11]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[11] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[12] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [12]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[12] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[13] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [13]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[13] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[14] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [14]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[14] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[15] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.progdiv_cfg_store[15]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[15] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[1] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [1]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[1] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[2] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [2]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[2] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[3] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [3]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[3] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[4] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [4]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[4] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[5] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [5]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[5] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[6] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [6]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[6] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[7] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [7]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[7] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[8] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [8]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[8] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.progdiv_cfg_store_reg[9] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.progdiv_cfg_store ),
-        .D(\gen_cal_rx_en.progdiv_cfg_store_reg[15]_0 [9]),
-        .Q(\gen_cal_rx_en.progdiv_cfg_store_reg_n_0_[9] ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.rd_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.rd_reg_1 ),
-        .Q(\gen_cal_rx_en.rd_reg_0 ),
-        .R(SS));
-  (* SOFT_HLUTNM = "soft_lutpair44" *) 
-  LUT2 #(
-    .INIT(4'h2)) 
-    \gen_cal_rx_en.repeat_ctr[0]_i_1 
-       (.I0(p_8_in),
-        .I1(cal_on_rx_debug_out[0]),
-        .O(\gen_cal_rx_en.repeat_ctr[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair44" *) 
-  LUT3 #(
-    .INIT(8'h28)) 
-    \gen_cal_rx_en.repeat_ctr[1]_i_1 
-       (.I0(p_8_in),
-        .I1(cal_on_rx_debug_out[0]),
-        .I2(cal_on_rx_debug_out[1]),
-        .O(\gen_cal_rx_en.repeat_ctr[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair38" *) 
-  LUT4 #(
-    .INIT(16'h2888)) 
-    \gen_cal_rx_en.repeat_ctr[2]_i_1 
-       (.I0(p_8_in),
-        .I1(cal_on_rx_debug_out[2]),
-        .I2(cal_on_rx_debug_out[1]),
-        .I3(cal_on_rx_debug_out[0]),
-        .O(\gen_cal_rx_en.repeat_ctr[2]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair33" *) 
-  LUT5 #(
-    .INIT(32'h28888888)) 
-    \gen_cal_rx_en.repeat_ctr[3]_i_2 
-       (.I0(p_8_in),
-        .I1(cal_on_rx_debug_out[3]),
-        .I2(cal_on_rx_debug_out[2]),
-        .I3(cal_on_rx_debug_out[0]),
-        .I4(cal_on_rx_debug_out[1]),
-        .O(\gen_cal_rx_en.repeat_ctr[3]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair33" *) 
-  LUT4 #(
-    .INIT(16'h7FFF)) 
-    \gen_cal_rx_en.repeat_ctr[3]_i_3 
-       (.I0(cal_on_rx_debug_out[3]),
-        .I1(cal_on_rx_debug_out[2]),
-        .I2(cal_on_rx_debug_out[0]),
-        .I3(cal_on_rx_debug_out[1]),
-        .O(\gen_cal_rx_en.repeat_ctr[3]_i_3_n_0 ));
-  FDRE \gen_cal_rx_en.repeat_ctr_reg[0] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_0 ),
-        .D(\gen_cal_rx_en.repeat_ctr[0]_i_1_n_0 ),
-        .Q(cal_on_rx_debug_out[0]),
-        .R(1'b0));
-  FDRE \gen_cal_rx_en.repeat_ctr_reg[1] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_0 ),
-        .D(\gen_cal_rx_en.repeat_ctr[1]_i_1_n_0 ),
-        .Q(cal_on_rx_debug_out[1]),
-        .R(1'b0));
-  FDRE \gen_cal_rx_en.repeat_ctr_reg[2] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_0 ),
-        .D(\gen_cal_rx_en.repeat_ctr[2]_i_1_n_0 ),
-        .Q(cal_on_rx_debug_out[2]),
-        .R(1'b0));
-  FDRE \gen_cal_rx_en.repeat_ctr_reg[3] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.U_RXOUTCLK_FREQ_COUNTER_n_0 ),
-        .D(\gen_cal_rx_en.repeat_ctr[3]_i_2_n_0 ),
-        .Q(cal_on_rx_debug_out[3]),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.rxcdrhold_int_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.rxcdrhold_int_reg_0 ),
-        .Q(\gen_cal_rx_en.rxcdrhold_int ),
-        .R(SS));
-  (* SOFT_HLUTNM = "soft_lutpair46" *) 
-  LUT3 #(
-    .INIT(8'h0E)) 
-    \gen_cal_rx_en.rxoutclksel_int[2]_i_1 
-       (.I0(\gen_cal_rx_en.rxoutclksel_int ),
-        .I1(\gen_cal_rx_en.cpll_cal_state_reg_n_0_[6] ),
-        .I2(Q[0]),
-        .O(\gen_cal_rx_en.rxoutclksel_int[2]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.rxoutclksel_int_reg[2] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.rxoutclksel_int[2]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.rxoutclksel_int ),
-        .R(1'b0));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.rxprogdivreset_int_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.rxprogdivreset_int_reg_0 ),
-        .Q(\gen_cal_rx_en.rxprogdivreset_int ),
-        .R(SS));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.status_store_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.status_store_reg_1 ),
-        .Q(\gen_cal_rx_en.status_store_reg_0 ),
-        .R(1'b0));
-  (* ADDER_THRESHOLD = "35" *) 
-  CARRY8 \gen_cal_rx_en.wait_ctr0_carry 
-       (.CI(\gen_cal_rx_en.wait_ctr_reg_n_0_[0] ),
-        .CI_TOP(1'b0),
-        .CO({\gen_cal_rx_en.wait_ctr0_carry_n_0 ,\gen_cal_rx_en.wait_ctr0_carry_n_1 ,\gen_cal_rx_en.wait_ctr0_carry_n_2 ,\gen_cal_rx_en.wait_ctr0_carry_n_3 ,\gen_cal_rx_en.wait_ctr0_carry_n_4 ,\gen_cal_rx_en.wait_ctr0_carry_n_5 ,\gen_cal_rx_en.wait_ctr0_carry_n_6 ,\gen_cal_rx_en.wait_ctr0_carry_n_7 }),
-        .DI({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .O({\gen_cal_rx_en.wait_ctr0_carry_n_8 ,\gen_cal_rx_en.wait_ctr0_carry_n_9 ,\gen_cal_rx_en.wait_ctr0_carry_n_10 ,\gen_cal_rx_en.wait_ctr0_carry_n_11 ,\gen_cal_rx_en.wait_ctr0_carry_n_12 ,\gen_cal_rx_en.wait_ctr0_carry_n_13 ,\gen_cal_rx_en.wait_ctr0_carry_n_14 ,\gen_cal_rx_en.wait_ctr0_carry_n_15 }),
-        .S({\gen_cal_rx_en.wait_ctr_reg_n_0_[8] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[7] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[6] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[5] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[4] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[3] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[2] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[1] }));
-  (* ADDER_THRESHOLD = "35" *) 
-  CARRY8 \gen_cal_rx_en.wait_ctr0_carry__0 
-       (.CI(\gen_cal_rx_en.wait_ctr0_carry_n_0 ),
-        .CI_TOP(1'b0),
-        .CO({\gen_cal_rx_en.wait_ctr0_carry__0_n_0 ,\gen_cal_rx_en.wait_ctr0_carry__0_n_1 ,\gen_cal_rx_en.wait_ctr0_carry__0_n_2 ,\gen_cal_rx_en.wait_ctr0_carry__0_n_3 ,\gen_cal_rx_en.wait_ctr0_carry__0_n_4 ,\gen_cal_rx_en.wait_ctr0_carry__0_n_5 ,\gen_cal_rx_en.wait_ctr0_carry__0_n_6 ,\gen_cal_rx_en.wait_ctr0_carry__0_n_7 }),
-        .DI({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .O({\gen_cal_rx_en.wait_ctr0_carry__0_n_8 ,\gen_cal_rx_en.wait_ctr0_carry__0_n_9 ,\gen_cal_rx_en.wait_ctr0_carry__0_n_10 ,\gen_cal_rx_en.wait_ctr0_carry__0_n_11 ,\gen_cal_rx_en.wait_ctr0_carry__0_n_12 ,\gen_cal_rx_en.wait_ctr0_carry__0_n_13 ,\gen_cal_rx_en.wait_ctr0_carry__0_n_14 ,\gen_cal_rx_en.wait_ctr0_carry__0_n_15 }),
-        .S({\gen_cal_rx_en.wait_ctr_reg_n_0_[16] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[15] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[14] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[13] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[12] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[11] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[10] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[9] }));
-  (* ADDER_THRESHOLD = "35" *) 
-  CARRY8 \gen_cal_rx_en.wait_ctr0_carry__1 
-       (.CI(\gen_cal_rx_en.wait_ctr0_carry__0_n_0 ),
-        .CI_TOP(1'b0),
-        .CO({\NLW_gen_cal_rx_en.wait_ctr0_carry__1_CO_UNCONNECTED [7],\gen_cal_rx_en.wait_ctr0_carry__1_n_1 ,\gen_cal_rx_en.wait_ctr0_carry__1_n_2 ,\gen_cal_rx_en.wait_ctr0_carry__1_n_3 ,\gen_cal_rx_en.wait_ctr0_carry__1_n_4 ,\gen_cal_rx_en.wait_ctr0_carry__1_n_5 ,\gen_cal_rx_en.wait_ctr0_carry__1_n_6 ,\gen_cal_rx_en.wait_ctr0_carry__1_n_7 }),
-        .DI({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}),
-        .O({\gen_cal_rx_en.wait_ctr0_carry__1_n_8 ,\gen_cal_rx_en.wait_ctr0_carry__1_n_9 ,\gen_cal_rx_en.wait_ctr0_carry__1_n_10 ,\gen_cal_rx_en.wait_ctr0_carry__1_n_11 ,\gen_cal_rx_en.wait_ctr0_carry__1_n_12 ,\gen_cal_rx_en.wait_ctr0_carry__1_n_13 ,\gen_cal_rx_en.wait_ctr0_carry__1_n_14 ,\gen_cal_rx_en.wait_ctr0_carry__1_n_15 }),
-        .S({\gen_cal_rx_en.wait_ctr_reg_n_0_[24] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[23] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[22] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[21] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[20] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[19] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[18] ,\gen_cal_rx_en.wait_ctr_reg_n_0_[17] }));
-  LUT6 #(
-    .INIT(64'h00000000FFEEFEEE)) 
-    \gen_cal_rx_en.wait_ctr[0]_i_1 
-       (.I0(\gen_cal_rx_en.cpll_cal_state_reg[17]_0 ),
-        .I1(\gen_cal_rx_en.wait_ctr[24]_i_4_n_0 ),
-        .I2(p_15_in),
-        .I3(\gen_cal_rx_en.wait_ctr_reg[14]_0 ),
-        .I4(Q[7]),
-        .I5(\gen_cal_rx_en.wait_ctr_reg_n_0_[0] ),
-        .O(\gen_cal_rx_en.wait_ctr[0]_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'h0011011100000000)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_1 
-       (.I0(\gen_cal_rx_en.cpll_cal_state_reg[17]_0 ),
-        .I1(\gen_cal_rx_en.wait_ctr[24]_i_4_n_0 ),
-        .I2(p_15_in),
-        .I3(\gen_cal_rx_en.wait_ctr_reg[14]_0 ),
-        .I4(Q[7]),
-        .I5(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .O(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair36" *) 
-  LUT2 #(
-    .INIT(4'hE)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_10 
-       (.I0(Q[14]),
-        .I1(p_19_in),
-        .O(\gen_cal_rx_en.wait_ctr[24]_i_10_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair27" *) 
-  LUT5 #(
-    .INIT(32'hFFFEFFFF)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_11 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg_n_0_[18] ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[17] ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[20] ),
-        .I3(\gen_cal_rx_en.wait_ctr_reg_n_0_[19] ),
-        .I4(\gen_cal_rx_en.cpll_cal_state[25]_i_4_n_0 ),
-        .O(\gen_cal_rx_en.wait_ctr[24]_i_11_n_0 ));
-  LUT4 #(
-    .INIT(16'h7FFF)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_12 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg_n_0_[11] ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[12] ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[10] ),
-        .I3(\gen_cal_rx_en.wait_ctr_reg_n_0_[13] ),
-        .O(\gen_cal_rx_en.wait_ctr[24]_i_12_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFFFAEAAAAAAAA)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_13 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg_n_0_[9] ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[3] ),
-        .I2(\gen_cal_rx_en.wait_ctr[24]_i_14_n_0 ),
-        .I3(\gen_cal_rx_en.wait_ctr[24]_i_15_n_0 ),
-        .I4(\gen_cal_rx_en.wait_ctr_reg_n_0_[4] ),
-        .I5(\gen_cal_rx_en.wait_ctr_reg_n_0_[8] ),
-        .O(\gen_cal_rx_en.wait_ctr[24]_i_13_n_0 ));
-  LUT3 #(
-    .INIT(8'h01)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_14 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg_n_0_[0] ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[1] ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[2] ),
-        .O(\gen_cal_rx_en.wait_ctr[24]_i_14_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair35" *) 
-  LUT3 #(
-    .INIT(8'hFE)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_15 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg_n_0_[5] ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[6] ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[7] ),
-        .O(\gen_cal_rx_en.wait_ctr[24]_i_15_n_0 ));
-  LUT6 #(
-    .INIT(64'h5555555555555554)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_2 
-       (.I0(SS),
-        .I1(\gen_cal_rx_en.wait_ctr[24]_i_6_n_0 ),
-        .I2(\gen_cal_rx_en.wait_ctr[24]_i_7_n_0 ),
-        .I3(Q[9]),
-        .I4(Q[6]),
-        .I5(p_16_in),
-        .O(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ));
-  LUT6 #(
-    .INIT(64'h0000000000000002)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_3 
-       (.I0(Q[9]),
-        .I1(\gen_cal_rx_en.wait_ctr[24]_i_8_n_0 ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[10] ),
-        .I3(\gen_cal_rx_en.wait_ctr_reg_n_0_[9] ),
-        .I4(\gen_cal_rx_en.wait_ctr[24]_i_9_n_0 ),
-        .I5(\gen_cal_rx_en.wait_ctr_reg_n_0_[4] ),
-        .O(\gen_cal_rx_en.cpll_cal_state_reg[17]_0 ));
-  LUT6 #(
-    .INIT(64'hEEEAEEEAEEEACCC0)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_4 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg[5]_0 ),
-        .I1(\gen_cal_rx_en.cpll_cal_state[12]_i_2_n_0 ),
-        .I2(p_16_in),
-        .I3(Q[6]),
-        .I4(Q[8]),
-        .I5(\gen_cal_rx_en.wait_ctr[24]_i_10_n_0 ),
-        .O(\gen_cal_rx_en.wait_ctr[24]_i_4_n_0 ));
-  LUT6 #(
-    .INIT(64'h0001000000010001)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_5 
-       (.I0(\gen_cal_rx_en.wait_ctr[24]_i_11_n_0 ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[14] ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[15] ),
-        .I3(\gen_cal_rx_en.wait_ctr_reg_n_0_[16] ),
-        .I4(\gen_cal_rx_en.wait_ctr[24]_i_12_n_0 ),
-        .I5(\gen_cal_rx_en.wait_ctr[24]_i_13_n_0 ),
-        .O(\gen_cal_rx_en.wait_ctr_reg[14]_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair36" *) 
-  LUT4 #(
-    .INIT(16'hFFFE)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_6 
-       (.I0(p_19_in),
-        .I1(Q[14]),
-        .I2(Q[8]),
-        .I3(Q[0]),
-        .O(\gen_cal_rx_en.wait_ctr[24]_i_6_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair37" *) 
-  LUT4 #(
-    .INIT(16'hEFEE)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_7 
-       (.I0(p_15_in),
-        .I1(Q[7]),
-        .I2(\gen_cal_rx_en.drp_state_reg[6]_0 [4]),
-        .I3(Q[4]),
-        .O(\gen_cal_rx_en.wait_ctr[24]_i_7_n_0 ));
-  LUT6 #(
-    .INIT(64'hFFFFFFFFFFFFFFFD)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_8 
-       (.I0(\gen_cal_rx_en.cpll_cal_state[25]_i_4_n_0 ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[19] ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[20] ),
-        .I3(\gen_cal_rx_en.wait_ctr_reg_n_0_[17] ),
-        .I4(\gen_cal_rx_en.wait_ctr_reg_n_0_[18] ),
-        .I5(\gen_cal_rx_en.cpll_cal_state[25]_i_6_n_0 ),
-        .O(\gen_cal_rx_en.wait_ctr[24]_i_8_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair35" *) 
-  LUT4 #(
-    .INIT(16'hFFFE)) 
-    \gen_cal_rx_en.wait_ctr[24]_i_9 
-       (.I0(\gen_cal_rx_en.wait_ctr_reg_n_0_[8] ),
-        .I1(\gen_cal_rx_en.wait_ctr_reg_n_0_[7] ),
-        .I2(\gen_cal_rx_en.wait_ctr_reg_n_0_[6] ),
-        .I3(\gen_cal_rx_en.wait_ctr_reg_n_0_[5] ),
-        .O(\gen_cal_rx_en.wait_ctr[24]_i_9_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[0] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr[0]_i_1_n_0 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[0] ),
-        .R(1'b0));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[10] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__0_n_14 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[10] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[11] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__0_n_13 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[11] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[12] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__0_n_12 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[12] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[13] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__0_n_11 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[13] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[14] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__0_n_10 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[14] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[15] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__0_n_9 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[15] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[16] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__0_n_8 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[16] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[17] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__1_n_15 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[17] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[18] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__1_n_14 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[18] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[19] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__1_n_13 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[19] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[1] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry_n_15 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[1] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[20] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__1_n_12 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[20] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[21] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__1_n_11 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[21] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[22] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__1_n_10 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[22] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[23] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__1_n_9 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[23] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[24] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__1_n_8 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[24] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[2] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry_n_14 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[2] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[3] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry_n_13 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[3] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[4] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry_n_12 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[4] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[5] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry_n_11 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[5] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[6] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry_n_10 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[6] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[7] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry_n_9 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[7] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[8] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry_n_8 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[8] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE \gen_cal_rx_en.wait_ctr_reg[9] 
-       (.C(drpclk_in),
-        .CE(\gen_cal_rx_en.wait_ctr[24]_i_2_n_0 ),
-        .D(\gen_cal_rx_en.wait_ctr0_carry__0_n_15 ),
-        .Q(\gen_cal_rx_en.wait_ctr_reg_n_0_[9] ),
-        .R(\gen_cal_rx_en.wait_ctr[24]_i_1_n_0 ));
-  FDRE #(
-    .INIT(1'b0)) 
-    \gen_cal_rx_en.wr_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(\gen_cal_rx_en.wr_reg_0 ),
-        .Q(\gen_cal_rx_en.wr ),
-        .R(SS));
-  (* SOFT_HLUTNM = "soft_lutpair34" *) 
-  LUT5 #(
-    .INIT(32'hB888B8BB)) 
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_i_1 
-       (.I0(\gen_cal_rx_en.gtrxreset_int ),
-        .I1(i_in_out_reg[0]),
-        .I2(\gen_gtwizard_gthe4.gtrxreset_int ),
-        .I3(out),
-        .I4(\gen_gtwizard_gthe4.gtpowergood_int ),
-        .O(\gen_gtwizard_gthe4.gtrxreset_ch_int ));
-  (* SOFT_HLUTNM = "soft_lutpair50" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_i_2 
-       (.I0(i_in_out_reg[0]),
-        .I1(\gen_cal_rx_en.rxcdrhold_int ),
-        .O(\gen_gtwizard_gthe4.rxcdrhold_ch_int ));
-  (* SOFT_HLUTNM = "soft_lutpair50" *) 
-  LUT3 #(
-    .INIT(8'hB8)) 
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_i_3 
-       (.I0(\gen_cal_rx_en.rxprogdivreset_int ),
-        .I1(i_in_out_reg[0]),
-        .I2(\gen_gtwizard_gthe4.rxprogdivreset_int ),
-        .O(\gen_gtwizard_gthe4.rxprogdivreset_ch_int ));
-  (* SOFT_HLUTNM = "soft_lutpair46" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_i_5 
-       (.I0(i_in_out_reg[0]),
-        .I1(\gen_cal_rx_en.rxoutclksel_int ),
-        .O(RXOUTCLKSEL[1]));
-  (* SOFT_HLUTNM = "soft_lutpair34" *) 
-  LUT1 #(
-    .INIT(2'h1)) 
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_i_6 
-       (.I0(i_in_out_reg[0]),
-        .O(RXOUTCLKSEL[0]));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_tx" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_tx
-   (\gen_gtwizard_gthe4.txprogdivreset_ch_int ,
-    \non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[2]_0 ,
-    in0,
-    i_in_meta_reg,
-    i_in_meta_reg_0,
-    txoutclk_out,
-    gtwiz_userclk_tx_reset_in,
-    drpclk_in,
-    lopt,
-    lopt_1,
-    lopt_2);
-  output \gen_gtwizard_gthe4.txprogdivreset_ch_int ;
-  output [2:0]\non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[2]_0 ;
-  input in0;
-  input i_in_meta_reg;
-  input i_in_meta_reg_0;
-  input [0:0]txoutclk_out;
-  input [0:0]gtwiz_userclk_tx_reset_in;
-  input [0:0]drpclk_in;
-  output lopt;
-  input lopt_1;
-  input lopt_2;
-
-  wire \<const1> ;
-  wire [0:0]drpclk_in;
-  wire \gen_gtwizard_gthe4.txprogdivreset_ch_int ;
-  wire [0:0]gtwiz_userclk_tx_reset_in;
-  wire i_in_meta_reg;
-  wire i_in_meta_reg_0;
-  wire in0;
-  wire \^lopt ;
-  wire \^lopt_1 ;
-  wire [2:0]\non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[2]_0 ;
-  wire [0:0]txoutclk_out;
-  wire txoutclkmon;
-  wire [2:0]user_txoutclksel_sync;
-  wire user_txprogdivreset_sync;
-
-  assign \^lopt  = lopt_1;
-  assign \^lopt_1  = lopt_2;
-  assign lopt = \<const1> ;
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_freq_counter U_TXOUTCLK_FREQ_COUNTER
-       (.drpclk_in(drpclk_in),
-        .txoutclkmon(txoutclkmon));
-  VCC VCC
-       (.P(\<const1> ));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_22 bit_synchronizer_cplllock_inst
-       (.drpclk_in(drpclk_in),
-        .in0(in0));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_23 bit_synchronizer_txoutclksel_inst0
-       (.D(user_txoutclksel_sync[0]),
-        .drpclk_in(drpclk_in));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_24 bit_synchronizer_txoutclksel_inst1
-       (.D(user_txoutclksel_sync[1]),
-        .drpclk_in(drpclk_in));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_25 bit_synchronizer_txoutclksel_inst2
-       (.D(user_txoutclksel_sync[2]),
-        .drpclk_in(drpclk_in));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_26 bit_synchronizer_txprgdivresetdone_inst
-       (.drpclk_in(drpclk_in),
-        .i_in_meta_reg_0(i_in_meta_reg_0));
-  gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_27 bit_synchronizer_txprogdivreset_inst
-       (.drpclk_in(drpclk_in),
-        .i_in_meta_reg_0(i_in_meta_reg),
-        .user_txprogdivreset_sync(user_txprogdivreset_sync));
-  (* BOX_TYPE = "PRIMITIVE" *) 
-  (* OPT_MODIFIED = "MLO" *) 
-  BUFG_GT #(
-    .SIM_DEVICE("ULTRASCALE"),
-    .STARTUP_SYNC("FALSE")) 
-    bufg_gt_txoutclkmon_inst
-       (.CE(\^lopt ),
-        .CEMASK(1'b1),
-        .CLR(\^lopt_1 ),
-        .CLRMASK(1'b1),
-        .DIV({1'b0,1'b0,1'b0}),
-        .I(txoutclk_out),
-        .O(txoutclkmon));
-  FDRE \non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[0] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(user_txoutclksel_sync[0]),
-        .Q(\non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[2]_0 [0]),
-        .R(1'b0));
-  FDRE \non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[1] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(user_txoutclksel_sync[1]),
-        .Q(\non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[2]_0 [1]),
-        .R(1'b0));
-  FDRE \non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[2] 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(user_txoutclksel_sync[2]),
-        .Q(\non_pcie_txoutclksel.GTHE4_TXOUTCLKSEL_OUT_reg[2]_0 [2]),
-        .R(1'b0));
-  FDRE \non_pcie_txoutclksel.GTHE4_TXPROGDIVRESET_OUT_reg 
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(user_txprogdivreset_sync),
-        .Q(\gen_gtwizard_gthe4.txprogdivreset_ch_int ),
-        .R(1'b0));
 endmodule
 
 (* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_gthe4_delay_powergood" *) 
@@ -13280,29 +6206,28 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_delay_powergood
         .R(\gen_powergood_delay.wait_cnt[8]_i_1_n_0 ));
   LUT1 #(
     .INIT(2'h1)) 
-    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_i_4 
+    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_i_2 
        (.I0(\gen_powergood_delay.pwr_on_fsm ),
         .O(RXRATE));
 endmodule
 
 (* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_gtwiz_reset" *) 
 module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
-   (rst_in_out_reg,
+   (\gen_gtwizard_gthe4.txprogdivreset_int ,
     gtwiz_reset_tx_done_out,
     i_in_out_reg,
     gtwiz_reset_rx_done_out,
-    pllreset_tx_out_reg_0,
     \gen_gtwizard_gthe4.gttxreset_int ,
     \gen_gtwizard_gthe4.txuserrdy_int ,
-    cal_on_rx_reset_in,
     \gen_gtwizard_gthe4.rxprogdivreset_int ,
-    \gen_gtwizard_gthe4.gtrxreset_int ,
     \gen_gtwizard_gthe4.rxuserrdy_int ,
+    \gen_gtwizard_gthe4.gtrxreset_ch_int ,
+    Q,
+    pllreset_tx_out_reg_0,
     gtpowergood_out,
     gtwiz_userclk_tx_active_in,
     qpll0lock_out,
     gtwiz_userclk_rx_active_in,
-    i_in_meta_reg,
     rxcdrlock_out,
     gtwiz_reset_clk_freerun_in,
     gtwiz_reset_all_in,
@@ -13310,27 +6235,28 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     rst_in0,
     txusrclk2_in,
     rxusrclk2_in,
+    \gen_gtwizard_gthe4.gtpowergood_int ,
+    \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync ,
     \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ,
+    \FSM_sequential_sm_reset_rx_reg[0]_0 ,
     gtwiz_reset_tx_pll_and_datapath_in,
     gtwiz_reset_rx_datapath_in,
-    gtwiz_reset_rx_pll_and_datapath_in,
-    \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync );
-  output rst_in_out_reg;
+    gtwiz_reset_rx_pll_and_datapath_in);
+  output \gen_gtwizard_gthe4.txprogdivreset_int ;
   output [0:0]gtwiz_reset_tx_done_out;
   output i_in_out_reg;
   output [0:0]gtwiz_reset_rx_done_out;
-  output pllreset_tx_out_reg_0;
   output \gen_gtwizard_gthe4.gttxreset_int ;
   output \gen_gtwizard_gthe4.txuserrdy_int ;
-  output cal_on_rx_reset_in;
   output \gen_gtwizard_gthe4.rxprogdivreset_int ;
-  output \gen_gtwizard_gthe4.gtrxreset_int ;
   output \gen_gtwizard_gthe4.rxuserrdy_int ;
+  output \gen_gtwizard_gthe4.gtrxreset_ch_int ;
+  output [0:0]Q;
+  output pllreset_tx_out_reg_0;
   input [0:0]gtpowergood_out;
   input [0:0]gtwiz_userclk_tx_active_in;
   input [0:0]qpll0lock_out;
   input [0:0]gtwiz_userclk_rx_active_in;
-  input i_in_meta_reg;
   input [0:0]rxcdrlock_out;
   input [0:0]gtwiz_reset_clk_freerun_in;
   input [0:0]gtwiz_reset_all_in;
@@ -13338,17 +6264,23 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
   input rst_in0;
   input [0:0]txusrclk2_in;
   input [0:0]rxusrclk2_in;
+  input \gen_gtwizard_gthe4.gtpowergood_int ;
+  input \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync ;
   input \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ;
+  input \FSM_sequential_sm_reset_rx_reg[0]_0 ;
   input [0:0]gtwiz_reset_tx_pll_and_datapath_in;
   input [0:0]gtwiz_reset_rx_datapath_in;
   input [0:0]gtwiz_reset_rx_pll_and_datapath_in;
-  input \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync ;
 
   wire \FSM_sequential_sm_reset_all[2]_i_3_n_0 ;
   wire \FSM_sequential_sm_reset_all[2]_i_4_n_0 ;
+  wire \FSM_sequential_sm_reset_rx[2]_i_5_n_0 ;
+  wire \FSM_sequential_sm_reset_rx_reg[0]_0 ;
   wire \FSM_sequential_sm_reset_tx[2]_i_6_n_0 ;
   wire \FSM_sequential_sm_reset_tx[2]_i_7_n_0 ;
+  wire [0:0]Q;
   wire bit_synchronizer_gtpowergood_inst_n_0;
+  wire bit_synchronizer_gtwiz_reset_rx_datapath_dly_inst_n_0;
   wire bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_0;
   wire bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_1;
   wire bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_2;
@@ -13358,26 +6290,30 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
   wire bit_synchronizer_plllock_rx_inst_n_1;
   wire bit_synchronizer_plllock_rx_inst_n_2;
   wire bit_synchronizer_plllock_rx_inst_n_3;
+  wire bit_synchronizer_plllock_rx_inst_n_4;
   wire bit_synchronizer_plllock_tx_inst_n_1;
   wire bit_synchronizer_plllock_tx_inst_n_2;
   wire bit_synchronizer_plllock_tx_inst_n_3;
   wire bit_synchronizer_rxcdrlock_inst_n_1;
   wire bit_synchronizer_rxcdrlock_inst_n_2;
   wire bit_synchronizer_rxcdrlock_inst_n_3;
-  wire cal_on_rx_reset_in;
+  wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_rx_int ;
+  wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_tx_int ;
   wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ;
   wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync ;
+  wire \gen_gtwizard_gthe4.gtpowergood_int ;
+  wire \gen_gtwizard_gthe4.gtrxreset_ch_int ;
   wire \gen_gtwizard_gthe4.gtrxreset_int ;
   wire \gen_gtwizard_gthe4.gttxreset_int ;
   wire \gen_gtwizard_gthe4.rxprogdivreset_int ;
   wire \gen_gtwizard_gthe4.rxuserrdy_int ;
+  wire \gen_gtwizard_gthe4.txprogdivreset_int ;
   wire \gen_gtwizard_gthe4.txuserrdy_int ;
   wire [0:0]gtpowergood_out;
   wire [0:0]gtwiz_reset_all_in;
   wire gtwiz_reset_all_sync;
   wire [0:0]gtwiz_reset_clk_freerun_in;
   wire gtwiz_reset_rx_any_sync;
-  wire gtwiz_reset_rx_datapath_dly;
   wire [0:0]gtwiz_reset_rx_datapath_in;
   wire gtwiz_reset_rx_datapath_int_i_1_n_0;
   wire gtwiz_reset_rx_datapath_int_reg_n_0;
@@ -13403,7 +6339,6 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
   wire gtwiz_reset_tx_pll_and_datapath_sync;
   wire [0:0]gtwiz_userclk_rx_active_in;
   wire [0:0]gtwiz_userclk_tx_active_in;
-  wire i_in_meta_reg;
   wire i_in_out_reg;
   wire p_0_in;
   wire [9:0]p_0_in__0;
@@ -13418,7 +6353,6 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
   wire reset_synchronizer_gtwiz_reset_tx_any_inst_n_1;
   wire reset_synchronizer_gtwiz_reset_tx_any_inst_n_2;
   wire rst_in0;
-  wire rst_in_out_reg;
   wire [0:0]rxcdrlock_out;
   wire [0:0]rxusrclk2_in;
   wire [2:0]sm_reset_all;
@@ -13433,10 +6367,9 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
   wire \sm_reset_all_timer_ctr[2]_i_1_n_0 ;
   wire sm_reset_all_timer_sat;
   wire sm_reset_all_timer_sat_i_1_n_0;
-  wire [2:0]sm_reset_rx;
+  wire [2:1]sm_reset_rx;
   wire [2:0]sm_reset_rx__0;
   wire sm_reset_rx_cdr_to_clr;
-  wire sm_reset_rx_cdr_to_clr_i_3_n_0;
   wire \sm_reset_rx_cdr_to_ctr[0]_i_1_n_0 ;
   wire \sm_reset_rx_cdr_to_ctr[0]_i_3_n_0 ;
   wire \sm_reset_rx_cdr_to_ctr[0]_i_4_n_0 ;
@@ -13502,9 +6435,10 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
   wire sm_reset_rx_cdr_to_sat_i_4_n_0;
   wire sm_reset_rx_cdr_to_sat_i_5_n_0;
   wire sm_reset_rx_cdr_to_sat_i_6_n_0;
-  wire sm_reset_rx_pll_timer_clr;
   wire sm_reset_rx_pll_timer_clr_i_1_n_0;
   wire sm_reset_rx_pll_timer_clr_reg_n_0;
+  wire \sm_reset_rx_pll_timer_ctr[2]_i_1_n_0 ;
+  wire \sm_reset_rx_pll_timer_ctr[3]_i_1_n_0 ;
   wire \sm_reset_rx_pll_timer_ctr[9]_i_1_n_0 ;
   wire \sm_reset_rx_pll_timer_ctr[9]_i_3_n_0 ;
   wire \sm_reset_rx_pll_timer_ctr[9]_i_4_n_0 ;
@@ -13548,13 +6482,13 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
   wire [7:2]\NLW_sm_reset_rx_cdr_to_ctr_reg[24]_i_1_O_UNCONNECTED ;
 
   LUT3 #(
-    .INIT(8'h71)) 
+    .INIT(8'h31)) 
     \FSM_sequential_sm_reset_all[0]_i_1 
        (.I0(sm_reset_all[2]),
         .I1(sm_reset_all[0]),
         .I2(sm_reset_all[1]),
         .O(sm_reset_all__0[0]));
-  (* SOFT_HLUTNM = "soft_lutpair71" *) 
+  (* SOFT_HLUTNM = "soft_lutpair18" *) 
   LUT3 #(
     .INIT(8'h3E)) 
     \FSM_sequential_sm_reset_all[1]_i_1 
@@ -13562,7 +6496,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .I1(sm_reset_all[1]),
         .I2(sm_reset_all[0]),
         .O(sm_reset_all__0[1]));
-  (* SOFT_HLUTNM = "soft_lutpair71" *) 
+  (* SOFT_HLUTNM = "soft_lutpair18" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \FSM_sequential_sm_reset_all[2]_i_2 
@@ -13580,7 +6514,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .I4(sm_reset_all[2]),
         .I5(gtwiz_reset_tx_done_int_reg_n_0),
         .O(\FSM_sequential_sm_reset_all[2]_i_3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair64" *) 
+  (* SOFT_HLUTNM = "soft_lutpair10" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \FSM_sequential_sm_reset_all[2]_i_4 
@@ -13614,36 +6548,37 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .D(sm_reset_all__0[2]),
         .Q(sm_reset_all[2]),
         .R(gtwiz_reset_all_sync));
-  (* SOFT_HLUTNM = "soft_lutpair67" *) 
+  (* SOFT_HLUTNM = "soft_lutpair13" *) 
   LUT3 #(
     .INIT(8'hF8)) 
     \FSM_sequential_sm_reset_rx[2]_i_2 
-       (.I0(sm_reset_rx[0]),
+       (.I0(Q),
         .I1(sm_reset_rx[1]),
         .I2(sm_reset_rx[2]),
         .O(sm_reset_rx__0[2]));
-  (* SOFT_HLUTNM = "soft_lutpair61" *) 
-  LUT2 #(
-    .INIT(4'h1)) 
+  (* SOFT_HLUTNM = "soft_lutpair13" *) 
+  LUT3 #(
+    .INIT(8'h40)) 
     \FSM_sequential_sm_reset_rx[2]_i_5 
-       (.I0(sm_reset_rx[1]),
-        .I1(sm_reset_rx[2]),
-        .O(sm_reset_rx_pll_timer_clr));
+       (.I0(sm_reset_rx_timer_clr_reg_n_0),
+        .I1(sm_reset_rx_timer_sat),
+        .I2(sm_reset_rx[1]),
+        .O(\FSM_sequential_sm_reset_rx[2]_i_5_n_0 ));
   (* FSM_ENCODED_STATES = "ST_RESET_RX_BRANCH:000,ST_RESET_RX_WAIT_LOCK:011,ST_RESET_RX_WAIT_CDR:100,ST_RESET_RX_WAIT_USERRDY:101,ST_RESET_RX_WAIT_RESETDONE:110,ST_RESET_RX_DATAPATH:010,ST_RESET_RX_PLL:001,ST_RESET_RX_IDLE:111" *) 
   FDRE #(
     .INIT(1'b0)) 
     \FSM_sequential_sm_reset_rx_reg[0] 
        (.C(gtwiz_reset_clk_freerun_in),
-        .CE(bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_2),
+        .CE(bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_0),
         .D(sm_reset_rx__0[0]),
-        .Q(sm_reset_rx[0]),
+        .Q(Q),
         .R(gtwiz_reset_rx_any_sync));
   (* FSM_ENCODED_STATES = "ST_RESET_RX_BRANCH:000,ST_RESET_RX_WAIT_LOCK:011,ST_RESET_RX_WAIT_CDR:100,ST_RESET_RX_WAIT_USERRDY:101,ST_RESET_RX_WAIT_RESETDONE:110,ST_RESET_RX_DATAPATH:010,ST_RESET_RX_PLL:001,ST_RESET_RX_IDLE:111" *) 
   FDRE #(
     .INIT(1'b0)) 
     \FSM_sequential_sm_reset_rx_reg[1] 
        (.C(gtwiz_reset_clk_freerun_in),
-        .CE(bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_2),
+        .CE(bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_0),
         .D(sm_reset_rx__0[1]),
         .Q(sm_reset_rx[1]),
         .R(gtwiz_reset_rx_any_sync));
@@ -13652,11 +6587,11 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     .INIT(1'b0)) 
     \FSM_sequential_sm_reset_rx_reg[2] 
        (.C(gtwiz_reset_clk_freerun_in),
-        .CE(bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_2),
+        .CE(bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_0),
         .D(sm_reset_rx__0[2]),
         .Q(sm_reset_rx[2]),
         .R(gtwiz_reset_rx_any_sync));
-  (* SOFT_HLUTNM = "soft_lutpair65" *) 
+  (* SOFT_HLUTNM = "soft_lutpair11" *) 
   LUT3 #(
     .INIT(8'h38)) 
     \FSM_sequential_sm_reset_tx[2]_i_2 
@@ -13664,14 +6599,14 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .I1(sm_reset_tx[1]),
         .I2(sm_reset_tx[2]),
         .O(sm_reset_tx__0[2]));
-  (* SOFT_HLUTNM = "soft_lutpair58" *) 
+  (* SOFT_HLUTNM = "soft_lutpair5" *) 
   LUT2 #(
     .INIT(4'h1)) 
     \FSM_sequential_sm_reset_tx[2]_i_5 
        (.I0(sm_reset_tx[1]),
         .I1(sm_reset_tx[2]),
         .O(sm_reset_tx_pll_timer_clr));
-  (* SOFT_HLUTNM = "soft_lutpair65" *) 
+  (* SOFT_HLUTNM = "soft_lutpair11" *) 
   LUT4 #(
     .INIT(16'h0400)) 
     \FSM_sequential_sm_reset_tx[2]_i_6 
@@ -13680,7 +6615,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .I2(sm_reset_tx_timer_clr_reg_n_0),
         .I3(sm_reset_tx_timer_sat),
         .O(\FSM_sequential_sm_reset_tx[2]_i_6_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair62" *) 
+  (* SOFT_HLUTNM = "soft_lutpair8" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \FSM_sequential_sm_reset_tx[2]_i_7 
@@ -13692,7 +6627,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     .INIT(1'b0)) 
     \FSM_sequential_sm_reset_tx_reg[0] 
        (.C(gtwiz_reset_clk_freerun_in),
-        .CE(bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_2),
+        .CE(bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_0),
         .D(sm_reset_tx__0[0]),
         .Q(sm_reset_tx[0]),
         .R(gtwiz_reset_tx_any_sync));
@@ -13701,7 +6636,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     .INIT(1'b0)) 
     \FSM_sequential_sm_reset_tx_reg[1] 
        (.C(gtwiz_reset_clk_freerun_in),
-        .CE(bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_2),
+        .CE(bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_0),
         .D(sm_reset_tx__0[1]),
         .Q(sm_reset_tx[1]),
         .R(gtwiz_reset_tx_any_sync));
@@ -13710,7 +6645,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     .INIT(1'b0)) 
     \FSM_sequential_sm_reset_tx_reg[2] 
        (.C(gtwiz_reset_clk_freerun_in),
-        .CE(bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_2),
+        .CE(bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_0),
         .D(sm_reset_tx__0[2]),
         .Q(sm_reset_tx[2]),
         .R(gtwiz_reset_tx_any_sync));
@@ -13721,12 +6656,14 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .gtpowergood_out(gtpowergood_out),
         .gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_2 bit_synchronizer_gtwiz_reset_rx_datapath_dly_inst
-       (.gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in),
-        .gtwiz_reset_rx_datapath_dly(gtwiz_reset_rx_datapath_dly),
+       (.\FSM_sequential_sm_reset_rx_reg[0] (bit_synchronizer_gtwiz_reset_rx_datapath_dly_inst_n_0),
+        .Q({sm_reset_rx,Q}),
+        .gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in),
+        .gtwiz_reset_rx_pll_and_datapath_dly(gtwiz_reset_rx_pll_and_datapath_dly),
         .in0(gtwiz_reset_rx_datapath_sync));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_3 bit_synchronizer_gtwiz_reset_rx_pll_and_datapath_dly_inst
        (.D(sm_reset_rx__0[1:0]),
-        .Q(sm_reset_rx),
+        .Q({sm_reset_rx,Q}),
         .gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in),
         .gtwiz_reset_rx_pll_and_datapath_dly(gtwiz_reset_rx_pll_and_datapath_dly),
         .in0(gtwiz_reset_rx_pll_and_datapath_sync));
@@ -13741,33 +6678,31 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .gtwiz_reset_tx_pll_and_datapath_dly(gtwiz_reset_tx_pll_and_datapath_dly),
         .in0(gtwiz_reset_tx_pll_and_datapath_sync));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_6 bit_synchronizer_gtwiz_reset_userclk_rx_active_inst
-       (.E(bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_2),
-        .\FSM_sequential_sm_reset_rx[2]_i_3_0 (sm_reset_rx_pll_timer_clr_reg_n_0),
-        .\FSM_sequential_sm_reset_rx_reg[0] (bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_0),
-        .\FSM_sequential_sm_reset_rx_reg[0]_0 (bit_synchronizer_rxcdrlock_inst_n_2),
-        .\FSM_sequential_sm_reset_rx_reg[0]_1 (sm_reset_rx_cdr_to_clr_i_3_n_0),
-        .\FSM_sequential_sm_reset_rx_reg[2] (bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_1),
-        .Q(sm_reset_rx),
-        .\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync (\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ),
+       (.E(bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_0),
+        .\FSM_sequential_sm_reset_rx_reg[0] (bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_1),
+        .\FSM_sequential_sm_reset_rx_reg[0]_0 (\FSM_sequential_sm_reset_rx_reg[0]_0 ),
+        .\FSM_sequential_sm_reset_rx_reg[0]_1 (\FSM_sequential_sm_reset_rx[2]_i_5_n_0 ),
+        .\FSM_sequential_sm_reset_rx_reg[0]_2 (bit_synchronizer_plllock_rx_inst_n_2),
+        .\FSM_sequential_sm_reset_rx_reg[0]_3 (bit_synchronizer_rxcdrlock_inst_n_1),
+        .\FSM_sequential_sm_reset_rx_reg[0]_4 (bit_synchronizer_gtwiz_reset_rx_datapath_dly_inst_n_0),
+        .\FSM_sequential_sm_reset_rx_reg[0]_5 (sm_reset_rx_pll_timer_clr_reg_n_0),
+        .\FSM_sequential_sm_reset_rx_reg[2] (bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_2),
+        .Q({sm_reset_rx,Q}),
         .\gen_gtwizard_gthe4.rxuserrdy_int (\gen_gtwizard_gthe4.rxuserrdy_int ),
         .gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in),
         .gtwiz_reset_rx_any_sync(gtwiz_reset_rx_any_sync),
-        .gtwiz_reset_rx_datapath_dly(gtwiz_reset_rx_datapath_dly),
-        .gtwiz_reset_rx_pll_and_datapath_dly(gtwiz_reset_rx_pll_and_datapath_dly),
         .gtwiz_userclk_rx_active_in(gtwiz_userclk_rx_active_in),
-        .plllock_rx_sync(plllock_rx_sync),
-        .sm_reset_rx_pll_timer_clr(sm_reset_rx_pll_timer_clr),
         .sm_reset_rx_pll_timer_sat(sm_reset_rx_pll_timer_sat),
-        .sm_reset_rx_timer_clr_reg(bit_synchronizer_plllock_rx_inst_n_2),
-        .sm_reset_rx_timer_clr_reg_0(sm_reset_rx_timer_clr_reg_n_0),
+        .sm_reset_rx_timer_clr_reg(sm_reset_rx_timer_clr_reg_n_0),
+        .sm_reset_rx_timer_clr_reg_0(bit_synchronizer_plllock_rx_inst_n_1),
         .sm_reset_rx_timer_sat(sm_reset_rx_timer_sat));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_7 bit_synchronizer_gtwiz_reset_userclk_tx_active_inst
-       (.E(bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_2),
-        .\FSM_sequential_sm_reset_tx_reg[0] (bit_synchronizer_plllock_tx_inst_n_2),
+       (.E(bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_0),
+        .\FSM_sequential_sm_reset_tx_reg[0] (bit_synchronizer_plllock_tx_inst_n_1),
         .\FSM_sequential_sm_reset_tx_reg[0]_0 (\FSM_sequential_sm_reset_tx[2]_i_6_n_0 ),
         .\FSM_sequential_sm_reset_tx_reg[0]_1 (sm_reset_tx_pll_timer_clr_reg_n_0),
-        .\FSM_sequential_sm_reset_tx_reg[1] (bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_1),
-        .\FSM_sequential_sm_reset_tx_reg[2] (bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_0),
+        .\FSM_sequential_sm_reset_tx_reg[1] (bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_2),
+        .\FSM_sequential_sm_reset_tx_reg[2] (bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_1),
         .Q(sm_reset_tx),
         .\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync (\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync ),
         .\gen_gtwizard_gthe4.txuserrdy_int (\gen_gtwizard_gthe4.txuserrdy_int ),
@@ -13779,22 +6714,23 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .plllock_tx_sync(plllock_tx_sync),
         .sm_reset_tx_pll_timer_clr(sm_reset_tx_pll_timer_clr),
         .sm_reset_tx_pll_timer_sat(sm_reset_tx_pll_timer_sat),
-        .sm_reset_tx_timer_clr_reg(sm_reset_tx_timer_clr_reg_n_0),
-        .sm_reset_tx_timer_clr_reg_0(\FSM_sequential_sm_reset_tx[2]_i_7_n_0 ),
+        .sm_reset_tx_timer_clr_reg(\FSM_sequential_sm_reset_tx[2]_i_7_n_0 ),
+        .sm_reset_tx_timer_clr_reg_0(sm_reset_tx_timer_clr_reg_n_0),
         .sm_reset_tx_timer_sat(sm_reset_tx_timer_sat));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_8 bit_synchronizer_plllock_rx_inst
-       (.\FSM_sequential_sm_reset_rx_reg[1] (bit_synchronizer_plllock_rx_inst_n_2),
-        .Q(sm_reset_rx),
+       (.\FSM_sequential_sm_reset_rx_reg[0] (sm_reset_rx_timer_clr_reg_n_0),
+        .\FSM_sequential_sm_reset_rx_reg[1] (bit_synchronizer_plllock_rx_inst_n_1),
+        .\FSM_sequential_sm_reset_rx_reg[2] (bit_synchronizer_plllock_rx_inst_n_2),
+        .Q({sm_reset_rx,Q}),
         .\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync (\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.rxresetdone_sync ),
-        .gtrxreset_out_reg(sm_reset_rx_timer_clr_reg_n_0),
         .gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in),
         .gtwiz_reset_rx_done_int_reg(gtwiz_reset_rx_done_int_i_2_n_0),
-        .gtwiz_reset_rx_done_int_reg_0(gtwiz_reset_rx_done_int_reg_n_0),
-        .gtwiz_reset_rx_done_int_reg_1(sm_reset_rx_cdr_to_clr_i_3_n_0),
-        .i_in_meta_reg_0(i_in_meta_reg),
-        .i_in_out_reg_0(bit_synchronizer_plllock_rx_inst_n_1),
-        .i_in_out_reg_1(bit_synchronizer_plllock_rx_inst_n_3),
+        .gtwiz_reset_rx_done_int_reg_0(\FSM_sequential_sm_reset_rx[2]_i_5_n_0 ),
+        .gtwiz_reset_rx_done_int_reg_1(gtwiz_reset_rx_done_int_reg_n_0),
+        .i_in_out_reg_0(bit_synchronizer_plllock_rx_inst_n_3),
+        .i_in_out_reg_1(bit_synchronizer_plllock_rx_inst_n_4),
         .plllock_rx_sync(plllock_rx_sync),
+        .qpll0lock_out(qpll0lock_out),
         .sm_reset_rx_timer_sat(sm_reset_rx_timer_sat));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_9 bit_synchronizer_plllock_tx_inst
        (.\FSM_sequential_sm_reset_tx_reg[0] (\FSM_sequential_sm_reset_tx[2]_i_7_n_0 ),
@@ -13803,25 +6739,38 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .gttxreset_out_reg(sm_reset_tx_timer_clr_reg_n_0),
         .gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in),
         .gtwiz_reset_tx_any_sync(gtwiz_reset_tx_any_sync),
-        .gtwiz_reset_tx_done_int_reg(bit_synchronizer_plllock_tx_inst_n_1),
+        .gtwiz_reset_tx_done_int_reg(bit_synchronizer_plllock_tx_inst_n_3),
         .gtwiz_reset_tx_done_int_reg_0(gtwiz_reset_tx_done_int_reg_n_0),
-        .i_in_out_reg_0(bit_synchronizer_plllock_tx_inst_n_2),
+        .i_in_out_reg_0(bit_synchronizer_plllock_tx_inst_n_1),
         .plllock_tx_sync(plllock_tx_sync),
         .qpll0lock_out(qpll0lock_out),
         .sm_reset_tx_timer_sat(sm_reset_tx_timer_sat),
-        .sm_reset_tx_timer_sat_reg(bit_synchronizer_plllock_tx_inst_n_3));
+        .sm_reset_tx_timer_sat_reg(bit_synchronizer_plllock_tx_inst_n_2));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_bit_synchronizer_10 bit_synchronizer_rxcdrlock_inst
-       (.\FSM_sequential_sm_reset_rx_reg[0] (bit_synchronizer_rxcdrlock_inst_n_2),
-        .\FSM_sequential_sm_reset_rx_reg[2] (bit_synchronizer_rxcdrlock_inst_n_1),
-        .Q(sm_reset_rx),
+       (.\FSM_sequential_sm_reset_rx_reg[0] (bit_synchronizer_rxcdrlock_inst_n_1),
+        .\FSM_sequential_sm_reset_rx_reg[2] (bit_synchronizer_rxcdrlock_inst_n_3),
+        .Q({sm_reset_rx,Q}),
         .gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in),
         .i_in_out_reg_0(i_in_out_reg),
         .plllock_rx_sync(plllock_rx_sync),
         .rxcdrlock_out(rxcdrlock_out),
         .sm_reset_rx_cdr_to_clr(sm_reset_rx_cdr_to_clr),
-        .sm_reset_rx_cdr_to_clr_reg(sm_reset_rx_cdr_to_clr_i_3_n_0),
+        .sm_reset_rx_cdr_to_clr_reg(\FSM_sequential_sm_reset_rx[2]_i_5_n_0 ),
         .sm_reset_rx_cdr_to_sat(sm_reset_rx_cdr_to_sat),
-        .sm_reset_rx_cdr_to_sat_reg(bit_synchronizer_rxcdrlock_inst_n_3));
+        .sm_reset_rx_cdr_to_sat_reg(bit_synchronizer_rxcdrlock_inst_n_2));
+  LUT3 #(
+    .INIT(8'h8B)) 
+    \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_i_1 
+       (.I0(\gen_gtwizard_gthe4.gtrxreset_int ),
+        .I1(gtpowergood_out),
+        .I2(\gen_gtwizard_gthe4.gtpowergood_int ),
+        .O(\gen_gtwizard_gthe4.gtrxreset_ch_int ));
+  LUT2 #(
+    .INIT(4'hE)) 
+    \gthe4_common_gen.GTHE4_COMMON_PRIM_INST_i_1 
+       (.I0(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_tx_int ),
+        .I1(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_rx_int ),
+        .O(pllreset_tx_out_reg_0));
   FDRE #(
     .INIT(1'b1)) 
     gtrxreset_out_reg
@@ -13838,7 +6787,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .D(reset_synchronizer_gtwiz_reset_tx_any_inst_n_2),
         .Q(\gen_gtwizard_gthe4.gttxreset_int ),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair66" *) 
+  (* SOFT_HLUTNM = "soft_lutpair12" *) 
   LUT4 #(
     .INIT(16'hF704)) 
     gtwiz_reset_rx_datapath_int_i_1
@@ -13855,7 +6804,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .D(gtwiz_reset_rx_datapath_int_i_1_n_0),
         .Q(gtwiz_reset_rx_datapath_int_reg_n_0),
         .R(gtwiz_reset_all_sync));
-  (* SOFT_HLUTNM = "soft_lutpair63" *) 
+  (* SOFT_HLUTNM = "soft_lutpair9" *) 
   LUT2 #(
     .INIT(4'h2)) 
     gtwiz_reset_rx_done_int_i_2
@@ -13867,16 +6816,16 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     gtwiz_reset_rx_done_int_reg
        (.C(gtwiz_reset_clk_freerun_in),
         .CE(1'b1),
-        .D(bit_synchronizer_plllock_rx_inst_n_1),
+        .D(bit_synchronizer_plllock_rx_inst_n_4),
         .Q(gtwiz_reset_rx_done_int_reg_n_0),
         .R(gtwiz_reset_rx_any_sync));
-  (* SOFT_HLUTNM = "soft_lutpair66" *) 
+  (* SOFT_HLUTNM = "soft_lutpair12" *) 
   LUT4 #(
-    .INIT(16'hDF40)) 
+    .INIT(16'hDF08)) 
     gtwiz_reset_rx_pll_and_datapath_int_i_1
-       (.I0(sm_reset_all[1]),
+       (.I0(sm_reset_all[2]),
         .I1(sm_reset_all[0]),
-        .I2(sm_reset_all[2]),
+        .I2(sm_reset_all[1]),
         .I3(gtwiz_reset_rx_pll_and_datapath_int_reg_n_0),
         .O(gtwiz_reset_rx_pll_and_datapath_int_i_1_n_0));
   FDRE #(
@@ -13892,7 +6841,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     gtwiz_reset_tx_done_int_reg
        (.C(gtwiz_reset_clk_freerun_in),
         .CE(1'b1),
-        .D(bit_synchronizer_plllock_tx_inst_n_1),
+        .D(bit_synchronizer_plllock_tx_inst_n_3),
         .Q(gtwiz_reset_tx_done_int_reg_n_0),
         .R(gtwiz_reset_tx_any_sync));
   LUT4 #(
@@ -13912,12 +6861,12 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .Q(gtwiz_reset_tx_pll_and_datapath_int_reg_n_0),
         .R(gtwiz_reset_all_sync));
   FDRE #(
-    .INIT(1'b1)) 
+    .INIT(1'b0)) 
     pllreset_rx_out_reg
        (.C(gtwiz_reset_clk_freerun_in),
         .CE(1'b1),
         .D(reset_synchronizer_gtwiz_reset_rx_any_inst_n_1),
-        .Q(cal_on_rx_reset_in),
+        .Q(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_rx_int ),
         .R(1'b0));
   FDRE #(
     .INIT(1'b1)) 
@@ -13925,7 +6874,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
        (.C(gtwiz_reset_clk_freerun_in),
         .CE(1'b1),
         .D(reset_synchronizer_gtwiz_reset_tx_any_inst_n_1),
-        .Q(pllreset_tx_out_reg_0),
+        .Q(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_tx_int ),
         .R(1'b0));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer reset_synchronizer_gtwiz_reset_all_inst
        (.gtwiz_reset_all_in(gtwiz_reset_all_in),
@@ -13935,8 +6884,8 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
        (.\FSM_sequential_sm_reset_rx_reg[0] (reset_synchronizer_gtwiz_reset_rx_any_inst_n_3),
         .\FSM_sequential_sm_reset_rx_reg[1] (reset_synchronizer_gtwiz_reset_rx_any_inst_n_1),
         .\FSM_sequential_sm_reset_rx_reg[1]_0 (reset_synchronizer_gtwiz_reset_rx_any_inst_n_2),
-        .Q(sm_reset_rx),
-        .cal_on_rx_reset_in(cal_on_rx_reset_in),
+        .Q({sm_reset_rx,Q}),
+        .\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_rx_int (\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_rx_int ),
         .\gen_gtwizard_gthe4.gtrxreset_int (\gen_gtwizard_gthe4.gtrxreset_int ),
         .\gen_gtwizard_gthe4.rxprogdivreset_int (\gen_gtwizard_gthe4.rxprogdivreset_int ),
         .gtrxreset_out_reg(bit_synchronizer_plllock_rx_inst_n_3),
@@ -13946,7 +6895,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .gtwiz_reset_rx_pll_and_datapath_in(gtwiz_reset_rx_pll_and_datapath_in),
         .rst_in_out_reg_0(gtwiz_reset_rx_datapath_int_reg_n_0),
         .rst_in_out_reg_1(gtwiz_reset_rx_pll_and_datapath_int_reg_n_0),
-        .rxprogdivreset_out_reg(bit_synchronizer_rxcdrlock_inst_n_3));
+        .rxprogdivreset_out_reg(bit_synchronizer_rxcdrlock_inst_n_2));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_12 reset_synchronizer_gtwiz_reset_rx_datapath_inst
        (.gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in),
         .gtwiz_reset_rx_datapath_in(gtwiz_reset_rx_datapath_in),
@@ -13960,13 +6909,13 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_14 reset_synchronizer_gtwiz_reset_tx_any_inst
        (.\FSM_sequential_sm_reset_tx_reg[1] (reset_synchronizer_gtwiz_reset_tx_any_inst_n_1),
         .Q(sm_reset_tx),
+        .\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_tx_int (\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_tx_int ),
         .\gen_gtwizard_gthe4.gttxreset_int (\gen_gtwizard_gthe4.gttxreset_int ),
-        .gttxreset_out_reg(bit_synchronizer_plllock_tx_inst_n_3),
+        .gttxreset_out_reg(bit_synchronizer_plllock_tx_inst_n_2),
         .gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in),
         .gtwiz_reset_tx_any_sync(gtwiz_reset_tx_any_sync),
         .gtwiz_reset_tx_datapath_in(gtwiz_reset_tx_datapath_in),
         .gtwiz_reset_tx_pll_and_datapath_in(gtwiz_reset_tx_pll_and_datapath_in),
-        .pllreset_tx_out_reg(pllreset_tx_out_reg_0),
         .rst_in_out_reg_0(reset_synchronizer_gtwiz_reset_tx_any_inst_n_2),
         .rst_in_out_reg_1(gtwiz_reset_tx_pll_and_datapath_int_reg_n_0));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_15 reset_synchronizer_gtwiz_reset_tx_datapath_inst
@@ -13987,9 +6936,9 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .rst_in_sync2_reg_0(gtwiz_reset_tx_done_int_reg_n_0),
         .txusrclk2_in(txusrclk2_in));
   gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_18 reset_synchronizer_txprogdivreset_inst
-       (.gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in),
-        .rst_in0(rst_in0),
-        .rst_in_out_reg_0(rst_in_out_reg));
+       (.\gen_gtwizard_gthe4.txprogdivreset_int (\gen_gtwizard_gthe4.txprogdivreset_int ),
+        .gtwiz_reset_clk_freerun_in(gtwiz_reset_clk_freerun_in),
+        .rst_in0(rst_in0));
   FDRE #(
     .INIT(1'b1)) 
     rxprogdivreset_out_reg
@@ -14003,7 +6952,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     rxuserrdy_out_reg
        (.C(gtwiz_reset_clk_freerun_in),
         .CE(1'b1),
-        .D(bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_1),
+        .D(bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_2),
         .Q(\gen_gtwizard_gthe4.rxuserrdy_int ),
         .R(1'b0));
   LUT5 #(
@@ -14045,14 +6994,14 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     \sm_reset_all_timer_ctr[0]_i_1 
        (.I0(sm_reset_all_timer_ctr[0]),
         .O(\sm_reset_all_timer_ctr[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair75" *) 
+  (* SOFT_HLUTNM = "soft_lutpair21" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \sm_reset_all_timer_ctr[1]_i_1 
        (.I0(sm_reset_all_timer_ctr[0]),
         .I1(sm_reset_all_timer_ctr[1]),
         .O(\sm_reset_all_timer_ctr[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair75" *) 
+  (* SOFT_HLUTNM = "soft_lutpair21" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \sm_reset_all_timer_ctr[2]_i_1 
@@ -14084,7 +7033,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .D(\sm_reset_all_timer_ctr[2]_i_1_n_0 ),
         .Q(sm_reset_all_timer_ctr[2]),
         .R(sm_reset_all_timer_clr_reg_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair64" *) 
+  (* SOFT_HLUTNM = "soft_lutpair10" *) 
   LUT5 #(
     .INIT(32'h0000FF80)) 
     sm_reset_all_timer_sat_i_1
@@ -14102,20 +7051,12 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .D(sm_reset_all_timer_sat_i_1_n_0),
         .Q(sm_reset_all_timer_sat),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair67" *) 
-  LUT3 #(
-    .INIT(8'h40)) 
-    sm_reset_rx_cdr_to_clr_i_3
-       (.I0(sm_reset_rx_timer_clr_reg_n_0),
-        .I1(sm_reset_rx_timer_sat),
-        .I2(sm_reset_rx[1]),
-        .O(sm_reset_rx_cdr_to_clr_i_3_n_0));
   FDSE #(
     .INIT(1'b1)) 
     sm_reset_rx_cdr_to_clr_reg
        (.C(gtwiz_reset_clk_freerun_in),
         .CE(1'b1),
-        .D(bit_synchronizer_rxcdrlock_inst_n_1),
+        .D(bit_synchronizer_rxcdrlock_inst_n_3),
         .Q(sm_reset_rx_cdr_to_clr),
         .S(gtwiz_reset_rx_any_sync));
   LUT6 #(
@@ -14478,12 +7419,11 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .D(sm_reset_rx_cdr_to_sat_i_1_n_0),
         .Q(sm_reset_rx_cdr_to_sat),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair61" *) 
   LUT5 #(
     .INIT(32'hFFF3000B)) 
     sm_reset_rx_pll_timer_clr_i_1
        (.I0(sm_reset_rx_pll_timer_sat),
-        .I1(sm_reset_rx[0]),
+        .I1(Q),
         .I2(sm_reset_rx[1]),
         .I3(sm_reset_rx[2]),
         .I4(sm_reset_rx_pll_timer_clr_reg_n_0),
@@ -14496,27 +7436,28 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .D(sm_reset_rx_pll_timer_clr_i_1_n_0),
         .Q(sm_reset_rx_pll_timer_clr_reg_n_0),
         .S(gtwiz_reset_rx_any_sync));
+  (* SOFT_HLUTNM = "soft_lutpair23" *) 
   LUT1 #(
     .INIT(2'h1)) 
     \sm_reset_rx_pll_timer_ctr[0]_i_1 
        (.I0(sm_reset_rx_pll_timer_ctr_reg[0]),
         .O(p_0_in__1[0]));
-  (* SOFT_HLUTNM = "soft_lutpair72" *) 
+  (* SOFT_HLUTNM = "soft_lutpair23" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \sm_reset_rx_pll_timer_ctr[1]_i_1 
        (.I0(sm_reset_rx_pll_timer_ctr_reg[0]),
         .I1(sm_reset_rx_pll_timer_ctr_reg[1]),
         .O(p_0_in__1[1]));
-  (* SOFT_HLUTNM = "soft_lutpair72" *) 
+  (* SOFT_HLUTNM = "soft_lutpair17" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \sm_reset_rx_pll_timer_ctr[2]_i_1 
        (.I0(sm_reset_rx_pll_timer_ctr_reg[1]),
         .I1(sm_reset_rx_pll_timer_ctr_reg[0]),
         .I2(sm_reset_rx_pll_timer_ctr_reg[2]),
-        .O(p_0_in__1[2]));
-  (* SOFT_HLUTNM = "soft_lutpair60" *) 
+        .O(\sm_reset_rx_pll_timer_ctr[2]_i_1_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair7" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \sm_reset_rx_pll_timer_ctr[3]_i_1 
@@ -14524,35 +7465,35 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .I1(sm_reset_rx_pll_timer_ctr_reg[0]),
         .I2(sm_reset_rx_pll_timer_ctr_reg[1]),
         .I3(sm_reset_rx_pll_timer_ctr_reg[3]),
-        .O(p_0_in__1[3]));
-  (* SOFT_HLUTNM = "soft_lutpair60" *) 
+        .O(\sm_reset_rx_pll_timer_ctr[3]_i_1_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair7" *) 
   LUT5 #(
     .INIT(32'h7FFF8000)) 
     \sm_reset_rx_pll_timer_ctr[4]_i_1 
-       (.I0(sm_reset_rx_pll_timer_ctr_reg[3]),
-        .I1(sm_reset_rx_pll_timer_ctr_reg[1]),
-        .I2(sm_reset_rx_pll_timer_ctr_reg[0]),
-        .I3(sm_reset_rx_pll_timer_ctr_reg[2]),
+       (.I0(sm_reset_rx_pll_timer_ctr_reg[1]),
+        .I1(sm_reset_rx_pll_timer_ctr_reg[0]),
+        .I2(sm_reset_rx_pll_timer_ctr_reg[2]),
+        .I3(sm_reset_rx_pll_timer_ctr_reg[3]),
         .I4(sm_reset_rx_pll_timer_ctr_reg[4]),
         .O(p_0_in__1[4]));
   LUT6 #(
     .INIT(64'h7FFFFFFF80000000)) 
     \sm_reset_rx_pll_timer_ctr[5]_i_1 
        (.I0(sm_reset_rx_pll_timer_ctr_reg[4]),
-        .I1(sm_reset_rx_pll_timer_ctr_reg[2]),
-        .I2(sm_reset_rx_pll_timer_ctr_reg[0]),
-        .I3(sm_reset_rx_pll_timer_ctr_reg[1]),
-        .I4(sm_reset_rx_pll_timer_ctr_reg[3]),
+        .I1(sm_reset_rx_pll_timer_ctr_reg[3]),
+        .I2(sm_reset_rx_pll_timer_ctr_reg[2]),
+        .I3(sm_reset_rx_pll_timer_ctr_reg[0]),
+        .I4(sm_reset_rx_pll_timer_ctr_reg[1]),
         .I5(sm_reset_rx_pll_timer_ctr_reg[5]),
         .O(p_0_in__1[5]));
-  (* SOFT_HLUTNM = "soft_lutpair69" *) 
+  (* SOFT_HLUTNM = "soft_lutpair15" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \sm_reset_rx_pll_timer_ctr[6]_i_1 
        (.I0(\sm_reset_rx_pll_timer_ctr[9]_i_4_n_0 ),
         .I1(sm_reset_rx_pll_timer_ctr_reg[6]),
         .O(p_0_in__1[6]));
-  (* SOFT_HLUTNM = "soft_lutpair69" *) 
+  (* SOFT_HLUTNM = "soft_lutpair15" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \sm_reset_rx_pll_timer_ctr[7]_i_1 
@@ -14560,7 +7501,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .I1(\sm_reset_rx_pll_timer_ctr[9]_i_4_n_0 ),
         .I2(sm_reset_rx_pll_timer_ctr_reg[7]),
         .O(p_0_in__1[7]));
-  (* SOFT_HLUTNM = "soft_lutpair57" *) 
+  (* SOFT_HLUTNM = "soft_lutpair4" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \sm_reset_rx_pll_timer_ctr[8]_i_1 
@@ -14570,15 +7511,15 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .I3(sm_reset_rx_pll_timer_ctr_reg[8]),
         .O(p_0_in__1[8]));
   LUT5 #(
-    .INIT(32'hFFFEFFFF)) 
+    .INIT(32'hEFFFFFFF)) 
     \sm_reset_rx_pll_timer_ctr[9]_i_1 
-       (.I0(sm_reset_rx_pll_timer_ctr_reg[2]),
+       (.I0(\sm_reset_rx_pll_timer_ctr[9]_i_3_n_0 ),
         .I1(sm_reset_rx_pll_timer_ctr_reg[3]),
-        .I2(\sm_reset_rx_pll_timer_ctr[9]_i_3_n_0 ),
-        .I3(sm_reset_rx_pll_timer_ctr_reg[1]),
-        .I4(sm_reset_rx_pll_timer_ctr_reg[0]),
+        .I2(sm_reset_rx_pll_timer_ctr_reg[1]),
+        .I3(sm_reset_rx_pll_timer_ctr_reg[0]),
+        .I4(sm_reset_rx_pll_timer_ctr_reg[2]),
         .O(\sm_reset_rx_pll_timer_ctr[9]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair57" *) 
+  (* SOFT_HLUTNM = "soft_lutpair4" *) 
   LUT5 #(
     .INIT(32'h7FFF8000)) 
     \sm_reset_rx_pll_timer_ctr[9]_i_2 
@@ -14589,23 +7530,23 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .I4(sm_reset_rx_pll_timer_ctr_reg[9]),
         .O(p_0_in__1[9]));
   LUT6 #(
-    .INIT(64'hFFFFFFFEFFFFFFFF)) 
+    .INIT(64'hFFFFFFFFFFFFFFFE)) 
     \sm_reset_rx_pll_timer_ctr[9]_i_3 
        (.I0(sm_reset_rx_pll_timer_ctr_reg[8]),
         .I1(sm_reset_rx_pll_timer_ctr_reg[9]),
         .I2(sm_reset_rx_pll_timer_ctr_reg[6]),
         .I3(sm_reset_rx_pll_timer_ctr_reg[7]),
-        .I4(sm_reset_rx_pll_timer_ctr_reg[4]),
-        .I5(sm_reset_rx_pll_timer_ctr_reg[5]),
+        .I4(sm_reset_rx_pll_timer_ctr_reg[5]),
+        .I5(sm_reset_rx_pll_timer_ctr_reg[4]),
         .O(\sm_reset_rx_pll_timer_ctr[9]_i_3_n_0 ));
   LUT6 #(
     .INIT(64'h8000000000000000)) 
     \sm_reset_rx_pll_timer_ctr[9]_i_4 
        (.I0(sm_reset_rx_pll_timer_ctr_reg[4]),
-        .I1(sm_reset_rx_pll_timer_ctr_reg[2]),
-        .I2(sm_reset_rx_pll_timer_ctr_reg[0]),
-        .I3(sm_reset_rx_pll_timer_ctr_reg[1]),
-        .I4(sm_reset_rx_pll_timer_ctr_reg[3]),
+        .I1(sm_reset_rx_pll_timer_ctr_reg[3]),
+        .I2(sm_reset_rx_pll_timer_ctr_reg[2]),
+        .I3(sm_reset_rx_pll_timer_ctr_reg[0]),
+        .I4(sm_reset_rx_pll_timer_ctr_reg[1]),
         .I5(sm_reset_rx_pll_timer_ctr_reg[5]),
         .O(\sm_reset_rx_pll_timer_ctr[9]_i_4_n_0 ));
   FDRE #(
@@ -14629,7 +7570,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     \sm_reset_rx_pll_timer_ctr_reg[2] 
        (.C(gtwiz_reset_clk_freerun_in),
         .CE(\sm_reset_rx_pll_timer_ctr[9]_i_1_n_0 ),
-        .D(p_0_in__1[2]),
+        .D(\sm_reset_rx_pll_timer_ctr[2]_i_1_n_0 ),
         .Q(sm_reset_rx_pll_timer_ctr_reg[2]),
         .R(sm_reset_rx_pll_timer_clr_reg_n_0));
   FDRE #(
@@ -14637,7 +7578,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     \sm_reset_rx_pll_timer_ctr_reg[3] 
        (.C(gtwiz_reset_clk_freerun_in),
         .CE(\sm_reset_rx_pll_timer_ctr[9]_i_1_n_0 ),
-        .D(p_0_in__1[3]),
+        .D(\sm_reset_rx_pll_timer_ctr[3]_i_1_n_0 ),
         .Q(sm_reset_rx_pll_timer_ctr_reg[3]),
         .R(sm_reset_rx_pll_timer_clr_reg_n_0));
   FDRE #(
@@ -14688,29 +7629,30 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .D(p_0_in__1[9]),
         .Q(sm_reset_rx_pll_timer_ctr_reg[9]),
         .R(sm_reset_rx_pll_timer_clr_reg_n_0));
-  LUT6 #(
-    .INIT(64'h00000000AAEAAAAA)) 
+  LUT5 #(
+    .INIT(32'h0000ABAA)) 
     sm_reset_rx_pll_timer_sat_i_1
        (.I0(sm_reset_rx_pll_timer_sat),
-        .I1(sm_reset_rx_pll_timer_sat_i_2_n_0),
-        .I2(sm_reset_rx_pll_timer_ctr_reg[0]),
-        .I3(sm_reset_rx_pll_timer_ctr_reg[1]),
-        .I4(sm_reset_rx_pll_timer_sat_i_3_n_0),
-        .I5(sm_reset_rx_pll_timer_clr_reg_n_0),
-        .O(sm_reset_rx_pll_timer_sat_i_1_n_0));
-  LUT2 #(
-    .INIT(4'h1)) 
-    sm_reset_rx_pll_timer_sat_i_2
-       (.I0(sm_reset_rx_pll_timer_ctr_reg[2]),
         .I1(sm_reset_rx_pll_timer_ctr_reg[3]),
+        .I2(sm_reset_rx_pll_timer_sat_i_2_n_0),
+        .I3(sm_reset_rx_pll_timer_sat_i_3_n_0),
+        .I4(sm_reset_rx_pll_timer_clr_reg_n_0),
+        .O(sm_reset_rx_pll_timer_sat_i_1_n_0));
+  (* SOFT_HLUTNM = "soft_lutpair17" *) 
+  LUT3 #(
+    .INIT(8'h7F)) 
+    sm_reset_rx_pll_timer_sat_i_2
+       (.I0(sm_reset_rx_pll_timer_ctr_reg[1]),
+        .I1(sm_reset_rx_pll_timer_ctr_reg[0]),
+        .I2(sm_reset_rx_pll_timer_ctr_reg[2]),
         .O(sm_reset_rx_pll_timer_sat_i_2_n_0));
   LUT6 #(
-    .INIT(64'h0000000000000010)) 
+    .INIT(64'h0000000000000001)) 
     sm_reset_rx_pll_timer_sat_i_3
        (.I0(sm_reset_rx_pll_timer_ctr_reg[6]),
         .I1(sm_reset_rx_pll_timer_ctr_reg[7]),
-        .I2(sm_reset_rx_pll_timer_ctr_reg[5]),
-        .I3(sm_reset_rx_pll_timer_ctr_reg[4]),
+        .I2(sm_reset_rx_pll_timer_ctr_reg[4]),
+        .I3(sm_reset_rx_pll_timer_ctr_reg[5]),
         .I4(sm_reset_rx_pll_timer_ctr_reg[9]),
         .I5(sm_reset_rx_pll_timer_ctr_reg[8]),
         .O(sm_reset_rx_pll_timer_sat_i_3_n_0));
@@ -14727,7 +7669,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     sm_reset_rx_timer_clr_reg
        (.C(gtwiz_reset_clk_freerun_in),
         .CE(1'b1),
-        .D(bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_0),
+        .D(bit_synchronizer_gtwiz_reset_userclk_rx_active_inst_n_1),
         .Q(sm_reset_rx_timer_clr_reg_n_0),
         .S(gtwiz_reset_rx_any_sync));
   LUT3 #(
@@ -14742,14 +7684,14 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     \sm_reset_rx_timer_ctr[0]_i_1 
        (.I0(sm_reset_rx_timer_ctr[0]),
         .O(\sm_reset_rx_timer_ctr[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair74" *) 
+  (* SOFT_HLUTNM = "soft_lutpair20" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \sm_reset_rx_timer_ctr[1]_i_1 
        (.I0(sm_reset_rx_timer_ctr[0]),
         .I1(sm_reset_rx_timer_ctr[1]),
         .O(\sm_reset_rx_timer_ctr[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair74" *) 
+  (* SOFT_HLUTNM = "soft_lutpair20" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \sm_reset_rx_timer_ctr[2]_i_1 
@@ -14781,7 +7723,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .D(\sm_reset_rx_timer_ctr[2]_i_1_n_0 ),
         .Q(sm_reset_rx_timer_ctr[2]),
         .R(sm_reset_rx_timer_clr_reg_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair63" *) 
+  (* SOFT_HLUTNM = "soft_lutpair9" *) 
   LUT5 #(
     .INIT(32'h0000FF80)) 
     sm_reset_rx_timer_sat_i_1
@@ -14799,7 +7741,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .D(sm_reset_rx_timer_sat_i_1_n_0),
         .Q(sm_reset_rx_timer_sat),
         .R(1'b0));
-  (* SOFT_HLUTNM = "soft_lutpair58" *) 
+  (* SOFT_HLUTNM = "soft_lutpair5" *) 
   LUT5 #(
     .INIT(32'hFFF5000D)) 
     sm_reset_tx_pll_timer_clr_i_1
@@ -14817,20 +7759,20 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .D(sm_reset_tx_pll_timer_clr_i_1_n_0),
         .Q(sm_reset_tx_pll_timer_clr_reg_n_0),
         .S(gtwiz_reset_tx_any_sync));
-  (* SOFT_HLUTNM = "soft_lutpair76" *) 
+  (* SOFT_HLUTNM = "soft_lutpair22" *) 
   LUT1 #(
     .INIT(2'h1)) 
     \sm_reset_tx_pll_timer_ctr[0]_i_1 
        (.I0(sm_reset_tx_pll_timer_ctr_reg[0]),
         .O(p_0_in__0[0]));
-  (* SOFT_HLUTNM = "soft_lutpair76" *) 
+  (* SOFT_HLUTNM = "soft_lutpair22" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \sm_reset_tx_pll_timer_ctr[1]_i_1 
        (.I0(sm_reset_tx_pll_timer_ctr_reg[0]),
         .I1(sm_reset_tx_pll_timer_ctr_reg[1]),
         .O(p_0_in__0[1]));
-  (* SOFT_HLUTNM = "soft_lutpair70" *) 
+  (* SOFT_HLUTNM = "soft_lutpair16" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \sm_reset_tx_pll_timer_ctr[2]_i_1 
@@ -14838,7 +7780,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .I1(sm_reset_tx_pll_timer_ctr_reg[0]),
         .I2(sm_reset_tx_pll_timer_ctr_reg[2]),
         .O(\sm_reset_tx_pll_timer_ctr[2]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair59" *) 
+  (* SOFT_HLUTNM = "soft_lutpair6" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \sm_reset_tx_pll_timer_ctr[3]_i_1 
@@ -14847,7 +7789,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .I2(sm_reset_tx_pll_timer_ctr_reg[1]),
         .I3(sm_reset_tx_pll_timer_ctr_reg[3]),
         .O(\sm_reset_tx_pll_timer_ctr[3]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair59" *) 
+  (* SOFT_HLUTNM = "soft_lutpair6" *) 
   LUT5 #(
     .INIT(32'h7FFF8000)) 
     \sm_reset_tx_pll_timer_ctr[4]_i_1 
@@ -14867,14 +7809,14 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .I4(sm_reset_tx_pll_timer_ctr_reg[1]),
         .I5(sm_reset_tx_pll_timer_ctr_reg[5]),
         .O(p_0_in__0[5]));
-  (* SOFT_HLUTNM = "soft_lutpair68" *) 
+  (* SOFT_HLUTNM = "soft_lutpair14" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \sm_reset_tx_pll_timer_ctr[6]_i_1 
        (.I0(\sm_reset_tx_pll_timer_ctr[9]_i_4_n_0 ),
         .I1(sm_reset_tx_pll_timer_ctr_reg[6]),
         .O(p_0_in__0[6]));
-  (* SOFT_HLUTNM = "soft_lutpair68" *) 
+  (* SOFT_HLUTNM = "soft_lutpair14" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \sm_reset_tx_pll_timer_ctr[7]_i_1 
@@ -14882,7 +7824,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .I1(\sm_reset_tx_pll_timer_ctr[9]_i_4_n_0 ),
         .I2(sm_reset_tx_pll_timer_ctr_reg[7]),
         .O(p_0_in__0[7]));
-  (* SOFT_HLUTNM = "soft_lutpair56" *) 
+  (* SOFT_HLUTNM = "soft_lutpair3" *) 
   LUT4 #(
     .INIT(16'h7F80)) 
     \sm_reset_tx_pll_timer_ctr[8]_i_1 
@@ -14900,7 +7842,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .I3(sm_reset_tx_pll_timer_ctr_reg[0]),
         .I4(sm_reset_tx_pll_timer_ctr_reg[2]),
         .O(\sm_reset_tx_pll_timer_ctr[9]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair56" *) 
+  (* SOFT_HLUTNM = "soft_lutpair3" *) 
   LUT5 #(
     .INIT(32'h7FFF8000)) 
     \sm_reset_tx_pll_timer_ctr[9]_i_2 
@@ -15019,7 +7961,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .I3(sm_reset_tx_pll_timer_sat_i_3_n_0),
         .I4(sm_reset_tx_pll_timer_clr_reg_n_0),
         .O(sm_reset_tx_pll_timer_sat_i_1_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair70" *) 
+  (* SOFT_HLUTNM = "soft_lutpair16" *) 
   LUT3 #(
     .INIT(8'h7F)) 
     sm_reset_tx_pll_timer_sat_i_2
@@ -15050,7 +7992,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     sm_reset_tx_timer_clr_reg
        (.C(gtwiz_reset_clk_freerun_in),
         .CE(1'b1),
-        .D(bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_0),
+        .D(bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_1),
         .Q(sm_reset_tx_timer_clr_reg_n_0),
         .S(gtwiz_reset_tx_any_sync));
   LUT3 #(
@@ -15065,14 +8007,14 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     \sm_reset_tx_timer_ctr[0]_i_1 
        (.I0(sm_reset_tx_timer_ctr[0]),
         .O(\sm_reset_tx_timer_ctr[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair73" *) 
+  (* SOFT_HLUTNM = "soft_lutpair19" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \sm_reset_tx_timer_ctr[1]_i_1 
        (.I0(sm_reset_tx_timer_ctr[0]),
         .I1(sm_reset_tx_timer_ctr[1]),
         .O(\sm_reset_tx_timer_ctr[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair73" *) 
+  (* SOFT_HLUTNM = "soft_lutpair19" *) 
   LUT3 #(
     .INIT(8'h78)) 
     \sm_reset_tx_timer_ctr[2]_i_1 
@@ -15104,7 +8046,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
         .D(\sm_reset_tx_timer_ctr[2]_i_1_n_0 ),
         .Q(sm_reset_tx_timer_ctr[2]),
         .R(sm_reset_tx_timer_clr_reg_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair62" *) 
+  (* SOFT_HLUTNM = "soft_lutpair8" *) 
   LUT5 #(
     .INIT(32'h0000FF80)) 
     sm_reset_tx_timer_sat_i_1
@@ -15127,7 +8069,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
     txuserrdy_out_reg
        (.C(gtwiz_reset_clk_freerun_in),
         .CE(1'b1),
-        .D(bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_1),
+        .D(bit_synchronizer_gtwiz_reset_userclk_tx_active_inst_n_2),
         .Q(\gen_gtwizard_gthe4.txuserrdy_int ),
         .R(1'b0));
 endmodule
@@ -15353,7 +8295,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_11
     \FSM_sequential_sm_reset_rx_reg[0] ,
     gtwiz_reset_clk_freerun_in,
     Q,
-    cal_on_rx_reset_in,
+    \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_rx_int ,
     rxprogdivreset_out_reg,
     \gen_gtwizard_gthe4.rxprogdivreset_int ,
     gtrxreset_out_reg,
@@ -15368,7 +8310,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_11
   output \FSM_sequential_sm_reset_rx_reg[0] ;
   input [0:0]gtwiz_reset_clk_freerun_in;
   input [2:0]Q;
-  input cal_on_rx_reset_in;
+  input \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_rx_int ;
   input rxprogdivreset_out_reg;
   input \gen_gtwizard_gthe4.rxprogdivreset_int ;
   input gtrxreset_out_reg;
@@ -15382,7 +8324,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_11
   wire \FSM_sequential_sm_reset_rx_reg[1] ;
   wire \FSM_sequential_sm_reset_rx_reg[1]_0 ;
   wire [2:0]Q;
-  wire cal_on_rx_reset_in;
+  wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_rx_int ;
   wire \gen_gtwizard_gthe4.gtrxreset_int ;
   wire \gen_gtwizard_gthe4.rxprogdivreset_int ;
   wire gtrxreset_out_reg;
@@ -15416,7 +8358,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_11
         .I1(Q[2]),
         .I2(Q[0]),
         .I3(gtwiz_reset_rx_any_sync),
-        .I4(cal_on_rx_reset_in),
+        .I4(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_rx_int ),
         .O(\FSM_sequential_sm_reset_rx_reg[1] ));
   LUT4 #(
     .INIT(16'hFFFE)) 
@@ -15647,7 +8589,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_14
     rst_in_out_reg_0,
     gtwiz_reset_clk_freerun_in,
     Q,
-    pllreset_tx_out_reg,
+    \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_tx_int ,
     gttxreset_out_reg,
     \gen_gtwizard_gthe4.gttxreset_int ,
     gtwiz_reset_tx_datapath_in,
@@ -15658,7 +8600,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_14
   output rst_in_out_reg_0;
   input [0:0]gtwiz_reset_clk_freerun_in;
   input [2:0]Q;
-  input pllreset_tx_out_reg;
+  input \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_tx_int ;
   input gttxreset_out_reg;
   input \gen_gtwizard_gthe4.gttxreset_int ;
   input [0:0]gtwiz_reset_tx_datapath_in;
@@ -15667,6 +8609,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_14
 
   wire \FSM_sequential_sm_reset_tx_reg[1] ;
   wire [2:0]Q;
+  wire \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_tx_int ;
   wire \gen_gtwizard_gthe4.gttxreset_int ;
   wire gttxreset_out_reg;
   wire [0:0]gtwiz_reset_clk_freerun_in;
@@ -15674,7 +8617,6 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_14
   wire gtwiz_reset_tx_any_sync;
   wire [0:0]gtwiz_reset_tx_datapath_in;
   wire [0:0]gtwiz_reset_tx_pll_and_datapath_in;
-  wire pllreset_tx_out_reg;
   (* async_reg = "true" *) wire rst_in_meta;
   wire rst_in_out_reg_0;
   wire rst_in_out_reg_1;
@@ -15699,7 +8641,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_14
         .I1(Q[2]),
         .I2(Q[0]),
         .I3(gtwiz_reset_tx_any_sync),
-        .I4(pllreset_tx_out_reg),
+        .I4(\gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_pllreset_tx_int ),
         .O(\FSM_sequential_sm_reset_tx_reg[1] ));
   LUT3 #(
     .INIT(8'hFE)) 
@@ -15904,17 +8846,17 @@ endmodule
 
 (* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_reset_synchronizer" *) 
 module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_18
-   (rst_in_out_reg_0,
+   (\gen_gtwizard_gthe4.txprogdivreset_int ,
     gtwiz_reset_clk_freerun_in,
     rst_in0);
-  output rst_in_out_reg_0;
+  output \gen_gtwizard_gthe4.txprogdivreset_int ;
   input [0:0]gtwiz_reset_clk_freerun_in;
   input rst_in0;
 
+  wire \gen_gtwizard_gthe4.txprogdivreset_int ;
   wire [0:0]gtwiz_reset_clk_freerun_in;
   wire rst_in0;
   (* async_reg = "true" *) wire rst_in_meta;
-  wire rst_in_out_reg_0;
   (* async_reg = "true" *) wire rst_in_sync1;
   (* async_reg = "true" *) wire rst_in_sync2;
   (* async_reg = "true" *) wire rst_in_sync3;
@@ -15936,7 +8878,7 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_18
         .CE(1'b1),
         .D(rst_in_sync3),
         .PRE(rst_in0),
-        .Q(rst_in_out_reg_0));
+        .Q(\gen_gtwizard_gthe4.txprogdivreset_int ));
   (* ASYNC_REG *) 
   (* KEEP = "yes" *) 
   FDPE #(
@@ -15966,249 +8908,6 @@ module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_18
         .CE(1'b1),
         .D(rst_in_sync2),
         .PRE(rst_in0),
-        .Q(rst_in_sync3));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_reset_synchronizer" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_20
-   (cal_on_rx_reset_in_sync,
-    drpclk_in,
-    cal_on_rx_reset_in);
-  output cal_on_rx_reset_in_sync;
-  input [0:0]drpclk_in;
-  input cal_on_rx_reset_in;
-
-  wire cal_on_rx_reset_in;
-  wire cal_on_rx_reset_in_sync;
-  wire [0:0]drpclk_in;
-  (* async_reg = "true" *) wire rst_in_meta;
-  (* async_reg = "true" *) wire rst_in_sync1;
-  (* async_reg = "true" *) wire rst_in_sync2;
-  (* async_reg = "true" *) wire rst_in_sync3;
-
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_meta_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(1'b0),
-        .PRE(cal_on_rx_reset_in),
-        .Q(rst_in_meta));
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_out_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(rst_in_sync3),
-        .PRE(cal_on_rx_reset_in),
-        .Q(cal_on_rx_reset_in_sync));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_sync1_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(rst_in_meta),
-        .PRE(cal_on_rx_reset_in),
-        .Q(rst_in_sync1));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_sync2_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(rst_in_sync1),
-        .PRE(cal_on_rx_reset_in),
-        .Q(rst_in_sync2));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_sync3_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(rst_in_sync2),
-        .PRE(cal_on_rx_reset_in),
-        .Q(rst_in_sync3));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_reset_synchronizer" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_21
-   (drpclk_in);
-  input [0:0]drpclk_in;
-
-  wire [0:0]drpclk_in;
-  (* async_reg = "true" *) wire rst_in_meta;
-  (* async_reg = "true" *) wire rst_in_sync1;
-  (* async_reg = "true" *) wire rst_in_sync2;
-  (* async_reg = "true" *) wire rst_in_sync3;
-
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_meta_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(1'b0),
-        .PRE(1'b1),
-        .Q(rst_in_meta));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_sync1_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(rst_in_meta),
-        .PRE(1'b1),
-        .Q(rst_in_sync1));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_sync2_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(rst_in_sync1),
-        .PRE(1'b1),
-        .Q(rst_in_sync2));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_sync3_reg
-       (.C(drpclk_in),
-        .CE(1'b1),
-        .D(rst_in_sync2),
-        .PRE(1'b1),
-        .Q(rst_in_sync3));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_reset_synchronizer" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_28
-   (txoutclkmon,
-    out);
-  input txoutclkmon;
-  input out;
-
-  wire out;
-  (* async_reg = "true" *) wire rst_in_meta;
-  (* async_reg = "true" *) wire rst_in_sync1;
-  (* async_reg = "true" *) wire rst_in_sync2;
-  (* async_reg = "true" *) wire rst_in_sync3;
-  wire txoutclkmon;
-
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_meta_reg
-       (.C(txoutclkmon),
-        .CE(1'b1),
-        .D(1'b0),
-        .PRE(out),
-        .Q(rst_in_meta));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_sync1_reg
-       (.C(txoutclkmon),
-        .CE(1'b1),
-        .D(rst_in_meta),
-        .PRE(out),
-        .Q(rst_in_sync1));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_sync2_reg
-       (.C(txoutclkmon),
-        .CE(1'b1),
-        .D(rst_in_sync1),
-        .PRE(out),
-        .Q(rst_in_sync2));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_sync3_reg
-       (.C(txoutclkmon),
-        .CE(1'b1),
-        .D(rst_in_sync2),
-        .PRE(out),
-        .Q(rst_in_sync3));
-endmodule
-
-(* ORIG_REF_NAME = "gtwizard_ultrascale_v1_7_19_reset_synchronizer" *) 
-module gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_reset_synchronizer_33
-   (rst_in_out,
-    \gen_cal_rx_en.rxoutclkmon ,
-    out);
-  output rst_in_out;
-  input \gen_cal_rx_en.rxoutclkmon ;
-  input out;
-
-  wire \gen_cal_rx_en.rxoutclkmon ;
-  wire out;
-  (* async_reg = "true" *) wire rst_in_meta;
-  wire rst_in_out;
-  (* async_reg = "true" *) wire rst_in_sync1;
-  (* async_reg = "true" *) wire rst_in_sync2;
-  (* async_reg = "true" *) wire rst_in_sync3;
-
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_meta_reg
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(1'b1),
-        .D(1'b0),
-        .PRE(out),
-        .Q(rst_in_meta));
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_out_reg
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(1'b1),
-        .D(rst_in_sync3),
-        .PRE(out),
-        .Q(rst_in_out));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_sync1_reg
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(1'b1),
-        .D(rst_in_meta),
-        .PRE(out),
-        .Q(rst_in_sync1));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_sync2_reg
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(1'b1),
-        .D(rst_in_sync1),
-        .PRE(out),
-        .Q(rst_in_sync2));
-  (* ASYNC_REG *) 
-  (* KEEP = "yes" *) 
-  FDPE #(
-    .INIT(1'b0)) 
-    rst_in_sync3_reg
-       (.C(\gen_cal_rx_en.rxoutclkmon ),
-        .CE(1'b1),
-        .D(rst_in_sync2),
-        .PRE(out),
         .Q(rst_in_sync3));
 endmodule
 `ifndef GLBL

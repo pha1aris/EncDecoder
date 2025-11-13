@@ -3,8 +3,8 @@
 # SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
 # IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
 # SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
-# Start of session at: Sat Sep 27 17:12:40 2025
-# Process ID         : 19544
+# Start of session at: Sat Nov  8 16:12:01 2025
+# Process ID         : 16924
 # Current directory  : C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/gtwizard_ultrascale_0_synth_1
 # Command line       : vivado.exe -log gtwizard_ultrascale_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source gtwizard_ultrascale_0.tcl
 # Log file           : C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/gtwizard_ultrascale_0_synth_1/gtwizard_ultrascale_0.vds
@@ -19,7 +19,7 @@
 # Host memory        : 68263 MB
 # Swap memory        : 10200 MB
 # Total Virtual      : 78464 MB
-# Available Virtual  : 54663 MB
+# Available Virtual  : 49255 MB
 #-----------------------------------------------------------
 Sourcing tcl script 'D:/2024_2/Vivado/2024.2/scripts/Vivado_init.tcl'
 source gtwizard_ultrascale_0.tcl -notrace
@@ -31,9 +31,9 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xczu15e
 INFO: [Device 21-403] Loading part xczu15eg-ffvb1156-2-i
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 17380
+INFO: [Synth 8-7075] Helper process launched with PID 13900
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1764.098 ; gain = 189.812
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1762.395 ; gain = 189.621
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'gtwizard_ultrascale_0' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/synth/gtwizard_ultrascale_0.v:53]
 INFO: [Synth 8-6157] synthesizing module 'gtwizard_ultrascale_0_gtwizard_top' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/synth/gtwizard_ultrascale_0_gtwizard_top.v:173]
@@ -50,26 +50,14 @@ INFO: [Synth 8-6157] synthesizing module 'GTHE4_CHANNEL' [D:/2024_2/Vivado/2024.
 INFO: [Synth 8-6155] done synthesizing module 'GTHE4_CHANNEL' (0#1) [D:/2024_2/Vivado/2024.2/scripts/rt/data/unisim_comp.v:47636]
 INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_v1_7_19_gthe4_channel' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/synth/gtwizard_ultrascale_v1_7_gthe4_channel.v:53]
 INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_0_gthe4_channel_wrapper' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/synth/gtwizard_ultrascale_0_gthe4_channel_wrapper.v:56]
-INFO: [Synth 8-6157] synthesizing module 'gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_cpll_cal.v:53]
-INFO: [Synth 8-6157] synthesizing module 'gtwizard_ultrascale_v1_7_19_reset_synchronizer' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_reset_sync.v:53]
-INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_v1_7_19_reset_synchronizer' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_reset_sync.v:53]
-INFO: [Synth 8-6157] synthesizing module 'gtwizard_ultrascale_v1_7_19_bit_synchronizer' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_bit_sync.v:53]
-INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_v1_7_19_bit_synchronizer' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_bit_sync.v:53]
-INFO: [Synth 8-6157] synthesizing module 'gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_tx' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_cpll_cal_tx.v:53]
-INFO: [Synth 8-6157] synthesizing module 'BUFG_GT' [D:/2024_2/Vivado/2024.2/scripts/rt/data/unisim_comp.v:2853]
-INFO: [Synth 8-6155] done synthesizing module 'BUFG_GT' (0#1) [D:/2024_2/Vivado/2024.2/scripts/rt/data/unisim_comp.v:2853]
-INFO: [Synth 8-6157] synthesizing module 'gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_freq_counter' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_cal_freqcnt.v:53]
-INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_freq_counter' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_cal_freqcnt.v:53]
-INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_tx' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_cpll_cal_tx.v:53]
-INFO: [Synth 8-6157] synthesizing module 'gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_cpll_cal_rx.v:53]
-INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_cpll_cal_rx.v:53]
-INFO: [Synth 8-6157] synthesizing module 'gtwizard_ultrascale_v1_7_19_gte4_drp_arb' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gte4_drp_arb.v:53]
-INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_v1_7_19_gte4_drp_arb' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gte4_drp_arb.v:53]
-INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_cpll_cal.v:53]
 INFO: [Synth 8-6157] synthesizing module 'gtwizard_ultrascale_v1_7_19_gthe4_delay_powergood' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_delay_powergood.v:53]
 INFO: [Synth 8-226] default block is never used [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_delay_powergood.v:136]
 INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_v1_7_19_gthe4_delay_powergood' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_delay_powergood.v:53]
+INFO: [Synth 8-6157] synthesizing module 'gtwizard_ultrascale_v1_7_19_bit_synchronizer' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_bit_sync.v:53]
+INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_v1_7_19_bit_synchronizer' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_bit_sync.v:53]
 INFO: [Synth 8-6157] synthesizing module 'gtwizard_ultrascale_v1_7_19_gtwiz_reset' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gtwiz_reset.v:53]
+INFO: [Synth 8-6157] synthesizing module 'gtwizard_ultrascale_v1_7_19_reset_synchronizer' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_reset_sync.v:53]
+INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_v1_7_19_reset_synchronizer' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_reset_sync.v:53]
 INFO: [Synth 8-155] case statement is not full and has no default [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gtwiz_reset.v:162]
 INFO: [Synth 8-6157] synthesizing module 'gtwizard_ultrascale_v1_7_19_reset_inv_synchronizer' [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_reset_inv_sync.v:53]
 INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_v1_7_19_reset_inv_synchronizer' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_reset_inv_sync.v:53]
@@ -81,9 +69,6 @@ INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_v1_7_19_gtwiz
 INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_0_gtwizard_gthe4' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/synth/gtwizard_ultrascale_0_gtwizard_gthe4.v:141]
 INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_0_gtwizard_top' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/synth/gtwizard_ultrascale_0_gtwizard_top.v:173]
 INFO: [Synth 8-6155] done synthesizing module 'gtwizard_ultrascale_0' (0#1) [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/synth/gtwizard_ultrascale_0.v:53]
-WARNING: [Synth 8-7137] Register freq_cnt_o_reg in module gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_freq_counter has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_cal_freqcnt.v:188]
-WARNING: [Synth 8-6014] Unused sequential element mask_reg was removed.  [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_cpll_cal_tx.v:1077]
-WARNING: [Synth 8-6014] Unused sequential element gen_cal_rx_en.mask_reg was removed.  [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_cpll_cal_rx.v:1000]
 WARNING: [Synth 8-7129] Port rxdata_in[127] in module gtwizard_ultrascale_v1_7_19_gtwiz_userdata_rx is either unconnected or has no load
 WARNING: [Synth 8-7129] Port rxdata_in[126] in module gtwizard_ultrascale_v1_7_19_gtwiz_userdata_rx is either unconnected or has no load
 WARNING: [Synth 8-7129] Port rxdata_in[125] in module gtwizard_ultrascale_v1_7_19_gtwiz_userdata_rx is either unconnected or has no load
@@ -186,18 +171,18 @@ WARNING: [Synth 8-7129] Port rxctrl0_in[13] in module gtwizard_ultrascale_v1_7_1
 WARNING: [Synth 8-7129] Port rxctrl0_in[12] in module gtwizard_ultrascale_v1_7_19_gtwiz_userdata_rx is either unconnected or has no load
 INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1916.668 ; gain = 342.383
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1892.621 ; gain = 319.848
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1916.668 ; gain = 342.383
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1892.621 ; gain = 319.848
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1916.668 ; gain = 342.383
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1892.621 ; gain = 319.848
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.063 . Memory (MB): peak = 1916.668 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.033 . Memory (MB): peak = 1892.621 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -213,14 +198,14 @@ Parsing XDC File [C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/gtwizar
 Finished Parsing XDC File [C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/gtwizard_ultrascale_0_synth_1/dont_touch.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2035.758 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2002.703 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.027 . Memory (MB): peak = 2035.898 ; gain = 0.141
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.023 . Memory (MB): peak = 2002.895 ; gain = 0.191
 INFO: [Designutils 20-5008] Incremental synthesis strategy off
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2035.898 ; gain = 461.613
+Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2002.895 ; gain = 430.121
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
@@ -228,31 +213,18 @@ Start Loading Part and Timing Information
 Loading part: xczu15eg-ffvb1156-2-i
 INFO: [Synth 8-6742] Reading net delay rules and data
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2035.898 ; gain = 461.613
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2002.895 ; gain = 430.121
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 Applied set_property KEEP_HIERARCHY = SOFT for inst. (constraint file  C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/gtwizard_ultrascale_0_synth_1/dont_touch.xdc, line 9).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2035.898 ; gain = 461.613
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2002.895 ; gain = 430.121
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-3936] Found unconnected internal register 'progclk_sel_store_reg' and it is trimmed from '16' to '15' bits. [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_cpll_cal_tx.v:705]
-WARNING: [Synth 8-3936] Found unconnected internal register 'x0e1_store_reg' and it is trimmed from '16' to '15' bits. [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/hdl/gtwizard_ultrascale_v1_7_gthe4_cpll_cal_tx.v:778]
-INFO: [Synth 8-802] inferred FSM for state register 'arb_state_reg' in module 'gtwizard_ultrascale_v1_7_19_gte4_drp_arb'
 INFO: [Synth 8-802] inferred FSM for state register 'sm_reset_all_reg' in module 'gtwizard_ultrascale_v1_7_19_gtwiz_reset'
 INFO: [Synth 8-802] inferred FSM for state register 'sm_reset_tx_reg' in module 'gtwizard_ultrascale_v1_7_19_gtwiz_reset'
 INFO: [Synth 8-802] inferred FSM for state register 'sm_reset_rx_reg' in module 'gtwizard_ultrascale_v1_7_19_gtwiz_reset'
----------------------------------------------------------------------------------------------------
-                   State |                     New Encoding |                Previous Encoding 
----------------------------------------------------------------------------------------------------
-*
-               ARB_START |                             0001 |                             0001
-                ARB_WAIT |                             0010 |                             0010
-              ARB_REPORT |                             0100 |                             0100
-                 ARB_INC |                             1000 |                             1000
----------------------------------------------------------------------------------------------------
-INFO: [Synth 8-3898] No Re-encoding of one hot register 'arb_state_reg' in module 'gtwizard_ultrascale_v1_7_19_gte4_drp_arb'
 ---------------------------------------------------------------------------------------------------
                    State |                     New Encoding |                Previous Encoding 
 ---------------------------------------------------------------------------------------------------
@@ -292,101 +264,30 @@ ST_RESET_ALL_TX_PLL_WAIT |                              011 |                   
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'sm_reset_all_reg' using encoding 'sequential' in module 'gtwizard_ultrascale_v1_7_19_gtwiz_reset'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 2035.898 ; gain = 461.613
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2002.895 ; gain = 430.121
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
 +---Adders : 
-	   2 Input   25 Bit       Adders := 2     
-	   2 Input   18 Bit       Adders := 2     
-	   3 Input   18 Bit       Adders := 2     
-	   2 Input   16 Bit       Adders := 2     
 	   2 Input   10 Bit       Adders := 2     
-	   2 Input    8 Bit       Adders := 1     
-	   2 Input    6 Bit       Adders := 2     
-	   2 Input    4 Bit       Adders := 2     
 	   2 Input    3 Bit       Adders := 3     
-	   2 Input    2 Bit       Adders := 1     
 +---Registers : 
-	               48 Bit    Registers := 2     
-	               32 Bit    Registers := 2     
-	               30 Bit    Registers := 1     
-	               25 Bit    Registers := 2     
-	               18 Bit    Registers := 2     
-	               16 Bit    Registers := 11    
-	               15 Bit    Registers := 2     
-	               10 Bit    Registers := 4     
-	                9 Bit    Registers := 2     
-	                8 Bit    Registers := 2     
-	                7 Bit    Registers := 3     
-	                6 Bit    Registers := 2     
-	                5 Bit    Registers := 3     
-	                4 Bit    Registers := 4     
-	                3 Bit    Registers := 9     
-	                2 Bit    Registers := 1     
-	                1 Bit    Registers := 249   
+	               10 Bit    Registers := 2     
+	                9 Bit    Registers := 1     
+	                5 Bit    Registers := 1     
+	                3 Bit    Registers := 3     
+	                1 Bit    Registers := 136   
 +---Muxes : 
-	   5 Input   48 Bit        Muxes := 1     
-	   2 Input   48 Bit        Muxes := 2     
-	  33 Input   32 Bit        Muxes := 1     
-	   3 Input   32 Bit        Muxes := 1     
-	  29 Input   32 Bit        Muxes := 1     
-	   2 Input   30 Bit        Muxes := 3     
-	   2 Input   28 Bit        Muxes := 1     
-	   3 Input   28 Bit        Muxes := 1     
-	   2 Input   27 Bit        Muxes := 1     
-	   2 Input   26 Bit        Muxes := 2     
-	  33 Input   25 Bit        Muxes := 1     
-	   2 Input   25 Bit        Muxes := 2     
-	  29 Input   25 Bit        Muxes := 1     
-	   2 Input   24 Bit        Muxes := 2     
-	   2 Input   23 Bit        Muxes := 2     
-	   4 Input   22 Bit        Muxes := 1     
-	   2 Input   22 Bit        Muxes := 1     
-	   2 Input   21 Bit        Muxes := 1     
-	   4 Input   21 Bit        Muxes := 1     
-	   2 Input   20 Bit        Muxes := 2     
-	   2 Input   19 Bit        Muxes := 2     
-	   2 Input   18 Bit        Muxes := 3     
-	   2 Input   17 Bit        Muxes := 2     
-	   2 Input   16 Bit        Muxes := 6     
-	  33 Input   16 Bit        Muxes := 2     
-	  29 Input   16 Bit        Muxes := 2     
-	   4 Input   16 Bit        Muxes := 1     
-	   2 Input   15 Bit        Muxes := 2     
-	   2 Input   14 Bit        Muxes := 1     
-	   2 Input   13 Bit        Muxes := 2     
-	   2 Input   12 Bit        Muxes := 2     
-	   2 Input   11 Bit        Muxes := 2     
-	   2 Input   10 Bit        Muxes := 6     
-	   4 Input   10 Bit        Muxes := 1     
-	   2 Input    9 Bit        Muxes := 2     
-	   3 Input    9 Bit        Muxes := 1     
-	   5 Input    8 Bit        Muxes := 1     
-	   8 Input    7 Bit        Muxes := 2     
-	   2 Input    7 Bit        Muxes := 6     
-	   3 Input    7 Bit        Muxes := 2     
-	   2 Input    6 Bit        Muxes := 4     
-	   6 Input    5 Bit        Muxes := 2     
-	   3 Input    5 Bit        Muxes := 3     
-	   2 Input    5 Bit        Muxes := 2     
-	   2 Input    4 Bit        Muxes := 3     
-	  33 Input    4 Bit        Muxes := 1     
-	  29 Input    4 Bit        Muxes := 1     
-	   5 Input    4 Bit        Muxes := 1     
-	   2 Input    3 Bit        Muxes := 20    
-	   5 Input    3 Bit        Muxes := 2     
+	   2 Input    9 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 8     
 	   7 Input    3 Bit        Muxes := 2     
 	   8 Input    3 Bit        Muxes := 1     
-	   2 Input    2 Bit        Muxes := 7     
-	  33 Input    1 Bit        Muxes := 18    
-	   2 Input    1 Bit        Muxes := 16    
-	   5 Input    1 Bit        Muxes := 6     
-	   8 Input    1 Bit        Muxes := 32    
-	  29 Input    1 Bit        Muxes := 18    
+	   2 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 6     
 	   7 Input    1 Bit        Muxes := 13    
+	   8 Input    1 Bit        Muxes := 26    
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -404,27 +305,25 @@ Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:15 . Memory (MB): peak = 2035.898 ; gain = 461.613
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 2002.895 ; gain = 430.121
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-3321] set_false_path : Empty from list for constraint at line 78 of c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/synth/gtwizard_ultrascale_0.xdc. [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/synth/gtwizard_ultrascale_0.xdc:78]
-WARNING: [Synth 8-3321] set_false_path : Empty to list for constraint at line 78 of c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/synth/gtwizard_ultrascale_0.xdc. [c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/synth/gtwizard_ultrascale_0.xdc:78]
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 2649.984 ; gain = 1075.699
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 2632.414 ; gain = 1059.641
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 2669.336 ; gain = 1095.051
+Finished Timing Optimization : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 2650.895 ; gain = 1078.121
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 2689.922 ; gain = 1115.637
+Finished Technology Mapping : Time (s): cpu = 00:00:20 ; elapsed = 00:00:20 . Memory (MB): peak = 2661.172 ; gain = 1088.398
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -442,37 +341,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 2882.668 ; gain = 1308.383
+Finished IO Insertion : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 2868.133 ; gain = 1295.359
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 2882.668 ; gain = 1308.383
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 2868.133 ; gain = 1295.359
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 2882.668 ; gain = 1308.383
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 2868.133 ; gain = 1295.359
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 2882.668 ; gain = 1308.383
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 2868.133 ; gain = 1295.359
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 2882.668 ; gain = 1308.383
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 2868.133 ; gain = 1295.359
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 2882.668 ; gain = 1308.383
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 2868.133 ; gain = 1295.359
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -488,49 +387,46 @@ Report Cell Usage:
 +------+--------------+------+
 |      |Cell          |Count |
 +------+--------------+------+
-|1     |BUFG_GT       |     2|
-|2     |CARRY8        |    17|
-|3     |GTHE4_CHANNEL |     1|
-|4     |GTHE4_COMMON  |     1|
-|5     |LUT1          |    27|
-|6     |LUT2          |    77|
-|7     |LUT3          |    68|
-|8     |LUT4          |    60|
-|9     |LUT5          |    49|
-|10    |LUT6          |    96|
-|11    |FDCE          |    41|
-|12    |FDPE          |    60|
-|13    |FDRE          |   514|
-|14    |FDSE          |    18|
+|1     |CARRY8        |     4|
+|2     |GTHE4_CHANNEL |     1|
+|3     |GTHE4_COMMON  |     1|
+|4     |LUT1          |    13|
+|5     |LUT2          |    19|
+|6     |LUT3          |    23|
+|7     |LUT4          |    15|
+|8     |LUT5          |    21|
+|9     |LUT6          |    40|
+|10    |FDCE          |    16|
+|11    |FDPE          |    40|
+|12    |FDRE          |   151|
+|13    |FDSE          |     7|
 +------+--------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 2882.668 ; gain = 1308.383
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 2868.133 ; gain = 1295.359
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 315 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:14 ; elapsed = 00:00:20 . Memory (MB): peak = 2882.668 ; gain = 1189.152
-Synthesis Optimization Complete : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 2882.668 ; gain = 1308.383
+Synthesis finished with 0 errors, 0 critical warnings and 310 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:13 ; elapsed = 00:00:18 . Memory (MB): peak = 2868.133 ; gain = 1185.086
+Synthesis Optimization Complete : Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 2868.133 ; gain = 1295.359
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.018 . Memory (MB): peak = 2882.668 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 17 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 2868.133 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 4 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-INFO: [Opt 31-441] Inserted BUFG_GT_SYNC inst/gen_gtwizard_gthe4_top.gtwizard_ultrascale_0_gtwizard_gthe4_inst/gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst/channel_inst/BUFG_GT_SYNC for BUFG_GT inst/gen_gtwizard_gthe4_top.gtwizard_ultrascale_0_gtwizard_gthe4_inst/gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst/gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_rx_i/gen_cal_rx_en.bufg_gt_rxoutclkmon_inst
-INFO: [Opt 31-441] Inserted BUFG_GT_SYNC inst/gen_gtwizard_gthe4_top.gtwizard_ultrascale_0_gtwizard_gthe4_inst/gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst/channel_inst/BUFG_GT_SYNC_1 for BUFG_GT inst/gen_gtwizard_gthe4_top.gtwizard_ultrascale_0_gtwizard_gthe4_inst/gen_gtwizard_gthe4.gen_cpll_cal_gthe4.gen_cpll_cal_inst[0].gen_inst_cpll_cal.gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_inst/gtwizard_ultrascale_v1_7_19_gthe4_cpll_cal_tx_i/bufg_gt_txoutclkmon_inst
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 2882.668 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 2868.133 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete | Checksum: a54f834b
+Synth Design complete | Checksum: 65d23216
 INFO: [Common 17-83] Releasing license: Synthesis
-76 Infos, 108 Warnings, 0 Critical Warnings and 0 Errors encountered.
+60 Infos, 101 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:31 ; elapsed = 00:00:29 . Memory (MB): peak = 2882.668 ; gain = 2377.637
-Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 2882.668 ; gain = 0.000
+synth_design: Time (s): cpu = 00:00:28 ; elapsed = 00:00:27 . Memory (MB): peak = 2868.133 ; gain = 2363.359
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2868.133 ; gain = 0.000
 INFO: [Common 17-1381] The checkpoint 'C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/gtwizard_ultrascale_0_synth_1/gtwizard_ultrascale_0.dcp' has been generated.
-INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP gtwizard_ultrascale_0, cache-ID = 3855ae7461583df9
-INFO: [Coretcl 2-1174] Renamed 46 cell refs.
-Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 2882.668 ; gain = 0.000
+INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP gtwizard_ultrascale_0, cache-ID = f6080e025bd7bcf4
+INFO: [Coretcl 2-1174] Renamed 26 cell refs.
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 2868.133 ; gain = 0.000
 INFO: [Common 17-1381] The checkpoint 'C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/gtwizard_ultrascale_0_synth_1/gtwizard_ultrascale_0.dcp' has been generated.
 INFO: [Vivado 12-24828] Executing command : report_utilization -file gtwizard_ultrascale_0_utilization_synth.rpt -pb gtwizard_ultrascale_0_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sat Sep 27 17:13:14 2025...
+INFO: [Common 17-206] Exiting Vivado at Sat Nov  8 16:12:34 2025...

@@ -6,9 +6,7 @@
 
 (* BLOCK_STUB = "true" *)
 module gtwizard_ultrascale_0 (
-  gtwiz_userclk_tx_reset_in,
   gtwiz_userclk_tx_active_in,
-  gtwiz_userclk_rx_reset_in,
   gtwiz_userclk_rx_active_in,
   gtwiz_reset_clk_freerun_in,
   gtwiz_reset_all_in,
@@ -24,16 +22,19 @@ module gtwizard_ultrascale_0 (
   gtrefclk00_in,
   qpll0outclk_out,
   qpll0outrefclk_out,
-  drpclk_in,
   gthrxn_in,
   gthrxp_in,
-  gtrefclk0_in,
+  loopback_in,
+  rxcdrhold_in,
+  rxlpmen_in,
+  rxpolarity_in,
+  rxslide_in,
   rxusrclk_in,
   rxusrclk2_in,
-  tx8b10ben_in,
-  txctrl0_in,
-  txctrl1_in,
-  txctrl2_in,
+  txdiffctrl_in,
+  txpolarity_in,
+  txpostcursor_in,
+  txprecursor_in,
   txusrclk_in,
   txusrclk2_in,
   gthtxn_out,
@@ -46,11 +47,7 @@ module gtwizard_ultrascale_0 (
 );
 
   (* X_INTERFACE_IGNORE = "true" *)
-  input [0:0]gtwiz_userclk_tx_reset_in;
-  (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]gtwiz_userclk_tx_active_in;
-  (* X_INTERFACE_IGNORE = "true" *)
-  input [0:0]gtwiz_userclk_rx_reset_in;
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]gtwiz_userclk_rx_active_in;
   (* X_INTERFACE_IGNORE = "true" *)
@@ -82,25 +79,31 @@ module gtwizard_ultrascale_0 (
   (* X_INTERFACE_IGNORE = "true" *)
   output [0:0]qpll0outrefclk_out;
   (* X_INTERFACE_IGNORE = "true" *)
-  input [0:0]drpclk_in;
-  (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]gthrxn_in;
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]gthrxp_in;
   (* X_INTERFACE_IGNORE = "true" *)
-  input [0:0]gtrefclk0_in;
+  input [2:0]loopback_in;
+  (* X_INTERFACE_IGNORE = "true" *)
+  input [0:0]rxcdrhold_in;
+  (* X_INTERFACE_IGNORE = "true" *)
+  input [0:0]rxlpmen_in;
+  (* X_INTERFACE_IGNORE = "true" *)
+  input [0:0]rxpolarity_in;
+  (* X_INTERFACE_IGNORE = "true" *)
+  input [0:0]rxslide_in;
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]rxusrclk_in;
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]rxusrclk2_in;
   (* X_INTERFACE_IGNORE = "true" *)
-  input [0:0]tx8b10ben_in;
+  input [4:0]txdiffctrl_in;
   (* X_INTERFACE_IGNORE = "true" *)
-  input [15:0]txctrl0_in;
+  input [0:0]txpolarity_in;
   (* X_INTERFACE_IGNORE = "true" *)
-  input [15:0]txctrl1_in;
+  input [4:0]txpostcursor_in;
   (* X_INTERFACE_IGNORE = "true" *)
-  input [7:0]txctrl2_in;
+  input [4:0]txprecursor_in;
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]txusrclk_in;
   (* X_INTERFACE_IGNORE = "true" *)

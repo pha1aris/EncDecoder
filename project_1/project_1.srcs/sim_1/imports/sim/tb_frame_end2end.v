@@ -71,6 +71,10 @@ module tb_frame_end2end;
     assign      payload_ready_sync_w = 1; // 接收器总是准备好
     wire        start_of_frame_w; // ★ 匹配 sof 端口
 
+    wire [7:0]  txctrl2_out;
+    wire [3:0]  charisk;
+    assign charisk = txctrl2_out[3:0];
+
     // --- DUT 1: 帧生成器 ---
     // (注意: 这里的 frame_generator 必须是 *无Header* 的版本)
     frame_generator #(
@@ -83,6 +87,7 @@ module tb_frame_end2end;
         .payload_data_in    (payload_data_gen_w),
         .payload_valid_in   (payload_valid_gen_w),
         .payload_ready_out  (payload_ready_gen_w),
+        .txctrl2_out        (txctrl2_out),
         .framed_data_out    (framed_data_w),
         .framed_valid_out   (framed_valid_w),
         .framed_ready_in    (framed_ready_w) // ★ 连接到反压 reg
@@ -91,35 +96,31 @@ module tb_frame_end2end;
     // --- DUT 2: 帧同步器 ---
     // ★ 例化我们已修复的 'frame_synchronizer_top' (即 frame_synchronizer_top_fixed.v)
     frame_synchronizer_top #(
-        .PARALLEL(32),
-        .MASK_LEN(TB_ASM_LEN),
-        .ASM_LEN(TB_ASM_LEN),
-        .FRAME_LEN_BYTE(TB_FRAME_LEN_BYTE), // ★ 修复 2: 传递 40
-        .M_VERIFY(TB_M_VERIFY),
-        .N_PROTECT(TB_N_PROTECT),
-        .PIPELINE_LATENCY(TB_PIPELINE_LATENCY),
-        .FRAME_CNT_W     (16),
-        .TOLERANCE       (0),
-        .OUTPUT_DELAY    (3)
+        .PARALLEL           (32),
+        .MASK_LEN           (TB_ASM_LEN),
+        .ASM_LEN            (TB_ASM_LEN),
+        .FRAME_LEN_BYTE     (TB_FRAME_LEN_BYTE), // ★ 修复 2: 传递 40
+        .M_VERIFY           (TB_M_VERIFY),
+        .N_PROTECT          (TB_N_PROTECT),
+        .PIPELINE_LATENCY   (TB_PIPELINE_LATENCY),
+        .FRAME_CNT_W        (16)
     ) u_frame_sync (
-        .clk(clk),
-        .rst_n(rst_n), // ★
-        .din(framed_data_w),
-        .din_valid(framed_valid_w),
-        // ★ 修复 5: asm_pattern 必须与 shift_buf 中的顺序匹配
-        //   Generator 发送 [HI, LO, HI, LO, HI, LO] (Word 1 -> 6)
-        //   Shift register (assuming {din, ...}) 存储 [LO, HI, LO, HI, LO, HI] (Word 6 -> 1)
-        .asm_pattern({TB_MARKER_LO, TB_MARKER_HI, 
-                      TB_MARKER_LO, TB_MARKER_HI, 
-                      TB_MARKER_LO, TB_MARKER_HI}), 
-        .asm_mask({TB_ASM_LEN{1'h1}}),   // 精确匹配
-        .frame_lock(frame_lock_w),      // (连接到内部线网)
-        .frame_sync_found(frame_sync_found_w),
-        .wnumber_dec(wnumber_dec_w),
-        .flocation(flocation_w),
-        .sof(start_of_frame_w),         // ★
-        .dout(payload_data_sync_w),
-        .dout_valid(payload_valid_sync_w)
+        .clk                (clk),
+        .rst_n              (rst_n), // ★
+        .din                (framed_data_w),
+        .din_valid          (framed_valid_w),
+        .din_charisk        (charisk),
+        .asm_pattern        ({TB_MARKER_LO, TB_MARKER_HI, 
+                              TB_MARKER_LO, TB_MARKER_HI,  
+                              TB_MARKER_LO, TB_MARKER_HI}),   //   B1699558_A53333A8
+        .asm_mask           ({TB_ASM_LEN{1'h1}}),   // 精确匹配
+        .frame_lock         (frame_lock_w),      // (连接到内部线网)
+        .frame_sync_found   (frame_sync_found_w),
+        .wnumber_dec        (wnumber_dec_w),
+        .flocation          (flocation_w),
+        .sof                (start_of_frame_w),         // ★
+        .dout               (payload_data_sync_w),
+        .dout_valid         (payload_valid_sync_w)
         // .dout_ready(payload_ready_sync_w) // 我们的同步器没有 dout_ready
     );
     
