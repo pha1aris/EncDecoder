@@ -19,20 +19,18 @@ module gtwizard_ultrascale_0 (
   gtwiz_reset_rx_done_out,
   gtwiz_userdata_tx_in,
   gtwiz_userdata_rx_out,
-  gtrefclk00_in,
-  qpll0outclk_out,
-  qpll0outrefclk_out,
+  gtrefclk01_in,
+  qpll1outclk_out,
+  qpll1outrefclk_out,
   gthrxn_in,
   gthrxp_in,
   loopback_in,
   rxcdrhold_in,
   rxlpmen_in,
-  rxpolarity_in,
   rxslide_in,
   rxusrclk_in,
   rxusrclk2_in,
   txdiffctrl_in,
-  txpolarity_in,
   txpostcursor_in,
   txprecursor_in,
   txusrclk_in,
@@ -73,11 +71,11 @@ module gtwizard_ultrascale_0 (
   (* X_INTERFACE_IGNORE = "true" *)
   output [31:0]gtwiz_userdata_rx_out;
   (* X_INTERFACE_IGNORE = "true" *)
-  input [0:0]gtrefclk00_in;
+  input [0:0]gtrefclk01_in;
   (* X_INTERFACE_IGNORE = "true" *)
-  output [0:0]qpll0outclk_out;
+  output [0:0]qpll1outclk_out;
   (* X_INTERFACE_IGNORE = "true" *)
-  output [0:0]qpll0outrefclk_out;
+  output [0:0]qpll1outrefclk_out;
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]gthrxn_in;
   (* X_INTERFACE_IGNORE = "true" *)
@@ -89,8 +87,6 @@ module gtwizard_ultrascale_0 (
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]rxlpmen_in;
   (* X_INTERFACE_IGNORE = "true" *)
-  input [0:0]rxpolarity_in;
-  (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]rxslide_in;
   (* X_INTERFACE_IGNORE = "true" *)
   input [0:0]rxusrclk_in;
@@ -98,8 +94,6 @@ module gtwizard_ultrascale_0 (
   input [0:0]rxusrclk2_in;
   (* X_INTERFACE_IGNORE = "true" *)
   input [4:0]txdiffctrl_in;
-  (* X_INTERFACE_IGNORE = "true" *)
-  input [0:0]txpolarity_in;
   (* X_INTERFACE_IGNORE = "true" *)
   input [4:0]txpostcursor_in;
   (* X_INTERFACE_IGNORE = "true" *)

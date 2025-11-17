@@ -53,11 +53,11 @@
 (* X_CORE_INFO = "gtwizard_ultrascale_0_gtwizard_top,Vivado 2024.2" *)
 (* CHECK_LICENSE_TYPE = "gtwizard_ultrascale_0,gtwizard_ultrascale_0_gtwizard_top,{}" *)
 (* CORE_GENERATION_INFO = "gtwizard_ultrascale_0,gtwizard_ultrascale_0_gtwizard_top,{x_ipProduct=Vivado 2024.2,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=gtwizard_ultrascale,x_ipVersion=1.7,x_ipCoreRevision=19,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_CHANNEL_ENABLE=000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,C_PCIE_ENABLE=0,C_PCIE_CORECLK_FREQ=250,C_COMMON_SCALING_FACT\
-OR=1,C_CPLL_VCO_FREQUENCY=2578.125,C_FORCE_COMMONS=0,C_FREERUN_FREQUENCY=39.0625,C_GT_TYPE=2,C_GT_REV=57,C_INCLUDE_CPLL_CAL=2,C_ENABLE_COMMON_USRCLK=0,C_USER_GTPOWERGOOD_DELAY_EN=1,C_SIM_CPLL_CAL_BYPASS=1,C_LOCATE_COMMON=0,C_LOCATE_RESET_CONTROLLER=0,C_LOCATE_USER_DATA_WIDTH_SIZING=0,C_LOCATE_RX_BUFFER_BYPASS_CONTROLLER=0,C_LOCATE_IN_SYSTEM_IBERT_CORE=2,C_LOCATE_RX_USER_CLOCKING=1,C_LOCATE_TX_BUFFER_BYPASS_CONTROLLER=0,C_LOCATE_TX_USER_CLOCKING=1,C_RESET_CONTROLLER_INSTANCE_CTRL=0,C_RX_BUFFBYPAS\
-S_MODE=0,C_RX_BUFFER_BYPASS_INSTANCE_CTRL=0,C_RX_BUFFER_MODE=1,C_RX_CB_DISP=00000000,C_RX_CB_K=00000000,C_RX_CB_MAX_LEVEL=1,C_RX_CB_LEN_SEQ=1,C_RX_CB_NUM_SEQ=0,C_RX_CB_VAL=00000000000000000000000000000000000000000000000000000000000000000000000000000000,C_RX_CC_DISP=00000000,C_RX_CC_ENABLE=0,C_RESET_SEQUENCE_INTERVAL=0,C_RX_CC_K=00000000,C_RX_CC_LEN_SEQ=1,C_RX_CC_NUM_SEQ=0,C_RX_CC_PERIODICITY=5000,C_RX_CC_VAL=00000000000000000000000000000000000000000000000000000000000000000000000000000000,C_RX_CO\
-MMA_M_ENABLE=0,C_RX_COMMA_M_VAL=1010000011,C_RX_COMMA_P_ENABLE=0,C_RX_COMMA_P_VAL=0101111100,C_RX_DATA_DECODING=0,C_RX_ENABLE=1,C_RX_INT_DATA_WIDTH=32,C_RX_LINE_RATE=1.25,C_RX_MASTER_CHANNEL_IDX=102,C_RX_OUTCLK_BUFG_GT_DIV=1,C_RX_OUTCLK_FREQUENCY=39.0625000,C_RX_OUTCLK_SOURCE=1,C_RX_PLL_TYPE=0,C_RX_RECCLK_OUTPUT=0x000000000000000000000000000000000000000000000000,C_RX_REFCLK_FREQUENCY=125,C_RX_SLIDE_MODE=0,C_RX_USER_CLOCKING_CONTENTS=0,C_RX_USER_CLOCKING_INSTANCE_CTRL=0,C_RX_USER_CLOCKING_RATIO_F\
-SRC_FUSRCLK=1,C_RX_USER_CLOCKING_RATIO_FUSRCLK_FUSRCLK2=1,C_RX_USER_CLOCKING_SOURCE=0,C_RX_USER_DATA_WIDTH=32,C_RX_USRCLK_FREQUENCY=39.0625000,C_RX_USRCLK2_FREQUENCY=39.0625000,C_SECONDARY_QPLL_ENABLE=0,C_SECONDARY_QPLL_REFCLK_FREQUENCY=257.8125,C_TOTAL_NUM_CHANNELS=1,C_TOTAL_NUM_COMMONS=1,C_TOTAL_NUM_COMMONS_EXAMPLE=0,C_TXPROGDIV_FREQ_ENABLE=0,C_TXPROGDIV_FREQ_SOURCE=0,C_TXPROGDIV_FREQ_VAL=78.125,C_TX_BUFFBYPASS_MODE=0,C_TX_BUFFER_BYPASS_INSTANCE_CTRL=0,C_TX_BUFFER_MODE=1,C_TX_DATA_ENCODING=0,C\
-_TX_ENABLE=1,C_TX_INT_DATA_WIDTH=32,C_TX_LINE_RATE=1.25,C_TX_MASTER_CHANNEL_IDX=102,C_TX_OUTCLK_BUFG_GT_DIV=1,C_TX_OUTCLK_FREQUENCY=39.0625000,C_TX_OUTCLK_SOURCE=1,C_TX_PLL_TYPE=0,C_TX_REFCLK_FREQUENCY=125,C_TX_USER_CLOCKING_CONTENTS=0,C_TX_USER_CLOCKING_INSTANCE_CTRL=0,C_TX_USER_CLOCKING_RATIO_FSRC_FUSRCLK=1,C_TX_USER_CLOCKING_RATIO_FUSRCLK_FUSRCLK2=1,C_TX_USER_CLOCKING_SOURCE=0,C_TX_USER_DATA_WIDTH=32,C_TX_USRCLK_FREQUENCY=39.0625000,C_TX_USRCLK2_FREQUENCY=39.0625000}" *)
+OR=1,C_CPLL_VCO_FREQUENCY=2578.125,C_FORCE_COMMONS=0,C_FREERUN_FREQUENCY=15.625,C_GT_TYPE=2,C_GT_REV=57,C_INCLUDE_CPLL_CAL=2,C_ENABLE_COMMON_USRCLK=0,C_USER_GTPOWERGOOD_DELAY_EN=1,C_SIM_CPLL_CAL_BYPASS=1,C_LOCATE_COMMON=0,C_LOCATE_RESET_CONTROLLER=0,C_LOCATE_USER_DATA_WIDTH_SIZING=0,C_LOCATE_RX_BUFFER_BYPASS_CONTROLLER=0,C_LOCATE_IN_SYSTEM_IBERT_CORE=2,C_LOCATE_RX_USER_CLOCKING=1,C_LOCATE_TX_BUFFER_BYPASS_CONTROLLER=0,C_LOCATE_TX_USER_CLOCKING=1,C_RESET_CONTROLLER_INSTANCE_CTRL=0,C_RX_BUFFBYPASS\
+_MODE=0,C_RX_BUFFER_BYPASS_INSTANCE_CTRL=0,C_RX_BUFFER_MODE=1,C_RX_CB_DISP=00000000,C_RX_CB_K=00000000,C_RX_CB_MAX_LEVEL=1,C_RX_CB_LEN_SEQ=1,C_RX_CB_NUM_SEQ=0,C_RX_CB_VAL=00000000000000000000000000000000000000000000000000000000000000000000000000000000,C_RX_CC_DISP=00000000,C_RX_CC_ENABLE=0,C_RESET_SEQUENCE_INTERVAL=0,C_RX_CC_K=00000000,C_RX_CC_LEN_SEQ=1,C_RX_CC_NUM_SEQ=0,C_RX_CC_PERIODICITY=5000,C_RX_CC_VAL=00000000000000000000000000000000000000000000000000000000000000000000000000000000,C_RX_COM\
+MA_M_ENABLE=0,C_RX_COMMA_M_VAL=1010000011,C_RX_COMMA_P_ENABLE=0,C_RX_COMMA_P_VAL=0101111100,C_RX_DATA_DECODING=0,C_RX_ENABLE=1,C_RX_INT_DATA_WIDTH=32,C_RX_LINE_RATE=0.5,C_RX_MASTER_CHANNEL_IDX=102,C_RX_OUTCLK_BUFG_GT_DIV=1,C_RX_OUTCLK_FREQUENCY=15.6250000,C_RX_OUTCLK_SOURCE=1,C_RX_PLL_TYPE=1,C_RX_RECCLK_OUTPUT=0x000000000000000000000000000000000000000000000000,C_RX_REFCLK_FREQUENCY=125,C_RX_SLIDE_MODE=0,C_RX_USER_CLOCKING_CONTENTS=0,C_RX_USER_CLOCKING_INSTANCE_CTRL=0,C_RX_USER_CLOCKING_RATIO_FSR\
+C_FUSRCLK=1,C_RX_USER_CLOCKING_RATIO_FUSRCLK_FUSRCLK2=1,C_RX_USER_CLOCKING_SOURCE=0,C_RX_USER_DATA_WIDTH=32,C_RX_USRCLK_FREQUENCY=15.6250000,C_RX_USRCLK2_FREQUENCY=15.6250000,C_SECONDARY_QPLL_ENABLE=0,C_SECONDARY_QPLL_REFCLK_FREQUENCY=257.8125,C_TOTAL_NUM_CHANNELS=1,C_TOTAL_NUM_COMMONS=1,C_TOTAL_NUM_COMMONS_EXAMPLE=0,C_TXPROGDIV_FREQ_ENABLE=0,C_TXPROGDIV_FREQ_SOURCE=1,C_TXPROGDIV_FREQ_VAL=62.5,C_TX_BUFFBYPASS_MODE=0,C_TX_BUFFER_BYPASS_INSTANCE_CTRL=0,C_TX_BUFFER_MODE=1,C_TX_DATA_ENCODING=0,C_TX_\
+ENABLE=1,C_TX_INT_DATA_WIDTH=32,C_TX_LINE_RATE=0.5,C_TX_MASTER_CHANNEL_IDX=102,C_TX_OUTCLK_BUFG_GT_DIV=1,C_TX_OUTCLK_FREQUENCY=15.6250000,C_TX_OUTCLK_SOURCE=1,C_TX_PLL_TYPE=1,C_TX_REFCLK_FREQUENCY=125,C_TX_USER_CLOCKING_CONTENTS=0,C_TX_USER_CLOCKING_INSTANCE_CTRL=0,C_TX_USER_CLOCKING_RATIO_FSRC_FUSRCLK=1,C_TX_USER_CLOCKING_RATIO_FUSRCLK_FUSRCLK2=1,C_TX_USER_CLOCKING_SOURCE=0,C_TX_USER_DATA_WIDTH=32,C_TX_USRCLK_FREQUENCY=15.6250000,C_TX_USRCLK2_FREQUENCY=15.6250000}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module gtwizard_ultrascale_0 (
   gtwiz_userclk_tx_active_in,
@@ -73,20 +73,18 @@ module gtwizard_ultrascale_0 (
   gtwiz_reset_rx_done_out,
   gtwiz_userdata_tx_in,
   gtwiz_userdata_rx_out,
-  gtrefclk00_in,
-  qpll0outclk_out,
-  qpll0outrefclk_out,
+  gtrefclk01_in,
+  qpll1outclk_out,
+  qpll1outrefclk_out,
   gthrxn_in,
   gthrxp_in,
   loopback_in,
   rxcdrhold_in,
   rxlpmen_in,
-  rxpolarity_in,
   rxslide_in,
   rxusrclk_in,
   rxusrclk2_in,
   txdiffctrl_in,
-  txpolarity_in,
   txpostcursor_in,
   txprecursor_in,
   txusrclk_in,
@@ -113,20 +111,18 @@ output wire [0 : 0] gtwiz_reset_tx_done_out;
 output wire [0 : 0] gtwiz_reset_rx_done_out;
 input wire [31 : 0] gtwiz_userdata_tx_in;
 output wire [31 : 0] gtwiz_userdata_rx_out;
-input wire [0 : 0] gtrefclk00_in;
-output wire [0 : 0] qpll0outclk_out;
-output wire [0 : 0] qpll0outrefclk_out;
+input wire [0 : 0] gtrefclk01_in;
+output wire [0 : 0] qpll1outclk_out;
+output wire [0 : 0] qpll1outrefclk_out;
 input wire [0 : 0] gthrxn_in;
 input wire [0 : 0] gthrxp_in;
 input wire [2 : 0] loopback_in;
 input wire [0 : 0] rxcdrhold_in;
 input wire [0 : 0] rxlpmen_in;
-input wire [0 : 0] rxpolarity_in;
 input wire [0 : 0] rxslide_in;
 input wire [0 : 0] rxusrclk_in;
 input wire [0 : 0] rxusrclk2_in;
 input wire [4 : 0] txdiffctrl_in;
-input wire [0 : 0] txpolarity_in;
 input wire [4 : 0] txpostcursor_in;
 input wire [4 : 0] txprecursor_in;
 input wire [0 : 0] txusrclk_in;
@@ -146,7 +142,7 @@ output wire [0 : 0] txpmaresetdone_out;
     .C_COMMON_SCALING_FACTOR(1),
     .C_CPLL_VCO_FREQUENCY(2578.125),
     .C_FORCE_COMMONS(0),
-    .C_FREERUN_FREQUENCY(39.0625),
+    .C_FREERUN_FREQUENCY(15.625),
     .C_GT_TYPE(2),
     .C_GT_REV(57),
     .C_INCLUDE_CPLL_CAL(2),
@@ -186,12 +182,12 @@ output wire [0 : 0] txpmaresetdone_out;
     .C_RX_DATA_DECODING(0),
     .C_RX_ENABLE(1),
     .C_RX_INT_DATA_WIDTH(32),
-    .C_RX_LINE_RATE(1.25),
+    .C_RX_LINE_RATE(0.5),
     .C_RX_MASTER_CHANNEL_IDX(102),
     .C_RX_OUTCLK_BUFG_GT_DIV(1),
-    .C_RX_OUTCLK_FREQUENCY(39.0625000),
+    .C_RX_OUTCLK_FREQUENCY(15.6250000),
     .C_RX_OUTCLK_SOURCE(1),
-    .C_RX_PLL_TYPE(0),
+    .C_RX_PLL_TYPE(1),
     .C_RX_RECCLK_OUTPUT(192'H000000000000000000000000000000000000000000000000),
     .C_RX_REFCLK_FREQUENCY(125),
     .C_RX_SLIDE_MODE(0),
@@ -201,28 +197,28 @@ output wire [0 : 0] txpmaresetdone_out;
     .C_RX_USER_CLOCKING_RATIO_FUSRCLK_FUSRCLK2(1),
     .C_RX_USER_CLOCKING_SOURCE(0),
     .C_RX_USER_DATA_WIDTH(32),
-    .C_RX_USRCLK_FREQUENCY(39.0625000),
-    .C_RX_USRCLK2_FREQUENCY(39.0625000),
+    .C_RX_USRCLK_FREQUENCY(15.6250000),
+    .C_RX_USRCLK2_FREQUENCY(15.6250000),
     .C_SECONDARY_QPLL_ENABLE(0),
     .C_SECONDARY_QPLL_REFCLK_FREQUENCY(257.8125),
     .C_TOTAL_NUM_CHANNELS(1),
     .C_TOTAL_NUM_COMMONS(1),
     .C_TOTAL_NUM_COMMONS_EXAMPLE(0),
     .C_TXPROGDIV_FREQ_ENABLE(0),
-    .C_TXPROGDIV_FREQ_SOURCE(0),
-    .C_TXPROGDIV_FREQ_VAL(78.125),
+    .C_TXPROGDIV_FREQ_SOURCE(1),
+    .C_TXPROGDIV_FREQ_VAL(62.5),
     .C_TX_BUFFBYPASS_MODE(0),
     .C_TX_BUFFER_BYPASS_INSTANCE_CTRL(0),
     .C_TX_BUFFER_MODE(1),
     .C_TX_DATA_ENCODING(0),
     .C_TX_ENABLE(1),
     .C_TX_INT_DATA_WIDTH(32),
-    .C_TX_LINE_RATE(1.25),
+    .C_TX_LINE_RATE(0.5),
     .C_TX_MASTER_CHANNEL_IDX(102),
     .C_TX_OUTCLK_BUFG_GT_DIV(1),
-    .C_TX_OUTCLK_FREQUENCY(39.0625000),
+    .C_TX_OUTCLK_FREQUENCY(15.6250000),
     .C_TX_OUTCLK_SOURCE(1),
-    .C_TX_PLL_TYPE(0),
+    .C_TX_PLL_TYPE(1),
     .C_TX_REFCLK_FREQUENCY(125),
     .C_TX_USER_CLOCKING_CONTENTS(0),
     .C_TX_USER_CLOCKING_INSTANCE_CTRL(0),
@@ -230,8 +226,8 @@ output wire [0 : 0] txpmaresetdone_out;
     .C_TX_USER_CLOCKING_RATIO_FUSRCLK_FUSRCLK2(1),
     .C_TX_USER_CLOCKING_SOURCE(0),
     .C_TX_USER_DATA_WIDTH(32),
-    .C_TX_USRCLK_FREQUENCY(39.0625000),
-    .C_TX_USRCLK2_FREQUENCY(39.0625000)
+    .C_TX_USRCLK_FREQUENCY(15.6250000),
+    .C_TX_USRCLK2_FREQUENCY(15.6250000)
   ) inst (
     .gtwiz_userclk_tx_reset_in(1'B0),
     .gtwiz_userclk_tx_active_in(gtwiz_userclk_tx_active_in),
@@ -295,8 +291,8 @@ output wire [0 : 0] txpmaresetdone_out;
     .gtnorthrefclk01_in(1'H0),
     .gtnorthrefclk10_in(1'H0),
     .gtnorthrefclk11_in(1'H0),
-    .gtrefclk00_in(gtrefclk00_in),
-    .gtrefclk01_in(1'H0),
+    .gtrefclk00_in(1'H0),
+    .gtrefclk01_in(gtrefclk01_in),
     .gtrefclk10_in(1'H0),
     .gtrefclk11_in(1'H0),
     .gtsouthrefclk00_in(1'H0),
@@ -311,18 +307,18 @@ output wire [0 : 0] txpmaresetdone_out;
     .qpll0clkrsvd1_in(1'H0),
     .qpll0fbdiv_in(8'H00),
     .qpll0lockdetclk_in(1'H0),
-    .qpll0locken_in(1'H1),
-    .qpll0pd_in(1'H0),
+    .qpll0locken_in(1'H0),
+    .qpll0pd_in(1'H1),
     .qpll0refclksel_in(3'H1),
-    .qpll0reset_in(1'H0),
+    .qpll0reset_in(1'H1),
     .qpll1clkrsvd0_in(1'H0),
     .qpll1clkrsvd1_in(1'H0),
     .qpll1fbdiv_in(8'H00),
     .qpll1lockdetclk_in(1'H0),
-    .qpll1locken_in(1'H0),
-    .qpll1pd_in(1'H1),
+    .qpll1locken_in(1'H1),
+    .qpll1pd_in(1'H0),
     .qpll1refclksel_in(3'H1),
-    .qpll1reset_in(1'H1),
+    .qpll1reset_in(1'H0),
     .qpllrsvd1_in(8'H00),
     .qpllrsvd2_in(5'H00),
     .qpllrsvd3_in(5'H00),
@@ -362,13 +358,13 @@ output wire [0 : 0] txpmaresetdone_out;
     .pmarsvdout1_out(),
     .qpll0fbclklost_out(),
     .qpll0lock_out(),
-    .qpll0outclk_out(qpll0outclk_out),
-    .qpll0outrefclk_out(qpll0outrefclk_out),
+    .qpll0outclk_out(),
+    .qpll0outrefclk_out(),
     .qpll0refclklost_out(),
     .qpll1fbclklost_out(),
     .qpll1lock_out(),
-    .qpll1outclk_out(),
-    .qpll1outrefclk_out(),
+    .qpll1outclk_out(qpll1outclk_out),
+    .qpll1outrefclk_out(qpll1outrefclk_out),
     .qpll1refclklost_out(),
     .qplldmonitor0_out(),
     .qplldmonitor1_out(),
@@ -562,9 +558,9 @@ output wire [0 : 0] txpmaresetdone_out;
     .rxphdlypd_in(1'H1),
     .rxphdlyreset_in(1'H0),
     .rxphovrden_in(1'H0),
-    .rxpllclksel_in(2'H3),
+    .rxpllclksel_in(2'H2),
     .rxpmareset_in(1'H0),
-    .rxpolarity_in(rxpolarity_in),
+    .rxpolarity_in(1'H0),
     .rxprbscntreset_in(1'H0),
     .rxprbssel_in(4'H0),
     .rxprogdivreset_in(1'H0),
@@ -577,7 +573,7 @@ output wire [0 : 0] txpmaresetdone_out;
     .rxsyncallin_in(1'H0),
     .rxsyncin_in(1'H0),
     .rxsyncmode_in(1'H0),
-    .rxsysclksel_in(2'H2),
+    .rxsysclksel_in(2'H3),
     .rxtermination_in(1'H0),
     .rxuserrdy_in(1'H1),
     .rxusrclk_in(rxusrclk_in),
@@ -637,9 +633,9 @@ output wire [0 : 0] txpmaresetdone_out;
     .txpippmsel_in(1'H0),
     .txpippmstepsize_in(5'H00),
     .txpisopd_in(1'H0),
-    .txpllclksel_in(2'H3),
+    .txpllclksel_in(2'H2),
     .txpmareset_in(1'H0),
-    .txpolarity_in(txpolarity_in),
+    .txpolarity_in(1'H0),
     .txpostcursor_in(txpostcursor_in),
     .txpostcursorinv_in(1'B0),
     .txprbsforceerr_in(1'H0),
@@ -657,7 +653,7 @@ output wire [0 : 0] txpmaresetdone_out;
     .txsyncallin_in(1'H0),
     .txsyncin_in(1'H0),
     .txsyncmode_in(1'H0),
-    .txsysclksel_in(2'H2),
+    .txsysclksel_in(2'H3),
     .txuserrdy_in(1'H1),
     .txusrclk_in(txusrclk_in),
     .txusrclk2_in(txusrclk2_in),

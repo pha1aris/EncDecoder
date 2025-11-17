@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date         : Wed Nov 12 21:25:19 2025
+| Date         : Fri Nov 14 18:32:52 2025
 | Host         : FSO-A running 64-bit major release  (build 9200)
 | Command      : report_utilization -file prbs_gth_test_utilization_synth.rpt -pb prbs_gth_test_utilization_synth.pb
 | Design       : prbs_gth_test
@@ -32,15 +32,15 @@ Table of Contents
 +----------------------------+-------+-------+------------+-----------+-------+
 |          Site Type         |  Used | Fixed | Prohibited | Available | Util% |
 +----------------------------+-------+-------+------------+-----------+-------+
-| CLB LUTs*                  | 10747 |     0 |          0 |    341280 |  3.15 |
-|   LUT as Logic             | 10710 |     0 |          0 |    341280 |  3.14 |
+| CLB LUTs*                  | 10711 |     0 |          0 |    341280 |  3.14 |
+|   LUT as Logic             | 10674 |     0 |          0 |    341280 |  3.13 |
 |   LUT as Memory            |    37 |     0 |          0 |    184320 |  0.02 |
 |     LUT as Distributed RAM |     0 |     0 |            |           |       |
 |     LUT as Shift Register  |    37 |     0 |            |           |       |
-| CLB Registers              |  6311 |     0 |          0 |    682560 |  0.92 |
-|   Register as Flip Flop    |  6311 |     0 |          0 |    682560 |  0.92 |
+| CLB Registers              |  6286 |     0 |          0 |    682560 |  0.92 |
+|   Register as Flip Flop    |  6286 |     0 |          0 |    682560 |  0.92 |
 |   Register as Latch        |     0 |     0 |          0 |    682560 |  0.00 |
-| CARRY8                     |    71 |     0 |          0 |     42660 |  0.17 |
+| CARRY8                     |    64 |     0 |          0 |     42660 |  0.15 |
 | F7 Muxes                   |     0 |     0 |          0 |    170640 |  0.00 |
 | F8 Muxes                   |     0 |     0 |          0 |     85320 |  0.00 |
 | F9 Muxes                   |     0 |     0 |          0 |     42660 |  0.00 |
@@ -63,7 +63,7 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
 | 5772  |          Yes |           - |          Set |
-| 439   |          Yes |           - |        Reset |
+| 414   |          Yes |           - |        Reset |
 | 63    |          Yes |         Set |            - |
 | 37    |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
@@ -158,14 +158,14 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 |   Ref Name  | Used | Functional Category |
 +-------------+------+---------------------+
 | FDPE        | 5772 |            Register |
-| LUT6        | 5259 |                 CLB |
-| LUT3        | 5187 |                 CLB |
-| LUT5        | 2747 |                 CLB |
-| FDCE        |  439 |            Register |
-| LUT1        |  227 |                 CLB |
-| LUT2        |  149 |                 CLB |
-| LUT4        |  119 |                 CLB |
-| CARRY8      |   71 |                 CLB |
+| LUT6        | 5257 |                 CLB |
+| LUT3        | 5182 |                 CLB |
+| LUT5        | 2748 |                 CLB |
+| FDCE        |  414 |            Register |
+| LUT1        |  226 |                 CLB |
+| LUT4        |  129 |                 CLB |
+| LUT2        |  110 |                 CLB |
+| CARRY8      |   64 |                 CLB |
 | FDSE        |   63 |            Register |
 | SRL16E      |   37 |                 CLB |
 | FDRE        |   37 |            Register |

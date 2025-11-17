@@ -50,17 +50,7 @@ module ddr4_controler_clean # (
     input  [DATA_WIDTH-1:0]     wr_fifo_wdata,
     // input                       rd_fifo_ren,
     output [DATA_WIDTH-1:0]     rd_fifo_rdata, 
-    output                      rd_fifo_rvalid //最终数据有效输出
-    // // --- 调试端口 (用于上层监控) ---
-    // output wire                 dbg_ui_clk,
-    // output wire                 dbg_ui_rst,
-    // output wire [28:0]          dbg_app_addr,
-    // output wire [2:0]           dbg_app_cmd,
-    // output wire                 dbg_app_en,
-    // output wire                 dbg_wdf_wren,
-    // output wire [255:0]         dbg_wr_data,
-    // output wire [255:0]         dbg_rd_data,
-    // output wire                 dbg_rd_data_valid
+    output                      rd_fifo_rvalid
 );
 
 // 内部信号定义

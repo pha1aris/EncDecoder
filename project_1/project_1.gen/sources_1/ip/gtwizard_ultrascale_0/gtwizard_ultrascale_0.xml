@@ -16,11 +16,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Nov 08 08:11:57 UTC 2025</spirit:value>
+            <spirit:value>Fri Nov 14 13:03:48 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:e22efa7d</spirit:value>
+            <spirit:value>9:c9a9755a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -32,7 +32,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:30e94395</spirit:value>
+            <spirit:value>9:4e2453bb</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -46,11 +46,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Nov 08 08:12:34 UTC 2025</spirit:value>
+            <spirit:value>Fri Nov 14 13:04:35 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:e22efa7d</spirit:value>
+            <spirit:value>9:c9a9755a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -61,7 +61,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:e22efa7d</spirit:value>
+            <spirit:value>9:c9a9755a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -77,11 +77,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Nov 08 08:11:59 UTC 2025</spirit:value>
+            <spirit:value>Fri Nov 14 13:03:49 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:a6fb85ca</spirit:value>
+            <spirit:value>9:6120e871</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -96,11 +96,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Nov 08 08:11:57 UTC 2025</spirit:value>
+            <spirit:value>Fri Nov 14 13:03:48 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:e22efa7d</spirit:value>
+            <spirit:value>9:c9a9755a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -116,11 +116,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Nov 08 08:11:59 UTC 2025</spirit:value>
+            <spirit:value>Fri Nov 14 13:03:49 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:a6fb85ca</spirit:value>
+            <spirit:value>9:6120e871</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -136,11 +136,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Nov 08 08:11:58 UTC 2025</spirit:value>
+            <spirit:value>Fri Nov 14 13:03:49 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:e22efa7d</spirit:value>
+            <spirit:value>9:c9a9755a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -156,11 +156,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Nov 08 08:11:58 UTC 2025</spirit:value>
+            <spirit:value>Fri Nov 14 13:03:49 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:e22efa7d</spirit:value>
+            <spirit:value>9:c9a9755a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -175,11 +175,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Sat Nov 08 08:11:59 UTC 2025</spirit:value>
+            <spirit:value>Fri Nov 14 13:03:49 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:e22efa7d</spirit:value>
+            <spirit:value>9:c9a9755a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1927,8 +1927,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:presence>required</xilinx:presence>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.gtrefclk00_in">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.gtrefclk00_in">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -1955,7 +1954,8 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.gtrefclk01_in">false</xilinx:isEnabled>
+              <xilinx:presence>required</xilinx:presence>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.gtrefclk01_in">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -2354,7 +2354,7 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x1</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
@@ -2381,7 +2381,7 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x1</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
@@ -2435,13 +2435,12 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x1</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:presence>illegal</xilinx:presence>
               <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.qpll0reset_in">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
@@ -2571,7 +2570,7 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x0</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x1</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
@@ -2598,7 +2597,7 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x1</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
@@ -2652,12 +2651,13 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x1</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="1">0x0</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
+              <xilinx:presence>illegal</xilinx:presence>
               <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.qpll1reset_in">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
@@ -3754,8 +3754,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:presence>required</xilinx:presence>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.qpll0outclk_out">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.qpll0outclk_out">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -3782,8 +3781,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:presence>required</xilinx:presence>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.qpll0outrefclk_out">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.qpll0outrefclk_out">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -3891,7 +3889,8 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.qpll1outclk_out">false</xilinx:isEnabled>
+              <xilinx:presence>required</xilinx:presence>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.qpll1outclk_out">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -3918,7 +3917,8 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.qpll1outrefclk_out">false</xilinx:isEnabled>
+              <xilinx:presence>required</xilinx:presence>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.qpll1outrefclk_out">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -9194,7 +9194,7 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="2">0x3</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="2">0x2</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
@@ -9254,7 +9254,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxpolarity_in">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.rxpolarity_in">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -9600,7 +9600,7 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="2">0x2</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="2">0x3</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
@@ -11227,7 +11227,7 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="2">0x3</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="2">0x2</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
@@ -11287,7 +11287,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txpolarity_in">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="generated" xilinx:id="PORT_ENABLEMENT.txpolarity_in">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -11771,7 +11771,7 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="2">0x2</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:bitStringLength="2">0x3</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
@@ -14765,7 +14765,7 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="signed">
         <spirit:name>C_FREERUN_FREQUENCY</spirit:name>
-        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_FREERUN_FREQUENCY">39.0625</spirit:value>
+        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_FREERUN_FREQUENCY">15.625</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_GT_TYPE</spirit:name>
@@ -14925,7 +14925,7 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="signed">
         <spirit:name>C_RX_LINE_RATE</spirit:name>
-        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_RX_LINE_RATE">1.25</spirit:value>
+        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_RX_LINE_RATE">0.5</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_RX_MASTER_CHANNEL_IDX</spirit:name>
@@ -14937,7 +14937,7 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="signed">
         <spirit:name>C_RX_OUTCLK_FREQUENCY</spirit:name>
-        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_RX_OUTCLK_FREQUENCY">39.0625000</spirit:value>
+        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_RX_OUTCLK_FREQUENCY">15.6250000</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_RX_OUTCLK_SOURCE</spirit:name>
@@ -14945,7 +14945,7 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_RX_PLL_TYPE</spirit:name>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_RX_PLL_TYPE">0</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_RX_PLL_TYPE">1</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="std_logic_vector">
         <spirit:name>C_RX_RECCLK_OUTPUT</spirit:name>
@@ -14985,11 +14985,11 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="signed">
         <spirit:name>C_RX_USRCLK_FREQUENCY</spirit:name>
-        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_RX_USRCLK_FREQUENCY">39.0625000</spirit:value>
+        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_RX_USRCLK_FREQUENCY">15.6250000</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="signed">
         <spirit:name>C_RX_USRCLK2_FREQUENCY</spirit:name>
-        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_RX_USRCLK2_FREQUENCY">39.0625000</spirit:value>
+        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_RX_USRCLK2_FREQUENCY">15.6250000</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_SECONDARY_QPLL_ENABLE</spirit:name>
@@ -15017,11 +15017,11 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_TXPROGDIV_FREQ_SOURCE</spirit:name>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_TXPROGDIV_FREQ_SOURCE">0</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_TXPROGDIV_FREQ_SOURCE">1</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="signed">
         <spirit:name>C_TXPROGDIV_FREQ_VAL</spirit:name>
-        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_TXPROGDIV_FREQ_VAL">78.125</spirit:value>
+        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_TXPROGDIV_FREQ_VAL">62.5</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_TX_BUFFBYPASS_MODE</spirit:name>
@@ -15049,7 +15049,7 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="signed">
         <spirit:name>C_TX_LINE_RATE</spirit:name>
-        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_TX_LINE_RATE">1.25</spirit:value>
+        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_TX_LINE_RATE">0.5</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_TX_MASTER_CHANNEL_IDX</spirit:name>
@@ -15061,7 +15061,7 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="signed">
         <spirit:name>C_TX_OUTCLK_FREQUENCY</spirit:name>
-        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_TX_OUTCLK_FREQUENCY">39.0625000</spirit:value>
+        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_TX_OUTCLK_FREQUENCY">15.6250000</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_TX_OUTCLK_SOURCE</spirit:name>
@@ -15069,7 +15069,7 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_TX_PLL_TYPE</spirit:name>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_TX_PLL_TYPE">0</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_TX_PLL_TYPE">1</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="signed">
         <spirit:name>C_TX_REFCLK_FREQUENCY</spirit:name>
@@ -15101,11 +15101,11 @@
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="signed">
         <spirit:name>C_TX_USRCLK_FREQUENCY</spirit:name>
-        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_TX_USRCLK_FREQUENCY">39.0625000</spirit:value>
+        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_TX_USRCLK_FREQUENCY">15.6250000</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="signed">
         <spirit:name>C_TX_USRCLK2_FREQUENCY</spirit:name>
-        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_TX_USRCLK2_FREQUENCY">39.0625000</spirit:value>
+        <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.C_TX_USRCLK2_FREQUENCY">15.6250000</spirit:value>
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
@@ -15116,27 +15116,21 @@
       <spirit:enumeration>32</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
-      <spirit:name>choice_list_1fad77c0</spirit:name>
-      <spirit:enumeration>RXOUTCLKPMA</spirit:enumeration>
-      <spirit:enumeration>RXOUTCLKPCS</spirit:enumeration>
-      <spirit:enumeration>RXPROGDIVCLK</spirit:enumeration>
-    </spirit:choice>
-    <spirit:choice>
       <spirit:name>choice_list_24871ac1</spirit:name>
       <spirit:enumeration>AC</spirit:enumeration>
       <spirit:enumeration>DC</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
-      <spirit:name>choice_list_305f448a</spirit:name>
+      <spirit:name>choice_list_3afc3821</spirit:name>
       <spirit:enumeration>TXOUTCLKPMA</spirit:enumeration>
       <spirit:enumeration>TXOUTCLKPCS</spirit:enumeration>
+      <spirit:enumeration>TXPLLREFCLK_DIV1</spirit:enumeration>
+      <spirit:enumeration>TXPLLREFCLK_DIV2</spirit:enumeration>
       <spirit:enumeration>TXPROGDIVCLK</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
-      <spirit:name>choice_list_3179277f</spirit:name>
-      <spirit:enumeration>QPLL0</spirit:enumeration>
+      <spirit:name>choice_list_3c2e0592</spirit:name>
       <spirit:enumeration>QPLL1</spirit:enumeration>
-      <spirit:enumeration>CPLL</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
       <spirit:name>choice_list_556e59ba</spirit:name>
@@ -15247,8 +15241,21 @@
       <spirit:enumeration>X1Y6</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
+      <spirit:name>choice_list_691692d1</spirit:name>
+      <spirit:enumeration>62.5</spirit:enumeration>
+      <spirit:enumeration>125</spirit:enumeration>
+    </spirit:choice>
+    <spirit:choice>
       <spirit:name>choice_list_6b979ebc</spirit:name>
       <spirit:enumeration>250</spirit:enumeration>
+    </spirit:choice>
+    <spirit:choice>
+      <spirit:name>choice_list_6c5a0a73</spirit:name>
+      <spirit:enumeration>RXOUTCLKPMA</spirit:enumeration>
+      <spirit:enumeration>RXOUTCLKPCS</spirit:enumeration>
+      <spirit:enumeration>RXPLLREFCLK_DIV1</spirit:enumeration>
+      <spirit:enumeration>RXPLLREFCLK_DIV2</spirit:enumeration>
+      <spirit:enumeration>RXPROGDIVCLK</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
       <spirit:name>choice_list_7f4090d6</spirit:name>
@@ -15262,12 +15269,6 @@
     <spirit:choice>
       <spirit:name>choice_list_98c4d361</spirit:name>
       <spirit:enumeration>257.8125</spirit:enumeration>
-    </spirit:choice>
-    <spirit:choice>
-      <spirit:name>choice_list_9aa0782d</spirit:name>
-      <spirit:enumeration>78.125</spirit:enumeration>
-      <spirit:enumeration>156.25</spirit:enumeration>
-      <spirit:enumeration>312.5</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
       <spirit:name>choice_list_a533ccf9</spirit:name>
@@ -15297,14 +15298,359 @@
       <spirit:enumeration>-20</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
+      <spirit:name>choice_list_de3f4419</spirit:name>
+      <spirit:enumeration>QPLL1</spirit:enumeration>
+      <spirit:enumeration>CPLL</spirit:enumeration>
+    </spirit:choice>
+    <spirit:choice>
       <spirit:name>choice_list_e6469819</spirit:name>
       <spirit:enumeration>1</spirit:enumeration>
       <spirit:enumeration>2</spirit:enumeration>
       <spirit:enumeration>4</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
-      <spirit:name>choice_list_ed5e3eb0</spirit:name>
-      <spirit:enumeration>QPLL0</spirit:enumeration>
+      <spirit:name>choice_list_f01dcfac</spirit:name>
+      <spirit:enumeration>60.1503759</spirit:enumeration>
+      <spirit:enumeration>60.6060606</spirit:enumeration>
+      <spirit:enumeration>61.0687023</spirit:enumeration>
+      <spirit:enumeration>61.5384615</spirit:enumeration>
+      <spirit:enumeration>62.0155039</spirit:enumeration>
+      <spirit:enumeration>62.5</spirit:enumeration>
+      <spirit:enumeration>62.992126</spirit:enumeration>
+      <spirit:enumeration>63.4920635</spirit:enumeration>
+      <spirit:enumeration>64</spirit:enumeration>
+      <spirit:enumeration>64.516129</spirit:enumeration>
+      <spirit:enumeration>65.0406504</spirit:enumeration>
+      <spirit:enumeration>65.5737705</spirit:enumeration>
+      <spirit:enumeration>66.1157025</spirit:enumeration>
+      <spirit:enumeration>66.6666667</spirit:enumeration>
+      <spirit:enumeration>67.2268908</spirit:enumeration>
+      <spirit:enumeration>67.7966102</spirit:enumeration>
+      <spirit:enumeration>68.3760684</spirit:enumeration>
+      <spirit:enumeration>68.9655172</spirit:enumeration>
+      <spirit:enumeration>69.5652174</spirit:enumeration>
+      <spirit:enumeration>70.1754386</spirit:enumeration>
+      <spirit:enumeration>70.7964602</spirit:enumeration>
+      <spirit:enumeration>71.4285714</spirit:enumeration>
+      <spirit:enumeration>72.0720721</spirit:enumeration>
+      <spirit:enumeration>72.7272727</spirit:enumeration>
+      <spirit:enumeration>73.3944954</spirit:enumeration>
+      <spirit:enumeration>74.0740741</spirit:enumeration>
+      <spirit:enumeration>74.7663551</spirit:enumeration>
+      <spirit:enumeration>75.4716981</spirit:enumeration>
+      <spirit:enumeration>76.1904762</spirit:enumeration>
+      <spirit:enumeration>76.9230769</spirit:enumeration>
+      <spirit:enumeration>77.6699029</spirit:enumeration>
+      <spirit:enumeration>78.4313725</spirit:enumeration>
+      <spirit:enumeration>79.2079208</spirit:enumeration>
+      <spirit:enumeration>80</spirit:enumeration>
+      <spirit:enumeration>80.8080808</spirit:enumeration>
+      <spirit:enumeration>81.6326531</spirit:enumeration>
+      <spirit:enumeration>82.4742268</spirit:enumeration>
+      <spirit:enumeration>83.3333333</spirit:enumeration>
+      <spirit:enumeration>84.2105263</spirit:enumeration>
+      <spirit:enumeration>85.106383</spirit:enumeration>
+      <spirit:enumeration>86.0215054</spirit:enumeration>
+      <spirit:enumeration>86.9565217</spirit:enumeration>
+      <spirit:enumeration>87.9120879</spirit:enumeration>
+      <spirit:enumeration>88.8888889</spirit:enumeration>
+      <spirit:enumeration>89.8876404</spirit:enumeration>
+      <spirit:enumeration>90.9090909</spirit:enumeration>
+      <spirit:enumeration>91.954023</spirit:enumeration>
+      <spirit:enumeration>93.0232558</spirit:enumeration>
+      <spirit:enumeration>94.1176471</spirit:enumeration>
+      <spirit:enumeration>95.2380952</spirit:enumeration>
+      <spirit:enumeration>96.3855422</spirit:enumeration>
+      <spirit:enumeration>97.5609756</spirit:enumeration>
+      <spirit:enumeration>98.7654321</spirit:enumeration>
+      <spirit:enumeration>100</spirit:enumeration>
+      <spirit:enumeration>100.6289308</spirit:enumeration>
+      <spirit:enumeration>101.2658228</spirit:enumeration>
+      <spirit:enumeration>101.910828</spirit:enumeration>
+      <spirit:enumeration>102.5641026</spirit:enumeration>
+      <spirit:enumeration>103.2258065</spirit:enumeration>
+      <spirit:enumeration>103.8961039</spirit:enumeration>
+      <spirit:enumeration>104.5751634</spirit:enumeration>
+      <spirit:enumeration>105.2631579</spirit:enumeration>
+      <spirit:enumeration>105.9602649</spirit:enumeration>
+      <spirit:enumeration>106.6666667</spirit:enumeration>
+      <spirit:enumeration>107.3825503</spirit:enumeration>
+      <spirit:enumeration>108.1081081</spirit:enumeration>
+      <spirit:enumeration>108.8435374</spirit:enumeration>
+      <spirit:enumeration>109.5890411</spirit:enumeration>
+      <spirit:enumeration>110.3448276</spirit:enumeration>
+      <spirit:enumeration>111.1111111</spirit:enumeration>
+      <spirit:enumeration>111.8881119</spirit:enumeration>
+      <spirit:enumeration>112.6760563</spirit:enumeration>
+      <spirit:enumeration>113.4751773</spirit:enumeration>
+      <spirit:enumeration>114.2857143</spirit:enumeration>
+      <spirit:enumeration>115.1079137</spirit:enumeration>
+      <spirit:enumeration>115.942029</spirit:enumeration>
+      <spirit:enumeration>116.7883212</spirit:enumeration>
+      <spirit:enumeration>117.6470588</spirit:enumeration>
+      <spirit:enumeration>118.5185185</spirit:enumeration>
+      <spirit:enumeration>119.4029851</spirit:enumeration>
+      <spirit:enumeration>120.3007519</spirit:enumeration>
+      <spirit:enumeration>121.2121212</spirit:enumeration>
+      <spirit:enumeration>122.1374046</spirit:enumeration>
+      <spirit:enumeration>123.0769231</spirit:enumeration>
+      <spirit:enumeration>124.0310078</spirit:enumeration>
+      <spirit:enumeration>125</spirit:enumeration>
+      <spirit:enumeration>125.984252</spirit:enumeration>
+      <spirit:enumeration>126.984127</spirit:enumeration>
+      <spirit:enumeration>128</spirit:enumeration>
+      <spirit:enumeration>129.0322581</spirit:enumeration>
+      <spirit:enumeration>130.0813008</spirit:enumeration>
+      <spirit:enumeration>131.147541</spirit:enumeration>
+      <spirit:enumeration>132.231405</spirit:enumeration>
+      <spirit:enumeration>133.3333333</spirit:enumeration>
+      <spirit:enumeration>134.4537815</spirit:enumeration>
+      <spirit:enumeration>135.5932203</spirit:enumeration>
+      <spirit:enumeration>136.7521368</spirit:enumeration>
+      <spirit:enumeration>137.9310345</spirit:enumeration>
+      <spirit:enumeration>139.1304348</spirit:enumeration>
+      <spirit:enumeration>140.3508772</spirit:enumeration>
+      <spirit:enumeration>141.5929204</spirit:enumeration>
+      <spirit:enumeration>142.8571429</spirit:enumeration>
+      <spirit:enumeration>144.1441441</spirit:enumeration>
+      <spirit:enumeration>145.4545455</spirit:enumeration>
+      <spirit:enumeration>146.7889908</spirit:enumeration>
+      <spirit:enumeration>148.1481481</spirit:enumeration>
+      <spirit:enumeration>149.5327103</spirit:enumeration>
+      <spirit:enumeration>150</spirit:enumeration>
+      <spirit:enumeration>150.9433962</spirit:enumeration>
+      <spirit:enumeration>151.8987342</spirit:enumeration>
+      <spirit:enumeration>152.3809524</spirit:enumeration>
+      <spirit:enumeration>152.866242</spirit:enumeration>
+      <spirit:enumeration>153.8461538</spirit:enumeration>
+      <spirit:enumeration>154.8387097</spirit:enumeration>
+      <spirit:enumeration>155.3398058</spirit:enumeration>
+      <spirit:enumeration>155.8441558</spirit:enumeration>
+      <spirit:enumeration>156.8627451</spirit:enumeration>
+      <spirit:enumeration>157.8947368</spirit:enumeration>
+      <spirit:enumeration>158.4158416</spirit:enumeration>
+      <spirit:enumeration>158.9403974</spirit:enumeration>
+      <spirit:enumeration>160</spirit:enumeration>
+      <spirit:enumeration>161.0738255</spirit:enumeration>
+      <spirit:enumeration>161.6161616</spirit:enumeration>
+      <spirit:enumeration>162.1621622</spirit:enumeration>
+      <spirit:enumeration>163.2653061</spirit:enumeration>
+      <spirit:enumeration>164.3835616</spirit:enumeration>
+      <spirit:enumeration>164.9484536</spirit:enumeration>
+      <spirit:enumeration>165.5172414</spirit:enumeration>
+      <spirit:enumeration>166.6666667</spirit:enumeration>
+      <spirit:enumeration>167.8321678</spirit:enumeration>
+      <spirit:enumeration>168.4210526</spirit:enumeration>
+      <spirit:enumeration>169.0140845</spirit:enumeration>
+      <spirit:enumeration>170.212766</spirit:enumeration>
+      <spirit:enumeration>171.4285714</spirit:enumeration>
+      <spirit:enumeration>172.0430108</spirit:enumeration>
+      <spirit:enumeration>172.6618705</spirit:enumeration>
+      <spirit:enumeration>173.9130435</spirit:enumeration>
+      <spirit:enumeration>175.1824818</spirit:enumeration>
+      <spirit:enumeration>175.8241758</spirit:enumeration>
+      <spirit:enumeration>176.4705882</spirit:enumeration>
+      <spirit:enumeration>177.7777778</spirit:enumeration>
+      <spirit:enumeration>179.1044776</spirit:enumeration>
+      <spirit:enumeration>179.7752809</spirit:enumeration>
+      <spirit:enumeration>180.4511278</spirit:enumeration>
+      <spirit:enumeration>181.8181818</spirit:enumeration>
+      <spirit:enumeration>183.2061069</spirit:enumeration>
+      <spirit:enumeration>183.908046</spirit:enumeration>
+      <spirit:enumeration>184.6153846</spirit:enumeration>
+      <spirit:enumeration>186.0465116</spirit:enumeration>
+      <spirit:enumeration>187.5</spirit:enumeration>
+      <spirit:enumeration>188.2352941</spirit:enumeration>
+      <spirit:enumeration>188.976378</spirit:enumeration>
+      <spirit:enumeration>190.4761905</spirit:enumeration>
+      <spirit:enumeration>192</spirit:enumeration>
+      <spirit:enumeration>192.7710843</spirit:enumeration>
+      <spirit:enumeration>193.5483871</spirit:enumeration>
+      <spirit:enumeration>195.1219512</spirit:enumeration>
+      <spirit:enumeration>196.7213115</spirit:enumeration>
+      <spirit:enumeration>197.5308642</spirit:enumeration>
+      <spirit:enumeration>198.3471074</spirit:enumeration>
+      <spirit:enumeration>200</spirit:enumeration>
+      <spirit:enumeration>201.2578616</spirit:enumeration>
+      <spirit:enumeration>201.6806723</spirit:enumeration>
+      <spirit:enumeration>202.5316456</spirit:enumeration>
+      <spirit:enumeration>203.3898305</spirit:enumeration>
+      <spirit:enumeration>203.8216561</spirit:enumeration>
+      <spirit:enumeration>205.1282051</spirit:enumeration>
+      <spirit:enumeration>206.4516129</spirit:enumeration>
+      <spirit:enumeration>206.8965517</spirit:enumeration>
+      <spirit:enumeration>207.7922078</spirit:enumeration>
+      <spirit:enumeration>208.6956522</spirit:enumeration>
+      <spirit:enumeration>209.1503268</spirit:enumeration>
+      <spirit:enumeration>210.5263158</spirit:enumeration>
+      <spirit:enumeration>211.9205298</spirit:enumeration>
+      <spirit:enumeration>212.3893805</spirit:enumeration>
+      <spirit:enumeration>213.3333333</spirit:enumeration>
+      <spirit:enumeration>214.2857143</spirit:enumeration>
+      <spirit:enumeration>214.7651007</spirit:enumeration>
+      <spirit:enumeration>216.2162162</spirit:enumeration>
+      <spirit:enumeration>217.6870748</spirit:enumeration>
+      <spirit:enumeration>218.1818182</spirit:enumeration>
+      <spirit:enumeration>219.1780822</spirit:enumeration>
+      <spirit:enumeration>220.1834862</spirit:enumeration>
+      <spirit:enumeration>220.6896552</spirit:enumeration>
+      <spirit:enumeration>222.2222222</spirit:enumeration>
+      <spirit:enumeration>223.7762238</spirit:enumeration>
+      <spirit:enumeration>224.2990654</spirit:enumeration>
+      <spirit:enumeration>225.3521127</spirit:enumeration>
+      <spirit:enumeration>226.4150943</spirit:enumeration>
+      <spirit:enumeration>226.9503546</spirit:enumeration>
+      <spirit:enumeration>228.5714286</spirit:enumeration>
+      <spirit:enumeration>230.2158273</spirit:enumeration>
+      <spirit:enumeration>230.7692308</spirit:enumeration>
+      <spirit:enumeration>231.884058</spirit:enumeration>
+      <spirit:enumeration>233.0097087</spirit:enumeration>
+      <spirit:enumeration>233.5766423</spirit:enumeration>
+      <spirit:enumeration>235.2941176</spirit:enumeration>
+      <spirit:enumeration>237.037037</spirit:enumeration>
+      <spirit:enumeration>237.6237624</spirit:enumeration>
+      <spirit:enumeration>238.8059701</spirit:enumeration>
+      <spirit:enumeration>240</spirit:enumeration>
+      <spirit:enumeration>240.6015038</spirit:enumeration>
+      <spirit:enumeration>242.4242424</spirit:enumeration>
+      <spirit:enumeration>244.2748092</spirit:enumeration>
+      <spirit:enumeration>244.8979592</spirit:enumeration>
+      <spirit:enumeration>246.1538462</spirit:enumeration>
+      <spirit:enumeration>247.4226804</spirit:enumeration>
+      <spirit:enumeration>248.0620155</spirit:enumeration>
+      <spirit:enumeration>250</spirit:enumeration>
+      <spirit:enumeration>251.9685039</spirit:enumeration>
+      <spirit:enumeration>252.6315789</spirit:enumeration>
+      <spirit:enumeration>253.968254</spirit:enumeration>
+      <spirit:enumeration>255.3191489</spirit:enumeration>
+      <spirit:enumeration>256</spirit:enumeration>
+      <spirit:enumeration>258.0645161</spirit:enumeration>
+      <spirit:enumeration>260.1626016</spirit:enumeration>
+      <spirit:enumeration>260.8695652</spirit:enumeration>
+      <spirit:enumeration>262.295082</spirit:enumeration>
+      <spirit:enumeration>263.7362637</spirit:enumeration>
+      <spirit:enumeration>264.4628099</spirit:enumeration>
+      <spirit:enumeration>266.6666667</spirit:enumeration>
+      <spirit:enumeration>268.907563</spirit:enumeration>
+      <spirit:enumeration>269.6629213</spirit:enumeration>
+      <spirit:enumeration>271.1864407</spirit:enumeration>
+      <spirit:enumeration>272.7272727</spirit:enumeration>
+      <spirit:enumeration>273.5042735</spirit:enumeration>
+      <spirit:enumeration>275.862069</spirit:enumeration>
+      <spirit:enumeration>278.2608696</spirit:enumeration>
+      <spirit:enumeration>279.0697674</spirit:enumeration>
+      <spirit:enumeration>280.7017544</spirit:enumeration>
+      <spirit:enumeration>282.3529412</spirit:enumeration>
+      <spirit:enumeration>283.1858407</spirit:enumeration>
+      <spirit:enumeration>285.7142857</spirit:enumeration>
+      <spirit:enumeration>288.2882883</spirit:enumeration>
+      <spirit:enumeration>289.1566265</spirit:enumeration>
+      <spirit:enumeration>290.9090909</spirit:enumeration>
+      <spirit:enumeration>292.6829268</spirit:enumeration>
+      <spirit:enumeration>293.5779817</spirit:enumeration>
+      <spirit:enumeration>296.2962963</spirit:enumeration>
+      <spirit:enumeration>299.0654206</spirit:enumeration>
+      <spirit:enumeration>300</spirit:enumeration>
+      <spirit:enumeration>301.8867925</spirit:enumeration>
+      <spirit:enumeration>303.7974684</spirit:enumeration>
+      <spirit:enumeration>304.7619048</spirit:enumeration>
+      <spirit:enumeration>307.6923077</spirit:enumeration>
+      <spirit:enumeration>310.6796117</spirit:enumeration>
+      <spirit:enumeration>311.6883117</spirit:enumeration>
+      <spirit:enumeration>313.7254902</spirit:enumeration>
+      <spirit:enumeration>315.7894737</spirit:enumeration>
+      <spirit:enumeration>316.8316832</spirit:enumeration>
+      <spirit:enumeration>320</spirit:enumeration>
+      <spirit:enumeration>323.2323232</spirit:enumeration>
+      <spirit:enumeration>324.3243243</spirit:enumeration>
+      <spirit:enumeration>326.5306122</spirit:enumeration>
+      <spirit:enumeration>328.7671233</spirit:enumeration>
+      <spirit:enumeration>329.8969072</spirit:enumeration>
+      <spirit:enumeration>333.3333333</spirit:enumeration>
+      <spirit:enumeration>336.8421053</spirit:enumeration>
+      <spirit:enumeration>338.028169</spirit:enumeration>
+      <spirit:enumeration>340.4255319</spirit:enumeration>
+      <spirit:enumeration>342.8571429</spirit:enumeration>
+      <spirit:enumeration>344.0860215</spirit:enumeration>
+      <spirit:enumeration>347.826087</spirit:enumeration>
+      <spirit:enumeration>351.6483516</spirit:enumeration>
+      <spirit:enumeration>352.9411765</spirit:enumeration>
+      <spirit:enumeration>355.5555556</spirit:enumeration>
+      <spirit:enumeration>358.2089552</spirit:enumeration>
+      <spirit:enumeration>359.5505618</spirit:enumeration>
+      <spirit:enumeration>363.6363636</spirit:enumeration>
+      <spirit:enumeration>367.816092</spirit:enumeration>
+      <spirit:enumeration>369.2307692</spirit:enumeration>
+      <spirit:enumeration>372.0930233</spirit:enumeration>
+      <spirit:enumeration>375</spirit:enumeration>
+      <spirit:enumeration>376.4705882</spirit:enumeration>
+      <spirit:enumeration>380.952381</spirit:enumeration>
+      <spirit:enumeration>385.5421687</spirit:enumeration>
+      <spirit:enumeration>387.0967742</spirit:enumeration>
+      <spirit:enumeration>390.2439024</spirit:enumeration>
+      <spirit:enumeration>393.442623</spirit:enumeration>
+      <spirit:enumeration>395.0617284</spirit:enumeration>
+      <spirit:enumeration>400</spirit:enumeration>
+      <spirit:enumeration>405.0632911</spirit:enumeration>
+      <spirit:enumeration>406.779661</spirit:enumeration>
+      <spirit:enumeration>410.2564103</spirit:enumeration>
+      <spirit:enumeration>413.7931034</spirit:enumeration>
+      <spirit:enumeration>415.5844156</spirit:enumeration>
+      <spirit:enumeration>421.0526316</spirit:enumeration>
+      <spirit:enumeration>426.6666667</spirit:enumeration>
+      <spirit:enumeration>428.5714286</spirit:enumeration>
+      <spirit:enumeration>432.4324324</spirit:enumeration>
+      <spirit:enumeration>436.3636364</spirit:enumeration>
+      <spirit:enumeration>438.3561644</spirit:enumeration>
+      <spirit:enumeration>444.4444444</spirit:enumeration>
+      <spirit:enumeration>450.7042254</spirit:enumeration>
+      <spirit:enumeration>452.8301887</spirit:enumeration>
+      <spirit:enumeration>457.1428571</spirit:enumeration>
+      <spirit:enumeration>461.5384615</spirit:enumeration>
+      <spirit:enumeration>463.7681159</spirit:enumeration>
+      <spirit:enumeration>470.5882353</spirit:enumeration>
+      <spirit:enumeration>477.6119403</spirit:enumeration>
+      <spirit:enumeration>480</spirit:enumeration>
+      <spirit:enumeration>484.8484848</spirit:enumeration>
+      <spirit:enumeration>489.7959184</spirit:enumeration>
+      <spirit:enumeration>492.3076923</spirit:enumeration>
+      <spirit:enumeration>500</spirit:enumeration>
+      <spirit:enumeration>507.9365079</spirit:enumeration>
+      <spirit:enumeration>510.6382979</spirit:enumeration>
+      <spirit:enumeration>516.1290323</spirit:enumeration>
+      <spirit:enumeration>521.7391304</spirit:enumeration>
+      <spirit:enumeration>524.5901639</spirit:enumeration>
+      <spirit:enumeration>533.3333333</spirit:enumeration>
+      <spirit:enumeration>542.3728814</spirit:enumeration>
+      <spirit:enumeration>545.4545455</spirit:enumeration>
+      <spirit:enumeration>551.7241379</spirit:enumeration>
+      <spirit:enumeration>558.1395349</spirit:enumeration>
+      <spirit:enumeration>561.4035088</spirit:enumeration>
+      <spirit:enumeration>571.4285714</spirit:enumeration>
+      <spirit:enumeration>581.8181818</spirit:enumeration>
+      <spirit:enumeration>585.3658537</spirit:enumeration>
+      <spirit:enumeration>592.5925926</spirit:enumeration>
+      <spirit:enumeration>600</spirit:enumeration>
+      <spirit:enumeration>603.7735849</spirit:enumeration>
+      <spirit:enumeration>615.3846154</spirit:enumeration>
+      <spirit:enumeration>627.4509804</spirit:enumeration>
+      <spirit:enumeration>631.5789474</spirit:enumeration>
+      <spirit:enumeration>640</spirit:enumeration>
+      <spirit:enumeration>648.6486486</spirit:enumeration>
+      <spirit:enumeration>653.0612245</spirit:enumeration>
+      <spirit:enumeration>666.6666667</spirit:enumeration>
+      <spirit:enumeration>680.8510638</spirit:enumeration>
+      <spirit:enumeration>685.7142857</spirit:enumeration>
+      <spirit:enumeration>695.6521739</spirit:enumeration>
+      <spirit:enumeration>705.8823529</spirit:enumeration>
+      <spirit:enumeration>711.1111111</spirit:enumeration>
+      <spirit:enumeration>727.2727273</spirit:enumeration>
+      <spirit:enumeration>744.1860465</spirit:enumeration>
+      <spirit:enumeration>750</spirit:enumeration>
+      <spirit:enumeration>761.9047619</spirit:enumeration>
+      <spirit:enumeration>774.1935484</spirit:enumeration>
+      <spirit:enumeration>780.4878049</spirit:enumeration>
+      <spirit:enumeration>800</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
       <spirit:name>choice_list_f490bbca</spirit:name>
@@ -15324,364 +15670,6 @@
       <spirit:enumeration>915</spirit:enumeration>
       <spirit:enumeration>960</spirit:enumeration>
       <spirit:enumeration>1030</spirit:enumeration>
-    </spirit:choice>
-    <spirit:choice>
-      <spirit:name>choice_list_f9858cdf</spirit:name>
-      <spirit:enumeration>62.5</spirit:enumeration>
-      <spirit:enumeration>62.8930818</spirit:enumeration>
-      <spirit:enumeration>63.2911392</spirit:enumeration>
-      <spirit:enumeration>63.6942675</spirit:enumeration>
-      <spirit:enumeration>64.1025641</spirit:enumeration>
-      <spirit:enumeration>64.516129</spirit:enumeration>
-      <spirit:enumeration>64.9350649</spirit:enumeration>
-      <spirit:enumeration>65.3594771</spirit:enumeration>
-      <spirit:enumeration>65.7894737</spirit:enumeration>
-      <spirit:enumeration>66.2251656</spirit:enumeration>
-      <spirit:enumeration>66.6666667</spirit:enumeration>
-      <spirit:enumeration>67.114094</spirit:enumeration>
-      <spirit:enumeration>67.5675676</spirit:enumeration>
-      <spirit:enumeration>68.0272109</spirit:enumeration>
-      <spirit:enumeration>68.4931507</spirit:enumeration>
-      <spirit:enumeration>68.9655172</spirit:enumeration>
-      <spirit:enumeration>69.4444444</spirit:enumeration>
-      <spirit:enumeration>69.9300699</spirit:enumeration>
-      <spirit:enumeration>70.4225352</spirit:enumeration>
-      <spirit:enumeration>70.9219858</spirit:enumeration>
-      <spirit:enumeration>71.4285714</spirit:enumeration>
-      <spirit:enumeration>71.942446</spirit:enumeration>
-      <spirit:enumeration>72.4637681</spirit:enumeration>
-      <spirit:enumeration>72.9927007</spirit:enumeration>
-      <spirit:enumeration>73.5294118</spirit:enumeration>
-      <spirit:enumeration>74.0740741</spirit:enumeration>
-      <spirit:enumeration>74.6268657</spirit:enumeration>
-      <spirit:enumeration>75.1879699</spirit:enumeration>
-      <spirit:enumeration>75.7575758</spirit:enumeration>
-      <spirit:enumeration>76.3358779</spirit:enumeration>
-      <spirit:enumeration>76.9230769</spirit:enumeration>
-      <spirit:enumeration>77.5193798</spirit:enumeration>
-      <spirit:enumeration>78.125</spirit:enumeration>
-      <spirit:enumeration>78.7401575</spirit:enumeration>
-      <spirit:enumeration>79.3650794</spirit:enumeration>
-      <spirit:enumeration>80</spirit:enumeration>
-      <spirit:enumeration>80.6451613</spirit:enumeration>
-      <spirit:enumeration>81.300813</spirit:enumeration>
-      <spirit:enumeration>81.9672131</spirit:enumeration>
-      <spirit:enumeration>82.6446281</spirit:enumeration>
-      <spirit:enumeration>83.3333333</spirit:enumeration>
-      <spirit:enumeration>84.0336134</spirit:enumeration>
-      <spirit:enumeration>84.7457627</spirit:enumeration>
-      <spirit:enumeration>85.4700855</spirit:enumeration>
-      <spirit:enumeration>86.2068966</spirit:enumeration>
-      <spirit:enumeration>86.9565217</spirit:enumeration>
-      <spirit:enumeration>87.7192982</spirit:enumeration>
-      <spirit:enumeration>88.4955752</spirit:enumeration>
-      <spirit:enumeration>89.2857143</spirit:enumeration>
-      <spirit:enumeration>90.0900901</spirit:enumeration>
-      <spirit:enumeration>90.9090909</spirit:enumeration>
-      <spirit:enumeration>91.7431193</spirit:enumeration>
-      <spirit:enumeration>92.5925926</spirit:enumeration>
-      <spirit:enumeration>93.4579439</spirit:enumeration>
-      <spirit:enumeration>94.3396226</spirit:enumeration>
-      <spirit:enumeration>95.2380952</spirit:enumeration>
-      <spirit:enumeration>96.1538462</spirit:enumeration>
-      <spirit:enumeration>97.0873786</spirit:enumeration>
-      <spirit:enumeration>98.0392157</spirit:enumeration>
-      <spirit:enumeration>99.009901</spirit:enumeration>
-      <spirit:enumeration>100</spirit:enumeration>
-      <spirit:enumeration>101.010101</spirit:enumeration>
-      <spirit:enumeration>102.0408163</spirit:enumeration>
-      <spirit:enumeration>103.0927835</spirit:enumeration>
-      <spirit:enumeration>104.1666667</spirit:enumeration>
-      <spirit:enumeration>105.2631579</spirit:enumeration>
-      <spirit:enumeration>106.3829787</spirit:enumeration>
-      <spirit:enumeration>107.5268817</spirit:enumeration>
-      <spirit:enumeration>108.6956522</spirit:enumeration>
-      <spirit:enumeration>109.8901099</spirit:enumeration>
-      <spirit:enumeration>111.1111111</spirit:enumeration>
-      <spirit:enumeration>112.3595506</spirit:enumeration>
-      <spirit:enumeration>113.6363636</spirit:enumeration>
-      <spirit:enumeration>114.9425287</spirit:enumeration>
-      <spirit:enumeration>116.2790698</spirit:enumeration>
-      <spirit:enumeration>117.6470588</spirit:enumeration>
-      <spirit:enumeration>119.047619</spirit:enumeration>
-      <spirit:enumeration>120.4819277</spirit:enumeration>
-      <spirit:enumeration>121.9512195</spirit:enumeration>
-      <spirit:enumeration>123.4567901</spirit:enumeration>
-      <spirit:enumeration>125</spirit:enumeration>
-      <spirit:enumeration>125.7861635</spirit:enumeration>
-      <spirit:enumeration>126.5822785</spirit:enumeration>
-      <spirit:enumeration>127.388535</spirit:enumeration>
-      <spirit:enumeration>128.2051282</spirit:enumeration>
-      <spirit:enumeration>129.0322581</spirit:enumeration>
-      <spirit:enumeration>129.8701299</spirit:enumeration>
-      <spirit:enumeration>130.7189542</spirit:enumeration>
-      <spirit:enumeration>131.5789474</spirit:enumeration>
-      <spirit:enumeration>132.4503311</spirit:enumeration>
-      <spirit:enumeration>133.3333333</spirit:enumeration>
-      <spirit:enumeration>134.2281879</spirit:enumeration>
-      <spirit:enumeration>135.1351351</spirit:enumeration>
-      <spirit:enumeration>136.0544218</spirit:enumeration>
-      <spirit:enumeration>136.9863014</spirit:enumeration>
-      <spirit:enumeration>137.9310345</spirit:enumeration>
-      <spirit:enumeration>138.8888889</spirit:enumeration>
-      <spirit:enumeration>139.8601399</spirit:enumeration>
-      <spirit:enumeration>140.8450704</spirit:enumeration>
-      <spirit:enumeration>141.8439716</spirit:enumeration>
-      <spirit:enumeration>142.8571429</spirit:enumeration>
-      <spirit:enumeration>143.8848921</spirit:enumeration>
-      <spirit:enumeration>144.9275362</spirit:enumeration>
-      <spirit:enumeration>145.9854015</spirit:enumeration>
-      <spirit:enumeration>147.0588235</spirit:enumeration>
-      <spirit:enumeration>148.1481481</spirit:enumeration>
-      <spirit:enumeration>149.2537313</spirit:enumeration>
-      <spirit:enumeration>150.3759398</spirit:enumeration>
-      <spirit:enumeration>151.5151515</spirit:enumeration>
-      <spirit:enumeration>152.6717557</spirit:enumeration>
-      <spirit:enumeration>153.8461538</spirit:enumeration>
-      <spirit:enumeration>155.0387597</spirit:enumeration>
-      <spirit:enumeration>156.25</spirit:enumeration>
-      <spirit:enumeration>157.480315</spirit:enumeration>
-      <spirit:enumeration>158.7301587</spirit:enumeration>
-      <spirit:enumeration>160</spirit:enumeration>
-      <spirit:enumeration>161.2903226</spirit:enumeration>
-      <spirit:enumeration>162.601626</spirit:enumeration>
-      <spirit:enumeration>163.9344262</spirit:enumeration>
-      <spirit:enumeration>165.2892562</spirit:enumeration>
-      <spirit:enumeration>166.6666667</spirit:enumeration>
-      <spirit:enumeration>168.0672269</spirit:enumeration>
-      <spirit:enumeration>169.4915254</spirit:enumeration>
-      <spirit:enumeration>170.9401709</spirit:enumeration>
-      <spirit:enumeration>172.4137931</spirit:enumeration>
-      <spirit:enumeration>173.9130435</spirit:enumeration>
-      <spirit:enumeration>175.4385965</spirit:enumeration>
-      <spirit:enumeration>176.9911504</spirit:enumeration>
-      <spirit:enumeration>178.5714286</spirit:enumeration>
-      <spirit:enumeration>180.1801802</spirit:enumeration>
-      <spirit:enumeration>181.8181818</spirit:enumeration>
-      <spirit:enumeration>183.4862385</spirit:enumeration>
-      <spirit:enumeration>185.1851852</spirit:enumeration>
-      <spirit:enumeration>186.9158879</spirit:enumeration>
-      <spirit:enumeration>187.5</spirit:enumeration>
-      <spirit:enumeration>188.6792453</spirit:enumeration>
-      <spirit:enumeration>189.8734177</spirit:enumeration>
-      <spirit:enumeration>190.4761905</spirit:enumeration>
-      <spirit:enumeration>191.0828025</spirit:enumeration>
-      <spirit:enumeration>192.3076923</spirit:enumeration>
-      <spirit:enumeration>193.5483871</spirit:enumeration>
-      <spirit:enumeration>194.1747573</spirit:enumeration>
-      <spirit:enumeration>194.8051948</spirit:enumeration>
-      <spirit:enumeration>196.0784314</spirit:enumeration>
-      <spirit:enumeration>197.3684211</spirit:enumeration>
-      <spirit:enumeration>198.019802</spirit:enumeration>
-      <spirit:enumeration>198.6754967</spirit:enumeration>
-      <spirit:enumeration>200</spirit:enumeration>
-      <spirit:enumeration>201.3422819</spirit:enumeration>
-      <spirit:enumeration>202.020202</spirit:enumeration>
-      <spirit:enumeration>202.7027027</spirit:enumeration>
-      <spirit:enumeration>204.0816327</spirit:enumeration>
-      <spirit:enumeration>205.4794521</spirit:enumeration>
-      <spirit:enumeration>206.185567</spirit:enumeration>
-      <spirit:enumeration>206.8965517</spirit:enumeration>
-      <spirit:enumeration>208.3333333</spirit:enumeration>
-      <spirit:enumeration>209.7902098</spirit:enumeration>
-      <spirit:enumeration>210.5263158</spirit:enumeration>
-      <spirit:enumeration>211.2676056</spirit:enumeration>
-      <spirit:enumeration>212.7659574</spirit:enumeration>
-      <spirit:enumeration>214.2857143</spirit:enumeration>
-      <spirit:enumeration>215.0537634</spirit:enumeration>
-      <spirit:enumeration>215.8273381</spirit:enumeration>
-      <spirit:enumeration>217.3913043</spirit:enumeration>
-      <spirit:enumeration>218.9781022</spirit:enumeration>
-      <spirit:enumeration>219.7802198</spirit:enumeration>
-      <spirit:enumeration>220.5882353</spirit:enumeration>
-      <spirit:enumeration>222.2222222</spirit:enumeration>
-      <spirit:enumeration>223.880597</spirit:enumeration>
-      <spirit:enumeration>224.7191011</spirit:enumeration>
-      <spirit:enumeration>225.5639098</spirit:enumeration>
-      <spirit:enumeration>227.2727273</spirit:enumeration>
-      <spirit:enumeration>229.0076336</spirit:enumeration>
-      <spirit:enumeration>229.8850575</spirit:enumeration>
-      <spirit:enumeration>230.7692308</spirit:enumeration>
-      <spirit:enumeration>232.5581395</spirit:enumeration>
-      <spirit:enumeration>234.375</spirit:enumeration>
-      <spirit:enumeration>235.2941176</spirit:enumeration>
-      <spirit:enumeration>236.2204724</spirit:enumeration>
-      <spirit:enumeration>238.0952381</spirit:enumeration>
-      <spirit:enumeration>240</spirit:enumeration>
-      <spirit:enumeration>240.9638554</spirit:enumeration>
-      <spirit:enumeration>241.9354839</spirit:enumeration>
-      <spirit:enumeration>243.902439</spirit:enumeration>
-      <spirit:enumeration>245.9016393</spirit:enumeration>
-      <spirit:enumeration>246.9135802</spirit:enumeration>
-      <spirit:enumeration>247.9338843</spirit:enumeration>
-      <spirit:enumeration>250</spirit:enumeration>
-      <spirit:enumeration>251.572327</spirit:enumeration>
-      <spirit:enumeration>252.1008403</spirit:enumeration>
-      <spirit:enumeration>253.164557</spirit:enumeration>
-      <spirit:enumeration>254.2372881</spirit:enumeration>
-      <spirit:enumeration>254.7770701</spirit:enumeration>
-      <spirit:enumeration>256.4102564</spirit:enumeration>
-      <spirit:enumeration>258.0645161</spirit:enumeration>
-      <spirit:enumeration>258.6206897</spirit:enumeration>
-      <spirit:enumeration>259.7402597</spirit:enumeration>
-      <spirit:enumeration>260.8695652</spirit:enumeration>
-      <spirit:enumeration>261.4379085</spirit:enumeration>
-      <spirit:enumeration>263.1578947</spirit:enumeration>
-      <spirit:enumeration>264.9006623</spirit:enumeration>
-      <spirit:enumeration>265.4867257</spirit:enumeration>
-      <spirit:enumeration>266.6666667</spirit:enumeration>
-      <spirit:enumeration>267.8571429</spirit:enumeration>
-      <spirit:enumeration>268.4563758</spirit:enumeration>
-      <spirit:enumeration>270.2702703</spirit:enumeration>
-      <spirit:enumeration>272.1088435</spirit:enumeration>
-      <spirit:enumeration>272.7272727</spirit:enumeration>
-      <spirit:enumeration>273.9726027</spirit:enumeration>
-      <spirit:enumeration>275.2293578</spirit:enumeration>
-      <spirit:enumeration>275.862069</spirit:enumeration>
-      <spirit:enumeration>277.7777778</spirit:enumeration>
-      <spirit:enumeration>279.7202797</spirit:enumeration>
-      <spirit:enumeration>280.3738318</spirit:enumeration>
-      <spirit:enumeration>281.6901408</spirit:enumeration>
-      <spirit:enumeration>283.0188679</spirit:enumeration>
-      <spirit:enumeration>283.6879433</spirit:enumeration>
-      <spirit:enumeration>285.7142857</spirit:enumeration>
-      <spirit:enumeration>287.7697842</spirit:enumeration>
-      <spirit:enumeration>288.4615385</spirit:enumeration>
-      <spirit:enumeration>289.8550725</spirit:enumeration>
-      <spirit:enumeration>291.2621359</spirit:enumeration>
-      <spirit:enumeration>291.9708029</spirit:enumeration>
-      <spirit:enumeration>294.1176471</spirit:enumeration>
-      <spirit:enumeration>296.2962963</spirit:enumeration>
-      <spirit:enumeration>297.029703</spirit:enumeration>
-      <spirit:enumeration>298.5074627</spirit:enumeration>
-      <spirit:enumeration>300</spirit:enumeration>
-      <spirit:enumeration>300.7518797</spirit:enumeration>
-      <spirit:enumeration>303.030303</spirit:enumeration>
-      <spirit:enumeration>305.3435115</spirit:enumeration>
-      <spirit:enumeration>306.122449</spirit:enumeration>
-      <spirit:enumeration>307.6923077</spirit:enumeration>
-      <spirit:enumeration>309.2783505</spirit:enumeration>
-      <spirit:enumeration>310.0775194</spirit:enumeration>
-      <spirit:enumeration>312.5</spirit:enumeration>
-      <spirit:enumeration>314.9606299</spirit:enumeration>
-      <spirit:enumeration>315.7894737</spirit:enumeration>
-      <spirit:enumeration>317.4603175</spirit:enumeration>
-      <spirit:enumeration>319.1489362</spirit:enumeration>
-      <spirit:enumeration>320</spirit:enumeration>
-      <spirit:enumeration>322.5806452</spirit:enumeration>
-      <spirit:enumeration>325.203252</spirit:enumeration>
-      <spirit:enumeration>326.0869565</spirit:enumeration>
-      <spirit:enumeration>327.8688525</spirit:enumeration>
-      <spirit:enumeration>329.6703297</spirit:enumeration>
-      <spirit:enumeration>330.5785124</spirit:enumeration>
-      <spirit:enumeration>333.3333333</spirit:enumeration>
-      <spirit:enumeration>336.1344538</spirit:enumeration>
-      <spirit:enumeration>337.0786517</spirit:enumeration>
-      <spirit:enumeration>338.9830508</spirit:enumeration>
-      <spirit:enumeration>340.9090909</spirit:enumeration>
-      <spirit:enumeration>341.8803419</spirit:enumeration>
-      <spirit:enumeration>344.8275862</spirit:enumeration>
-      <spirit:enumeration>347.826087</spirit:enumeration>
-      <spirit:enumeration>348.8372093</spirit:enumeration>
-      <spirit:enumeration>350.877193</spirit:enumeration>
-      <spirit:enumeration>352.9411765</spirit:enumeration>
-      <spirit:enumeration>353.9823009</spirit:enumeration>
-      <spirit:enumeration>357.1428571</spirit:enumeration>
-      <spirit:enumeration>360.3603604</spirit:enumeration>
-      <spirit:enumeration>361.4457831</spirit:enumeration>
-      <spirit:enumeration>363.6363636</spirit:enumeration>
-      <spirit:enumeration>365.8536585</spirit:enumeration>
-      <spirit:enumeration>366.9724771</spirit:enumeration>
-      <spirit:enumeration>370.3703704</spirit:enumeration>
-      <spirit:enumeration>373.8317757</spirit:enumeration>
-      <spirit:enumeration>375</spirit:enumeration>
-      <spirit:enumeration>377.3584906</spirit:enumeration>
-      <spirit:enumeration>379.7468354</spirit:enumeration>
-      <spirit:enumeration>380.952381</spirit:enumeration>
-      <spirit:enumeration>384.6153846</spirit:enumeration>
-      <spirit:enumeration>388.3495146</spirit:enumeration>
-      <spirit:enumeration>389.6103896</spirit:enumeration>
-      <spirit:enumeration>392.1568627</spirit:enumeration>
-      <spirit:enumeration>394.7368421</spirit:enumeration>
-      <spirit:enumeration>396.039604</spirit:enumeration>
-      <spirit:enumeration>400</spirit:enumeration>
-      <spirit:enumeration>404.040404</spirit:enumeration>
-      <spirit:enumeration>405.4054054</spirit:enumeration>
-      <spirit:enumeration>408.1632653</spirit:enumeration>
-      <spirit:enumeration>410.9589041</spirit:enumeration>
-      <spirit:enumeration>412.371134</spirit:enumeration>
-      <spirit:enumeration>416.6666667</spirit:enumeration>
-      <spirit:enumeration>421.0526316</spirit:enumeration>
-      <spirit:enumeration>422.5352113</spirit:enumeration>
-      <spirit:enumeration>425.5319149</spirit:enumeration>
-      <spirit:enumeration>428.5714286</spirit:enumeration>
-      <spirit:enumeration>430.1075269</spirit:enumeration>
-      <spirit:enumeration>434.7826087</spirit:enumeration>
-      <spirit:enumeration>439.5604396</spirit:enumeration>
-      <spirit:enumeration>441.1764706</spirit:enumeration>
-      <spirit:enumeration>444.4444444</spirit:enumeration>
-      <spirit:enumeration>447.761194</spirit:enumeration>
-      <spirit:enumeration>449.4382022</spirit:enumeration>
-      <spirit:enumeration>454.5454545</spirit:enumeration>
-      <spirit:enumeration>459.7701149</spirit:enumeration>
-      <spirit:enumeration>461.5384615</spirit:enumeration>
-      <spirit:enumeration>465.1162791</spirit:enumeration>
-      <spirit:enumeration>468.75</spirit:enumeration>
-      <spirit:enumeration>470.5882353</spirit:enumeration>
-      <spirit:enumeration>476.1904762</spirit:enumeration>
-      <spirit:enumeration>481.9277108</spirit:enumeration>
-      <spirit:enumeration>483.8709677</spirit:enumeration>
-      <spirit:enumeration>487.804878</spirit:enumeration>
-      <spirit:enumeration>491.8032787</spirit:enumeration>
-      <spirit:enumeration>493.8271605</spirit:enumeration>
-      <spirit:enumeration>500</spirit:enumeration>
-      <spirit:enumeration>506.3291139</spirit:enumeration>
-      <spirit:enumeration>508.4745763</spirit:enumeration>
-      <spirit:enumeration>512.8205128</spirit:enumeration>
-      <spirit:enumeration>517.2413793</spirit:enumeration>
-      <spirit:enumeration>519.4805195</spirit:enumeration>
-      <spirit:enumeration>526.3157895</spirit:enumeration>
-      <spirit:enumeration>533.3333333</spirit:enumeration>
-      <spirit:enumeration>535.7142857</spirit:enumeration>
-      <spirit:enumeration>540.5405405</spirit:enumeration>
-      <spirit:enumeration>545.4545455</spirit:enumeration>
-      <spirit:enumeration>547.9452055</spirit:enumeration>
-      <spirit:enumeration>555.5555556</spirit:enumeration>
-      <spirit:enumeration>563.3802817</spirit:enumeration>
-      <spirit:enumeration>566.0377358</spirit:enumeration>
-      <spirit:enumeration>571.4285714</spirit:enumeration>
-      <spirit:enumeration>576.9230769</spirit:enumeration>
-      <spirit:enumeration>579.7101449</spirit:enumeration>
-      <spirit:enumeration>588.2352941</spirit:enumeration>
-      <spirit:enumeration>597.0149254</spirit:enumeration>
-      <spirit:enumeration>600</spirit:enumeration>
-      <spirit:enumeration>606.0606061</spirit:enumeration>
-      <spirit:enumeration>612.244898</spirit:enumeration>
-      <spirit:enumeration>615.3846154</spirit:enumeration>
-      <spirit:enumeration>625</spirit:enumeration>
-      <spirit:enumeration>634.9206349</spirit:enumeration>
-      <spirit:enumeration>638.2978723</spirit:enumeration>
-      <spirit:enumeration>645.1612903</spirit:enumeration>
-      <spirit:enumeration>652.173913</spirit:enumeration>
-      <spirit:enumeration>655.7377049</spirit:enumeration>
-      <spirit:enumeration>666.6666667</spirit:enumeration>
-      <spirit:enumeration>677.9661017</spirit:enumeration>
-      <spirit:enumeration>681.8181818</spirit:enumeration>
-      <spirit:enumeration>689.6551724</spirit:enumeration>
-      <spirit:enumeration>697.6744186</spirit:enumeration>
-      <spirit:enumeration>701.754386</spirit:enumeration>
-      <spirit:enumeration>714.2857143</spirit:enumeration>
-      <spirit:enumeration>727.2727273</spirit:enumeration>
-      <spirit:enumeration>731.7073171</spirit:enumeration>
-      <spirit:enumeration>740.7407407</spirit:enumeration>
-      <spirit:enumeration>750</spirit:enumeration>
-      <spirit:enumeration>754.7169811</spirit:enumeration>
-      <spirit:enumeration>769.2307692</spirit:enumeration>
-      <spirit:enumeration>784.3137255</spirit:enumeration>
-      <spirit:enumeration>789.4736842</spirit:enumeration>
-      <spirit:enumeration>800</spirit:enumeration>
-      <spirit:enumeration>810.8108108</spirit:enumeration>
-      <spirit:enumeration>816.3265306</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
       <spirit:name>choice_pairs_03018cc1</spirit:name>
@@ -16411,7 +16399,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INTERNAL_TX_USRCLK_FREQUENCY</spirit:name>
-      <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_TX_USRCLK_FREQUENCY" spirit:order="16">39.0625000</spirit:value>
+      <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_TX_USRCLK_FREQUENCY" spirit:order="16">15.6250000</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -16422,7 +16410,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INTERNAL_RX_USRCLK_FREQUENCY</spirit:name>
-      <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_RX_USRCLK_FREQUENCY" spirit:order="17">39.0625000</spirit:value>
+      <spirit:value spirit:format="float" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_RX_USRCLK_FREQUENCY" spirit:order="17">15.6250000</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -16474,19 +16462,19 @@
       <spirit:name>TX_LINE_RATE</spirit:name>
       <spirit:displayName>Line rate (Gb/s)</spirit:displayName>
       <spirit:description>Enter the transmitter line rate in Gb/s</spirit:description>
-      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.TX_LINE_RATE" spirit:order="24" spirit:minimum="0.5" spirit:maximum="16.375">1.25</spirit:value>
+      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.TX_LINE_RATE" spirit:order="24" spirit:minimum="0.5" spirit:maximum="16.375">0.5</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>TX_PLL_TYPE</spirit:name>
       <spirit:displayName>PLL type</spirit:displayName>
       <spirit:description>Select the transmitter PLL type</spirit:description>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.TX_PLL_TYPE" spirit:choiceRef="choice_list_3179277f" spirit:order="25">QPLL0</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.TX_PLL_TYPE" spirit:choiceRef="choice_list_de3f4419" spirit:order="25">QPLL1</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>TX_REFCLK_FREQUENCY</spirit:name>
       <spirit:displayName>Actual Reference clock (MHz)</spirit:displayName>
       <spirit:description>Select a transmitter reference clock frequency from among those supported for the selected line rate and PLL type </spirit:description>
-      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.TX_REFCLK_FREQUENCY" spirit:choiceRef="choice_list_f9858cdf" spirit:order="26">125</spirit:value>
+      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.TX_REFCLK_FREQUENCY" spirit:choiceRef="choice_list_f01dcfac" spirit:order="26">125</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>TX_DATA_ENCODING</spirit:name>
@@ -16522,7 +16510,7 @@
       <spirit:name>TX_OUTCLK_SOURCE</spirit:name>
       <spirit:displayName>TXOUTCLK source</spirit:displayName>
       <spirit:description>Select the source of TXOUTCLK</spirit:description>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.TX_OUTCLK_SOURCE" spirit:choiceRef="choice_list_305f448a" spirit:order="32">TXOUTCLKPMA</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.TX_OUTCLK_SOURCE" spirit:choiceRef="choice_list_3afc3821" spirit:order="32">TXOUTCLKPMA</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>TX_DIFF_SWING_EMPH_MODE</spirit:name>
@@ -16534,19 +16522,19 @@
       <spirit:name>RX_LINE_RATE</spirit:name>
       <spirit:displayName>Line rate (Gb/s)</spirit:displayName>
       <spirit:description>Enter the receiver line rate in Gb/s</spirit:description>
-      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.RX_LINE_RATE" spirit:order="34" spirit:minimum="0.5" spirit:maximum="16.375">1.25</spirit:value>
+      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.RX_LINE_RATE" spirit:order="34" spirit:minimum="0.5" spirit:maximum="16.375">0.5</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>RX_PLL_TYPE</spirit:name>
       <spirit:displayName>PLL type</spirit:displayName>
       <spirit:description>Select the receiver PLL type</spirit:description>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.RX_PLL_TYPE" spirit:choiceRef="choice_list_3179277f" spirit:order="35">QPLL0</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.RX_PLL_TYPE" spirit:choiceRef="choice_list_de3f4419" spirit:order="35">QPLL1</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>RX_REFCLK_FREQUENCY</spirit:name>
       <spirit:displayName>Actual Reference clock (MHz)</spirit:displayName>
       <spirit:description>Select a receiver reference clock frequency from among those supported for the selected line rate and PLL type</spirit:description>
-      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.RX_REFCLK_FREQUENCY" spirit:choiceRef="choice_list_f9858cdf" spirit:order="36">125</spirit:value>
+      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.RX_REFCLK_FREQUENCY" spirit:choiceRef="choice_list_f01dcfac" spirit:order="36">125</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>RX_DATA_DECODING</spirit:name>
@@ -16588,7 +16576,7 @@
       <spirit:name>RX_JTOL_FC</spirit:name>
       <spirit:displayName>Mask corner frequency (MHz)</spirit:displayName>
       <spirit:description>Refer to the product guide for guidelines on setting jitter tolerance mask corner frequency.</spirit:description>
-      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.RX_JTOL_FC" spirit:order="43" spirit:minimum="0" spirit:maximum="10">0.74985</spirit:value>
+      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.RX_JTOL_FC" spirit:order="43" spirit:minimum="0" spirit:maximum="10">0.29994</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>RX_JTOL_LF_SLOPE</spirit:name>
@@ -16600,7 +16588,7 @@
       <spirit:name>RX_OUTCLK_SOURCE</spirit:name>
       <spirit:displayName>RXOUTCLK source</spirit:displayName>
       <spirit:description>Select the source of RXOUTCLK</spirit:description>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.RX_OUTCLK_SOURCE" spirit:choiceRef="choice_list_1fad77c0" spirit:order="45">RXOUTCLKPMA</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.RX_OUTCLK_SOURCE" spirit:choiceRef="choice_list_6c5a0a73" spirit:order="45">RXOUTCLKPMA</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>SIM_CPLL_CAL_BYPASS</spirit:name>
@@ -17841,19 +17829,19 @@
       <spirit:name>ENABLE_OPTIONAL_PORTS</spirit:name>
       <spirit:displayName>Enable optional ports</spirit:displayName>
       <spirit:description>Indicate whether a port should be included</spirit:description>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.ENABLE_OPTIONAL_PORTS" spirit:order="150">loopback_in rxcdrhold_in rxlpmen_in rxpolarity_in rxslide_in txdiffctrl_in txpolarity_in txpostcursor_in txprecursor_in</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.ENABLE_OPTIONAL_PORTS" spirit:order="150">loopback_in rxcdrhold_in rxlpmen_in rxslide_in txdiffctrl_in txpostcursor_in txprecursor_in</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>RX_REFCLK_SOURCE</spirit:name>
       <spirit:displayName>Receiver reference clock source</spirit:displayName>
       <spirit:description>Select a reference clock input to drive the PLL chosen for receiver operation</spirit:description>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.RX_REFCLK_SOURCE" spirit:order="151">X1Y6 clk1+2</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.RX_REFCLK_SOURCE" spirit:order="151">X1Y6 clk0+2</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>TX_REFCLK_SOURCE</spirit:name>
       <spirit:displayName>Transmitter reference clock source</spirit:displayName>
       <spirit:description>Select a reference clock input to drive the PLL chosen for transmitter operation</spirit:description>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.TX_REFCLK_SOURCE" spirit:order="152">X1Y6 clk1+2</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.TX_REFCLK_SOURCE" spirit:order="152">X1Y6 clk0+2</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>RX_RECCLK_OUTPUT</spirit:name>
@@ -17954,7 +17942,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INTERNAL_PORT_ENABLEMENT_UPDATED</spirit:name>
-      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLEMENT_UPDATED" spirit:order="165">55</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLEMENT_UPDATED" spirit:order="165">62</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -17965,7 +17953,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INTERNAL_CHANNEL_SITES_UPDATED</spirit:name>
-      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_CHANNEL_SITES_UPDATED" spirit:order="166">13</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_CHANNEL_SITES_UPDATED" spirit:order="166">15</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -17987,7 +17975,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INTERNAL_RX_COMMA_PRESET_UPDATE</spirit:name>
-      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_RX_COMMA_PRESET_UPDATE" spirit:order="168">23</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_RX_COMMA_PRESET_UPDATE" spirit:order="168">24</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -18069,7 +18057,7 @@
       <spirit:name>TXPROGDIV_FREQ_SOURCE</spirit:name>
       <spirit:displayName>Programmable divider clock source</spirit:displayName>
       <spirit:description>Select which PLL source is used to generate the selectable TXOUTCLK frequency</spirit:description>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.TXPROGDIV_FREQ_SOURCE" spirit:choiceRef="choice_list_ed5e3eb0" spirit:order="175">QPLL0</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.TXPROGDIV_FREQ_SOURCE" spirit:choiceRef="choice_list_3c2e0592" spirit:order="175">QPLL1</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -18082,7 +18070,7 @@
       <spirit:name>TXPROGDIV_FREQ_VAL</spirit:name>
       <spirit:displayName>TXOUTCLK frequency (MHz)</spirit:displayName>
       <spirit:description>Select the TXOUTCLK frequency to be generated by the TX programmable divider</spirit:description>
-      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.TXPROGDIV_FREQ_VAL" spirit:choiceRef="choice_list_9aa0782d" spirit:order="176">78.125</spirit:value>
+      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.TXPROGDIV_FREQ_VAL" spirit:choiceRef="choice_list_691692d1" spirit:order="176">62.5</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -18101,7 +18089,7 @@
       <spirit:name>FREERUN_FREQUENCY</spirit:name>
       <spirit:displayName>Free-running and DRP clock frequency (MHz)</spirit:displayName>
       <spirit:description>Enter the frequency of the free-running clock used to bring up the core. For configurations which use the CPLL, this clock must also be used for the transceiver channel DRP interface</spirit:description>
-      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.FREERUN_FREQUENCY" spirit:order="178" spirit:minimum="3.125" spirit:maximum="39.0625">39.0625</spirit:value>
+      <spirit:value spirit:format="float" spirit:resolve="user" spirit:id="PARAM_VALUE.FREERUN_FREQUENCY" spirit:order="178" spirit:minimum="3.125" spirit:maximum="15.625">15.625</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INCLUDE_CPLL_CAL</spirit:name>
@@ -18817,7 +18805,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INTERNAL_PORT_ENABLED_GTREFCLK00_IN</spirit:name>
-      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_GTREFCLK00_IN" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">1</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_GTREFCLK00_IN" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">0</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -18828,7 +18816,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INTERNAL_PORT_ENABLED_GTREFCLK01_IN</spirit:name>
-      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_GTREFCLK01_IN" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">0</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_GTREFCLK01_IN" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">1</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -19026,7 +19014,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INTERNAL_PORT_ENABLED_QPLL0RESET_IN</spirit:name>
-      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_QPLL0RESET_IN" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">-1</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_QPLL0RESET_IN" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">0</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -19114,7 +19102,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INTERNAL_PORT_ENABLED_QPLL1RESET_IN</spirit:name>
-      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_QPLL1RESET_IN" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">0</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_QPLL1RESET_IN" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">-1</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -19554,7 +19542,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INTERNAL_PORT_ENABLED_QPLL0OUTCLK_OUT</spirit:name>
-      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_QPLL0OUTCLK_OUT" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">1</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_QPLL0OUTCLK_OUT" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">0</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -19565,7 +19553,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INTERNAL_PORT_ENABLED_QPLL0OUTREFCLK_OUT</spirit:name>
-      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_QPLL0OUTREFCLK_OUT" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">1</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_QPLL0OUTREFCLK_OUT" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">0</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -19609,7 +19597,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INTERNAL_PORT_ENABLED_QPLL1OUTCLK_OUT</spirit:name>
-      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_QPLL1OUTCLK_OUT" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">0</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_QPLL1OUTCLK_OUT" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">1</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -19620,7 +19608,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>INTERNAL_PORT_ENABLED_QPLL1OUTREFCLK_OUT</spirit:name>
-      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_QPLL1OUTREFCLK_OUT" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">0</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="PARAM_VALUE.INTERNAL_PORT_ENABLED_QPLL1OUTREFCLK_OUT" spirit:minimum="-1" spirit:maximum="2" spirit:rangeType="long">1</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>

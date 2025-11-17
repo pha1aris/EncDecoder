@@ -23,7 +23,7 @@ vlog -work xilinx_vip  -incr -mfcu  -sv -L axi_vip_v1_1_19 -L smartconnect_v1_0 
 "D:/2024_2/Vivado/2024.2/data/xilinx_vip/hdl/rst_vip_if.sv" \
 
 vlog -work xpm  -incr -mfcu  -sv -L axi_vip_v1_1_19 -L smartconnect_v1_0 -L zynq_ultra_ps_e_vip_v1_0_19 -L xilinx_vip "+incdir+D:/2024_2/Vivado/2024.2/data/xilinx_vip/include" \
-"D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv" \
+"D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv" \
 
 vcom -work xpm  -93  \
 "D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_VCOMP.vhd" \
