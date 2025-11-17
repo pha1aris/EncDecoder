@@ -4,12 +4,13 @@
 module gth_raw_32b_phy
 (
     // 自由运行时钟 & 复位
-    input  wire        clk_freerun,   // e.g. 100 MHz
-    input  wire        rst_n,         // 低有效复位
+    input  wire        clk_freerun,   
+    input  wire        rst_n,         
 
     // 参考时钟（已经是单端，外部用 IBUFDS_GTE4 转过来的）
-    input  wire        gtrefclk01,
-
+    // input  wire        gtrefclk01,
+    input  wire        mgtrefclk0_x1y1_p,
+    input  wire        mgtrefclk0_x1y1_n,
     // 串行差分接口
     input  wire        gthrxp_in,
     input  wire        gthrxn_in,
@@ -22,11 +23,10 @@ module gth_raw_32b_phy
     input  wire        rxusrclk,
     input  wire        rxusrclk2,
 
-    // 用户并行 TX 数据接口（RAW 32bit）
+    // 用户并行 数据接口（RAW 32bit）
     input  wire [31:0] tx_data,
     input  wire        tx_data_valid, // 暂时只是用来选择 idle 还是有效数据
 
-    // 用户并行 RX 数据接口（RAW 32bit）
     output wire [31:0] rx_data,
     output wire        rx_data_valid,
 
@@ -43,10 +43,23 @@ module gth_raw_32b_phy
     output wire        txoutclk,
     output wire        rxoutclk
 );
+    // 0) freerun BUFG
+    wire freerun_clk_buf;
+    BUFG u_bufg_freerun (.I(clk_freerun), .O(freerun_clk_buf));
 
-    // --------------------------------------------------------------------
-    // 内部信号定义：对应 gtwizard_ultrascale_0 的端口
-    // --------------------------------------------------------------------
+
+    wire gtrefclk01;
+    IBUFDS_GTE4 #(
+      .REFCLK_EN_TX_PATH (1'b0),
+      .REFCLK_HROW_CK_SEL(2'b00),
+      .REFCLK_ICNTL_RX   (2'b00)
+    ) u_ibufds_refclk (
+      .I  (mgtrefclk0_x1y1_p),
+      .IB (mgtrefclk0_x1y1_n),
+      .CEB(1'b0),
+      .O  (gtrefclk01),
+      .ODIV2()
+    );
 
     // gtwiz_* reset/clock/userclk 相关是 [0:0] 宽度
     wire [0:0] gtwiz_userclk_tx_active_in;

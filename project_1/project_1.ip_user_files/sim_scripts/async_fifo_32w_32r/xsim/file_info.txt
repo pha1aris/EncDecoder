@@ -1,0 +1,2 @@
+async_fifo_32w_32r.v,verilog,xil_defaultlib,../../../../project_1.gen/sources_1/ip/async_fifo_32w_32r/sim/async_fifo_32w_32r.v,
+glbl.v,Verilog,xil_defaultlib,glbl.v

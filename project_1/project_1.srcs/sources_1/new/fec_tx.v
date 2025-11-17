@@ -8,6 +8,7 @@ module fec_tx #(
     parameter integer INTLV_D       = 4808,
     parameter integer INTLV_N       = 255
 )(
+    input  wire             line_clk,
     input  wire             core_clk,
     input  wire             rst_n,
 
@@ -19,6 +20,8 @@ module fec_tx #(
     // 输出给 GTH TX 的 32bit 数据
     output wire [W-1:0]     o_tx_data,
     output wire             o_tx_valid,
+    output wire [31:0]      o_tx_data_line,
+    output wire             o_tx_valid_line,
     output wire [15:0]      o_tx_frame_index
 );
 
@@ -27,18 +30,23 @@ module fec_tx #(
     // ================= RS 编码 =================
     wire [7:0] enc_data;
     wire       enc_valid;
+    wire xpm_input_tready;
 
-    rs_encode_frontend #(
-        .RS_K (RS_K)
-    ) u_rs_encode_frontend (
-        .clk    (core_clk),
-        .rst    (rst),
-        .i_data (i_data),
-        .i_valid(i_valid),
-        .i_ready(i_ready),
-        .o_data (enc_data),
-        .o_valid(enc_valid),
-        .o_ready(1'b1)      // 下游交织器当前不反压
+
+    rs_encode_frontend rs_encode_frontend (
+        .clk                    (line_clk),                   // 上游 8bit 数据时钟
+        .enc_clk                (core_clk),                // RS 编码 IP 的工作时钟
+        .rst                    (rst),
+
+        // 上游 8 bit 输入
+        .fifo_input_rdy         (i_ready),
+        .data_i                 (i_data),
+        .data_valid_i           (i_valid),
+
+        // 下游 RS 编码 IP 的 AXIS 输出
+        .m_axis_output_tready   (xpm_input_tready),
+        .m_axis_output_tdata    (enc_data),
+        .m_axis_output_tvalid   (enc_valid)
     );
 
     // ================= 交织器 ==================
@@ -54,8 +62,8 @@ module fec_tx #(
         .rst            (rst),
         .in_valid       (enc_valid),
         .in_data        (enc_data),
-        .in_ready       (),          // 模块内部 assign 1'b1
-        .in_tlast       (1'b0),
+        .in_ready       (xpm_input_tready),          // 模块内部 assign 1'b1
+        // .in_tlast       (1'b0),
         .out_valid      (intlv_valid),
         .out_data       (intlv_data),
         .out_block_start(intlv_block_start)
@@ -93,5 +101,32 @@ module fec_tx #(
         .o_frame_index    (o_tx_frame_index)
     );
 
-    // 这里 o_tx_data / o_tx_valid 就可以直接连到 GTH TX
+    // =========== async FIFO: core_clk → line_clk ===============
+    wire [31:0] tx32_fifo_dout;
+    wire        tx32_fifo_empty;
+    wire        tx32_fifo_full;
+    wire        tx32_fifo_rd_en;               // line_clk 域读取
+    wire        tx32_fifo_wrstbsy;
+    wire        tx32_fifo_rrstbsy;
+
+    async_fifo_32w_32r u_tx_fifo (
+        .srst        (rst),
+        .wr_clk     (core_clk),
+        .rd_clk     (line_clk),
+        .din        (o_tx_data),
+        .wr_en      (o_tx_valid),
+        .rd_en      (tx32_fifo_rd_en),
+        .dout       (tx32_fifo_dout),
+        .full       (tx32_fifo_full),
+        .empty      (tx32_fifo_empty),  
+        .wr_rst_busy(tx32_fifo_wrstbsy),  // output wire wr_rst_busy
+        .rd_rst_busy(tx32_fifo_rrstbsy)  // output wire rd_rst_busy
+    );
+
+    // 真实 GTH 侧 TX 输出（line_clk 域）
+    assign tx32_fifo_rd_en = ~tx32_fifo_empty;
+    assign o_tx_data_line  = tx32_fifo_dout;
+    assign o_tx_valid_line = ~tx32_fifo_empty;
+
+
 endmodule

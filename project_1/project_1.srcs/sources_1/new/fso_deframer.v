@@ -58,7 +58,7 @@ module fso_deframer #(
     wire [15:0] rx_block_id       = i_rx_data[31:16];
     wire [15:0] rx_frame_in_block = i_rx_data[15:0];
 
-    // （你原来这两个拍延时现在没再用到，可以保留或删掉）
+    // 暂时没用
     reg [W-1:0] rx_data_d0, rx_data_d1;
     always@(posedge clk or negedge rst_n)begin
         if(!rst_n)begin

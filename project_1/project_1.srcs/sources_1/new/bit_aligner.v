@@ -13,7 +13,7 @@ module bit_aligner #(
     input       [W-1:0]         i_rx_data,
     input                       i_rx_valid,
     
-    input                       i_realign_req,
+    input                       i_realign_req,  //来自快时钟域
 
     output  reg                 o_rxslide,
     output  wire                o_aligned_valid,   // 由内部寄存器驱动
@@ -53,6 +53,40 @@ module bit_aligner #(
     wire         header_match = i_rx_valid && (err_bits <= ERR_TH);
 
     // ---------------- 数据 & valid 打一拍 ----------------
+    reg [2:0]   realign_cnt;
+    reg         realign_flag_core; //展宽后的信号
+    reg         realign_flag_d0;
+    reg         realign_flag_d1;
+    wire        realign_req;
+
+    reg realign_sync_d0, realign_sync_d1;
+    wire      realign_req_line;   // 本域拉宽后的重对齐请求
+
+    // core_clk 域来的 i_realign_req 先做 2 拍同步
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            realign_sync_d0 <= 1'b0;
+            realign_sync_d1 <= 1'b0;
+        end else begin
+            realign_sync_d0 <= i_realign_req;
+            realign_sync_d1 <= realign_sync_d0;
+        end
+    end
+
+    // 展宽（拉成 N 拍 level 信号）
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            realign_cnt <= 3'd0;
+        end else begin
+            if (realign_sync_d1) begin
+                realign_cnt <= 3'd4;             // 重对齐时拉高 4 拍
+            end else if (realign_cnt != 3'd0) begin
+                realign_cnt <= realign_cnt - 1'b1;
+            end
+        end
+    end
+
+    assign realign_req_line = (realign_cnt != 3'd0);
 
     wire lock_now = (state == S_CHECK_ALIGNMENT) &&
                     (!locked_reg) &&
@@ -90,7 +124,7 @@ module bit_aligner #(
 
     // ---------------- 主状态机：搜索 + 滑位 ----------------
     always @(posedge clk or negedge rst_n) begin
-        if (!rst_n || !rx_cdr_stable || !rx_reset_done || i_realign_req) begin
+        if (!rst_n || !rx_cdr_stable || !rx_reset_done || realign_req_line) begin
             state              <= S_IDLE;
             verify_cnt         <= 8'd0;
             slide_cooldown_cnt <= 8'd0;
