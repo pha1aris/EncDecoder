@@ -6,7 +6,7 @@
 
 (* BLOCK_STUB = "true" *)
 module async_fifo_32w_32r (
-  srst,
+  rst,
   wr_clk,
   rd_clk,
   din,
@@ -15,19 +15,21 @@ module async_fifo_32w_32r (
   dout,
   full,
   empty,
+  rd_data_count,
+  wr_data_count,
   wr_rst_busy,
   rd_rst_busy
 );
 
   (* X_INTERFACE_IGNORE = "true" *)
-  input srst;
+  input rst;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 write_clk CLK" *)
   (* X_INTERFACE_MODE = "slave write_clk" *)
-  (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME write_clk, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN , ASSOCIATED_BUSIF , ASSOCIATED_PORT , ASSOCIATED_RESET , INSERT_VIP 0" *)
+  (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME write_clk, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN , ASSOCIATED_BUSIF , ASSOCIATED_PORT , ASSOCIATED_RESET , INSERT_VIP 0" *)
   input wr_clk;
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 read_clk CLK" *)
   (* X_INTERFACE_MODE = "slave read_clk" *)
-  (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME read_clk, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN , ASSOCIATED_BUSIF , ASSOCIATED_PORT , ASSOCIATED_RESET , INSERT_VIP 0" *)
+  (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME read_clk, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN , ASSOCIATED_BUSIF , ASSOCIATED_PORT , ASSOCIATED_RESET , INSERT_VIP 0" *)
   input rd_clk;
   (* X_INTERFACE_INFO = "xilinx.com:interface:fifo_write:1.0 FIFO_WRITE WR_DATA" *)
   (* X_INTERFACE_MODE = "slave FIFO_WRITE" *)
@@ -43,6 +45,10 @@ module async_fifo_32w_32r (
   output full;
   (* X_INTERFACE_INFO = "xilinx.com:interface:fifo_read:1.0 FIFO_READ EMPTY" *)
   output empty;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [7:0]rd_data_count;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [7:0]wr_data_count;
   (* X_INTERFACE_IGNORE = "true" *)
   output wr_rst_busy;
   (* X_INTERFACE_IGNORE = "true" *)

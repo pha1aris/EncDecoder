@@ -17,9 +17,10 @@ module fec_rx #(
     input  wire             rx_reset_done,
     input  wire             rx_cdr_stable,
 
-    // 解码后的数据（注意：这里我改成 32bit，对齐 rs_decode_backend）
-    output wire [31:0]      o_data,
+    // 解码后的数据（8bit）
+    output wire [7:0]       o_data,
     output wire             o_valid,
+    input  wire             i_data_ready,
 
     // 调试信号
     output wire             o_rxslide,
@@ -65,28 +66,28 @@ module fec_rx #(
     wire         rx32_fifo_rd_rst_busy;
     wire         rx32_fifo_rd_en;
     wire         rx32_fifo_wr_en;
-    // 写侧：bit_aligner 输出
+
     assign rx32_fifo_wr_en = aligned_valid;  // 每来一个对齐好的 word 就写
 
     async_fifo_32w_32r u_rx_fifo (
-        .srst        (rst),
-        .wr_clk      (line_clk),
-        .rd_clk      (core_clk),
-        .din         (aligned_data), //是否需要将控制信号一同输入fifo进行同步？
-        .wr_en       (rx32_fifo_wr_en),
-        .rd_en       (rx32_fifo_rd_en),
-        .dout        (rx32_fifo_dout),
-        .full        (rx32_fifo_full),
-        .empty       (rx32_fifo_empty),
-        .wr_rst_busy (rx32_fifo_wr_rst_busy),
-        .rd_rst_busy (rx32_fifo_rd_rst_busy)
+        .rst        (rst),
+        .wr_clk     (line_clk),
+        .rd_clk     (core_clk),
+        .din        (aligned_data), 
+        .wr_en      (rx32_fifo_wr_en),
+        .rd_en      (rx32_fifo_rd_en),
+        .dout       (rx32_fifo_dout),
+        .full       (rx32_fifo_full),
+        .empty      (rx32_fifo_empty),
+        .wr_rst_busy(rx32_fifo_wr_rst_busy),
+        .rd_rst_busy(rx32_fifo_rd_rst_busy)
     );
 
-    // 读侧：core_clk 域持续读（或者根据 deframer 需要读）
     assign rx32_fifo_rd_en   = ~rx32_fifo_empty & ~rx32_fifo_rd_rst_busy;
 
     wire [W-1:0] aligned_data_c  = rx32_fifo_dout;
     wire         aligned_valid_c = ~rx32_fifo_empty & ~rx32_fifo_rd_rst_busy;
+
     // ==================== deframer =======================
     wire [W-1:0] rx_payload_data;
     wire         rx_payload_valid;
@@ -134,83 +135,106 @@ module fec_rx #(
     // =============== 32bit → 8bit gearbox ===============
     wire [7:0]  gb8_data;
     wire        gb8_valid;
+    wire        out_sync_rst;
 
     gearbox_32to8 u_gb_32to8 (
-        .clk      (core_clk),
-        .rst      (rst),
-        .in_data  (rx_payload_data),
-        .in_valid (rx_payload_valid),
-        .out_data (gb8_data),
-        .out_valid(gb8_valid)
+        .clk            (core_clk),
+        .rst            (rst),
+        .in_sync_rst    (blk_soft_rst),
+        .in_data        (rx_payload_data),
+        .in_valid       (rx_payload_valid),
+        .out_sync_rst   (out_sync_rst),
+        .out_data       (gb8_data),
+        .out_valid      (gb8_valid)
     );
-
-    // 将 blk_soft_rst 同步一拍后送给去交织器
-    reg blk_soft_rst_d;
-    always @(posedge core_clk or posedge rst) begin
-        if (rst)
-            blk_soft_rst_d <= 1'b0;
-        else
-            blk_soft_rst_d <= blk_soft_rst;
-    end
 
     // =================== 去交织器 ========================
     wire [7:0] deintlv_data;
     wire       deintlv_valid;
     wire       deintlv_block_start;
-
+    
     rs_deinterleaver_xpm #(
         .D (INTLV_D),
         .N (INTLV_N)
     ) u_deinterleaver (
         .clk         (core_clk),
         .rst         (rst),
-        .blk_soft_rst(blk_soft_rst_d),
+        .blk_soft_rst(out_sync_rst),
         .in_valid    (gb8_valid),
         .in_data     (gb8_data),
-        .in_ready    (),              // 目前不做反压，保持内部 ready=1 的风格
+        .in_ready    (),              // 目前不反压
         .block_start (deintlv_block_start),
         .out_valid   (deintlv_valid),
         .out_data    (deintlv_data)
     );
 
-    // =================== RS 解码后端 ========================
-    //
-    // 这里用你贴出来、已经验证过的 rs_decode_backend。
-    // 它的输入是 8bit AXIS，需要我们提供：
-    //   - s_axis_input_tdata  : deintlv_data
-    //   - s_axis_input_tvalid : deintlv_valid
-    //   - s_axis_input_tlast  : 本地按 255 计数生成
-    // 输出是 32bit AXIS：output_tdata/output_tvalid
-    // 这里先简单把 output_tready 固定为 1'b1（始终可接受），
-    // 方便联调；以后如果要再接后级 AXIS，可以把 ready 做成端口往外引。
+    // ====================================================
+    // ★ 新增：9bit FIFO dec_rx_fifo
+    //      把 {block_start, data} 一起排队
+    // ====================================================
 
-    // =================== RS 解码前的 tlast 生成 ========================
-    // RS_N = 255（每个码字 255 字节）
-    // deintlv_block_start：交织块的第一个 symbol，与 out_valid 同拍
+    wire [8:0] dec_rx_fifo_din  = {deintlv_block_start, deintlv_data};
+    wire       dec_rx_fifo_wr_en;
+    wire       dec_rx_fifo_rd_en;
+    wire [8:0] dec_rx_fifo_dout;
+    wire       dec_rx_fifo_full, dec_rx_fifo_empty;
+    wire       dec_rx_fifo_wr_rst_busy, dec_rx_fifo_rd_rst_busy;
 
-    reg [8:0] rs_byte_cnt;   
-    reg       rs_tlast;
-    reg       rs_in_sync;    // 是否已经block_start完成一次同步
+    assign dec_rx_fifo_wr_en = deintlv_valid;
 
-    wire s_axis_input_fire  = deintlv_valid & s_axis_input_tready;
+    dec_rx_fifo u_dec_rx_fifo (
+      .rst        (rst),                  // input wire rst
+      .wr_clk     (core_clk),            // 写时钟：core_clk
+      .rd_clk     (core_clk),            // 读时钟：core_clk（同域）
+      .din        (dec_rx_fifo_din),     // input wire [8 : 0] din
+      .wr_en      (dec_rx_fifo_wr_en),   // input wire wr_en
+      .rd_en      (dec_rx_fifo_rd_en),   // input wire rd_en
+      .dout       (dec_rx_fifo_dout),    // output wire [8 : 0] dout
+      .full       (dec_rx_fifo_full),    // output wire full
+      .empty      (dec_rx_fifo_empty),   // output wire empty
+      .wr_rst_busy(dec_rx_fifo_wr_rst_busy),  // output wire wr_rst_busy
+      .rd_rst_busy(dec_rx_fifo_rd_rst_busy)   // output wire rd_rst_busy
+    );
+
+    // FIFO 读口视角下的有效信号
+    wire fifo_out_valid = ~dec_rx_fifo_empty & ~dec_rx_fifo_rd_rst_busy;
+    wire fifo_block_start = dec_rx_fifo_dout[8];
+    wire [7:0] fifo_data  = dec_rx_fifo_dout[7:0];
+
+    // =================== RS 解码前端：计数 + tlast ========================
+
+    reg  [7:0] rs_byte_cnt;
+    reg        rs_in_sync;
+
+    wire       s_axis_input_tready;   // 来自 rs_decode_backend
+    wire       s_axis_input_fire;     // 真正被解码器“吃掉”的 symbol
+
+    // AXIS 到解码器：valid 由 FIFO 是否为空决定，data 来自 FIFO
+    wire       s_axis_input_tvalid = fifo_out_valid;
+    wire [7:0] s_axis_input_tdata  = fifo_data;
+
+    // 当 FIFO 有数据且解码器 ready 时，拉 rd_en，表示这一拍的 symbol 被“消费”
+    assign dec_rx_fifo_rd_en = fifo_out_valid & s_axis_input_tready;
+
+    assign s_axis_input_fire = dec_rx_fifo_rd_en;
+
+    // tlast：在码字的第 254 个 symbol 上拉高（0..254 共 255 个）
+    wire rs_tlast = (rs_byte_cnt == 8'd254) && s_axis_input_fire;
 
     always @(posedge core_clk or posedge rst) begin
         if (rst) begin
-            rs_byte_cnt <= 9'd0;
-            rs_tlast    <= 1'b0;
+            rs_byte_cnt <= 8'd0;
             rs_in_sync  <= 1'b0;
         end else begin
-            rs_tlast <= 1'b0;  
-
             if (s_axis_input_fire) begin
-                if (deintlv_block_start) begin
-                    rs_byte_cnt <= 9'd0;  
-                    rs_in_sync  <= 1'b1;  // 从这拍开始认为已经对齐好了
-
+                if (fifo_block_start) begin
+                    // 当前这个 symbol 定义为新码字 index=0
+                    rs_byte_cnt <= 8'd1;
+                    rs_in_sync  <= 1'b1;
                 end else if (rs_in_sync) begin
-                    if (rs_byte_cnt == RS_N-1) begin// 当前这个字节是一个 RS 码字的最后一个字节
-                        rs_tlast    <= 1'b1;
-                        rs_byte_cnt <= 9'd0;   // 下一拍的字节将是“下一码字的 index=0”
+                    if (rs_byte_cnt == RS_N-1) begin
+                        // 当前这一拍是 index=254，下一拍从 0 开始
+                        rs_byte_cnt <= 8'd0;
                     end else begin
                         rs_byte_cnt <= rs_byte_cnt + 1'b1;
                     end
@@ -219,28 +243,27 @@ module fec_rx #(
         end
     end
 
+    // =================== RS 解码后端（双 decoder + 内部 8bit FIFO） ========================
 
-    wire        s_axis_input_tready;
-    wire [31:0] dec32_data;
-    wire        dec32_valid;
+    wire [7:0]  dec_data;
+    wire        dec_valid;
 
     rs_decode_backend u_rs_decode_backend (
         .rst                 (rst),
         .core_clk            (core_clk),
-        .output_clk          (core_clk),   // 仿真/当前方案：先用同一个时钟，后面需要再拆时钟域可以改
+        .output_clk          (core_clk),   
 
-        .s_axis_input_tdata  (deintlv_data),
-        .s_axis_input_tvalid (deintlv_valid),
+        .s_axis_input_tdata  (s_axis_input_tdata),
+        .s_axis_input_tvalid (s_axis_input_tvalid),
         .s_axis_input_tlast  (rs_tlast),
-        .s_axis_input_tready (s_axis_input_tready), // 当前不回传给上游
+        .s_axis_input_tready (s_axis_input_tready),
 
-        .output_tdata        (dec32_data),
-        .output_tvalid       (dec32_valid),
-        .output_tready       (1'b1)        // 下游永远 ready，方便你现在做联调
+        .output_tdata        (dec_data),
+        .output_tvalid       (dec_valid),
+        .output_tready       (i_data_ready)
     );
 
-    // 直接把 32bit 输出映射到 fec_rx 的输出口
-    assign o_data  = dec32_data;
-    assign o_valid = dec32_valid;
+    assign o_data  = dec_data;
+    assign o_valid = dec_valid;
 
 endmodule

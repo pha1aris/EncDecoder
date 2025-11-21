@@ -18,7 +18,13 @@ set_property IOSTANDARD DIFF_SSTL12 [get_ports sys_clk_n]
 set_property PACKAGE_PIN AN12 [get_ports sys_rst_n]
 set_property IOSTANDARD LVCMOS33 [get_ports sys_rst_n]
 
+##################### led ###########################
+set_property PACKAGE_PIN AM13 [get_ports pl_led1]
+set_property IOSTANDARD LVCMOS33 [get_ports pl_led1]
+set_property PACKAGE_PIN AP12 [get_ports pl_led2]
+set_property IOSTANDARD LVCMOS33 [get_ports pl_led2]
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 
 
 
@@ -33,42 +39,26 @@ set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_0]
 set_property C_TRIGIN_EN false [get_debug_cores u_ila_0]
 set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
 set_property port_width 1 [get_debug_ports u_ila_0/clk]
-connect_debug_port u_ila_0/clk [get_nets [list {gth_top/u_gt/inst/gen_gtwizard_gthe4_top.gtwizard_ultrascale_1_gtwizard_gthe4_inst/gen_gtwizard_gthe4.gen_rx_user_clocking_internal.gen_single_instance.gtwiz_userclk_rx_inst/gtwiz_userclk_rx_usrclk2_out[0]}]]
+connect_debug_port u_ila_0/clk [get_nets [list rxusrclk2]]
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
 set_property port_width 32 [get_debug_ports u_ila_0/probe0]
-connect_debug_port u_ila_0/probe0 [get_nets [list {sync_dout[0]} {sync_dout[1]} {sync_dout[2]} {sync_dout[3]} {sync_dout[4]} {sync_dout[5]} {sync_dout[6]} {sync_dout[7]} {sync_dout[8]} {sync_dout[9]} {sync_dout[10]} {sync_dout[11]} {sync_dout[12]} {sync_dout[13]} {sync_dout[14]} {sync_dout[15]} {sync_dout[16]} {sync_dout[17]} {sync_dout[18]} {sync_dout[19]} {sync_dout[20]} {sync_dout[21]} {sync_dout[22]} {sync_dout[23]} {sync_dout[24]} {sync_dout[25]} {sync_dout[26]} {sync_dout[27]} {sync_dout[28]} {sync_dout[29]} {sync_dout[30]} {sync_dout[31]}]]
+connect_debug_port u_ila_0/probe0 [get_nets [list {prbs_err_bits[0]} {prbs_err_bits[1]} {prbs_err_bits[2]} {prbs_err_bits[3]} {prbs_err_bits[4]} {prbs_err_bits[5]} {prbs_err_bits[6]} {prbs_err_bits[7]} {prbs_err_bits[8]} {prbs_err_bits[9]} {prbs_err_bits[10]} {prbs_err_bits[11]} {prbs_err_bits[12]} {prbs_err_bits[13]} {prbs_err_bits[14]} {prbs_err_bits[15]} {prbs_err_bits[16]} {prbs_err_bits[17]} {prbs_err_bits[18]} {prbs_err_bits[19]} {prbs_err_bits[20]} {prbs_err_bits[21]} {prbs_err_bits[22]} {prbs_err_bits[23]} {prbs_err_bits[24]} {prbs_err_bits[25]} {prbs_err_bits[26]} {prbs_err_bits[27]} {prbs_err_bits[28]} {prbs_err_bits[29]} {prbs_err_bits[30]} {prbs_err_bits[31]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
 set_property port_width 32 [get_debug_ports u_ila_0/probe1]
-connect_debug_port u_ila_0/probe1 [get_nets [list {userdata_rx_out[0]} {userdata_rx_out[1]} {userdata_rx_out[2]} {userdata_rx_out[3]} {userdata_rx_out[4]} {userdata_rx_out[5]} {userdata_rx_out[6]} {userdata_rx_out[7]} {userdata_rx_out[8]} {userdata_rx_out[9]} {userdata_rx_out[10]} {userdata_rx_out[11]} {userdata_rx_out[12]} {userdata_rx_out[13]} {userdata_rx_out[14]} {userdata_rx_out[15]} {userdata_rx_out[16]} {userdata_rx_out[17]} {userdata_rx_out[18]} {userdata_rx_out[19]} {userdata_rx_out[20]} {userdata_rx_out[21]} {userdata_rx_out[22]} {userdata_rx_out[23]} {userdata_rx_out[24]} {userdata_rx_out[25]} {userdata_rx_out[26]} {userdata_rx_out[27]} {userdata_rx_out[28]} {userdata_rx_out[29]} {userdata_rx_out[30]} {userdata_rx_out[31]}]]
+connect_debug_port u_ila_0/probe1 [get_nets [list {aligned_data[0]} {aligned_data[1]} {aligned_data[2]} {aligned_data[3]} {aligned_data[4]} {aligned_data[5]} {aligned_data[6]} {aligned_data[7]} {aligned_data[8]} {aligned_data[9]} {aligned_data[10]} {aligned_data[11]} {aligned_data[12]} {aligned_data[13]} {aligned_data[14]} {aligned_data[15]} {aligned_data[16]} {aligned_data[17]} {aligned_data[18]} {aligned_data[19]} {aligned_data[20]} {aligned_data[21]} {aligned_data[22]} {aligned_data[23]} {aligned_data[24]} {aligned_data[25]} {aligned_data[26]} {aligned_data[27]} {aligned_data[28]} {aligned_data[29]} {aligned_data[30]} {aligned_data[31]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe2]
-set_property port_width 4 [get_debug_ports u_ila_0/probe2]
-connect_debug_port u_ila_0/probe2 [get_nets [list {charisk[0]} {charisk[1]} {charisk[2]} {charisk[3]}]]
+set_property port_width 32 [get_debug_ports u_ila_0/probe2]
+connect_debug_port u_ila_0/probe2 [get_nets [list {total_err_cnt[0]} {total_err_cnt[1]} {total_err_cnt[2]} {total_err_cnt[3]} {total_err_cnt[4]} {total_err_cnt[5]} {total_err_cnt[6]} {total_err_cnt[7]} {total_err_cnt[8]} {total_err_cnt[9]} {total_err_cnt[10]} {total_err_cnt[11]} {total_err_cnt[12]} {total_err_cnt[13]} {total_err_cnt[14]} {total_err_cnt[15]} {total_err_cnt[16]} {total_err_cnt[17]} {total_err_cnt[18]} {total_err_cnt[19]} {total_err_cnt[20]} {total_err_cnt[21]} {total_err_cnt[22]} {total_err_cnt[23]} {total_err_cnt[24]} {total_err_cnt[25]} {total_err_cnt[26]} {total_err_cnt[27]} {total_err_cnt[28]} {total_err_cnt[29]} {total_err_cnt[30]} {total_err_cnt[31]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe3]
-set_property port_width 2 [get_debug_ports u_ila_0/probe3]
-connect_debug_port u_ila_0/probe3 [get_nets [list {u_frame_sync/state[0]} {u_frame_sync/state[1]}]]
+set_property port_width 1 [get_debug_ports u_ila_0/probe3]
+connect_debug_port u_ila_0/probe3 [get_nets [list aligner_locked]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe4]
-set_property port_width 2 [get_debug_ports u_ila_0/probe4]
-connect_debug_port u_ila_0/probe4 [get_nets [list {u_frame_sync/next_state[0]} {u_frame_sync/next_state[1]}]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe5]
-set_property port_width 32 [get_debug_ports u_ila_0/probe5]
-connect_debug_port u_ila_0/probe5 [get_nets [list {data_o[0]} {data_o[1]} {data_o[2]} {data_o[3]} {data_o[4]} {data_o[5]} {data_o[6]} {data_o[7]} {data_o[8]} {data_o[9]} {data_o[10]} {data_o[11]} {data_o[12]} {data_o[13]} {data_o[14]} {data_o[15]} {data_o[16]} {data_o[17]} {data_o[18]} {data_o[19]} {data_o[20]} {data_o[21]} {data_o[22]} {data_o[23]} {data_o[24]} {data_o[25]} {data_o[26]} {data_o[27]} {data_o[28]} {data_o[29]} {data_o[30]} {data_o[31]}]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe6]
-set_property port_width 1 [get_debug_ports u_ila_0/probe6]
-connect_debug_port u_ila_0/probe6 [get_nets [list data_valid_o]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe7]
-set_property port_width 1 [get_debug_ports u_ila_0/probe7]
-connect_debug_port u_ila_0/probe7 [get_nets [list frame_is_locked]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe8]
-set_property port_width 1 [get_debug_ports u_ila_0/probe8]
-connect_debug_port u_ila_0/probe8 [get_nets [list gth_top/rx_cdr_stable]]
+set_property port_width 1 [get_debug_ports u_ila_0/probe4]
+connect_debug_port u_ila_0/probe4 [get_nets [list prbs_error_detected]]
 create_debug_core u_ila_1 ila
 set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_1]
 set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_1]
@@ -79,19 +69,11 @@ set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_1]
 set_property C_TRIGIN_EN false [get_debug_cores u_ila_1]
 set_property C_TRIGOUT_EN false [get_debug_cores u_ila_1]
 set_property port_width 1 [get_debug_ports u_ila_1/clk]
-connect_debug_port u_ila_1/clk [get_nets [list {gth_top/u_gt/inst/gen_gtwizard_gthe4_top.gtwizard_ultrascale_1_gtwizard_gthe4_inst/gen_gtwizard_gthe4.gen_tx_user_clocking_internal.gen_single_instance.gtwiz_userclk_tx_inst/gtwiz_userclk_tx_usrclk2_out[0]}]]
+connect_debug_port u_ila_1/clk [get_nets [list txusrclk2]]
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_1/probe0]
 set_property port_width 32 [get_debug_ports u_ila_1/probe0]
-connect_debug_port u_ila_1/probe0 [get_nets [list {prbs_data[0]} {prbs_data[1]} {prbs_data[2]} {prbs_data[3]} {prbs_data[4]} {prbs_data[5]} {prbs_data[6]} {prbs_data[7]} {prbs_data[8]} {prbs_data[9]} {prbs_data[10]} {prbs_data[11]} {prbs_data[12]} {prbs_data[13]} {prbs_data[14]} {prbs_data[15]} {prbs_data[16]} {prbs_data[17]} {prbs_data[18]} {prbs_data[19]} {prbs_data[20]} {prbs_data[21]} {prbs_data[22]} {prbs_data[23]} {prbs_data[24]} {prbs_data[25]} {prbs_data[26]} {prbs_data[27]} {prbs_data[28]} {prbs_data[29]} {prbs_data[30]} {prbs_data[31]}]]
-create_debug_port u_ila_1 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_1/probe1]
-set_property port_width 32 [get_debug_ports u_ila_1/probe1]
-connect_debug_port u_ila_1/probe1 [get_nets [list {framed_tx_data[0]} {framed_tx_data[1]} {framed_tx_data[2]} {framed_tx_data[3]} {framed_tx_data[4]} {framed_tx_data[5]} {framed_tx_data[6]} {framed_tx_data[7]} {framed_tx_data[8]} {framed_tx_data[9]} {framed_tx_data[10]} {framed_tx_data[11]} {framed_tx_data[12]} {framed_tx_data[13]} {framed_tx_data[14]} {framed_tx_data[15]} {framed_tx_data[16]} {framed_tx_data[17]} {framed_tx_data[18]} {framed_tx_data[19]} {framed_tx_data[20]} {framed_tx_data[21]} {framed_tx_data[22]} {framed_tx_data[23]} {framed_tx_data[24]} {framed_tx_data[25]} {framed_tx_data[26]} {framed_tx_data[27]} {framed_tx_data[28]} {framed_tx_data[29]} {framed_tx_data[30]} {framed_tx_data[31]}]]
-create_debug_port u_ila_1 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_1/probe2]
-set_property port_width 2 [get_debug_ports u_ila_1/probe2]
-connect_debug_port u_ila_1/probe2 [get_nets [list {gth_top/rxclkcorcnt_out[0]} {gth_top/rxclkcorcnt_out[1]}]]
+connect_debug_port u_ila_1/probe0 [get_nets [list {prbs_tx_data[0]} {prbs_tx_data[1]} {prbs_tx_data[2]} {prbs_tx_data[3]} {prbs_tx_data[4]} {prbs_tx_data[5]} {prbs_tx_data[6]} {prbs_tx_data[7]} {prbs_tx_data[8]} {prbs_tx_data[9]} {prbs_tx_data[10]} {prbs_tx_data[11]} {prbs_tx_data[12]} {prbs_tx_data[13]} {prbs_tx_data[14]} {prbs_tx_data[15]} {prbs_tx_data[16]} {prbs_tx_data[17]} {prbs_tx_data[18]} {prbs_tx_data[19]} {prbs_tx_data[20]} {prbs_tx_data[21]} {prbs_tx_data[22]} {prbs_tx_data[23]} {prbs_tx_data[24]} {prbs_tx_data[25]} {prbs_tx_data[26]} {prbs_tx_data[27]} {prbs_tx_data[28]} {prbs_tx_data[29]} {prbs_tx_data[30]} {prbs_tx_data[31]}]]
 set_property C_CLK_INPUT_FREQ_HZ 300000000 [get_debug_cores dbg_hub]
 set_property C_ENABLE_CLK_DIVIDER false [get_debug_cores dbg_hub]
 set_property C_USER_SCAN_CHAIN 1 [get_debug_cores dbg_hub]
-connect_debug_port dbg_hub/clk [get_nets freerun_clk]
+connect_debug_port dbg_hub/clk [get_nets txusrclk2]

@@ -143,7 +143,7 @@ output wire rd_rst_busy;
     .C_UNDERFLOW_LOW(0),
     .C_USE_DOUT_RST(1),
     .C_USE_ECC(0),
-    .C_USE_EMBEDDED_REG(1),
+    .C_USE_EMBEDDED_REG(0),
     .C_USE_PIPELINE_REG(0),
     .C_POWER_SAVING_MODE(0),
     .C_USE_FIFO16_FLAGS(0),

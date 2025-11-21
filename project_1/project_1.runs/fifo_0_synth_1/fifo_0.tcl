@@ -76,7 +76,7 @@ set_property ip_output_repo c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.ca
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
-read_ip -quiet c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/fifo_0/fifo_0.xci
+read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/fifo_0/fifo_0.xci
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/fifo_0/fifo_0.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/fifo_0/fifo_0_clocks.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/fifo_0/fifo_0_ooc.xdc]

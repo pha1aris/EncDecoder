@@ -88,6 +88,7 @@ module gtwizard_ultrascale_0 (
   gtpowergood_out,
   rxoutclk_out,
   rxpmaresetdone_out,
+  rxsliderdy_out,
   txoutclk_out,
   txpmaresetdone_out
 );
@@ -126,6 +127,7 @@ output wire [0 : 0] gthtxp_out;
 output wire [0 : 0] gtpowergood_out;
 output wire [0 : 0] rxoutclk_out;
 output wire [0 : 0] rxpmaresetdone_out;
+output wire [0 : 0] rxsliderdy_out;
 output wire [0 : 0] txoutclk_out;
 output wire [0 : 0] txpmaresetdone_out;
 
@@ -184,7 +186,7 @@ output wire [0 : 0] txpmaresetdone_out;
     .C_RX_PLL_TYPE(1),
     .C_RX_RECCLK_OUTPUT(192'H000000000000000000000000000000000000000000000000),
     .C_RX_REFCLK_FREQUENCY(125),
-    .C_RX_SLIDE_MODE(0),
+    .C_RX_SLIDE_MODE(2),
     .C_RX_USER_CLOCKING_CONTENTS(0),
     .C_RX_USER_CLOCKING_INSTANCE_CTRL(0),
     .C_RX_USER_CLOCKING_RATIO_FSRC_FUSRCLK(1),
@@ -465,7 +467,7 @@ output wire [0 : 0] txpmaresetdone_out;
     .rxchbondslave_in(1'H0),
     .rxckcalreset_in(1'H0),
     .rxckcalstart_in(7'H00),
-    .rxcommadeten_in(1'H0),
+    .rxcommadeten_in(1'H1),
     .rxdfeagcctrl_in(2'H1),
     .rxdccforcestart_in(1'B0),
     .rxdfeagchold_in(1'H0),
@@ -549,7 +551,7 @@ output wire [0 : 0] txpmaresetdone_out;
     .rxpd_in(2'H0),
     .rxphalign_in(1'H0),
     .rxphalignen_in(1'H0),
-    .rxphdlypd_in(1'H1),
+    .rxphdlypd_in(1'H0),
     .rxphdlyreset_in(1'H0),
     .rxphovrden_in(1'H0),
     .rxpllclksel_in(2'H2),
@@ -731,7 +733,7 @@ output wire [0 : 0] txpmaresetdone_out;
     .rxratedone_out(),
     .rxrecclkout_out(),
     .rxresetdone_out(),
-    .rxsliderdy_out(),
+    .rxsliderdy_out(rxsliderdy_out),
     .rxslipdone_out(),
     .rxslipoutclkrdy_out(),
     .rxslippmardy_out(),

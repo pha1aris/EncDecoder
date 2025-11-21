@@ -40,6 +40,7 @@ module gtwizard_ultrascale_0 (
   gtpowergood_out,
   rxoutclk_out,
   rxpmaresetdone_out,
+  rxsliderdy_out,
   txoutclk_out,
   txpmaresetdone_out
 );
@@ -112,6 +113,8 @@ module gtwizard_ultrascale_0 (
   output [0:0]rxoutclk_out;
   (* X_INTERFACE_IGNORE = "true" *)
   output [0:0]rxpmaresetdone_out;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [0:0]rxsliderdy_out;
   (* X_INTERFACE_IGNORE = "true" *)
   output [0:0]txoutclk_out;
   (* X_INTERFACE_IGNORE = "true" *)

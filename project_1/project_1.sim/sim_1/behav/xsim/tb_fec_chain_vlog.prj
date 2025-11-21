@@ -1,11 +1,13 @@
 # compile verilog/system verilog design source files
 verilog xil_defaultlib  --include "../../../../project_1.gen/sources_1/ip/ddr4_0/ip_1/rtl/map" --include "../../../../project_1.gen/sources_1/ip/ddr4_0/rtl/ip_top" --include "../../../../project_1.gen/sources_1/ip/ddr4_0/rtl/cal" --include "../../../../project_1.gen/sources_1/bd/design_1/ipshared/ec67/hdl" --include "../../../../project_1.gen/sources_1/bd/design_1/ipshared/6f8f/hdl" --include "../../../../project_1.gen/sources_1/bd/design_1/ipshared/f0b6/hdl/verilog" --include "../../../../project_1.gen/sources_1/bd/design_1/ipshared/0127/hdl/verilog" --include "../../../../project_1.ip_user_files/ipstatic" --include "D:/2024_2/Vivado/2024.2/data/xilinx_vip/include" \
-"../../../../project_1.gen/sources_1/ip/fifo_sim_8_32/sim/fifo_sim_8_32.v" \
 "../../../../project_1.gen/sources_1/ip/dec_fifo_8w_8r/sim/dec_fifo_8w_8r.v" \
+"../../../../project_1.gen/sources_1/ip/dec_rx_fifo/sim/dec_rx_fifo.v" \
+"../../../../project_1.gen/sources_1/ip/async_fifo_32w_32r/sim/async_fifo_32w_32r.v" \
 "../../../../project_1.gen/sources_1/ip/fifo_0/sim/fifo_0.v" \
 "../../../../project_1.srcs/sources_1/new/bit_aligner.v" \
 "../../../../project_1.srcs/sources_1/new/fec_rx.v" \
 "../../../../project_1.srcs/sources_1/new/fec_tx.v" \
+"../../../../project_1.srcs/sources_1/new/fifo_8b_flag_sync.v" \
 "../../../../project_1.srcs/sources_1/new/fso_deframer.v" \
 "../../../../project_1.srcs/sources_1/new/fso_framer.v" \
 "../../../../project_1.srcs/sources_1/new/gearbox_32to8.v" \

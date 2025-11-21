@@ -10,42 +10,48 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0"></ZoomStartTime>
-      <ZoomEndTime time="1,025"></ZoomEndTime>
-      <Cursor1Time time="512"></Cursor1Time>
+      <ZoomEndTime time="11"></ZoomEndTime>
+      <Cursor1Time time="0"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="155"></NameColumnWidth>
+      <NameColumnWidth column_width="139"></NameColumnWidth>
       <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="4" />
-   <wave_markers>
-   </wave_markers>
-   <wvobject fp_name="data_o" type="array">
+   <WVObjectSize size="5" />
+   <wvobject fp_name="aligned_data" type="array">
       <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">data_o[31:0]</obj_property>
-      <obj_property name="ObjectShortName">data_o[31:0]</obj_property>
+      <obj_property name="ElementShortName">aligned_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">aligned_data[31:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>
-   <wvobject fp_name="data_valid_o" type="logic">
+   <wvobject fp_name="aligner_locked" type="logic">
       <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">data_valid_o</obj_property>
-      <obj_property name="ObjectShortName">data_valid_o</obj_property>
+      <obj_property name="ElementShortName">aligner_locked</obj_property>
+      <obj_property name="ObjectShortName">aligner_locked</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>
-   <wvobject fp_name="gth_top/rx_cdr_stable" type="logic">
+   <wvobject fp_name="prbs_err_bits" type="array">
       <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">gth_top/rx_cdr_stable</obj_property>
-      <obj_property name="ObjectShortName">rx_cdr_stable</obj_property>
+      <obj_property name="ElementShortName">prbs_err_bits[31:0]</obj_property>
+      <obj_property name="ObjectShortName">prbs_err_bits[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>
-   <wvobject fp_name="sync_dout" type="array">
+   <wvobject fp_name="prbs_error_detected" type="logic">
       <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">sync_dout[31:0]</obj_property>
-      <obj_property name="ObjectShortName">sync_dout[31:0]</obj_property>
+      <obj_property name="ElementShortName">prbs_error_detected</obj_property>
+      <obj_property name="ObjectShortName">prbs_error_detected</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="total_err_cnt" type="array">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">total_err_cnt[31:0]</obj_property>
+      <obj_property name="ObjectShortName">total_err_cnt[31:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>

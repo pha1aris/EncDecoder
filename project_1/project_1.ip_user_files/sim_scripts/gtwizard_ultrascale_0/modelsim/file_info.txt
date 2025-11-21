@@ -7,6 +7,7 @@ axi4stream_vip_if.sv,systemverilog,xilinx_vip,D:/2024_2/Vivado/2024.2/data/xilin
 axi_vip_if.sv,systemverilog,xilinx_vip,D:/2024_2/Vivado/2024.2/data/xilinx_vip/hdl/axi_vip_if.sv,
 clk_vip_if.sv,systemverilog,xilinx_vip,D:/2024_2/Vivado/2024.2/data/xilinx_vip/hdl/clk_vip_if.sv,
 rst_vip_if.sv,systemverilog,xilinx_vip,D:/2024_2/Vivado/2024.2/data/xilinx_vip/hdl/rst_vip_if.sv,
+xpm_cdc.sv,systemverilog,xpm,D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv,
 xpm_memory.sv,systemverilog,xpm,D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv,
 xpm_VCOMP.vhd,vhdl,xpm,D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_VCOMP.vhd,
 gtwizard_ultrascale_v1_7_bit_sync.v,verilog,gtwizard_ultrascale_v1_7_19,../../../ipstatic/hdl/gtwizard_ultrascale_v1_7_bit_sync.v,

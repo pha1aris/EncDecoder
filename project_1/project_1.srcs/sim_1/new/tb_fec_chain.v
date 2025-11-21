@@ -7,7 +7,7 @@ module tb_fec_chain;
     // TEST_PRBS = 0 → 8bit 计数器
     // TEST_PRBS = 1 → PRBS7（8bit）
     //============================================================
-    localparam TEST_PRBS = 1;
+    localparam TEST_PRBS = 0;
 
     //============================================================
     // 时钟 & 复位
@@ -17,7 +17,7 @@ module tb_fec_chain;
     reg rst_n;
     initial begin
         line_clk = 0;
-        forever #25 line_clk = ~line_clk;  // 20MHz
+        forever #8 line_clk = ~line_clk;  // 20MHz
     end
     initial begin
         core_clk = 1'b0;
@@ -38,6 +38,10 @@ module tb_fec_chain;
     localparam integer W             = 32;
     localparam integer PAYLOAD_WORDS = 16;
 
+    parameter INTLV_D = 64;
+    parameter INTLV_N = 255;
+    parameter FRAMES_PER_BLOCK = 255;
+
     // 源数据（8bit）
     wire [7:0] src_data;
     wire       src_valid;
@@ -49,22 +53,26 @@ module tb_fec_chain;
     wire [15:0]  tx_frame_index;
 
     fec_tx #(
-        .W             (W),
-        .PAYLOAD_WORDS (PAYLOAD_WORDS),
-        .RS_K          (229),
-        .RS_N          (255),
-        .INTLV_D       (4),      // 联调建议先用小 D，跑通再改大
-        .INTLV_N       (255)
+        .W                (W),
+        .PAYLOAD_WORDS    (PAYLOAD_WORDS),
+        .RS_K             (229),
+        .RS_N             (255),
+        .INTLV_D          (INTLV_D),      // 联调建议先用小 D，跑通再改大
+        .INTLV_N          (INTLV_N),
+        .FRAMES_PER_BLOCK (FRAMES_PER_BLOCK)
     ) u_fec_tx (
+        .line_clk         (line_clk),
         .core_clk         (core_clk),
-        .rst_n            (rst_n),
+        .rst_n            (rst_n),   //复位信号跨时钟域
 
         .i_data           (src_data),
         .i_valid          (src_valid),
         .i_ready          (src_ready),
 
-        .o_tx_data        (tx_data),
-        .o_tx_valid       (tx_valid),
+        // .o_tx_data        (tx_data),
+        // .o_tx_valid       (tx_valid),
+        .o_tx_data_line   (tx_data),
+        .o_tx_valid_line  (tx_valid),
         .o_tx_frame_index (tx_frame_index)
     );
 
@@ -96,12 +104,13 @@ module tb_fec_chain;
     wire [15:0] rx_frame_in_block;
 
     fec_rx #(
-        .W             (W),
-        .PAYLOAD_WORDS (PAYLOAD_WORDS),
-        .RS_N          (255),
-        .INTLV_D       (4),       // 和 TX 保持一致
-        .INTLV_N       (255)
+        .W               (W),
+        .PAYLOAD_WORDS   (PAYLOAD_WORDS),
+        .RS_N            (255),
+        .INTLV_D         (INTLV_D),       // 和 TX 保持一致
+        .INTLV_N         (INTLV_N)
     ) u_fec_rx (
+        .line_clk        (line_clk),
         .core_clk        (core_clk),
         .rst_n           (rst_n),
 
@@ -112,6 +121,7 @@ module tb_fec_chain;
 
         .o_data          (rx_data),
         .o_valid         (rx_valid),
+        .i_data_ready    (1'b1),
 
         .o_rxslide       (rxslide),
         .o_bit_locked    (bit_locked),
@@ -129,7 +139,7 @@ module tb_fec_chain;
     channel_model #(
         .W (W)
     ) u_channel_model (
-        .clk        (core_clk),
+        .clk        (line_clk),
         .rst_n      (rst_n),
 
         .i_tx_data  (tx_data),
@@ -148,12 +158,34 @@ module tb_fec_chain;
     reg [7:0] cnt_data;
 
     // 计数器
-    always @(posedge core_clk or negedge rst_n) begin
+    always @(posedge line_clk or negedge rst_n) begin
         if (!rst_n)
             cnt_data <= 8'd0;
         else if (!use_prbs && src_ready)
-            cnt_data <= cnt_data + 1'b1;
+            if(cnt_data == 'd229-1)
+                cnt_data <= 'd0;
+            else 
+                cnt_data <= cnt_data + 1'b1;
     end
+
+    reg [7:0] expected_data;
+    wire [7:0] rx_diff;
+    assign rx_diff = rx_data ^ expected_data;
+    wire cnt_mode_match;
+    assign cnt_mode_match =  ~|rx_diff; 
+
+    // always@(posedge line_clk or negedge rst_n)begin //rs 解码后得到的数据应该是0-229
+    //     if(!rst_n)begin
+    //         expected_data <= 'd0;
+    //     end else begin
+    //         if(rx_valid)begin
+    //             if(expected_data == 'd229-1)
+    //                 expected_data <= 'd0;
+    //             else 
+    //                 expected_data <= expected_data + 1'b1;
+    //         end
+    //     end
+    // end
 
     // PRBS7（8bit）
     wire [7:0] prbs7_data;
@@ -204,27 +236,34 @@ module tb_fec_chain;
 
     assign prbs_match = ~|prbs_err_vec;
 
-    always @(posedge core_clk or negedge rst_n) begin
+    always @(posedge line_clk or negedge rst_n) begin
         if (!rst_n) begin
-            cnt_err  <= 0;
-            prbs_err <= 0;
-            exp_cnt  <= 8'd0;
+            cnt_err       <= 0;
+            expected_data <= 8'd0;
         end else if (rx_valid) begin
             if (!use_prbs) begin
-                // 计数器模式检查：RX 是否等于 TX 的计数序列
-                if (rx_data !== exp_cnt) begin
+                // 1) 先比较当前收到的 rx_data 和当前期望值 expected_data
+                if (rx_data !== expected_data) begin
                     cnt_err <= cnt_err + 1;
-                    $display("[%0t] CNT ERROR: expect=%0d got=%0d, total_err=%0d",
-                             $time, exp_cnt, rx_data, cnt_err);
+
+                    // 使用旧值的 cnt_err == 0 来判断“第一颗错误”
+                    if (cnt_err == 0) begin
+                        $display("[%0t] FIRST CNT ERROR !!!", $time);
+                        $display("  expected_data    = %0d, rx_data = %0d",
+                                  expected_data, rx_data);
+                        $display("  rx_frame_index   = %0d", rx_frame_index);
+                        $display("  rx_block_id      = %0d", rx_block_id);
+                        $display("  rx_frame_in_block= %0d", rx_frame_in_block);
+                        // 这里可以再加：当前交织器 / 解交织器的一些状态信号
+                        $stop;   // 在第一颗错停下来
+                    end
                 end
-                exp_cnt <= exp_cnt + 1'b1;
-            end else begin
-                // PRBS 模式检查
-                if (!prbs_match) begin
-                    prbs_err <= prbs_err + 1;
-                    $display("[%0t] PRBS ERROR: data=%02x err_vec=%02x, total_err=%0d",
-                             $time, rx_data, prbs_err_vec, prbs_err);
-                end
+
+                // 2) 再更新下一拍的 expected_data（0..228 循环）
+                if (expected_data == 8'd228)
+                    expected_data <= 8'd0;
+                else
+                    expected_data <= expected_data + 1'b1;
             end
         end
     end

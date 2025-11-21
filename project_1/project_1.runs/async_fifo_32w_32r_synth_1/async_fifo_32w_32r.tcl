@@ -76,10 +76,10 @@ set_property ip_output_repo c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.ca
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
-read_ip -quiet c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r.xci
+read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r.xci
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r_ooc.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r_clocks.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r_ooc.xdc]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being

@@ -2,7 +2,7 @@
 -- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
--- Date        : Fri Nov 14 21:04:35 2025
+-- Date        : Thu Nov 20 16:30:45 2025
 -- Host        : FSO-A running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
 --               c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/gtwizard_ultrascale_0/gtwizard_ultrascale_0_sim_netlist.vhdl
@@ -1607,6 +1607,7 @@ entity gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_channel is
     rxoutclkpcs_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    rxsliderdy_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     txoutclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     txpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     txresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
@@ -1939,7 +1940,6 @@ architecture STRUCTURE of gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe
   signal \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_52\ : STD_LOGIC;
   signal \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_53\ : STD_LOGIC;
   signal \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_54\ : STD_LOGIC;
-  signal \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_56\ : STD_LOGIC;
   signal \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_57\ : STD_LOGIC;
   signal \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_58\ : STD_LOGIC;
   signal \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_59\ : STD_LOGIC;
@@ -2300,7 +2300,7 @@ begin
       RXPRBS_LINKACQ_CNT => 15,
       RXREFCLKDIV2_SEL => '0',
       RXSLIDE_AUTO_WAIT => 7,
-      RXSLIDE_MODE => "OFF",
+      RXSLIDE_MODE => "PMA",
       RXSYNC_MULTILANE => '0',
       RXSYNC_OVRD => '0',
       RXSYNC_SKIP_DA => '1',
@@ -2370,7 +2370,7 @@ begin
       SATA_BURST_VAL => B"100",
       SATA_CPLL_CFG => "VCO_3000MHZ",
       SATA_EIDLE_VAL => B"100",
-      SHOW_REALIGN_COMMA => "TRUE",
+      SHOW_REALIGN_COMMA => "FALSE",
       SIM_DEVICE => "ULTRASCALE_PLUS",
       SIM_MODE => "FAST",
       SIM_RECEIVER_DETECT_PASS => "TRUE",
@@ -2691,7 +2691,7 @@ begin
       RXCLKCORCNT(0) => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_308\,
       RXCOMINITDET => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_29\,
       RXCOMMADET => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_30\,
-      RXCOMMADETEN => '0',
+      RXCOMMADETEN => '1',
       RXCOMSASDET => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_31\,
       RXCOMWAKEDET => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_32\,
       RXCTRL0(15) => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_271\,
@@ -2955,7 +2955,7 @@ begin
       RXPHALIGNDONE => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_45\,
       RXPHALIGNEN => '0',
       RXPHALIGNERR => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_46\,
-      RXPHDLYPD => '1',
+      RXPHDLYPD => '0',
       RXPHDLYRESET => '0',
       RXPHOVRDEN => '0',
       RXPLLCLKSEL(1 downto 0) => B"10",
@@ -2978,7 +2978,7 @@ begin
       RXRECCLKOUT => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_54\,
       RXRESETDONE => rxresetdone_out(0),
       RXSLIDE => rxslide_in(0),
-      RXSLIDERDY => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_56\,
+      RXSLIDERDY => rxsliderdy_out(0),
       RXSLIPDONE => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_57\,
       RXSLIPOUTCLK => '0',
       RXSLIPOUTCLKRDY => \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST_n_58\,
@@ -4865,6 +4865,7 @@ entity gtwizard_ultrascale_0_gthe4_channel_wrapper is
     rxoutclkpcs_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    rxsliderdy_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     txoutclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     txpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     txresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
@@ -4930,6 +4931,7 @@ channel_inst: entity work.gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe
       rxpmaresetdone_out(0) => rxpmaresetdone_out(0),
       rxresetdone_out(0) => rxresetdone_out(0),
       rxslide_in(0) => rxslide_in(0),
+      rxsliderdy_out(0) => rxsliderdy_out(0),
       rxusrclk2_in(0) => rxusrclk2_in(0),
       rxusrclk_in(0) => rxusrclk_in(0),
       txdiffctrl_in(4 downto 0) => txdiffctrl_in(4 downto 0),
@@ -7416,6 +7418,7 @@ entity gtwizard_ultrascale_0_gtwizard_gthe4 is
     gthtxp_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxoutclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    rxsliderdy_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     txoutclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     txpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     gtwiz_userdata_rx_out : out STD_LOGIC_VECTOR ( 31 downto 0 );
@@ -7450,9 +7453,9 @@ entity gtwizard_ultrascale_0_gtwizard_gthe4 is
 end gtwizard_ultrascale_0_gtwizard_gthe4;
 
 architecture STRUCTURE of gtwizard_ultrascale_0_gtwizard_gthe4 is
-  signal \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_10\ : STD_LOGIC;
+  signal \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_11\ : STD_LOGIC;
   signal \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_3\ : STD_LOGIC;
-  signal \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_43\ : STD_LOGIC;
+  signal \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_44\ : STD_LOGIC;
   signal \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_5\ : STD_LOGIC;
   signal \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_7\ : STD_LOGIC;
   signal \gen_gtwizard_gthe4.gen_common.gen_common_container[25].gen_enabled_common.gthe4_common_wrapper_inst_n_0\ : STD_LOGIC;
@@ -7489,7 +7492,7 @@ begin
       \gen_gtwizard_gthe4.rxuserrdy_int\ => \gen_gtwizard_gthe4.rxuserrdy_int\,
       \gen_gtwizard_gthe4.txprogdivreset_int\ => \gen_gtwizard_gthe4.txprogdivreset_int\,
       \gen_gtwizard_gthe4.txuserrdy_int\ => \gen_gtwizard_gthe4.txuserrdy_int\,
-      \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST\ => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_43\,
+      \gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST\ => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_44\,
       gthrxn_in(0) => gthrxn_in(0),
       gthrxp_in(0) => gthrxp_in(0),
       gthtxn_out(0) => gthtxn_out(0),
@@ -7509,6 +7512,7 @@ begin
       rxpmaresetdone_out(0) => rxpmaresetdone_out(0),
       rxresetdone_out(0) => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_7\,
       rxslide_in(0) => rxslide_in(0),
+      rxsliderdy_out(0) => rxsliderdy_out(0),
       rxusrclk2_in(0) => rxusrclk2_in(0),
       rxusrclk_in(0) => rxusrclk_in(0),
       txdiffctrl_in(4 downto 0) => txdiffctrl_in(4 downto 0),
@@ -7516,7 +7520,7 @@ begin
       txpmaresetdone_out(0) => txpmaresetdone_out(0),
       txpostcursor_in(4 downto 0) => txpostcursor_in(4 downto 0),
       txprecursor_in(4 downto 0) => txprecursor_in(4 downto 0),
-      txresetdone_out(0) => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_10\,
+      txresetdone_out(0) => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_11\,
       txusrclk2_in(0) => txusrclk2_in(0),
       txusrclk_in(0) => txusrclk_in(0)
     );
@@ -7534,7 +7538,7 @@ begin
 \gen_gtwizard_gthe4.gen_pwrgood_delay_inst[0].delay_powergood_inst\: entity work.gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gthe4_delay_powergood
      port map (
       RXRATE(0) => \gen_gtwizard_gthe4.rxratemode_ch_int\,
-      \gen_powergood_delay.intclk_rrst_n_r_reg[4]_0\ => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_43\,
+      \gen_powergood_delay.intclk_rrst_n_r_reg[4]_0\ => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_44\,
       \out\ => \^gtpowergood_out\(0),
       rxoutclkpcs_out(0) => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_5\
     );
@@ -7550,7 +7554,7 @@ begin
      port map (
       \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync\ => \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.txresetdone_sync\,
       gtwiz_reset_clk_freerun_in(0) => gtwiz_reset_clk_freerun_in(0),
-      txresetdone_out(0) => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_10\
+      txresetdone_out(0) => \gen_gtwizard_gthe4.gen_channel_container[25].gen_enabled_channel.gthe4_channel_wrapper_inst_n_11\
     );
 \gen_gtwizard_gthe4.gen_reset_controller_internal.gen_single_instance.gtwiz_reset_inst\: entity work.gtwizard_ultrascale_0_gtwizard_ultrascale_v1_7_19_gtwiz_reset
      port map (
@@ -8231,7 +8235,7 @@ entity gtwizard_ultrascale_0_gtwizard_top is
   attribute C_RX_REFCLK_FREQUENCY : string;
   attribute C_RX_REFCLK_FREQUENCY of gtwizard_ultrascale_0_gtwizard_top : entity is "125.000000";
   attribute C_RX_SLIDE_MODE : integer;
-  attribute C_RX_SLIDE_MODE of gtwizard_ultrascale_0_gtwizard_top : entity is 0;
+  attribute C_RX_SLIDE_MODE of gtwizard_ultrascale_0_gtwizard_top : entity is 2;
   attribute C_RX_USER_CLOCKING_CONTENTS : integer;
   attribute C_RX_USER_CLOCKING_CONTENTS of gtwizard_ultrascale_0_gtwizard_top : entity is 0;
   attribute C_RX_USER_CLOCKING_INSTANCE_CTRL : integer;
@@ -8742,7 +8746,6 @@ begin
   rxrecclk1sel_out(0) <= \<const0>\;
   rxrecclkout_out(0) <= \<const0>\;
   rxresetdone_out(0) <= \<const0>\;
-  rxsliderdy_out(0) <= \<const0>\;
   rxslipdone_out(0) <= \<const0>\;
   rxslipoutclkrdy_out(0) <= \<const0>\;
   rxslippmardy_out(0) <= \<const0>\;
@@ -8859,6 +8862,7 @@ GND: unisim.vcomponents.GND
       rxoutclk_out(0) => rxoutclk_out(0),
       rxpmaresetdone_out(0) => rxpmaresetdone_out(0),
       rxslide_in(0) => rxslide_in(0),
+      rxsliderdy_out(0) => rxsliderdy_out(0),
       rxusrclk2_in(0) => rxusrclk2_in(0),
       rxusrclk_in(0) => rxusrclk_in(0),
       txdiffctrl_in(4 downto 0) => txdiffctrl_in(4 downto 0),
@@ -8910,6 +8914,7 @@ entity gtwizard_ultrascale_0 is
     gtpowergood_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxoutclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     rxpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 );
+    rxsliderdy_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     txoutclk_out : out STD_LOGIC_VECTOR ( 0 to 0 );
     txpmaresetdone_out : out STD_LOGIC_VECTOR ( 0 to 0 )
   );
@@ -9033,7 +9038,6 @@ architecture STRUCTURE of gtwizard_ultrascale_0 is
   signal NLW_inst_rxrecclk1sel_out_UNCONNECTED : STD_LOGIC_VECTOR ( 1 downto 0 );
   signal NLW_inst_rxrecclkout_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_rxresetdone_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
-  signal NLW_inst_rxsliderdy_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_rxslipdone_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_rxslipoutclkrdy_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
   signal NLW_inst_rxslippmardy_out_UNCONNECTED : STD_LOGIC_VECTOR ( 0 to 0 );
@@ -9175,7 +9179,7 @@ architecture STRUCTURE of gtwizard_ultrascale_0 is
   attribute C_RX_REFCLK_FREQUENCY : string;
   attribute C_RX_REFCLK_FREQUENCY of inst : label is "125.000000";
   attribute C_RX_SLIDE_MODE : integer;
-  attribute C_RX_SLIDE_MODE of inst : label is 0;
+  attribute C_RX_SLIDE_MODE of inst : label is 2;
   attribute C_RX_USER_CLOCKING_CONTENTS : integer;
   attribute C_RX_USER_CLOCKING_CONTENTS of inst : label is 0;
   attribute C_RX_USER_CLOCKING_INSTANCE_CTRL : integer;
@@ -9499,7 +9503,7 @@ inst: entity work.gtwizard_ultrascale_0_gtwizard_top
       rxclkcorcnt_out(1 downto 0) => NLW_inst_rxclkcorcnt_out_UNCONNECTED(1 downto 0),
       rxcominitdet_out(0) => NLW_inst_rxcominitdet_out_UNCONNECTED(0),
       rxcommadet_out(0) => NLW_inst_rxcommadet_out_UNCONNECTED(0),
-      rxcommadeten_in(0) => '0',
+      rxcommadeten_in(0) => '1',
       rxcomsasdet_out(0) => NLW_inst_rxcomsasdet_out_UNCONNECTED(0),
       rxcomwakedet_out(0) => NLW_inst_rxcomwakedet_out_UNCONNECTED(0),
       rxctrl0_out(15 downto 0) => NLW_inst_rxctrl0_out_UNCONNECTED(15 downto 0),
@@ -9609,7 +9613,7 @@ inst: entity work.gtwizard_ultrascale_0_gtwizard_top
       rxphaligndone_out(0) => NLW_inst_rxphaligndone_out_UNCONNECTED(0),
       rxphalignen_in(0) => '0',
       rxphalignerr_out(0) => NLW_inst_rxphalignerr_out_UNCONNECTED(0),
-      rxphdlypd_in(0) => '1',
+      rxphdlypd_in(0) => '0',
       rxphdlyreset_in(0) => '0',
       rxphovrden_in(0) => '0',
       rxpllclksel_in(1 downto 0) => B"10",
@@ -9635,7 +9639,7 @@ inst: entity work.gtwizard_ultrascale_0_gtwizard_top
       rxrecclkout_out(0) => NLW_inst_rxrecclkout_out_UNCONNECTED(0),
       rxresetdone_out(0) => NLW_inst_rxresetdone_out_UNCONNECTED(0),
       rxslide_in(0) => rxslide_in(0),
-      rxsliderdy_out(0) => NLW_inst_rxsliderdy_out_UNCONNECTED(0),
+      rxsliderdy_out(0) => rxsliderdy_out(0),
       rxslipdone_out(0) => NLW_inst_rxslipdone_out_UNCONNECTED(0),
       rxslipoutclk_in(0) => '0',
       rxslipoutclkrdy_out(0) => NLW_inst_rxslipoutclkrdy_out_UNCONNECTED(0),
