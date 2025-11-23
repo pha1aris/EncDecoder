@@ -6,12 +6,12 @@ module gearbox_32to8 (
 
     // 输入：32bit 数据 + 1bit 同步复位标志
     input  wire [31:0] in_data,
-    input  wire        in_sync_rst, // ★ 新增：来自 Deframer 的复位请求，与 in_data 对齐
+    input  wire        in_sync_rst, 
     input  wire        in_valid,
     
     // 输出：8bit 数据 + 1bit 同步复位标志
     output reg  [7:0]  out_data,
-    output reg         out_sync_rst, // ★ 新增：输出给 Deinterleaver，与 out_data 对齐
+    output reg         out_sync_rst, 
     output reg         out_valid
 );
 
@@ -112,5 +112,23 @@ module gearbox_32to8 (
             end
         end
     end
+
+
+    reg [7:0]  out_data_d0;
+    reg        out_sync_rst_d0;
+    reg        out_valid_d0;
+
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            out_data_d0 <= 'd0;
+            out_sync_rst_d0 <= 'd0;
+            out_valid_d0 <= 'd0;
+        end else begin
+            out_data_d0 <= out_data;
+            out_sync_rst_d0 <= out_sync_rst;
+            out_valid_d0 <= out_valid;
+        end
+    end
+
 
 endmodule

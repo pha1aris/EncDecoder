@@ -3,10 +3,7 @@
 //
 // Module Name: ScramblerDescrambler
 //
-// Description:
-//   最终修正版本：高性能的并行自同步加扰/解扰器。
-//   - 结构: 采用高效的并行 generate 结构，性能好。
-//   - 逻辑: 采用经典的自同步反馈逻辑，理论清晰，可自动恢复同步。
+// Description:并行自同步加扰/解扰器。
 //
 //////////////////////////////////////////////////////////////////////////////////
 module ScramblerDescrambler #(
@@ -32,7 +29,6 @@ module ScramblerDescrambler #(
     assign lfsr_chain[0] = lfsr_reg;
     
     genvar i;
-    // 并行自同步加扰/解扰器
     generate
         for (i = 0; i < NBITS; i = i + 1) begin : G_SCRAMBLE_LOOP
             // 1. 计算反馈比特

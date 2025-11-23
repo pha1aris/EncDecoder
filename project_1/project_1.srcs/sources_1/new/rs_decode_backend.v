@@ -1,20 +1,20 @@
 `timescale 1ns/1ps
 
 module rs_decode_backend(
-    input wire         rst,
-    input wire         core_clk,
-    input wire         output_clk,
+    input  wire        rst,
+    input  wire        core_clk,
+    input  wire        output_clk,
 
     // 8-bit AXI Stream Input（来自去交织器）
-    input wire  [7:0]  s_axis_input_tdata,
-    input wire         s_axis_input_tvalid,
-    input wire         s_axis_input_tlast,   // 这里要求已经是“码字末尾”的 tlast
+    input  wire [7:0]  s_axis_input_tdata,
+    input  wire        s_axis_input_tvalid,
+    input  wire        s_axis_input_tlast,   // 码字末尾 tlast
     output wire        s_axis_input_tready,
 
     // 8-bit AXI Stream Output（给后级）
     output wire [7:0]  output_tdata,
     output wire        output_tvalid,
-    input  wire        output_tready 
+    input  wire        output_tready
 );
 
 //================================================================
@@ -31,7 +31,7 @@ module rs_decode_backend(
     assign s_axis_input_tready = (!pingpang) ? s_axis_input_tready0
                                              : s_axis_input_tready1;
 
-    // 按上游 tlast 乒乓切换：一个码字发完，切到另一个解码器
+    // 按上游 tlast 乒乓切换
     always @(posedge core_clk or posedge rst) begin
         if (rst) begin
             pingpang <= 1'b0;
@@ -47,11 +47,11 @@ module rs_decode_backend(
             s_axis_input_tvalid0 = s_axis_input_tvalid;
             s_axis_input_tlast0  = s_axis_input_tlast;
 
-            s_axis_input_tdata1  = 8'b0;
+            s_axis_input_tdata1  = 8'd0;
             s_axis_input_tvalid1 = 1'b0;
             s_axis_input_tlast1  = 1'b0;
         end else begin        // 送 Decoder_U1
-            s_axis_input_tdata0  = 8'b0;
+            s_axis_input_tdata0  = 8'd0;
             s_axis_input_tvalid0 = 1'b0;
             s_axis_input_tlast0  = 1'b0;
 
@@ -63,12 +63,14 @@ module rs_decode_backend(
 
 //================================================================
 // 2. 两个 RS 解码 IP（core_clk 域）
-//    —— 注意：每个 decoder 有独立的 tready
 //================================================================
     wire [7:0] m_axis_output_tdata0, m_axis_output_tdata1;
     wire       m_axis_output_tvalid0, m_axis_output_tvalid1;
     wire       m_axis_output_tlast0,  m_axis_output_tlast1;
-    wire       decoder_tready0,       decoder_tready1;
+
+    // 给每个 decoder 各自的 tready
+    wire       decoder_tready0;
+    wire       decoder_tready1;
 
     // 未使用端口
     wire [7:0] m_axis_stat_tdata0, m_axis_stat_tdata1;
@@ -117,28 +119,41 @@ module rs_decode_backend(
     );
 
 //================================================================
-// 2.1 输出仲裁：一拍只从一个 decoder 取数 + 对应 tready=1
+// 2.1 输出仲裁：一段时间只服务一个 decoder
 //================================================================
-    reg cur_sel;  // 0: 先服务 decoder0, 1: 先服务 decoder1
+    reg cur_sel;   // 当前服务的 decoder：0→U0，1→U1
+    reg in_word;   // 当前是否处于一个 codeword 输出中
 
     always @(posedge core_clk or posedge rst) begin
         if (rst) begin
             cur_sel <= 1'b0;
+            in_word <= 1'b0;
         end else begin
-            case (cur_sel)
-                1'b0: begin
-                    // 当前选0，但 0 没有 valid、1 有 valid，则切到1
-                    if (!m_axis_output_tvalid0 && m_axis_output_tvalid1)
-                        cur_sel <= 1'b1;
+            if (!in_word) begin
+                // 还没开始输出任何 codeword，看谁先 valid
+                if (m_axis_output_tvalid0) begin
+                    cur_sel <= 1'b0;
+                    in_word <= 1'b1;
+                end else if (m_axis_output_tvalid1) begin
+                    cur_sel <= 1'b1;
+                    in_word <= 1'b1;
                 end
-                1'b1: begin
-                    // 当前选1，但 1 没有 valid、0 有 valid，则切回0
-                    if (!m_axis_output_tvalid1 && m_axis_output_tvalid0)
-                        cur_sel <= 1'b0;
+            end else begin
+                // 正在输出某个 decoder 的 codeword，检测该路的 tlast
+                if (cur_sel == 1'b0) begin
+                    if (m_axis_output_tvalid0 && decoder_tready0 && m_axis_output_tlast0)
+                        in_word <= 1'b0;
+                end else begin
+                    if (m_axis_output_tvalid1 && decoder_tready1 && m_axis_output_tlast1)
+                        in_word <= 1'b0;
                 end
-            endcase
+            end
         end
     end
+
+    wire [7:0] sel_data  = (cur_sel == 1'b0) ? m_axis_output_tdata0  : m_axis_output_tdata1;
+    wire       sel_valid = (cur_sel == 1'b0) ? m_axis_output_tvalid0 : m_axis_output_tvalid1;
+    wire       sel_last  = (cur_sel == 1'b0) ? m_axis_output_tlast0  : m_axis_output_tlast1;
 
 //================================================================
 // 3. dec_fifo_8w_8r：core_clk → output_clk 的 8bit 异步 FIFO
@@ -149,19 +164,15 @@ module rs_decode_backend(
     wire       dec_fifo_wr_en;
     wire       dec_fifo_rd_en;
 
-    // FIFO 是否可以写
+    // FIFO 作为“输出 sink”的 tready
     wire fifo_can_write = !dec_fifo_full && !dec_fifo_wr_rst_busy;
 
-    // 只有当前选中的那个 decoder 能看到 ready=1
+    // 只有当前选中的 decoder 看到 tready=1
     assign decoder_tready0 = fifo_can_write && (cur_sel == 1'b0);
     assign decoder_tready1 = fifo_can_write && (cur_sel == 1'b1);
 
-    // 实际被消费的一路数据
-    wire       sel_valid = (cur_sel == 1'b0) ? m_axis_output_tvalid0 : m_axis_output_tvalid1;
-    wire [7:0] sel_data  = (cur_sel == 1'b0) ? m_axis_output_tdata0  : m_axis_output_tdata1;
-
     // 有有效数据且 FIFO 有空间就写
-    assign dec_fifo_wr_en = sel_valid && fifo_can_write;
+    assign dec_fifo_wr_en  = sel_valid && fifo_can_write;
 
     dec_fifo_8w_8r u_dec_fifo (
       .rst        (rst),

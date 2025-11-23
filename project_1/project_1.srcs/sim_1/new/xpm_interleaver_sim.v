@@ -97,8 +97,8 @@ module xpm_interleaver_sim();
         .rst                (rst),      
 
         .in_valid           (data_8_valid),
-        // .in_data            (cnt_8),   //计数器数据输入
-        .in_data            (prbs_data),   //prbs7数据输入
+        .in_data            (cnt_8),   //计数器数据输入
+        // .in_data            (prbs_data),   //prbs7数据输入
         .in_ready           (xpm_intv_ready),
 
         .out_block_start    (out_block_start),

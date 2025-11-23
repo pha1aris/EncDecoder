@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_fec_chain_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_fec_chain" />
+            <top_module name="vcomponents" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="806.094166 us"></ZoomStartTime>
+      <ZoomEndTime time="3,273.139167 us"></ZoomEndTime>
+      <Cursor1Time time="2,861.965000 us"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="182"></NameColumnWidth>
+      <ValueColumnWidth column_width="69"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="94" />
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/blk_soft_rst" type="logic">
+      <obj_property name="ElementShortName">blk_soft_rst</obj_property>
+      <obj_property name="ObjectShortName">blk_soft_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/in_valid" type="logic">
+      <obj_property name="ElementShortName">in_valid</obj_property>
+      <obj_property name="ObjectShortName">in_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/in_data" type="array">
+      <obj_property name="ElementShortName">in_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">in_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/in_ready" type="logic">
+      <obj_property name="ElementShortName">in_ready</obj_property>
+      <obj_property name="ObjectShortName">in_ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/out_valid" type="logic">
+      <obj_property name="ElementShortName">out_valid</obj_property>
+      <obj_property name="ObjectShortName">out_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/out_data" type="array">
+      <obj_property name="ElementShortName">out_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">out_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/block_start" type="logic">
+      <obj_property name="ElementShortName">block_start</obj_property>
+      <obj_property name="ObjectShortName">block_start</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/wr_row" type="array">
+      <obj_property name="ElementShortName">wr_row[5:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_row[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/wr_col" type="array">
+      <obj_property name="ElementShortName">wr_col[7:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_col[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/wr_row_shifted" type="array">
+      <obj_property name="ElementShortName">wr_row_shifted[22:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_row_shifted[22:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/wr_row_mul_255" type="array">
+      <obj_property name="ElementShortName">wr_row_mul_255[14:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_row_mul_255[14:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/wr_sym_idx" type="array">
+      <obj_property name="ElementShortName">wr_sym_idx[13:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_sym_idx[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/wr_cnt" type="array">
+      <obj_property name="ElementShortName">wr_cnt[13:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_cnt[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/wr_bank" type="logic">
+      <obj_property name="ElementShortName">wr_bank</obj_property>
+      <obj_property name="ObjectShortName">wr_bank</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/rd_bank" type="logic">
+      <obj_property name="ElementShortName">rd_bank</obj_property>
+      <obj_property name="ObjectShortName">rd_bank</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/kick_read" type="logic">
+      <obj_property name="ElementShortName">kick_read</obj_property>
+      <obj_property name="ObjectShortName">kick_read</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/wr_fire" type="logic">
+      <obj_property name="ElementShortName">wr_fire</obj_property>
+      <obj_property name="ObjectShortName">wr_fire</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/wea0" type="logic">
+      <obj_property name="ElementShortName">wea0</obj_property>
+      <obj_property name="ObjectShortName">wea0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/wea1" type="logic">
+      <obj_property name="ElementShortName">wea1</obj_property>
+      <obj_property name="ObjectShortName">wea1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/rd_sym_idx" type="array">
+      <obj_property name="ElementShortName">rd_sym_idx[13:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_sym_idx[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/rd_busy" type="logic">
+      <obj_property name="ElementShortName">rd_busy</obj_property>
+      <obj_property name="ObjectShortName">rd_busy</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/rd_fire" type="logic">
+      <obj_property name="ElementShortName">rd_fire</obj_property>
+      <obj_property name="ObjectShortName">rd_fire</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/rd_bank_latch" type="logic">
+      <obj_property name="ElementShortName">rd_bank_latch</obj_property>
+      <obj_property name="ObjectShortName">rd_bank_latch</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/block_start_addr" type="logic">
+      <obj_property name="ElementShortName">block_start_addr</obj_property>
+      <obj_property name="ObjectShortName">block_start_addr</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/block_end" type="logic">
+      <obj_property name="ElementShortName">block_end</obj_property>
+      <obj_property name="ObjectShortName">block_end</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/doutb0" type="array">
+      <obj_property name="ElementShortName">doutb0[7:0]</obj_property>
+      <obj_property name="ObjectShortName">doutb0[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/doutb1" type="array">
+      <obj_property name="ElementShortName">doutb1[7:0]</obj_property>
+      <obj_property name="ObjectShortName">doutb1[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/rd_fire_d1" type="logic">
+      <obj_property name="ElementShortName">rd_fire_d1</obj_property>
+      <obj_property name="ObjectShortName">rd_fire_d1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/D" type="array">
+      <obj_property name="ElementShortName">D[31:0]</obj_property>
+      <obj_property name="ObjectShortName">D[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/N" type="array">
+      <obj_property name="ElementShortName">N[31:0]</obj_property>
+      <obj_property name="ObjectShortName">N[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/TOTAL_SYM" type="array">
+      <obj_property name="ElementShortName">TOTAL_SYM[31:0]</obj_property>
+      <obj_property name="ObjectShortName">TOTAL_SYM[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/MEM_ADDR_W" type="array">
+      <obj_property name="ElementShortName">MEM_ADDR_W[31:0]</obj_property>
+      <obj_property name="ObjectShortName">MEM_ADDR_W[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/MEM_SIZE" type="array">
+      <obj_property name="ElementShortName">MEM_SIZE[31:0]</obj_property>
+      <obj_property name="ObjectShortName">MEM_SIZE[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/ROW_W" type="array">
+      <obj_property name="ElementShortName">ROW_W[31:0]</obj_property>
+      <obj_property name="ObjectShortName">ROW_W[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_deinterleaver/COL_W" type="array">
+      <obj_property name="ElementShortName">COL_W[31:0]</obj_property>
+      <obj_property name="ObjectShortName">COL_W[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/in_data" type="array">
+      <obj_property name="ElementShortName">in_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">in_data[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/in_sync_rst" type="logic">
+      <obj_property name="ElementShortName">in_sync_rst</obj_property>
+      <obj_property name="ObjectShortName">in_sync_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/in_valid" type="logic">
+      <obj_property name="ElementShortName">in_valid</obj_property>
+      <obj_property name="ObjectShortName">in_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/out_data" type="array">
+      <obj_property name="ElementShortName">out_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">out_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/out_sync_rst" type="logic">
+      <obj_property name="ElementShortName">out_sync_rst</obj_property>
+      <obj_property name="ObjectShortName">out_sync_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/out_valid" type="logic">
+      <obj_property name="ElementShortName">out_valid</obj_property>
+      <obj_property name="ObjectShortName">out_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/mem" type="array">
+      <obj_property name="ElementShortName">mem[0:31][32:0]</obj_property>
+      <obj_property name="ObjectShortName">mem[0:31][32:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/wr_ptr" type="array">
+      <obj_property name="ElementShortName">wr_ptr[5:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_ptr[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/rd_ptr" type="array">
+      <obj_property name="ElementShortName">rd_ptr[5:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_ptr[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/count" type="array">
+      <obj_property name="ElementShortName">count[5:0]</obj_property>
+      <obj_property name="ObjectShortName">count[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/full" type="logic">
+      <obj_property name="ElementShortName">full</obj_property>
+      <obj_property name="ObjectShortName">full</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/empty" type="logic">
+      <obj_property name="ElementShortName">empty</obj_property>
+      <obj_property name="ObjectShortName">empty</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/shreg_bundle" type="array">
+      <obj_property name="ElementShortName">shreg_bundle[32:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg_bundle[32:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/shreg_data" type="array">
+      <obj_property name="ElementShortName">shreg_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">shreg_data[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/shreg_flag" type="logic">
+      <obj_property name="ElementShortName">shreg_flag</obj_property>
+      <obj_property name="ObjectShortName">shreg_flag</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/byte_cnt" type="array">
+      <obj_property name="ElementShortName">byte_cnt[1:0]</obj_property>
+      <obj_property name="ObjectShortName">byte_cnt[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/active" type="logic">
+      <obj_property name="ElementShortName">active</obj_property>
+      <obj_property name="ObjectShortName">active</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/fifo_pop" type="logic">
+      <obj_property name="ElementShortName">fifo_pop</obj_property>
+      <obj_property name="ObjectShortName">fifo_pop</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/DEPTH" type="array">
+      <obj_property name="ElementShortName">DEPTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">DEPTH[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_gb_32to8/AW" type="array">
+      <obj_property name="ElementShortName">AW[31:0]</obj_property>
+      <obj_property name="ObjectShortName">AW[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/rst_n" type="logic">
+      <obj_property name="ElementShortName">rst_n</obj_property>
+      <obj_property name="ObjectShortName">rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/i_link_up" type="logic">
+      <obj_property name="ElementShortName">i_link_up</obj_property>
+      <obj_property name="ObjectShortName">i_link_up</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/i_rx_data" type="array">
+      <obj_property name="ElementShortName">i_rx_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i_rx_data[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/i_rx_valid" type="logic">
+      <obj_property name="ElementShortName">i_rx_valid</obj_property>
+      <obj_property name="ObjectShortName">i_rx_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/o_realign_req" type="logic">
+      <obj_property name="ElementShortName">o_realign_req</obj_property>
+      <obj_property name="ObjectShortName">o_realign_req</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/o_frame_start" type="logic">
+      <obj_property name="ElementShortName">o_frame_start</obj_property>
+      <obj_property name="ObjectShortName">o_frame_start</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/o_frame_index" type="array">
+      <obj_property name="ElementShortName">o_frame_index[15:0]</obj_property>
+      <obj_property name="ObjectShortName">o_frame_index[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/o_block_id" type="array">
+      <obj_property name="ElementShortName">o_block_id[15:0]</obj_property>
+      <obj_property name="ObjectShortName">o_block_id[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/o_frame_in_block" type="array">
+      <obj_property name="ElementShortName">o_frame_in_block[15:0]</obj_property>
+      <obj_property name="ObjectShortName">o_frame_in_block[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/o_blk_soft_rst" type="logic">
+      <obj_property name="ElementShortName">o_blk_soft_rst</obj_property>
+      <obj_property name="ObjectShortName">o_blk_soft_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/o_payload_data" type="array">
+      <obj_property name="ElementShortName">o_payload_data[31:0]</obj_property>
+      <obj_property name="ObjectShortName">o_payload_data[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/o_payload_valid" type="logic">
+      <obj_property name="ElementShortName">o_payload_valid</obj_property>
+      <obj_property name="ObjectShortName">o_payload_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/state" type="array">
+      <obj_property name="ElementShortName">state[2:0]</obj_property>
+      <obj_property name="ObjectShortName">state[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/payload_cnt" type="array">
+      <obj_property name="ElementShortName">payload_cnt[15:0]</obj_property>
+      <obj_property name="ObjectShortName">payload_cnt[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/frame_timeout_cnt" type="array">
+      <obj_property name="ElementShortName">frame_timeout_cnt[6:0]</obj_property>
+      <obj_property name="ObjectShortName">frame_timeout_cnt[6:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/last_block_id" type="array">
+      <obj_property name="ElementShortName">last_block_id[15:0]</obj_property>
+      <obj_property name="ObjectShortName">last_block_id[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/last_frame_in_block" type="array">
+      <obj_property name="ElementShortName">last_frame_in_block[15:0]</obj_property>
+      <obj_property name="ObjectShortName">last_frame_in_block[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/block_sync_valid" type="logic">
+      <obj_property name="ElementShortName">block_sync_valid</obj_property>
+      <obj_property name="ObjectShortName">block_sync_valid</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/frame_index" type="array">
+      <obj_property name="ElementShortName">frame_index[15:0]</obj_property>
+      <obj_property name="ObjectShortName">frame_index[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/rx_block_id" type="array">
+      <obj_property name="ElementShortName">rx_block_id[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_block_id[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/rx_frame_in_block" type="array">
+      <obj_property name="ElementShortName">rx_frame_in_block[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_frame_in_block[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/pending_rst" type="logic">
+      <obj_property name="ElementShortName">pending_rst</obj_property>
+      <obj_property name="ObjectShortName">pending_rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/block_aligned" type="logic">
+      <obj_property name="ElementShortName">block_aligned</obj_property>
+      <obj_property name="ObjectShortName">block_aligned</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/W" type="array">
+      <obj_property name="ElementShortName">W[31:0]</obj_property>
+      <obj_property name="ObjectShortName">W[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/PAYLOAD_WORDS" type="array">
+      <obj_property name="ElementShortName">PAYLOAD_WORDS[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PAYLOAD_WORDS[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/FRAME_TIMEOUT_MAX" type="array">
+      <obj_property name="ElementShortName">FRAME_TIMEOUT_MAX[31:0]</obj_property>
+      <obj_property name="ObjectShortName">FRAME_TIMEOUT_MAX[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/PREAMBLE_HI" type="array">
+      <obj_property name="ElementShortName">PREAMBLE_HI[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PREAMBLE_HI[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/PREAMBLE_LO" type="array">
+      <obj_property name="ElementShortName">PREAMBLE_LO[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PREAMBLE_LO[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/S_WAIT_LINK" type="array">
+      <obj_property name="ElementShortName">S_WAIT_LINK[2:0]</obj_property>
+      <obj_property name="ObjectShortName">S_WAIT_LINK[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/S_SEARCH_PREAMBLE1" type="array">
+      <obj_property name="ElementShortName">S_SEARCH_PREAMBLE1[2:0]</obj_property>
+      <obj_property name="ObjectShortName">S_SEARCH_PREAMBLE1[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/S_SEARCH_PREAMBLE2" type="array">
+      <obj_property name="ElementShortName">S_SEARCH_PREAMBLE2[2:0]</obj_property>
+      <obj_property name="ObjectShortName">S_SEARCH_PREAMBLE2[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/S_RECV_HEADER" type="array">
+      <obj_property name="ElementShortName">S_RECV_HEADER[2:0]</obj_property>
+      <obj_property name="ObjectShortName">S_RECV_HEADER[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/S_RECV_PAYLOAD" type="array">
+      <obj_property name="ElementShortName">S_RECV_PAYLOAD[2:0]</obj_property>
+      <obj_property name="ObjectShortName">S_RECV_PAYLOAD[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_fec_chain/u_fec_rx/u_fso_deframer/FRAME_TIMEOUT_WIDTH" type="array">
+      <obj_property name="ElementShortName">FRAME_TIMEOUT_WIDTH[31:0]</obj_property>
+      <obj_property name="ObjectShortName">FRAME_TIMEOUT_WIDTH[31:0]</obj_property>
+   </wvobject>
+</wave_config>
