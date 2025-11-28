@@ -17,6 +17,7 @@ module fec_tx #(
     input  wire             i_valid,
     output wire             i_ready,
     // 输出给 GTH TX 的 32bit 数据
+    input wire              scrambler_en,
     output wire [W-1:0]     o_tx_data,
     output wire             o_tx_valid,
     output wire [31:0]      o_tx_data_line,
@@ -42,7 +43,7 @@ module fec_tx #(
         .data_valid_i           (i_valid),
 
         // 下游 RS 编码 IP 的 AXIS 输出
-        .m_axis_output_tready   (1),
+        .m_axis_output_tready   (xpm_input_tready),
         .m_axis_output_tlast    (enc_last),
         .m_axis_output_tdata    (enc_data),
         .m_axis_output_tvalid   (enc_valid)
@@ -62,6 +63,7 @@ module fec_tx #(
     wire        intlv_valid;
     wire [7:0]  intlv_data;
     wire        intlv_block_start;
+    wire        intlv_out_ready;
     // 暂时绕过交织器
     // assign intlv_data        = enc_data;
     // assign intlv_valid       = enc_valid;
@@ -79,6 +81,7 @@ module fec_tx #(
         .out_data       (intlv_data),
         .out_block_start(intlv_block_start)
     );
+    
     // ================= 8bit 数据 + 1bit block_start 标志的同步 FIFO =================
 
     // FIFO 输出
@@ -87,9 +90,8 @@ module fec_tx #(
     wire        fifo_flag;
     wire        fifo_ready;
 
-
     fifo_8b_flag_sync #(
-        .DEPTH     (64))
+        .DEPTH     (2048))
     u_intlv_fifo (
         .clk       (core_clk),
         .rst       (rst),
@@ -97,7 +99,7 @@ module fec_tx #(
         .in_data   (intlv_data),
         .in_flag   (intlv_block_start),
         .in_valid  (intlv_valid),
-        .in_ready  (),              // 如果以后想反压交织器，就把这根接上去
+        .in_ready  (intlv_out_ready),            
 
         .out_data  (fifo_data),
         .out_flag  (fifo_flag),
@@ -136,9 +138,10 @@ module fec_tx #(
     ) u_fso_framer (
         .clk                (core_clk),
         .rst_n              (rst_n),
+        // .i_block_start_flag (gb_block_start),
+        .scrambler_en       (scrambler_en),
         .i_payload_data     (gb_data),
         .i_payload_valid    (gb_valid),
-        .i_block_start_word (gb_block_start),
         .o_payload_ready    (gb_ready),            
         .o_tx_data          (o_tx_data),
         .o_tx_valid         (o_tx_valid),
@@ -185,7 +188,7 @@ module fec_tx #(
     );
 
 // Store-and-Forward 参数
-    localparam integer FRAME_LEN_WORDS = 2 + 1 + PAYLOAD_WORDS; // 19
+    localparam integer FRAME_LEN_WORDS = 2 + 1 + PAYLOAD_WORDS + 1; // 19
     localparam [31:0]  IDLE_WORD       = 32'h0707_0707;
 
     // 状态控制
@@ -256,10 +259,9 @@ module fec_tx #(
     // 接口赋值
     // ------------------------------------------------------------
     assign tx32_fifo_rd_en = tx_fifo_rd_en_reg;
-    
     assign o_tx_data_line  = tx_data_out_reg;
     assign o_tx_valid_line = tx_valid_out_reg;
-    
     assign tx32_wr_ready   = ~tx32_fifo_full & ~tx32_fifo_wrstbsy;
+
 
 endmodule

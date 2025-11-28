@@ -1,171 +1,264 @@
-`timescale 1ns / 1ps
+`timescale 1 ns / 1 ps
 
-module axi4_lite_slave #(
-    parameter ADDRESS_WIDTH = 32,
-    parameter DATA_WIDTH    = 32,
-    // 【扩展性设计 1】: 定义有多少个只读监控数据
-    parameter NUM_RO_REGS   = 2   // 目前有: 包序号, 误码数
-)(
-    // 全局信号
+module axi4_lite_slave #
+(
+    // 适配 fso_sys_top 的参数命名
+    parameter integer ADDRESS_WIDTH = 32,
+    parameter integer DATA_WIDTH    = 32,
+    parameter integer NUM_RO_REGS   = 2     // 监控寄存器数量
+)
+(
+    // --- 全局信号 ---
     input wire                      ACLK,
     input wire                      ARESETN,
 
-    // --- AXI4-Lite 接口 (标准 Verilog 写法) ---
-    // 写地址通道
-    input wire [ADDRESS_WIDTH-1:0]  S_AWADDR,
-    input wire                      S_AWVALID,
-    output reg                      S_AWREADY,
+    // --- AXI4-Lite 接口 (对应 fso_sys_top 的连接) ---
+    input wire [ADDRESS_WIDTH-1 : 0] S_AWADDR,
+    input wire [2 : 0]               S_AWPROT,
+    input wire                       S_AWVALID,
+    output wire                      S_AWREADY,
     
-    // 写数据通道
-    input wire [DATA_WIDTH-1:0]     S_WDATA,
-    input wire [3:0]                S_WSTRB,
-    input wire                      S_WVALID,
-    output reg                      S_WREADY,
+    input wire [DATA_WIDTH-1 : 0]    S_WDATA,
+    input wire [(DATA_WIDTH/8)-1 : 0] S_WSTRB,
+    input wire                       S_WVALID,
+    output wire                      S_WREADY,
     
-    // 写响应通道
-    output reg [1:0]                S_BRESP,
-    output reg                      S_BVALID,
-    input wire                      S_BREADY,
+    output wire [1 : 0] S_BRESP,
+    output wire  S_BVALID,
+    input wire  S_BREADY,
     
-    // 读地址通道
-    input wire [ADDRESS_WIDTH-1:0]  S_ARADDR,
-    input wire                      S_ARVALID,
-    output reg                      S_ARREADY,
+    input wire [ADDRESS_WIDTH-1 : 0] S_ARADDR,
+    input wire [2 : 0] S_ARPROT,
+    input wire  S_ARVALID,
+    output wire  S_ARREADY,
     
-    // 读数据通道
-    output reg [DATA_WIDTH-1:0]     S_RDATA,
-    output reg [1:0]                S_RRESP,
-    output reg                      S_RVALID,
-    input wire                      S_RREADY,
+    output wire [DATA_WIDTH-1 : 0] S_RDATA,
+    output wire [1 : 0] S_RRESP,
+    output wire  S_RVALID,
+    input wire  S_RREADY,
 
-    // --- 【扩展性设计 2】: 扁平化的监控数据输入 ---
-    // 在实例化时，将多个 32 位信号拼接成 {信号2, 信号1} 输入
-    input wire [(NUM_RO_REGS*32)-1:0] monitor_data_flat
+    // --- 【新增】自定义接口 ---
+    input wire [(NUM_RO_REGS*32)-1:0] monitor_data_flat, // 监控数据输入
+    output wire [31:0]                o_slv_reg0         // 导出控制寄存器
 );
 
-    // --- 参数定义 (替代 enum) ---
-    localparam [2:0] IDLE           = 3'b000;
-    localparam [2:0] WRITE_CHANNEL  = 3'b001;
-    localparam [2:0] WRESP_CHANNEL  = 3'b010;
-    localparam [2:0] RADDR_CHANNEL  = 3'b011;
-    localparam [2:0] RDATA_CHANNEL  = 3'b100;
+    // AXI4LITE 内部信号
+    reg [ADDRESS_WIDTH-1 : 0] axi_awaddr;
+    reg  axi_awready;
+    reg  axi_wready;
+    reg [1 : 0] axi_bresp;
+    reg  axi_bvalid;
+    reg [ADDRESS_WIDTH-1 : 0] axi_araddr;
+    reg  axi_arready;
+    reg [DATA_WIDTH-1 : 0] axi_rdata;
+    reg [1 : 0] axi_rresp;
+    reg  axi_rvalid;
 
-    // --- 内部信号 ---
-    reg [2:0] state, next_state;
-    reg [ADDRESS_WIDTH-1:0] r_addr_latch; // 锁存读地址
+    // 地址解码参数
+    localparam integer ADDR_LSB = (DATA_WIDTH/32) + 1;
+    localparam integer OPT_MEM_ADDR_BITS = 6; // 覆盖 0x00 ~ 0xFF 范围 (足够容纳几十个寄存器)
     
-    // 通用寄存器 (用于 PS 控制 PL，可读写)
-    // 假设保留 16 个通用控制寄存器
-    localparam NUM_RW_REGS = 16;
+    // --- 【修改点 1】: 定义通用读写寄存器堆 ---
+    localparam integer NUM_RW_REGS = 16;
     reg [DATA_WIDTH-1:0] slv_regs [0:NUM_RW_REGS-1];
     
-    // 写辅助信号
+    // --- 【修改点 2】: 导出控制信号 ---
+    assign o_slv_reg0 = slv_regs[0];
+
+    wire slv_reg_rden;
     wire slv_reg_wren;
+    reg [DATA_WIDTH-1:0] reg_data_out;
+    integer byte_index;
     integer i;
+    reg  aw_en;
 
-    // --- 1. 状态机逻辑 ---
-    always @(posedge ACLK) begin
-        if (!ARESETN) 
-            state <= IDLE;
-        else 
-            state <= next_state;
-    end
+    // I/O 连接
+    assign S_AWREADY = axi_awready;
+    assign S_WREADY  = axi_wready;
+    assign S_BRESP   = axi_bresp;
+    assign S_BVALID  = axi_bvalid;
+    assign S_ARREADY = axi_arready;
+    assign S_RDATA   = axi_rdata;
+    assign S_RRESP   = axi_rresp;
+    assign S_RVALID  = axi_rvalid;
 
-    always @(*) begin
-        next_state = state; // 默认保持
-        case (state)
-            IDLE: begin
-                if (S_AWVALID)
-                    next_state = WRITE_CHANNEL;
-                else if (S_ARVALID)
-                    next_state = RADDR_CHANNEL;
-                else
-                    next_state = IDLE;
-            end
-            WRITE_CHANNEL: begin
-                if (S_AWVALID && S_AWREADY && S_WVALID && S_WREADY)
-                    next_state = WRESP_CHANNEL;
-            end
-            WRESP_CHANNEL: begin
-                if (S_BVALID && S_BREADY)
-                    next_state = IDLE;
-            end
-            RADDR_CHANNEL: begin
-                if (S_ARVALID && S_ARREADY)
-                    next_state = RDATA_CHANNEL;
-            end
-            RDATA_CHANNEL: begin
-                if (S_RVALID && S_RREADY)
-                    next_state = IDLE;
-            end
-            default: next_state = IDLE;
-        endcase
-    end
+    // -------------------------------------------------------------------------
+    //  AXI 握手逻辑 (保持 Xilinx 模板原样)
+    // -------------------------------------------------------------------------
 
-    // --- 2. AXI 握手输出逻辑 ---
-    // 为了简化时序，这里使用组合逻辑生成 READY，但在高速设计中建议用寄存器输出
-    always @(*) begin
-        S_AWREADY = (state == WRITE_CHANNEL);
-        S_WREADY  = (state == WRITE_CHANNEL);
-        S_ARREADY = (state == RADDR_CHANNEL);
-        S_BVALID  = (state == WRESP_CHANNEL);
-        S_RVALID  = (state == RDATA_CHANNEL);
-        S_BRESP   = 2'b00; // OKAY
-        S_RRESP   = 2'b00; // OKAY
-    end
+    // 写地址准备好 (AWREADY)
+    always @( posedge ACLK )
+    begin
+        if ( ARESETN == 1'b0 ) begin
+            axi_awready <= 1'b0;
+            aw_en <= 1'b1;
+        end 
+        else begin    
+            if (~axi_awready && S_AWVALID && S_WVALID && aw_en) begin
+                axi_awready <= 1'b1;
+                aw_en <= 1'b0;
+            end
+            else if (S_BREADY && axi_bvalid) begin
+                aw_en <= 1'b1;
+                axi_awready <= 1'b0;
+            end
+            else begin
+                axi_awready <= 1'b0;
+            end
+        end 
+    end  
 
-    // --- 3. 写操作逻辑 (PS -> PL) ---
-    assign slv_reg_wren = S_AWVALID && S_WREADY && S_WVALID && S_AWREADY;
+    // 写地址锁存 (AWADDR)
+    always @( posedge ACLK )
+    begin
+        if ( ARESETN == 1'b0 ) begin
+            axi_awaddr <= 0;
+        end 
+        else begin    
+            if (~axi_awready && S_AWVALID && S_WVALID && aw_en) begin
+                axi_awaddr <= S_AWADDR;
+            end
+        end 
+    end       
 
-    always @(posedge ACLK) begin
-        if (!ARESETN) begin
+    // 写数据准备好 (WREADY)
+    always @( posedge ACLK )
+    begin
+        if ( ARESETN == 1'b0 ) begin
+            axi_wready <= 1'b0;
+        end 
+        else begin    
+            if (~axi_wready && S_WVALID && S_AWVALID && aw_en ) begin
+                axi_wready <= 1'b1;
+            end
+            else begin
+                axi_wready <= 1'b0;
+            end
+        end 
+    end       
+
+    // 写响应 (BVALID/BRESP)
+    always @( posedge ACLK )
+    begin
+        if ( ARESETN == 1'b0 ) begin
+            axi_bvalid  <= 0;
+            axi_bresp   <= 2'b0;
+        end 
+        else begin    
+            if (axi_awready && S_AWVALID && ~axi_bvalid && axi_wready && S_WVALID) begin
+                axi_bvalid <= 1'b1;
+                axi_bresp  <= 2'b0; 
+            end
+            else if (S_BREADY && axi_bvalid) begin
+                axi_bvalid <= 1'b0; 
+            end
+        end
+    end   
+
+    // 读地址准备好 (ARREADY)
+    always @( posedge ACLK )
+    begin
+        if ( ARESETN == 1'b0 ) begin
+            axi_arready <= 1'b0;
+            axi_araddr  <= 32'b0;
+        end 
+        else begin    
+            if (~axi_arready && S_ARVALID) begin
+                axi_arready <= 1'b1;
+                axi_araddr  <= S_ARADDR;
+            end
+            else begin
+                axi_arready <= 1'b0;
+            end
+        end 
+    end       
+
+    // 读数据有效 (RVALID)
+    always @( posedge ACLK )
+    begin
+        if ( ARESETN == 1'b0 ) begin
+            axi_rvalid <= 0;
+            axi_rresp  <= 0;
+        end 
+        else begin    
+            if (axi_arready && S_ARVALID && ~axi_rvalid) begin
+                axi_rvalid <= 1'b1;
+                axi_rresp  <= 2'b0; 
+            end   
+            else if (axi_rvalid && S_RREADY) begin
+                axi_rvalid <= 1'b0;
+            end                
+        end
+    end    
+
+    // -------------------------------------------------------------------------
+    //  【修改点 3】: 写寄存器逻辑 (Write Logic)
+    // -------------------------------------------------------------------------
+    assign slv_reg_wren = axi_wready && S_WVALID && axi_awready && S_AWVALID;
+
+    // 计算当前写操作的寄存器索引
+    wire [OPT_MEM_ADDR_BITS:0] wr_index;
+    assign wr_index = axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB];
+
+    always @( posedge ACLK )
+    begin
+        if ( ARESETN == 1'b0 ) begin
             for (i = 0; i < NUM_RW_REGS; i = i + 1) begin
-                slv_regs[i] <= 32'h0;
+                slv_regs[i] <= 0;
             end
         end
-        else if (slv_reg_wren) begin
-            // 简单的地址解码：忽略低2位，取 [6:2]
-            // 只允许写入前 NUM_RW_REGS 个寄存器
-            if (S_AWADDR[6:2] < NUM_RW_REGS) begin
-                slv_regs[S_AWADDR[6:2]] <= S_WDATA;
+        else begin
+            if (slv_reg_wren) begin
+                // 只允许写入 0 ~ NUM_RW_REGS-1 范围内的寄存器
+                if (wr_index < NUM_RW_REGS) begin
+                    for ( byte_index = 0; byte_index <= (DATA_WIDTH/8)-1; byte_index = byte_index+1 )
+                        if ( S_WSTRB[byte_index] == 1 ) begin
+                            slv_regs[wr_index][(byte_index*8) +: 8] <= S_WDATA[(byte_index*8) +: 8];
+                        end  
+                end
             end
         end
-    end
+    end    
 
-    // --- 4. 读地址锁存 ---
-    always @(posedge ACLK) begin
-        if (!ARESETN)
-            r_addr_latch <= 0;
-        else if (S_ARVALID && S_ARREADY)
-            r_addr_latch <= S_ARADDR;
-    end
+    // -------------------------------------------------------------------------
+    //  【修改点 4】: 读数据逻辑 (Read Logic - 包含监控数据)
+    // -------------------------------------------------------------------------
+    assign slv_reg_rden = axi_arready & S_ARVALID & ~axi_rvalid;
 
-    // --- 5. 【核心】读数据逻辑 (PL -> PS) ---
-    // 扩展性设计的关键：将地址空间划分为“通用区”和“监控区”
+    // 计算当前读操作的寄存器索引
+    wire [OPT_MEM_ADDR_BITS:0] rd_index;
+    assign rd_index = axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB];
     
-    // 计算寄存器索引 (word index)
-    wire [4:0] reg_index = r_addr_latch[6:2]; 
-    
-    // 定义只读监控数据的起始索引 (例如从寄存器 16 开始)
-    localparam RO_START_INDEX = 16; 
+    // 监控数据起始地址 (Index 16 = 0x40)
+    localparam RO_START_INDEX = 16;
 
-    always @(*) begin
-        S_RDATA = 32'h0; // 默认值
-        
-        if (state == RDATA_CHANNEL) begin
-            if (reg_index < NUM_RW_REGS) begin
-                // 0 ~ 15: 读取通用可读写寄存器
-                S_RDATA = slv_regs[reg_index];
-            end
-            else if (reg_index >= RO_START_INDEX && 
-                     reg_index < RO_START_INDEX + NUM_RO_REGS) begin
-                // 16 ~ 16+N: 读取只读监控数据
-                // 【技巧】使用位切片从扁平向量中提取对应的 32 位数据
-                // 比如 reg_index=16 (第一个监控数据), 提取 monitor_data_flat[31:0]
-                // 比如 reg_index=17 (第二个监控数据), 提取 monitor_data_flat[63:32]
-                S_RDATA = monitor_data_flat[(reg_index - RO_START_INDEX) * 32 +: 32];
-            end
+    always @(*)
+    begin
+        reg_data_out = 32'h0; // 默认 0
+
+        // 1. 读取可读写寄存器 (0 ~ 15)
+        if (rd_index < NUM_RW_REGS) begin
+            reg_data_out = slv_regs[rd_index];
+        end
+        // 2. 读取只读监控数据 (16 ~ 16+NUM_RO_REGS)
+        else if (rd_index >= RO_START_INDEX && 
+                 rd_index < RO_START_INDEX + NUM_RO_REGS) begin
+            // 动态位切片：从扁平向量中切出对应的 32 位
+            reg_data_out = monitor_data_flat[(rd_index - RO_START_INDEX) * 32 +: 32];
         end
     end
+
+    // 输出到总线
+    always @( posedge ACLK )
+    begin
+        if ( ARESETN == 1'b0 ) begin
+            axi_rdata  <= 0;
+        end 
+        else begin    
+            if (slv_reg_rden) begin
+                axi_rdata <= reg_data_out;     
+            end   
+        end
+    end    
 
 endmodule

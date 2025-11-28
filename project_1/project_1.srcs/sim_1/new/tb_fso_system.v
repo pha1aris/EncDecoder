@@ -14,7 +14,8 @@ module tb_fso_system;
     localparam integer W             = 32;
     localparam integer PAYLOAD_WORDS = 16;
     localparam integer BIT_OFFSET_W  = $clog2(W); // = 5
-
+    parameter          USE_SCRAM = 1; //加扰-1 不加扰-0
+    parameter          PRBS_MODE = 1; // 0-cnt模式 1-prbs模式
     // 仿真时钟、复位
     reg clk;
     reg rst_n;
@@ -120,28 +121,29 @@ module tb_fso_system;
         .DATA_OUT           (prbs_data)                     //  连接到 Frame Gen
     );
 
+    wire [W-1:0] test_data;
+    assign test_data = PRBS_MODE ? prbs_data : payload_data;
     // --------------------------------------------------------------------
     // TX：FSO Framer 实例
     // --------------------------------------------------------------------
-    wire    i_block_start_word;
 
     fso_framer #(
-        .W             (W),
-        .PAYLOAD_WORDS (PAYLOAD_WORDS)
+        .W                  (W),
+        .PAYLOAD_WORDS      (PAYLOAD_WORDS)
     ) u_fso_framer (
         .clk                (clk),
         .rst_n              (rst_n),
-        // .i_payload_data     (payload_data),
-        // .i_payload_valid    (payload_valid),
-        .i_payload_data     (prbs_data),//prbs模式输入
-        .i_payload_valid    (payload_ready),//prbs模式输入
+        .i_payload_data     (test_data),    
+        .i_payload_valid    (payload_valid),
 
-        .i_block_start_word (i_block_start_word),
+        .scrambler_en       (USE_SCRAM),
         .o_payload_ready    (payload_ready),
+        .i_tx_ready         (1),
         .o_tx_data          (tx_data),
         .o_tx_valid         (tx_valid),
         .o_frame_index      (tx_frame_index)
     );
+
 
     // --------------------------------------------------------------------
     // 关键！信道模型 (Channel Model)
@@ -171,25 +173,49 @@ module tb_fso_system;
     // --------------------------------------------------------------------
     wire o_bit_locked;
 
-    bit_aligner #(
-        .W                  (W),
-        .VERIFY_CNT_MAX     (8),
-        .SLIDE_COOLDOWN     (5),
-        .ERR_TH             (0),
-        .CHECK_TIMEOUT_MAX  (2048)
-    ) u_bit_aligner (
-        .clk                (clk),
-        .rst_n              (rst_n),
-        .rx_reset_done      (rx_reset_done),
-        .rx_cdr_stable      (rx_cdr_stable),
-        .i_rx_data          (rx_data_to_aligner), // <-- 来自信道模型
-        .i_rx_valid         (rx_valid_to_aligner),// <-- 来自信道模型
-        .i_realign_req      (realign_req),
-        .o_rxslide          (rxslide),            // --> 去往信道模型
-        .o_aligned_valid    (aligned_valid),
-        .o_bit_locked       (o_bit_locked),
-        .o_data_aligned     (aligned_data)        // (这是 aligner 的 pass-through)
-    );
+    // bit_aligner #(
+    //     .W                  (W),
+    //     .VERIFY_CNT_MAX     (8),
+    //     .SLIDE_COOLDOWN     (5),
+    //     .ERR_TH             (0),
+    //     .CHECK_TIMEOUT_MAX  (2048)
+    // ) u_bit_aligner (
+    //     .clk                (clk),
+    //     .rst_n              (rst_n),
+    //     .rx_reset_done      (rx_reset_done),
+    //     .rx_cdr_stable      (rx_cdr_stable),
+    //     .i_rx_data          (rx_data_to_aligner), // <-- 来自信道模型
+    //     .i_rx_valid         (rx_valid_to_aligner),// <-- 来自信道模型
+    //     .i_realign_req      (realign_req),
+    //     .o_rxslide          (rxslide),            // --> 去往信道模型
+    //     .o_aligned_valid    (aligned_valid),
+    //     .o_bit_locked       (o_bit_locked),
+    //     .o_data_aligned     (aligned_data)        // (这是 aligner 的 pass-through)
+    // );
+
+         bit_aligner_gth #(
+            .W               (32),
+            .VERIFY_CNT_MAX(4),    // 连续匹配 4 次才锁 
+            .MISS_CNT_MAX  (10),   // 连续错 10 次才失锁 
+            .SLIDE_COOLDOWN(32),   // GTH 物理层滑动需要的等待周期
+            .ERR_TH        (2),    // 汉明距离容错 (2 bit)
+            .SCAN_WINDOW   (64)   // 盲搜窗口 (大于最大帧长)
+        )u_bit_aligner_gth(
+                .clk                (clk),
+                .rst_n              (rst_n),
+                .rx_reset_done      (rx_reset_done),
+                .rx_cdr_stable      (rx_cdr_stable),
+            
+                .i_rx_data          (rx_data_to_aligner), // <-- 来自信道模型
+                .i_rx_valid         (rx_valid_to_aligner),// <-- 来自信道模型
+            
+            // input wire i_realign_req, // 工业级设计通常由本模块自行判断失锁，不需要外部请求
+            
+                .o_rxslide          (rxslide),            // --> 去往信道模型
+                .o_aligned_valid    (aligned_valid),
+                .o_bit_locked       (o_bit_locked),
+                .o_data_aligned     (aligned_data)   
+        );
 
     // --------------------------------------------------------------------
     // Deframer 实例
@@ -207,8 +233,9 @@ module tb_fso_system;
         .clk                (clk),
         .rst_n              (rst_n),
         .i_link_up          (o_bit_locked),
-        .i_rx_data          (aligned_data),         // <-- 来自 aligner
-        .i_rx_valid         (aligned_valid),  // <-- (应使用 aligner 的 valid)
+        .i_rx_data          (aligned_data),         
+        .i_rx_valid         (aligned_valid),  
+        .scrambler_en       (USE_SCRAM),
         .o_realign_req      (realign_req),
         .o_frame_start      (frame_start),
         .o_frame_index      (rx_frame_index),
@@ -221,6 +248,8 @@ module tb_fso_system;
         .o_payload_data     (rx_payload_data),
         .o_payload_valid    (rx_payload_valid)
     );
+
+
 
     wire [31:0] rx_prbs_data;
     wire prbs_match = ~|rx_prbs_data;
@@ -235,8 +264,8 @@ module tb_fso_system;
         .RST                (~rst_n), // 使用 GTH TX 激活信号
         .CLK                (clk), // 使用 GTH TX 时钟
         .DATA_IN            (rx_payload_data),
-        .EN                 (rx_payload_valid), //  修改: 由 Frame Gen 反压
-        .DATA_OUT           (rx_prbs_data)                     //  连接到 Frame Gen
+        .EN                 (rx_payload_valid&&PRBS_MODE), //  修改: 由 Frame Gen 反压
+        .DATA_OUT           (rx_prbs_data)      //  连接到 Frame Gen
     );
 
 

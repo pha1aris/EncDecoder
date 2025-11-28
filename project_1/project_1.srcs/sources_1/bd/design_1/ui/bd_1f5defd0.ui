@@ -1,31 +1,49 @@
 {
    "ActiveEmotionalView":"Default View",
-   "Default View_ScaleFactor":"0.561468",
-   "Default View_TopLeft":"0,-237",
+   "Default View_ScaleFactor":"0.647948",
+   "Default View_TopLeft":"-190,-94",
    "ExpandedHierarchyInLayout":"",
    "guistr":"# # String gsaved with Nlview 7.8.0 2024-04-26 e1825d835c VDI=44 GEI=38 GUI=JA:21.0
 #  -string -flagsOSRD
-preplace inst zynq_ultra_ps_e_0 -pg 1 -lvl 5 -x 1570 -y 300 -defaultsOSRD
-preplace inst BER_axis_packager_0 -pg 1 -lvl 2 -x 440 -y 290 -defaultsOSRD
-preplace inst ber_test_gen_0 -pg 1 -lvl 1 -x 140 -y 310 -defaultsOSRD
-preplace inst axi_dma_0 -pg 1 -lvl 3 -x 800 -y 310 -defaultsOSRD
-preplace inst axi_smc -pg 1 -lvl 6 -x 2030 -y 300 -defaultsOSRD
-preplace inst rst_ps8_0_100M -pg 1 -lvl 2 -x 440 -y 100 -defaultsOSRD
-preplace inst axi_smc_1 -pg 1 -lvl 4 -x 1130 -y 130 -defaultsOSRD
-preplace netloc ber_test_gen_0_data_i0 1 1 1 N 300
-preplace netloc ber_test_gen_0_data_i1 1 1 1 N 320
-preplace netloc rst_ps8_0_100M_peripheral_aresetn 1 2 4 630 150 990 210 NJ 210 1880J
-preplace netloc zynq_ultra_ps_e_0_pl_clk0 1 0 6 20 240 260 380 640 410 1000 300 1280 390 1870
-preplace netloc zynq_ultra_ps_e_0_pl_resetn0 1 0 6 10 230 270 200 610J 50 NJ 50 NJ 50 1860
-preplace netloc BER_axis_packager_0_M_AXIS 1 2 1 N 290
-preplace netloc axi_dma_0_M_AXI_S2MM 1 3 1 960 110n
-preplace netloc axi_smc_1_M00_AXI 1 4 1 1260 130n
-preplace netloc axi_smc_M00_AXI 1 2 5 640 40 NJ 40 NJ 40 NJ 40 2160
-preplace netloc zynq_ultra_ps_e_0_M_AXI_HPM0_LPD 1 5 1 N 280
-levelinfo -pg 1 -10 140 440 800 1130 1570 2030 2190
-pagesize -pg 1 -db -bbox -sgen -10 0 2190 440
+preplace port port-id_gthrxp_in -pg 1 -lvl 0 -x -20 -y 180 -defaultsOSRD
+preplace port port-id_sys_rst_n -pg 1 -lvl 0 -x -20 -y 120 -defaultsOSRD
+preplace port port-id_sys_clk_p -pg 1 -lvl 0 -x -20 -y 80 -defaultsOSRD
+preplace port port-id_sys_clk_n -pg 1 -lvl 0 -x -20 -y 100 -defaultsOSRD
+preplace port port-id_gthrxn_in -pg 1 -lvl 0 -x -20 -y 200 -defaultsOSRD
+preplace port port-id_gthtxp_out -pg 1 -lvl 5 -x 1520 -y 110 -defaultsOSRD
+preplace port port-id_gthtxn_out -pg 1 -lvl 5 -x 1520 -y 130 -defaultsOSRD
+preplace port port-id_mgtrefclk0_x1y1_p -pg 1 -lvl 0 -x -20 -y 140 -defaultsOSRD
+preplace port port-id_mgtrefclk0_x1y1_n -pg 1 -lvl 0 -x -20 -y 160 -defaultsOSRD
+preplace portBus tx_disable -pg 1 -lvl 5 -x 1520 -y 90 -defaultsOSRD
+preplace inst zynq_ultra_ps_e_0 -pg 1 -lvl 1 -x 330 -y 290 -defaultsOSRD
+preplace inst fso_rx_top_0 -pg 1 -lvl 3 -x 1130 -y 150 -defaultsOSRD
+preplace inst axi_smc -pg 1 -lvl 2 -x 790 -y 290 -defaultsOSRD
+preplace inst rst_ps8_0_100M -pg 1 -lvl 1 -x 330 -y 490 -defaultsOSRD
+preplace inst ila_0 -pg 1 -lvl 4 -x 1410 -y 340 -defaultsOSRD
+preplace netloc fso_rx_top_0_gthtxn_out 1 3 2 NJ 130 NJ
+preplace netloc fso_rx_top_0_gthtxp_out 1 3 2 NJ 110 NJ
+preplace netloc fso_rx_top_0_o_bit_locked 1 3 1 1310 170n
+preplace netloc fso_rx_top_0_o_error_detect 1 3 1 1290 210n
+preplace netloc fso_rx_top_0_o_prbs_locked 1 3 1 1300 190n
+preplace netloc fso_rx_top_0_o_rx_active 1 3 1 1320 150n
+preplace netloc fso_rx_top_0_tx_disable 1 3 2 NJ 90 NJ
+preplace netloc gthrxn_in_0_1 1 0 3 10J 180 NJ 180 960J
+preplace netloc gthrxp_in_0_1 1 0 3 0J 150 NJ 150 970J
+preplace netloc mgtrefclk0_x1y1_n_0_1 1 0 3 NJ 160 NJ 160 NJ
+preplace netloc mgtrefclk0_x1y1_p_0_1 1 0 3 NJ 140 NJ 140 NJ
+preplace netloc rst_ps8_0_100M_peripheral_aresetn 1 1 2 650 210 930
+preplace netloc sys_clk_n_0_1 1 0 3 NJ 100 NJ 100 NJ
+preplace netloc sys_clk_p 1 0 3 NJ 80 NJ 80 NJ
+preplace netloc sys_rst_n_0_1 1 0 3 NJ 120 NJ 120 NJ
+preplace netloc zynq_ultra_ps_e_0_pl_clk0 1 0 4 20 190 640 200 940 300 NJ
+preplace netloc zynq_ultra_ps_e_0_pl_resetn0 1 0 2 30 200 630
+preplace netloc axi_smc_M00_AXI 1 2 1 950 60n
+preplace netloc zynq_ultra_ps_e_0_M_AXI_HPM0_LPD 1 1 1 N 270
+levelinfo -pg 1 -20 330 790 1130 1410 1520
+pagesize -pg 1 -db -bbox -sgen -190 0 1670 590
 "
 }
 {
-   "da_axi4_cnt":"2"
+   "da_axi4_cnt":"3",
+   "da_clkrst_cnt":"1"
 }

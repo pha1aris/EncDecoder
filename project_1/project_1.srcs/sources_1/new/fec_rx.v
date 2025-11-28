@@ -16,7 +16,7 @@ module fec_rx #(
     input  wire             i_rx_valid,
     input  wire             rx_reset_done,
     input  wire             rx_cdr_stable,
-
+    input wire              scrambler_en,
     // 解码后的数据（8bit）
     output wire [7:0]       o_data,
     output wire             o_valid,
@@ -37,14 +37,37 @@ module fec_rx #(
     wire         aligned_valid;
     wire         realign_req;
 
-    bit_aligner #(
-        .W                 (W),
-        .VERIFY_CNT_MAX    (8),
-        .SLIDE_COOLDOWN    (5),
-        .ERR_TH            (0),
-        .CHECK_TIMEOUT_MAX (2048)
-    ) u_bit_aligner (
-        .clk                (line_clk),  // 慢时钟域
+    // bit_aligner #(
+    //     .W                 (W),
+    //     .VERIFY_CNT_MAX    (8),
+    //     .SLIDE_COOLDOWN    (5),
+    //     .ERR_TH            (0),
+    //     .CHECK_TIMEOUT_MAX (2048)
+    // ) u_bit_aligner (
+    //     .clk                (line_clk),  // 慢时钟域
+    //     .rst_n              (rst_n),
+    //     .rx_reset_done      (rx_reset_done),
+    //     .rx_cdr_stable      (rx_cdr_stable),
+    //     .i_rx_data          (i_rx_data),
+    //     .i_rx_valid         (i_rx_valid),
+    //     .i_realign_req      (realign_req),
+    //     .o_rxslide          (o_rxslide),
+    //     .o_aligned_valid    (aligned_valid),
+    //     .o_bit_locked       (o_bit_locked),
+    //     .o_data_aligned     (aligned_data)
+    // );
+
+    bit_aligner_ind #(
+        .W                  (32),                // 需要的真头数量（窗口内至少 N 次匹配才认为可以锁定）
+        .VERIFY_CNT_MAX     (4),     // bitslip 之后的冷却周期数（避免连发）
+        .SLIDE_COOLDOWN     (50),    // 对 ALIGN_WORD 允许的 bit 误差数
+        .ERR_TH             (2),             // UNLOCK 状态下，长期匹配不到头时触发 bitslip 的超时时间（按 i_rx_valid 计数）
+        .CHECK_TIMEOUT_MAX  (4096),// 用来统计“头匹配/假头”的窗口长度（建议 >= VERIFY_CNT_MAX）
+        .HDR_WINDOW_N       (32),      // LOCKED 状态下，窗口内允许的最大假头数
+        .FALSE_HDR_MAX      (4),      // bitslip 脉冲宽度（以 clk 周期计）
+        .BITSLIP_PULSE      (1)
+    )u_bit_aligner_ind(
+        .clk                (line_clk),
         .rst_n              (rst_n),
         .rx_reset_done      (rx_reset_done),
         .rx_cdr_stable      (rx_cdr_stable),
@@ -69,6 +92,9 @@ module fec_rx #(
 
     assign rx32_fifo_wr_en   = aligned_valid;  // 每来一个对齐好的 word 就写
     assign rx32_fifo_rd_en   = ~rx32_fifo_empty & ~rx32_fifo_rd_rst_busy;
+
+//延迟读逻辑
+
 
     async_fifo_32w_32r u_rx_fifo (
         .rst        (rst),
@@ -115,6 +141,7 @@ module fec_rx #(
     ) u_fso_deframer (
         .clk              (core_clk),   // 快时钟域
         .rst_n            (rst_n),
+        .scrambler_en    (scrambler_en),
         .i_link_up        (bit_locked_core),
         .i_rx_data        (aligned_data_c),
         .i_rx_valid       (aligned_valid_c),
@@ -127,6 +154,32 @@ module fec_rx #(
         .o_payload_data   (rx_payload_data),
         .o_payload_valid  (rx_payload_valid)
     );
+
+    // wire frame_locked;
+
+    // fso_deframer_ind #(
+    //     .W                 (W),
+    //     .PAYLOAD_WORDS     (PAYLOAD_WORDS),
+    //     .FRAME_TIMEOUT_MAX (64)
+    // )u_fso_deframer_ind(  
+    //     .clk              (core_clk),       // 快时钟域
+    //     .rst_n            (rst_n),
+
+    //     .i_link_up        (bit_locked_core),
+    //     .i_rx_data        (aligned_data_c),
+    //     .i_rx_valid       (aligned_valid_c),
+
+    //     .scrambler_en     (scrambler_en),
+    //     .o_realign_req    (realign_req),
+    //     .o_frame_start    (),  
+    //     .o_frame_index    (frame_index_rx),
+    //     .o_block_id       (block_id_rx),
+    //     .o_frame_in_block (frame_in_block_rx),
+    //     .o_blk_soft_rst   (blk_soft_rst),  
+    //     .o_frame_locked   (frame_locked),       // ★ 新增：帧级锁定标志
+    //     .o_payload_data   (rx_payload_data),
+    //     .o_payload_valid  (rx_payload_valid)
+    // );
 
     assign o_frame_index    = frame_index_rx;
     assign o_block_id       = block_id_rx;
@@ -173,7 +226,7 @@ module fec_rx #(
         .out_valid   (deintlv_valid),
         .out_data    (deintlv_data)
     );
-
+    
     // ====================================================
     // 9bit FIFO dec_rx_fifo：把 {block_start, data} 一起排队
     // ====================================================
