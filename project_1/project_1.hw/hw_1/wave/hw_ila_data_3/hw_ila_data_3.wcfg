@@ -9,43 +9,50 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0"></ZoomStartTime>
-      <ZoomEndTime time="1,025"></ZoomEndTime>
-      <Cursor1Time time="0"></Cursor1Time>
+      <ZoomStartTime time="443"></ZoomStartTime>
+      <ZoomEndTime time="630"></ZoomEndTime>
+      <Cursor1Time time="541"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="247"></NameColumnWidth>
+      <NameColumnWidth column_width="243"></NameColumnWidth>
       <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="4" />
+   <WVObjectSize size="5" />
    <wave_markers>
    </wave_markers>
-   <wvobject fp_name="gtwiz_reset_tx_done_out" type="logic">
+   <wvobject fp_name="bit_locked" type="logic">
       <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">gtwiz_reset_tx_done_out</obj_property>
-      <obj_property name="ObjectShortName">gtwiz_reset_tx_done_out</obj_property>
+      <obj_property name="ElementShortName">bit_locked</obj_property>
+      <obj_property name="ObjectShortName">bit_locked</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>
-   <wvobject fp_name="gtwiz_userclk_tx_active_in" type="logic">
+   <wvobject fp_name="rx_active" type="logic">
       <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">gtwiz_userclk_tx_active_in</obj_property>
-      <obj_property name="ObjectShortName">gtwiz_userclk_tx_active_in</obj_property>
+      <obj_property name="ElementShortName">rx_active</obj_property>
+      <obj_property name="ObjectShortName">rx_active</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>
-   <wvobject fp_name="txdata32" type="array">
+   <wvobject fp_name="rx_data_from_gth" type="array">
       <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">txdata32[31:0]</obj_property>
-      <obj_property name="ObjectShortName">txdata32[31:0]</obj_property>
+      <obj_property name="ElementShortName">rx_data_from_gth[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_data_from_gth[31:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>
-   <wvobject fp_name="txpmaresetdone_out" type="logic">
+   <wvobject fp_name="rx_done" type="logic">
       <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">txpmaresetdone_out</obj_property>
-      <obj_property name="ObjectShortName">txpmaresetdone_out</obj_property>
+      <obj_property name="ElementShortName">rx_done</obj_property>
+      <obj_property name="ObjectShortName">rx_done</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="rx_slide_req" type="logic">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">rx_slide_req</obj_property>
+      <obj_property name="ObjectShortName">rx_slide_req</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>

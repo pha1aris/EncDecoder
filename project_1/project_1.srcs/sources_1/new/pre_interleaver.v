@@ -3,17 +3,18 @@
 // 码字中
 //
 module pre_interleaver #(
+    parameter DATA_WIDTH          = 32,
     parameter CODEWORD_SIZE_IN_32 = 65,
     parameter NUM_CODEWORDS       = 4
 )(
     input  wire                   clk,
     input  wire                   rst,
     // AXI-Stream Slave Interface
-    input  wire [31:0]            s_axis_tdata,
+    input  wire [DATA_WIDTH-1:0]  s_axis_tdata,
     input  wire                   s_axis_tvalid,
     output wire                   s_axis_tready,
     // AXI-Stream Master Interface
-    output wire [31:0]            m_axis_tdata,
+    output wire [DATA_WIDTH-1:0]  m_axis_tdata,
     output wire                   m_axis_tvalid,
     input  wire                   m_axis_tready
 );
@@ -21,8 +22,8 @@ module pre_interleaver #(
     // ------------------ 存储器定义 ------------------
     // 使用两组RAM实现乒乓操作
     localparam BLOCK_SIZE = CODEWORD_SIZE_IN_32 * NUM_CODEWORDS;
-    reg [31:0] RAM_b0 [NUM_CODEWORDS-1:0] [CODEWORD_SIZE_IN_32-1:0];
-    reg [31:0] RAM_b1 [NUM_CODEWORDS-1:0] [CODEWORD_SIZE_IN_32-1:0];
+    reg [DATA_WIDTH-1:0] RAM_b0 [NUM_CODEWORDS-1:0] [CODEWORD_SIZE_IN_32-1:0];
+    reg [DATA_WIDTH-1:0] RAM_b1 [NUM_CODEWORDS-1:0] [CODEWORD_SIZE_IN_32-1:0];
 
     // ------------------ 状态变量 ------------------
     reg wr_pingpong; // 0: 写Block0, 1: 写Block1

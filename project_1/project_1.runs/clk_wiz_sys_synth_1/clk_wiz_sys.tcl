@@ -57,8 +57,6 @@ if {$::dispatch::connected} {
 
 OPTRACE "clk_wiz_sys_synth_1" START { ROLLUP_AUTO }
 set_param general.maxThreads 32
-set_param chipscope.maxJobs 8
-set_param bd.open.in_stealth_mode 1
 set_param simulator.modelsimInstallPath C:/modeltech64_2020.4/win64
 set_msg_config  -id {Synth 8-11365}  -string {{ERROR: [Synth 8-11365] for the instance 'u_axi_slave' of module 'axi4_lite_slave' declared at 'C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/axi4_lite_slave.v:3', named port connection 'o_slv_reg0' does not exist [C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/fso_rx_top.v:308]}}  -suppress 
 set_param project.vivado.isBlockSynthRun true
@@ -79,7 +77,7 @@ set_property ip_output_repo c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.ca
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
-read_ip -quiet c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/clk_wiz_sys/clk_wiz_sys.xci
+read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/clk_wiz_sys/clk_wiz_sys.xci
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/clk_wiz_sys/clk_wiz_sys_board.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/clk_wiz_sys/clk_wiz_sys.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/clk_wiz_sys/clk_wiz_sys_ooc.xdc]

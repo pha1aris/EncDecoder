@@ -36,6 +36,7 @@ module cnt32_gen (
                 byte_cnt <= 8'd1;
             else
                 byte_cnt <= byte_cnt + 1'b1;
+            
         end else begin
             data_valid <= 1'b0;
         end

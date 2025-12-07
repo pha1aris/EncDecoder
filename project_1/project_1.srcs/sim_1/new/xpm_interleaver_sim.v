@@ -92,7 +92,7 @@ module xpm_interleaver_sim;
 
         .out_valid      (intlv_out_valid),
         .out_data       (intlv_out_data),
-        // .out_ready      (intlv_out_ready),
+        .out_ready      (intlv_out_ready),
         .out_block_start(out_block_start)             // 暂时不用
     );
 
@@ -105,7 +105,7 @@ module xpm_interleaver_sim;
     ) u_deinterleaver (
         .clk        (clk),
         .rst        (rst),
-
+        .blk_soft_rst(1'b0),
         .in_valid   (deintlv_in_valid),
         .in_data    (deintlv_in_data),
         .in_ready   (deintlv_in_ready),

@@ -21,6 +21,9 @@
 
 
 module drp_top(
-
+    input wire drp_clk,
+    input wire drp_addr,
+    input wire drp_en,
+    input wire drp_we
     );
 endmodule

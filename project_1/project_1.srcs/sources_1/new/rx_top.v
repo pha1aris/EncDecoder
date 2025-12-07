@@ -181,7 +181,7 @@ module rx_top(
         .core_clk               (core_clk),
     // --- MODIFICATION 1: 将输入接口修改为AXI-Stream slave接口 ---
     // input wire [31:0]   data_i,
-    // input wire          data_valid_i,
+    // input wire          data_valid_i,    
     // output wire         fifo_input_rdy,
         .s_axis_input_tdata     (de_intv_tdata_o),
         .s_axis_input_tvalid    (de_intv_tvalid_o),

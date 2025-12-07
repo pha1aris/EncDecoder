@@ -198,17 +198,17 @@ module prbs_gth_test(
     frame_generator #(
         .SYNC_MARKER        (GEN_SYNC_MARKER),  // 64'hA53333A8_B1699558 
         .SYNC_REPETITION    (GEN_ASM_REPS),
-        .PAYLOAD_SIZE_WORDS (GEN_PAYLOAD_WORDS) // 1MB 负载
+        .PAYLOAD_SIZE_WORDS (GEN_PAYLOAD_WORDS) // 负载
     ) u_frame_gen (
         .clk                (gtwiz_userclk_tx_usrclk2_out), // GTH TX 时钟
         .rst_n              (gtwiz_userclk_tx_active_out),  // GTH TX 激活
         .txctrl2_out        (txctrl2_out),
-        .payload_data_in    (prbs_data),                    // 来自 PRBS Gen
-        .payload_valid_in   (1'b1),                         // PRBS 总是有效 (靠 ready 节流)
-        .payload_ready_out  (payload_ready_from_frame_gen), // 反压 PRBS Gen
-        .framed_data_out    (framed_tx_data),               // 连接到 GTH TX
-        .framed_valid_out   (framed_tx_valid),              // (GTH TX 是透明的, 但我们保留这个 valid 信号)
-        .framed_ready_in    (1'b1)                          // 假设 GTH TX 总是 ready
+        .payload_data_in    (prbs_data),                   
+        .payload_valid_in   (1'b1),                        
+        .payload_ready_out  (payload_ready_from_frame_gen),
+        .framed_data_out    (framed_tx_data),              
+        .framed_valid_out   (framed_tx_valid),             
+        .framed_ready_in    (1'b1)                         
     );
 
     (* MARK_DEBUG="true" *)wire [31:0] data_o;

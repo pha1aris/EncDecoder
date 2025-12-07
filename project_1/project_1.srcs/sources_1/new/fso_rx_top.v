@@ -1,4 +1,4 @@
-`timescale 1ns / 1ps
+`timescale 1ns/1ps
 
 module fso_rx_top(
     // =========================================================================
@@ -10,8 +10,8 @@ module fso_rx_top(
     output wire [1:0]   tx_disable,       // SFP 光模块控制 (拉低使能)
     
     // GTH 参考时钟
-    input   wire       mgtrefclk0_x1y1_p,    
-    input   wire       mgtrefclk0_x1y1_n,
+    input   wire        mgtrefclk0_x1y1_p,    
+    input   wire        mgtrefclk0_x1y1_n,
     
     // GTH 串行数据
     input  wire         gthrxp_in,
@@ -35,6 +35,8 @@ module fso_rx_top(
     
     // 写地址
     input  wire [31:0]  s_axi_awaddr,
+    // 如果你的 AXI BFM/PS 带 PROT，这里建议加上：
+    input  wire [2:0]   s_axi_awprot,   // ★ 新增：AWPROT
     input  wire         s_axi_awvalid,
     output wire         s_axi_awready,
     // 写数据
@@ -48,6 +50,7 @@ module fso_rx_top(
     input  wire         s_axi_bready,
     // 读地址
     input  wire [31:0]  s_axi_araddr,
+    input  wire [2:0]   s_axi_arprot,   // ★ 新增：ARPROT
     input  wire         s_axi_arvalid,
     output wire         s_axi_arready,
     // 读数据
@@ -70,23 +73,20 @@ module fso_rx_top(
     wire [31:0] gth_rx_data;     // GTH 接收的原始数据
     wire        rx_slide_req;    // 来自 FEC 的滑动请求
     
-    // 逻辑复位
-    wire        logic_rst = ~rx_active; // 高有效 (用于 PRBS)
-    
     // FEC 接口
     wire [7:0]  fec_out_data;    // 解码后的数据 (8-bit)
     wire        fec_out_valid;   // 数据有效
     wire        fec_bit_locked;  // 比特对齐锁定状态
     
-    // PRBS 检查
-    wire [7:0]  prbs_err_vec;    // 错误向量
-    
+    // scrambler 使能：要与 TX 端保持一致
+    wire        scrambler_en = 1'b1;
+
     // 状态输出分配
     assign o_rx_active  = rx_active;
     assign o_bit_locked = fec_bit_locked;
 
     // =========================================================================
-    // PHY & FEC 模块实例化
+    // PHY GTH 实例
     // =========================================================================
     gth_raw_top #(
         .W(32)
@@ -95,27 +95,40 @@ module fso_rx_top(
         .sys_clk_n              (sys_clk_n),
         .sys_rst_n              (sys_rst_n),
         .tx_disable             (tx_disable),
+
         .mgtrefclk0_x1y1_p      (mgtrefclk0_x1y1_p),
         .mgtrefclk0_x1y1_n      (mgtrefclk0_x1y1_n),
+
         .gthrxp_in              (gthrxp_in),
         .gthrxn_in              (gthrxn_in),
         .gthtxp_out             (gthtxp_out),
         .gthtxn_out             (gthtxn_out),
-        .i_loopback             (3'b000),      // 正常模式
+
+        .i_loopback             (3'b000),      // RX-only 模式，正常接收
+
         .o_pll_locked           (),            
-        .o_tx_clk               (),
+        .o_tx_clk               (),            // RX-only，TX 不用
         .o_tx_rst_n             (),
         .o_tx_active            (),
         .o_tx_done              (),
         .i_tx_data              (32'd0),
+
         .o_rx_clk               (rx_usr_clk),
         .o_rx_rst_n             (rx_rst_n_gth),
         .o_rx_done              (),           
         .o_rx_active            (rx_active),  
         .o_cdr_stable           (cdr_stable), 
         .o_rx_data              (gth_rx_data),
-        .i_rx_slide             (rx_slide_req) 
+        .i_rx_slide             (rx_slide_req)
     );
+
+    // =========================================================================
+    // FEC RX 实例（line_clk/core_clk 均为 rx_usr_clk，当前只有一个时钟域）
+    // =========================================================================
+
+    // 对 FEC 来说的“系统复位”：
+    //   GTH 复位正常 + RX 初始化完成 + CDR 稳定
+    wire fec_rst_n = rx_rst_n_gth & rx_active & cdr_stable;
 
     wire [15:0] frame_index;
     wire [15:0] block_id;
@@ -130,14 +143,18 @@ module fso_rx_top(
     ) u_fec_rx (
         .line_clk         (rx_usr_clk),
         .core_clk         (rx_usr_clk),
-        .rst_n            (rx_active),      
+        .rst_n            (fec_rst_n),
+
         .i_rx_data        (gth_rx_data),
-        .i_rx_valid       (1'b1),           
+        .i_rx_valid       (1'b1),           // GTH 每拍都有数据
         .rx_reset_done    (rx_active),      
-        .rx_cdr_stable    (cdr_stable),     
+        .rx_cdr_stable    (cdr_stable),
+        .scrambler_en     (scrambler_en),
+
         .o_data           (fec_out_data),
         .o_valid          (fec_out_valid),
-        .i_data_ready     (1'b1),           
+        .i_data_ready     (1'b1),           // 后端 PRBS 不反压
+
         .o_rxslide        (rx_slide_req),   
         .o_bit_locked     (fec_bit_locked), 
         .o_frame_index    (frame_index),
@@ -148,6 +165,12 @@ module fso_rx_top(
     // =========================================================================
     // PRBS 检查器
     // =========================================================================
+
+    // 建议：PRBS / 误码统计的复位，除了链路 active 外，也参考 bit_locked
+    wire logic_rst = ~rx_active | ~cdr_stable | ~fec_bit_locked;
+
+    wire [7:0]  prbs_err_vec;    // 错误向量
+
     gtwizard_ultrascale_0_prbs_any #(
         .CHK_MODE    (1), 
         .INV_PATTERN (0),
@@ -163,7 +186,7 @@ module fso_rx_top(
     );
 
     // =========================================================================
-    // 统计与监控逻辑 (Fast Clock Domain)
+    // 统计与监控逻辑 (Fast Clock Domain: rx_usr_clk)
     // =========================================================================
     
     reg [3:0]  mask_cnt;
@@ -175,7 +198,6 @@ module fso_rx_top(
     wire        prbs_clr;
     wire [3:0]  current_err_bits_cnt;
     
-    // 计算 8bit 中的错误比特数 (Population Count)
     assign current_err_bits_cnt = prbs_err_vec[0] + prbs_err_vec[1] + 
                                   prbs_err_vec[2] + prbs_err_vec[3] + 
                                   prbs_err_vec[4] + prbs_err_vec[5] + 
@@ -221,16 +243,15 @@ module fso_rx_top(
     assign o_prbs_locked  = link_locked_reg; 
     assign o_error_detect = err_detect_reg;  
 
+    // =========================================================================
+    // 监控数据打包 & CDC 到 AXI 域
+    // =========================================================================
 
-    // 定义需要监控的信号 (rx_usr_clk 域)
     wire [31:0] raw_err_lo = prbs_rxtotal_err_bits[31:0];
     wire [31:0] raw_err_hi = prbs_rxtotal_err_bits[63:32];
     wire [31:0] raw_rx_lo  = prbs_rxtotal_rx_bits[31:0];
     wire [31:0] raw_rx_hi  = prbs_rxtotal_rx_bits[63:32];
     
-    // 将所有监控信号打包成扁平向量
-    // 总位宽：7个寄存器 * 32位 = 224位
-    // 顺序建议：MSB 对应高地址索引
     wire [223:0] monitor_data_fast;
     assign monitor_data_fast = {
         raw_rx_hi,                  // Index 22
@@ -246,67 +267,60 @@ module fso_rx_top(
     wire [31:0]  slv_reg0_ctrl;
     wire         cdc_capture_req = slv_reg0_ctrl[1]; // AXI Bit 1 控制快照
     
-    // 控制信号赋值
-    // Bit 0: 清除 PRBS 计数; Bit 1: 捕获快照
     wire vio_prbs_ctrl_en;
     wire vio_prbs_clr;
     wire axi_prbs_clear = slv_reg0_ctrl[0]; 
 
-    assign prbs_clr = vio_prbs_ctrl_en ? vio_prbs_clr : axi_prbs_clear;
-    
-    // 如果没有 VIO，给默认值
+    assign prbs_clr        = vio_prbs_ctrl_en ? vio_prbs_clr : axi_prbs_clear;
     assign vio_prbs_ctrl_en = 1'b0;
-    assign vio_prbs_clr = 1'b0;
+    assign vio_prbs_clr     = 1'b0;
 
-    // CDC Wrapper 实例化
     monitor_cdc_wrapper #(
         .DATA_WIDTH (224) 
     ) u_mon_cdc (
         .src_clk          (rx_usr_clk),
         .src_rst          (~rx_active),      
-        .src_data_in      (monitor_data_fast), // 正在跳变的实时数据
-
+        .src_data_in      (monitor_data_fast),
         .dest_clk         (s_axi_aclk),
-        .dest_capture_req (cdc_capture_req),   // 来自 AXI 的捕获请求
-        .dest_data_out    (monitor_data_synced)// 输出给 AXI Slave 的稳定数据
+        .dest_capture_req (cdc_capture_req),
+        .dest_data_out    (monitor_data_synced)
     );
 
     axi4_lite_slave #(
         .ADDRESS_WIDTH(32),
         .DATA_WIDTH   (32),
-        .NUM_RO_REGS  (7)    // 7 个监控寄存器
+        .NUM_RO_REGS  (7)
     ) u_axi_slave (
         .ACLK              (s_axi_aclk),
         .ARESETN           (s_axi_aresetn),
-        // AXI Write Address
+
         .S_AWADDR          (s_axi_awaddr),
+        .S_AWPROT          (s_axi_awprot),  // ★ 新增：PROT 透传
         .S_AWVALID         (s_axi_awvalid),
         .S_AWREADY         (s_axi_awready),    
-        // AXI Write Data
+
         .S_WDATA           (s_axi_wdata),
         .S_WSTRB           (s_axi_wstrb),
         .S_WVALID          (s_axi_wvalid),
         .S_WREADY          (s_axi_wready),    
-        // AXI Write Response
+
         .S_BRESP           (s_axi_bresp),
         .S_BVALID          (s_axi_bvalid),
         .S_BREADY          (s_axi_bready),    
-        // AXI Read Address
+
         .S_ARADDR          (s_axi_araddr),
+        .S_ARPROT          (s_axi_arprot),  // ★ 新增
         .S_ARVALID         (s_axi_arvalid),
         .S_ARREADY         (s_axi_arready),    
-        // AXI Read Data
+
         .S_RDATA           (s_axi_rdata),
         .S_RRESP           (s_axi_rresp),
         .S_RVALID          (s_axi_rvalid),
         .S_RREADY          (s_axi_rready),
         
-        // 监控数据输入 (来自 CDC)
         .monitor_data_flat (monitor_data_synced),
         
-        // 控制寄存器输出 (去往逻辑控制)
-        .o_slv_reg0        (slv_reg0_ctrl) // 导出 Reg0
-        // .o_slv_reg1        ()               // 如果需要 Reg1 可在此引出
+        .o_slv_reg0        (slv_reg0_ctrl)
     );
 
 endmodule

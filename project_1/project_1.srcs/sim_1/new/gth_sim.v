@@ -18,12 +18,12 @@ module gth_sim;
     //----------------------------------------------------------------
     localparam SYS_CLK_PERIOD    = 5000;     // 200MHz
     localparam REFCLK_PERIOD     = 8000;     //125Mhz
-
-    reg  sys_clk;
+    localparam FREERUNCLK_PERIOD = 64000;    //15.625Mhz
+    reg  sys_clk;  
     reg  rst_n;
     reg  mgtrefclk0_x1y1_p;
     wire mgtrefclk0_x1y1_n;
-
+    reg freerun_clk;
     //----------------------------------------------------------------
     // DUT (Device Under Test) 端口
     //----------------------------------------------------------------
@@ -42,6 +42,11 @@ module gth_sim;
     initial begin
         mgtrefclk0_x1y1_p = 1'b0;
         forever #(REFCLK_PERIOD / 2.0) mgtrefclk0_x1y1_p = ~mgtrefclk0_x1y1_p;
+    end
+
+    initial begin
+        freerun_clk = 1'b0;
+        forever #(FREERUNCLK_PERIOD/2.0) freerun_clk = ~freerun_clk;
     end
     
     assign mgtrefclk0_x1y1_n = ~mgtrefclk0_x1y1_p;
@@ -83,6 +88,37 @@ module gth_sim;
         .gthtxn_out          (gthtxn_out)
     );
     
+    // gth_raw_top #(
+    //     .W (W)
+    // ) u_gth_raw (
+    //     .freerun_clk        (freerun_clk),
+    //     .gth_reset_all      (!rst_n),
+
+    //     .tx_disable         (tx_disable),
+    //     .mgtrefclk0_x1y1_p  (mgtrefclk0_x1y1_p),
+    //     .mgtrefclk0_x1y1_n  (mgtrefclk0_x1y1_n),
+    //     .gthrxp_in          (gthrxp_in),
+    //     .gthrxn_in          (gthrxn_in),
+    //     .gthtxp_out         (gthtxp_out),
+    //     .gthtxn_out         (gthtxn_out),
+
+    //     .i_loopback         (3'b000),
+
+    //     .o_tx_clk           (tx_usr_clk),   // TX line_clk
+    //     .o_tx_rst_n         (tx_rst_n),
+    //     .o_tx_done          (tx_done),
+    //     .o_tx_active        (tx_active),
+    //     .i_tx_data          (tx_data_to_gth),
+
+    //     .o_rx_clk           (rx_usr_clk),   // RX line_clk
+    //     .o_rx_rst_n         (rx_rst_n),
+    //     .o_rx_done          (rx_done),
+    //     .o_rx_active        (rx_active),
+    //     .o_cdr_stable       (cdr_stable),
+    //     .o_rx_data          (rx_data_from_gth),
+    //     .i_rx_slide         (rx_slide_req)
+    // );
+
 
 // prbs_gth_test prbs_gth_test(
 

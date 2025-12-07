@@ -6,6 +6,7 @@ module bit_aligner_ind #(
     parameter integer SLIDE_COOLDOWN    = 5,
     parameter integer ERR_TH            = 0,
     parameter integer CHECK_TIMEOUT_MAX = 2048,
+    parameter         IDLE_WORD         = 32'h0707_0707, // tx在空闲状态太下发送的数据
     // ★ 新增：锁定后如果长期看不到前导，则认为“失锁”的超时时间
     parameter integer LOCK_LOSS_TIMEOUT = 4096
 )(

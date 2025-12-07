@@ -117,7 +117,7 @@ module gearbox_32to8 (
     reg [7:0]  out_data_d0;
     reg        out_sync_rst_d0;
     reg        out_valid_d0;
-
+    
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             out_data_d0 <= 'd0;

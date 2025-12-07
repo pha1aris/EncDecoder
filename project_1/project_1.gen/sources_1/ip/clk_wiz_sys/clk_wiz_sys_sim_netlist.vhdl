@@ -2,7 +2,7 @@
 -- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
--- Date        : Thu Nov 27 21:13:22 2025
+-- Date        : Sat Nov 29 10:09:07 2025
 -- Host        : FSO-A running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
 --               c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/clk_wiz_sys/clk_wiz_sys_sim_netlist.vhdl
@@ -19,6 +19,7 @@ entity clk_wiz_sys_clk_wiz is
   port (
     clk_out1 : out STD_LOGIC;
     clk_out2 : out STD_LOGIC;
+    clk_out3 : out STD_LOGIC;
     reset : in STD_LOGIC;
     locked : out STD_LOGIC;
     clk_in1_p : in STD_LOGIC;
@@ -30,6 +31,7 @@ architecture STRUCTURE of clk_wiz_sys_clk_wiz is
   signal clk_in1_clk_wiz_sys : STD_LOGIC;
   signal clk_out1_clk_wiz_sys : STD_LOGIC;
   signal clk_out2_clk_wiz_sys : STD_LOGIC;
+  signal clk_out3_clk_wiz_sys : STD_LOGIC;
   signal NLW_mmcme4_adv_inst_CDDCDONE_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcme4_adv_inst_CLKFBIN_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcme4_adv_inst_CLKFBOUT_UNCONNECTED : STD_LOGIC;
@@ -38,7 +40,6 @@ architecture STRUCTURE of clk_wiz_sys_clk_wiz is
   signal NLW_mmcme4_adv_inst_CLKINSTOPPED_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcme4_adv_inst_CLKOUT0B_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcme4_adv_inst_CLKOUT1B_UNCONNECTED : STD_LOGIC;
-  signal NLW_mmcme4_adv_inst_CLKOUT2_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcme4_adv_inst_CLKOUT2B_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcme4_adv_inst_CLKOUT3_UNCONNECTED : STD_LOGIC;
   signal NLW_mmcme4_adv_inst_CLKOUT3B_UNCONNECTED : STD_LOGIC;
@@ -64,6 +65,9 @@ architecture STRUCTURE of clk_wiz_sys_clk_wiz is
   attribute BOX_TYPE of clkout2_buf : label is "PRIMITIVE";
   attribute XILINX_LEGACY_PRIM of clkout2_buf : label is "BUFG";
   attribute XILINX_TRANSFORM_PINMAP of clkout2_buf : label is "VCC:CE";
+  attribute BOX_TYPE of clkout3_buf : label is "PRIMITIVE";
+  attribute XILINX_LEGACY_PRIM of clkout3_buf : label is "BUFG";
+  attribute XILINX_TRANSFORM_PINMAP of clkout3_buf : label is "VCC:CE";
   attribute BOX_TYPE of mmcme4_adv_inst : label is "PRIMITIVE";
   attribute OPT_MODIFIED : string;
   attribute OPT_MODIFIED of mmcme4_adv_inst : label is "MLO";
@@ -98,6 +102,16 @@ clkout2_buf: unisim.vcomponents.BUFGCE
       I => clk_out2_clk_wiz_sys,
       O => clk_out2
     );
+clkout3_buf: unisim.vcomponents.BUFGCE
+    generic map(
+      CE_TYPE => "ASYNC",
+      SIM_DEVICE => "ULTRASCALE_PLUS"
+    )
+        port map (
+      CE => '1',
+      I => clk_out3_clk_wiz_sys,
+      O => clk_out3
+    );
 mmcme4_adv_inst: unisim.vcomponents.MMCME4_ADV
     generic map(
       BANDWIDTH => "OPTIMIZED",
@@ -114,7 +128,7 @@ mmcme4_adv_inst: unisim.vcomponents.MMCME4_ADV
       CLKOUT1_DUTY_CYCLE => 0.500000,
       CLKOUT1_PHASE => 0.000000,
       CLKOUT1_USE_FINE_PS => "FALSE",
-      CLKOUT2_DIVIDE => 1,
+      CLKOUT2_DIVIDE => 10,
       CLKOUT2_DUTY_CYCLE => 0.500000,
       CLKOUT2_PHASE => 0.000000,
       CLKOUT2_USE_FINE_PS => "FALSE",
@@ -167,7 +181,7 @@ mmcme4_adv_inst: unisim.vcomponents.MMCME4_ADV
       CLKOUT0B => NLW_mmcme4_adv_inst_CLKOUT0B_UNCONNECTED,
       CLKOUT1 => clk_out2_clk_wiz_sys,
       CLKOUT1B => NLW_mmcme4_adv_inst_CLKOUT1B_UNCONNECTED,
-      CLKOUT2 => NLW_mmcme4_adv_inst_CLKOUT2_UNCONNECTED,
+      CLKOUT2 => clk_out3_clk_wiz_sys,
       CLKOUT2B => NLW_mmcme4_adv_inst_CLKOUT2B_UNCONNECTED,
       CLKOUT3 => NLW_mmcme4_adv_inst_CLKOUT3_UNCONNECTED,
       CLKOUT3B => NLW_mmcme4_adv_inst_CLKOUT3B_UNCONNECTED,
@@ -198,6 +212,7 @@ entity clk_wiz_sys is
   port (
     clk_out1 : out STD_LOGIC;
     clk_out2 : out STD_LOGIC;
+    clk_out3 : out STD_LOGIC;
     reset : in STD_LOGIC;
     locked : out STD_LOGIC;
     clk_in1_p : in STD_LOGIC;
@@ -215,6 +230,7 @@ inst: entity work.clk_wiz_sys_clk_wiz
       clk_in1_p => clk_in1_p,
       clk_out1 => clk_out1,
       clk_out2 => clk_out2,
+      clk_out3 => clk_out3,
       locked => locked,
       reset => reset
     );

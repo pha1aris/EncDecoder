@@ -78,19 +78,19 @@ module tb_frame_end2end;
     // --- DUT 1: 帧生成器 ---
     // (注意: 这里的 frame_generator 必须是 *无Header* 的版本)
     frame_generator #(
-        .SYNC_MARKER            (TB_SYNC_MARKER), // ★ 传递 SYNC_MARKER
+        .SYNC_MARKER            (TB_SYNC_MARKER), // ★ 传递 SYNC_MARKER A53333A8_B1699558
         .SYNC_REPETITION        (GEN_ASM_REPS),
         .PAYLOAD_SIZE_WORDS     (GEN_PAYLOAD_WORDS) 
     ) u_frame_gen (
-        .clk                (clk),
-        .rst_n              (rst_n), // 
-        .payload_data_in    (payload_data_gen_w),
-        .payload_valid_in   (payload_valid_gen_w),
-        .payload_ready_out  (payload_ready_gen_w),
-        .txctrl2_out        (txctrl2_out),
-        .framed_data_out    (framed_data_w),
-        .framed_valid_out   (framed_valid_w),
-        .framed_ready_in    (framed_ready_w) // ★ 连接到反压 reg
+        .clk                    (clk),
+        .rst_n                  (rst_n), // 
+        .payload_data_in        (payload_data_gen_w),
+        .payload_valid_in       (payload_valid_gen_w),
+        .payload_ready_out      (payload_ready_gen_w),
+        .txctrl2_out            (txctrl2_out),
+        .framed_data_out        (framed_data_w),
+        .framed_valid_out       (framed_valid_w),
+        .framed_ready_in        (framed_ready_w) // ★ 连接到反压 reg
     );
 
     // --- DUT 2: 帧同步器 ---

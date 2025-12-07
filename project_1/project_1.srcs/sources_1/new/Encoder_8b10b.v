@@ -23,6 +23,7 @@ wire       next_rd;
 assign data_o = data_o_reg;
 assign data_valid_o = data_valid_o_reg;
 
+
 always @(*) begin
     if (current_rd == RD_POS) begin
         next_code = Encode_lut_pos_rd(data_i, k_i);
@@ -30,7 +31,10 @@ always @(*) begin
         next_code = Encode_lut_neg_rd(data_i, k_i);
     end
 end
+
+
 assign next_rd = get_next_rd(next_code, current_rd);
+
 
 always @(posedge clk or posedge rst) begin
     if (rst) begin

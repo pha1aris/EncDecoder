@@ -147,13 +147,13 @@ module enc_dec_core_clk_sim();
     reg [8:0]  byte_cnt;   
     assign      cnt_buf_rden = !cnt_buf_empty;
 
-cnt32_gen cnt32_gen (
-    .wr_clk             (wr_clk),
-    .rst                (rst),
-    .encoder_fifo_wrrdy (encoder_fifo_wrrdy), // 下游FIFO就绪
-    .data_o             (cnt32),
-    .data_valid         (cnt32_valid)
-);
+    cnt32_gen cnt32_gen (
+        .wr_clk             (wr_clk),
+        .rst                (rst),
+        .encoder_fifo_wrrdy (encoder_fifo_wrrdy), // 下游FIFO就绪
+        .data_o             (cnt32),
+        .data_valid         (cnt32_valid)
+    );
 
 //////////////------------------------------------------------
     gtwizard_ultrascale_0_prbs_any #(
@@ -207,7 +207,6 @@ cnt32_gen cnt32_gen (
         .core_clk               (core_clk),    
         // .data_i                 (cnt32),
         // .data_valid_i           (cnt32_valid),
-        
         .data_i                 (prbs_data),
         .data_valid_i           (encoder_fifo_wrrdy),
 
@@ -260,7 +259,7 @@ cnt32_gen cnt32_gen (
 
     assign Decoder_output_ready = 1;
 
-    always @(posedge fifo_rd_clk or posedge rst) begin
+    always @(posedge rd_clk or posedge rst) begin
         if(rst) begin
             output_buf_empty_neg0 <= 0;
             output_buf_empty_neg1 <= 0;
@@ -270,7 +269,7 @@ cnt32_gen cnt32_gen (
         end
     end
 
-    always @(posedge fifo_rd_clk or posedge rst) begin
+    always @(posedge rd_clk or posedge rst) begin
         if(rst) begin
             empty_dly_sr <= 0;
         end else if(output_buf_rd_r && empty_dly_sr < READ_DELAY_CYCLES) begin
@@ -280,7 +279,7 @@ cnt32_gen cnt32_gen (
         end
     end
 
-    always @(posedge fifo_rd_clk or posedge rst) begin
+    always @(posedge rd_clk or posedge rst) begin
         if(rst) begin
             output_buf_rd_r <= 0;
         end else if(output_buf_empty_neg) begin
@@ -288,7 +287,7 @@ cnt32_gen cnt32_gen (
         end
     end
     reg obuf_rden;
-    always @(posedge fifo_rd_clk or posedge rst) begin
+    always @(posedge rd_clk or posedge rst) begin
         if(rst) begin
            obuf_rden <= 0;
         end else if(empty_dly_sr == READ_DELAY_CYCLES && output_buf_rd_r <= 1) begin

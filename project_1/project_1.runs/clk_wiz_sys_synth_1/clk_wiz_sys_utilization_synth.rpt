@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date         : Thu Nov 27 21:13:22 2025
+| Date         : Sat Nov 29 10:09:07 2025
 | Host         : FSO-A running 64-bit major release  (build 9200)
 | Command      : report_utilization -file clk_wiz_sys_utilization_synth.rpt -pb clk_wiz_sys_utilization_synth.pb
 | Design       : clk_wiz_sys
@@ -107,7 +107,7 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +------------+------+-------+------------+-----------+-------+
 |  Site Type | Used | Fixed | Prohibited | Available | Util% |
 +------------+------+-------+------------+-----------+-------+
-| BUFGCE     |    2 |     0 |          0 |       116 |  1.72 |
+| BUFGCE     |    3 |     0 |          0 |       116 |  2.59 |
 | BUFGCE_DIV |    0 |     0 |          0 |        16 |  0.00 |
 | BUFG_GT    |    0 |     0 |          0 |       168 |  0.00 |
 | BUFG_PS    |    0 |     0 |          0 |        72 |  0.00 |
@@ -155,7 +155,7 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +------------+------+---------------------+
 |  Ref Name  | Used | Functional Category |
 +------------+------+---------------------+
-| BUFGCE     |    2 |               Clock |
+| BUFGCE     |    3 |               Clock |
 | MMCME4_ADV |    1 |               Clock |
 | IBUFCTRL   |    1 |              Others |
 | DIFFINBUF  |    1 |                 I/O |

@@ -76,7 +76,8 @@ module fec_tx #(
         .rst            (rst),
         .in_valid       (enc_valid),
         .in_data        (enc_data),
-        .in_ready       (xpm_input_tready),    
+        .in_ready       (xpm_input_tready),   
+        .out_ready      (intlv_out_ready), 
         .out_valid      (intlv_valid),
         .out_data       (intlv_data),
         .out_block_start(intlv_block_start)
@@ -90,22 +91,23 @@ module fec_tx #(
     wire        fifo_flag;
     wire        fifo_ready;
 
-    fifo_8b_flag_sync #(
-        .DEPTH     (2048))
-    u_intlv_fifo (
-        .clk       (core_clk),
-        .rst       (rst),
+    // fifo_8b_flag_sync #(
+    //     .DEPTH (2048),
+    //     .GUARD (400)   // 预留 1 个空位，刚好抵消交织器 1 拍反压延迟
+    // ) u_intlv_fifo (
+    //     .clk       (core_clk),
+    //     .rst       (rst),
 
-        .in_data   (intlv_data),
-        .in_flag   (intlv_block_start),
-        .in_valid  (intlv_valid),
-        .in_ready  (intlv_out_ready),            
+    //     .in_data   (intlv_data),
+    //     .in_flag   (intlv_block_start),
+    //     .in_valid  (intlv_valid),
+    //     .in_ready  (intlv_out_ready),
 
-        .out_data  (fifo_data),
-        .out_flag  (fifo_flag),
-        .out_valid (fifo_valid),
-        .out_ready (fifo_ready)
-    );
+    //     .out_data  (fifo_data),
+    //     .out_flag  (fifo_flag),
+    //     .out_valid (fifo_valid),
+    //     .out_ready (fifo_ready)
+    // );
 
     // =============== 8bit → 32bit 打包 + 块起始 ===============
     // gearbox 输出
@@ -118,10 +120,10 @@ module fec_tx #(
         .clk            (core_clk),
         .rst            (rst),
 
-        .in_data        (fifo_data),
-        .in_valid       (fifo_valid),
-        .in_block_start (fifo_flag),
-        .in_ready       (fifo_ready),       // ★ 直接用 FIFO 的读侧 ready
+        .in_data        (intlv_data),
+        .in_valid       (intlv_valid),
+        .in_block_start (intlv_block_start),
+        .in_ready       (intlv_out_ready),       // ★ 直接用 FIFO 的读侧 ready
 
         .out_ready      (gb_ready),         // 来自 framer（再往下 async FIFO）
         .out_data       (gb_data),
@@ -159,7 +161,7 @@ module fec_tx #(
     wire [7:0]  tx_fifo_wrcnt;
 //加入计数逻辑 每次发送一个帧 而不是一有数据就发送 
 
-    reg rst_sync_d0,rst_sync_d1;
+    reg         rst_sync_d0,rst_sync_d1;
     
     always@(posedge core_clk or posedge rst)begin
         if(rst)begin

@@ -114,6 +114,23 @@ module tx_top(
         .sync_valid_o           (sync_valid_o)
     );
 
+// module Sync (
+//     input               rst,                  // 高有效复位
+//     input               core_clk,             // 时钟
+
+//     // AXI Stream Input
+//     input      [7:0]    s_axis_input_tdata,
+//     input               s_axis_input_tvalid,
+//     input               s_axis_input_tlast,   // tlast 信号当前未被使用
+//     output              s_axis_input_tready,
+
+//     output wire [31:0]  m_axis_output_tdata,
+//     output wire         m_axis_output_tvalid,
+//     output wire         m_axis_output_tlast,
+//     input  wire         m_axis_output_tready
+// );
+
+
     pre_interleaver #(
         .CODEWORD_SIZE          (256),   // 每个码字256 words (1024B)
         .NUM_CODEWORDS          (4)    // 4个码字
@@ -127,6 +144,7 @@ module tx_top(
         .m_axis_tvalid          (intv_tvalid_o),
         .m_axis_tready          (intv_tready_o)
     );
+
 
     ddr4_controler_clean #(
         .MATRIX_COL             (8), 
@@ -161,6 +179,7 @@ module tx_top(
         .rd_fifo_rvalid         (rd_fifo_rvalid),   //output
         .rd_fifo_rdata          (rd_fifo_rdata_u1)  //ouptut
     );
+
 
     frame_generator frame_generator (
         .clk                    (clk),

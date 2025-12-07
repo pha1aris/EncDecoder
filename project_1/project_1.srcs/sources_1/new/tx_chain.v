@@ -53,6 +53,7 @@ module tx_chain (
         .EN            (prbs_en), // 仅当编码器输入 FIFO 准备好时才产生新数据
         .DATA_OUT      (prbs_data)
     );
+    
     // --- 2. 编码器 ---
     Encoder Encoder(
         .rst                   (rst),

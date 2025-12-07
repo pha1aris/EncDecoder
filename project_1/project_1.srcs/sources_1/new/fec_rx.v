@@ -58,14 +58,12 @@ module fec_rx #(
     // );
 
     bit_aligner_ind #(
-        .W                  (32),                // 需要的真头数量（窗口内至少 N 次匹配才认为可以锁定）
+        .W                  (32),     // 需要的真头数量（窗口内至少 N 次匹配才认为可以锁定）
         .VERIFY_CNT_MAX     (4),     // bitslip 之后的冷却周期数（避免连发）
         .SLIDE_COOLDOWN     (50),    // 对 ALIGN_WORD 允许的 bit 误差数
         .ERR_TH             (2),             // UNLOCK 状态下，长期匹配不到头时触发 bitslip 的超时时间（按 i_rx_valid 计数）
-        .CHECK_TIMEOUT_MAX  (4096),// 用来统计“头匹配/假头”的窗口长度（建议 >= VERIFY_CNT_MAX）
-        .HDR_WINDOW_N       (32),      // LOCKED 状态下，窗口内允许的最大假头数
-        .FALSE_HDR_MAX      (4),      // bitslip 脉冲宽度（以 clk 周期计）
-        .BITSLIP_PULSE      (1)
+        .CHECK_TIMEOUT_MAX  (4096),  // 用来统计“头匹配/假头”的窗口长度（建议 >= VERIFY_CNT_MAX）
+        .LOCK_LOSS_TIMEOUT  (4096) //// 锁定后如果长期看不到前导，则认为“失锁”的超时时间
     )u_bit_aligner_ind(
         .clk                (line_clk),
         .rst_n              (rst_n),
@@ -79,6 +77,7 @@ module fec_rx #(
         .o_bit_locked       (o_bit_locked),
         .o_data_aligned     (aligned_data)
     );
+
 
     // ========== async FIFO: line_clk → core_clk ==========
 
@@ -94,7 +93,6 @@ module fec_rx #(
     assign rx32_fifo_rd_en   = ~rx32_fifo_empty & ~rx32_fifo_rd_rst_busy;
 
 //延迟读逻辑
-
 
     async_fifo_32w_32r u_rx_fifo (
         .rst        (rst),
@@ -114,7 +112,7 @@ module fec_rx #(
     wire         aligned_valid_c = ~rx32_fifo_empty & ~rx32_fifo_rd_rst_busy;
 
     //==============================
-    // bit_locked 同步到 core_clk 域
+    // bit_locked 同步
     //==============================
     reg [1:0] bit_locked_sync;
     always @(posedge core_clk or posedge rst) begin
@@ -141,7 +139,7 @@ module fec_rx #(
     ) u_fso_deframer (
         .clk              (core_clk),   // 快时钟域
         .rst_n            (rst_n),
-        .scrambler_en    (scrambler_en),
+        .scrambler_en     (scrambler_en),
         .i_link_up        (bit_locked_core),
         .i_rx_data        (aligned_data_c),
         .i_rx_valid       (aligned_valid_c),

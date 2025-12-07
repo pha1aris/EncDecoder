@@ -20,7 +20,16 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Decoder_8b10b(
+module Decoder_8b10b#(
+    parameter COMMA = 10'h1BC
+)(
+    input wire clk,
+    input wire rst,
+    
 
-    );
+);
+
+
+
+
 endmodule

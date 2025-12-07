@@ -55,7 +55,7 @@
 // instance drives a single transceiver channel for data transmission demonstration purposes.
 // =====================================================================================================================
 
-module gtwizard_ultrascale_1_example_stimulus_8b10b (
+ module gtwizard_ultrascale_1_example_stimulus_8b10b (
   input  wire         gtwiz_reset_all_in,
   input  wire         gtwiz_userclk_tx_usrclk2_in,
   input  wire         gtwiz_userclk_tx_active_in,

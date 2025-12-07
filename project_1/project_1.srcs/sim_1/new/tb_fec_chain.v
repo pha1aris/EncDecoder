@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-
+`define  SIM
 module tb_fec_chain;
 
     //============================================================
@@ -7,19 +7,20 @@ module tb_fec_chain;
     // TEST_PRBS = 0 → 8bit 计数器
     // TEST_PRBS = 1 → PRBS7（8bit）
     //============================================================
-    localparam TEST_PRBS = 1;
+    localparam TEST_PRBS     = 0;
     localparam INJECT_ERR_EN = 0;
-    localparam SCRAMBLER_EN = 0; //扰码使能
+    localparam SCRAMBLER_EN  = 0; //扰码使能
     //============================================================
     // 时钟 & 复位
     //============================================================
     reg core_clk;
-    reg line_clk;
+    wire line_clk;
     reg rst_n;
-    initial begin
-        line_clk = 0;
-        forever #8 line_clk = ~line_clk;  // 20MHz
-    end
+    // initial begin
+    //     line_clk = 0;
+    //     forever #8 line_clk = ~line_clk;  // 20MHz
+    // end
+    assign line_clk = core_clk;
     initial begin
         core_clk = 1'b0;
         forever #5 core_clk = ~core_clk;   // 100MHz
@@ -62,7 +63,7 @@ module tb_fec_chain;
         .INTLV_N          (INTLV_N),
         .FRAMES_PER_BLOCK (FRAMES_PER_BLOCK)
     ) u_fec_tx (
-        .line_clk         (line_clk),
+        .line_clk         (core_clk),
         .core_clk         (core_clk),
         .rst_n            (rst_n),   //复位信号跨时钟域
         .scrambler_en     (SCRAMBLER_EN),
@@ -215,7 +216,7 @@ module tb_fec_chain;
         .NBITS       (8)
     ) u_prbs_gen (
         .RST      (~rst_n),
-        .CLK      (line_clk),
+        .CLK      (core_clk),
         .DATA_IN  (8'd0),
         .EN       (use_prbs && src_ready),
         .DATA_OUT (prbs7_data)
@@ -259,8 +260,8 @@ module tb_fec_chain;
     ) u_prbs_chk (
         .RST      (~rst_n),
         .CLK      (core_clk),
-        .DATA_IN  (rx_data),
-        .EN       (use_prbs && rx_valid),
+        .DATA_IN  (rx_data_d),
+        .EN       (use_prbs && rx_valid_d),
         .DATA_OUT (prbs_err_vec)
     );
 
@@ -269,6 +270,8 @@ module tb_fec_chain;
     // ------------------------------------------------
     reg [3:0] prbs_mask_cnt;    // 屏蔽计数器
     reg       prbs_lock_latched; // 锁定标志
+
+    wire chk_en = use_prbs && rx_valid;   // 或者再 & bit_locked
 
     always @(posedge core_clk or negedge rst_n) begin
         if (!rst_n) begin
@@ -284,53 +287,33 @@ module tb_fec_chain;
                 if (|prbs_err_vec) begin
                     prbs_err <= prbs_err + 1;
                 end
-                
                 // 如果当前周期无错，认为已锁定
                 if (prbs_err_vec == 0)
                     prbs_lock_latched <= 1'b1;
             end
         end
     end
+    // ------------------------------------------------
+    // prbs_match：只在 rx_valid 且过了 mask 期时，反映当前 symbol 是否无错
+    // ------------------------------------------------
+    wire prbs_match_sym = (prbs_err_vec == 8'h00);
 
-    // 最终匹配信号：屏蔽期已过 且 当前无错
-    assign prbs_match = (prbs_mask_cnt >= 4) && (prbs_err_vec == 0);
+    reg prbs_match_r;
+    always @(posedge core_clk or negedge rst_n) begin
+        if (!rst_n) begin
+            prbs_match_r <= 1'b0;
+        end else if (use_prbs) begin
+            if (chk_en && (prbs_mask_cnt >= 4))
+                prbs_match_r <= prbs_match_sym;
+            else
+                prbs_match_r <= 1'b0;   // 没有有效数据 / 未过屏蔽期 → 拉低
+        end else begin
+            prbs_match_r <= 1'b0;
+        end
+    end
 
+    assign prbs_match = prbs_match_r;
 
-
-    // always @(posedge line_clk or negedge rst_n) begin
-    //     if (!rst_n) begin
-    //         cnt_err       <= 0;
-    //         expected_data <= 8'd0;
-    //     end else if (rx_valid) begin
-    //         if (!use_prbs) begin
-    //             // 1) 先比较当前收到的 rx_data 和当前期望值 expected_data
-    //             if (rx_data !== expected_data) begin
-    //                 cnt_err <= cnt_err + 1;
-
-    //                 // 使用旧值的 cnt_err == 0 来判断“第一颗错误”
-    //                 if (cnt_err == 0) begin
-    //                     $display("[%0t] FIRST CNT ERROR !!!", $time);
-    //                     $display("  expected_data    = %0d, rx_data = %0d",
-    //                               expected_data, rx_data);
-    //                     $display("  rx_frame_index   = %0d", rx_frame_index);
-    //                     $display("  rx_block_id      = %0d", rx_block_id);
-    //                     $display("  rx_frame_in_block= %0d", rx_frame_in_block);
-    //                     // 这里可以再加：当前交织器 / 解交织器的一些状态信号
-    //                     $stop;   // 在第一颗错停下来
-    //                 end
-    //             end
-
-    //             // 2) 再更新下一拍的 expected_data（0..228 循环）
-    //             if (expected_data == 8'd228)
-    //                 expected_data <= 8'd0;
-    //             else
-    //                 expected_data <= expected_data + 1'b1;
-    //         end
-    //     end
-    // end
-//============================================================
-// RX 端计数器模式检查（core_clk 域）
-//============================================================
     reg  [7:0] exp_cnt;
     reg  [7:0] rx_data_d;      // 把 rx_data 打一拍
     reg        rx_valid_d;     // 把 rx_valid 打一拍
@@ -363,11 +346,11 @@ module tb_fec_chain;
                     if (!cnt_match_sym) begin
                         cnt_err <= cnt_err + 1;
                         if (cnt_err == 0) begin
-                            $display("[%0t] FIRST CNT ERROR !!!", $time);
-                            $display("  exp_cnt        = %0d, rx_data = %0d", exp_cnt, rx_data_d);
-                            $display("  rx_frame_index = %0d", rx_frame_index);
-                            $display("  rx_block_id    = %0d", rx_block_id);
-                            $display("  rx_frame_in_block = %0d", rx_frame_in_block);
+                            // $display("[%0t] FIRST CNT ERROR !!!", $time);
+                            // $display("  exp_cnt        = %0d, rx_data = %0d", exp_cnt, rx_data_d);
+                            // $display("  rx_frame_index = %0d", rx_frame_index);
+                            // $display("  rx_block_id    = %0d", rx_block_id);
+                            // $display("  rx_frame_in_block = %0d", rx_frame_in_block);
                             // 这里如果想停仿真就 $stop;
                         end
                     end
@@ -393,24 +376,24 @@ module tb_fec_chain;
     // 仿真流程 & 打印信息
     //============================================================
     initial begin
-        $dumpfile("tb_fec_chain.vcd");
-        $dumpvars(0, tb_fec_chain);
+        // $dumpfile("tb_fec_chain.vcd");
+        // $dumpvars(0, tb_fec_chain);
 
         // 等到 bit_aligner 锁定 + 首帧 deframer 输出再提示
         wait (bit_locked == 1'b1);
-        $display("[%0t] Bit Aligner Locked.", $time);
+        // $display("[%0t] Bit Aligner Locked.", $time);
 
         wait (rx_frame_index == 16'd0);
-        $display("[%0t] First frame received.", $time);
+        // $display("[%0t] First frame received.", $time);
 
         // 正常跑一段时间
         #200000;
 
-        $display("======================================");
-        $display("TEST_PRBS = %0d", TEST_PRBS);
-        $display("Counter errors = %0d", cnt_err);
-        $display("PRBS7   errors = %0d", prbs_err);
-        $display("======================================");
+        // $display("======================================");
+        // $display("TEST_PRBS = %0d", TEST_PRBS);
+        // $display("Counter errors = %0d", cnt_err);
+        // $display("PRBS7   errors = %0d", prbs_err);
+        // $display("======================================");
 
 //        $finish;
     end

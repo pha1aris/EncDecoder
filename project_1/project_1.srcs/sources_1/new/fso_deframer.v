@@ -164,7 +164,7 @@ module fso_deframer #(
 
             pre_win_cnt      <= 'd0;
             pre_bad_cnt      <= 'd0;
-            pre_need_realign <= 1'b0;
+            // pre_need_realign <= 1'b0;
 
             o_frame_locked   <= 1'b0;
         end else begin
@@ -191,7 +191,7 @@ module fso_deframer #(
 
                     pre_win_cnt      <= 'd0;
                     pre_bad_cnt      <= 'd0;
-                    pre_need_realign <= 1'b0;
+                    // pre_need_realign <= 1'b0;
 
                     if (i_link_up)
                         state <= S_SEARCH_PREAMBLE1;
@@ -460,13 +460,13 @@ module fso_deframer #(
     //================================================================
     // Debug 打印（可按需要保留或注释）
     //================================================================
-    always @(posedge clk) begin
-        if (i_rx_valid) begin
-            $display("RX Data - i_rx_data: %h, i_rx_valid: %b", i_rx_data, i_rx_valid);
-        end
-        if (o_payload_valid) begin
-            $display("PAYLOAD - o_payload_data: %h, o_payload_valid: %b", o_payload_data, o_payload_valid);
-        end
-    end
+    // always @(posedge clk) begin
+    //     if (i_rx_valid) begin
+    //         $display("RX Data - i_rx_data: %h, i_rx_valid: %b", i_rx_data, i_rx_valid);
+    //     end
+    //     if (o_payload_valid) begin
+    //         $display("PAYLOAD - o_payload_data: %h, o_payload_valid: %b", o_payload_data, o_payload_valid);
+    //     end
+    // end
 
 endmodule
