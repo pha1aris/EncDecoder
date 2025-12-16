@@ -58,6 +58,7 @@ if {$::dispatch::connected} {
 OPTRACE "async_fifo_32w_32r_synth_1" START { ROLLUP_AUTO }
 set_param general.maxThreads 32
 set_param simulator.modelsimInstallPath C:/modeltech64_2020.4/win64
+set_msg_config  -id {Synth 8-11365}  -string {{ERROR: [Synth 8-11365] for the instance 'u_axi_slave' of module 'axi4_lite_slave' declared at 'C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/axi4_lite_slave.v:3', named port connection 'o_slv_reg0' does not exist [C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/fso_rx_top.v:308]}}  -suppress 
 set_param project.vivado.isBlockSynthRun true
 set_msg_config -msgmgr_mode ooc_run
 OPTRACE "Creating in-memory project" START { }

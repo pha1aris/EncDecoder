@@ -12,8 +12,20 @@ view wave
 view structure
 view signals
 
+log -r /*
+
 do {div_gen_0.udo}
 
-run 1000ns
+# execute post tcl file
+set rc [catch {
+  puts "source wave nameformat short"
+  source "wave nameformat short"
+} result]
+if {$rc} {
+  puts "$result"
+  puts "ERROR: \[exportsim-Tcl-1\] Script failed:wave nameformat short"
+}
+
+run 0
 
 quit -force

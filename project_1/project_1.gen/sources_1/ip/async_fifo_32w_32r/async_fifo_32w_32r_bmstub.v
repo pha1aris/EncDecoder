@@ -46,9 +46,9 @@ module async_fifo_32w_32r (
   (* X_INTERFACE_INFO = "xilinx.com:interface:fifo_read:1.0 FIFO_READ EMPTY" *)
   output empty;
   (* X_INTERFACE_IGNORE = "true" *)
-  output [7:0]rd_data_count;
+  output [11:0]rd_data_count;
   (* X_INTERFACE_IGNORE = "true" *)
-  output [7:0]wr_data_count;
+  output [11:0]wr_data_count;
   (* X_INTERFACE_IGNORE = "true" *)
   output wr_rst_busy;
   (* X_INTERFACE_IGNORE = "true" *)

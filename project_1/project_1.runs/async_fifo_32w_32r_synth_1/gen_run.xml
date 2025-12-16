@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="async_fifo_32w_32r_synth_1" LaunchPart="xczu15eg-ffvb1156-2-i" LaunchTime="1763536047">
+<GenRun Id="async_fifo_32w_32r_synth_1" LaunchPart="xczu15eg-ffvb1156-2-i" LaunchTime="1765349198">
   <File Type="REPORTS-TCL" Name="async_fifo_32w_32r_reports.tcl"/>
   <File Type="RDS-UTIL" Name="async_fifo_32w_32r_utilization_synth.rpt"/>
   <File Type="RDS-UTIL-PB" Name="async_fifo_32w_32r_utilization_synth.pb"/>

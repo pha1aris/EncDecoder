@@ -1,224 +1,280 @@
-`timescale 1ps/1ps
+`timescale 1ns/1ps
 
-// ============================================================================
-// Minimal RAW-GT PRBS loopback test top (no 8b/10b, PRBS31 on 32-bit bus)
-//   - Works with: gtwizard_ultrascale_0 (RAW interface ports as you pasted)
-//   - Clocks: rx/txusrclk2 derived from rx/txoutclk via BUFG_GT
-//   - Reset: gtwiz_reset_all_in from sys_rst_n & freerun lock
-//   - Active: gtwiz_userclk_{tx,rx}_active_in from *_pmaresetdone_out
-//   - Data: PRBS gen -> gtwiz_userdata_tx_in, gtwiz_userdata_rx_out -> PRBS chk
-//   - Serial: ports exposed; if you need PMA internal loopback, re-gen IP with
-//             loopback port or configure via DRP (not included in RAW template).
-// ============================================================================
+module gth_prbs_raw_loopback_top #(
+    parameter integer W = 32,
+    parameter integer PRBS_INV    = 1,
+    parameter integer PRBS_LEN    = 31,
+    parameter integer PRBS_TAP    = 28,
+    parameter integer LOCK_THRESH = 1024
+)(
+    input  wire         sys_clk_p,    // 200Mhz
+    input  wire         sys_clk_n,
+    input  wire         sys_rst_n,
 
-module gth_prbs_raw_loopback_top (
-  // system clock (for resets/DRP/timing only)
-  input  wire        sys_clk_p,
-  input  wire        sys_clk_n,
-  input  wire        sys_rst_n,
+    output wire [1:0]   tx_disable,
 
-  // SFP disable (active-high). Drive 0 to enable TX laser.
-(* MARK_DEBUG="true" *)  output  wire [1:0]  tx_disable,
+    input  wire         mgtrefclk0_x1y1_p,  // 125Mhz
+    input  wire         mgtrefclk0_x1y1_n,
 
-  // GT reference clock 0/0 (e.g., 125/156.25 MHz for your line rate plan)
-  input  wire        mgtrefclk0_x1y1_p,
-  input  wire        mgtrefclk0_x1y1_n,
-  // Serial I/O (use external SFP loopback; PMA internal loopback not exposed in RAW ports)
-  input  wire        gthrxp_in,
-  input  wire        gthrxn_in,
-  output wire        gthtxp_out,
-  output wire        gthtxn_out
+    input  wire         gthrxp_in,
+    input  wire         gthrxn_in,
+    output wire         gthtxp_out,
+    output wire         gthtxn_out
 );
 
-  // --------------------------------------------------------------------------
-  // 0) Free-run fabric clock (for resets/DRP/helpers). Use your board clock.
-  // --------------------------------------------------------------------------
-  wire freerun_clk, pll_locked;
-  clk_wiz_1 u_clk_wiz (
-    .clk_out1 (freerun_clk), //39.0625Mhz
-    .reset    (~sys_rst_n),
-    .locked   (pll_locked),
-    .clk_in1_p(sys_clk_p),
-    .clk_in1_n(sys_clk_n)
-  );
+    // SFP TX disable：0=enable
+    assign tx_disable = 2'b00;
 
-   assign tx_disable = 2'b00; // enable SFP TX
+    // =========================================================================
+    // 1. 时钟与复位
+    // =========================================================================
+    wire freerun_clk;
+    wire pll_locked;
+    clk_wiz_2 u_clk_wiz_2 (
+        .clk_out1 (freerun_clk),
+        .reset    (~sys_rst_n),
+        .locked   (pll_locked),
+        .clk_in1_p(sys_clk_p),
+        .clk_in1_n(sys_clk_n)
+    );
 
-  // RAW wizard global resets
-  wire [0:0] gtwiz_reset_clk_freerun_in = freerun_clk;
-  wire [0:0] gtwiz_reset_all_in         = ~(sys_rst_n & pll_locked);
-  wire [0:0] gtwiz_reset_tx_pll_and_datapath_in = 1'b0;
-  wire [0:0] gtwiz_reset_tx_datapath_in         = 1'b0;
-  wire [0:0] gtwiz_reset_rx_pll_and_datapath_in = 1'b0;
-  wire [0:0] gtwiz_reset_rx_datapath_in         = 1'b0;
+    // GTH 复位 (active-high)
+    wire gth_reset_all = ~(sys_rst_n & pll_locked);
 
-  // --------------------------------------------------------------------------
-  // 1) GT REFCLK buffer to gtrefclk00_in
-  // --------------------------------------------------------------------------
-  wire gtrefclk0;
-  IBUFDS_GTE4 #(
-    .REFCLK_EN_TX_PATH (1'b0),
-    .REFCLK_HROW_CK_SEL(2'b00),
-    .REFCLK_ICNTL_RX   (2'b00)
-  ) u_ibufds_refclk (
-    .I   (mgtrefclk0_x1y1_p),
-    .IB  (mgtrefclk0_x1y1_n),
-    .CEB (1'b0),
-    .O   (gtrefclk0),
-    .ODIV2()
-  );
-  wire [0:0] gtrefclk00_in = gtrefclk0;
+    // =========================================================================
+    // 2. VIO 控制与监视
+    // =========================================================================
+    // 注意：请确保您的 vio_2 IP 核已配置为：
+    // OUTPUT PROBES: 4个 (index 0~3)
+    // INPUT PROBES:  1个 (index 0, 宽度32)
+    wire [2:0]  loopback_mode;
+    wire        rx_slide;
+    wire [W-1:0] tx_err_inject;
+    wire        vio_ber_clr;      // probe_out3: 误码清零
+    wire [31:0] vio_ber_result;   // probe_in0:  BER结果显示
 
-  // --------------------------------------------------------------------------
-  // 2) Instantiate RAW GT wizard
-  // --------------------------------------------------------------------------
-  // user clocks from GT
-  wire [0:0] txoutclk_out, rxoutclk_out;
-  // pma done & powergood
-  (* MARK_DEBUG="true" *)wire [0:0] txpmaresetdone_out, rxpmaresetdone_out;
-  (* MARK_DEBUG="true" *)wire [0:0] gtpowergood_out;
+    vio_2 u_vio (
+        .clk        (freerun_clk),
+        .probe_out0 (loopback_mode),  // [2:0]
+        .probe_out1 (rx_slide),       // [0:0]
+        .probe_out2 (tx_err_inject),  // [31:0]
+        .probe_out3 (vio_ber_clr),    // [0:0]  <-- 新增：清零
+        .probe_in0  (vio_ber_result)  // [31:0] <-- 新增：BER结果
+    );
 
-  // QPLL outputs (unused for fabric, but must be wired)
-  wire [0:0] qpll0outclk_out, qpll0outrefclk_out;
+    // =========================================================================
+    // 3. GTH Transceiver Instantiation
+    // =========================================================================
 
-  // user clocks (usrclk / usrclk2) – both driven by same BUFG_GT output
-  wire txusrclk, txusrclk2, rxusrclk, rxusrclk2;
-  // Active flags for RAW core
-  (* MARK_DEBUG="true" *)wire [0:0] gtwiz_userclk_tx_active_in = txpmaresetdone_out;
-  (* MARK_DEBUG="true" *)wire [0:0] gtwiz_userclk_rx_active_in = rxpmaresetdone_out;
+    wire o_tx_clk;
+    wire o_rx_clk;
+    (* MARK_DEBUG="true" *) wire [W-1:0] tx_data;
+    (* MARK_DEBUG="true" *) wire [W-1:0] rx_data;
+    (* MARK_DEBUG="true" *) wire  o_tx_rst_n, o_tx_done, o_tx_active;
+    (* MARK_DEBUG="true" *) wire  o_rx_rst_n, o_rx_done, o_rx_active, o_cdr_stable;
 
-  // Generate usrclks from GT *_outclk
-  BUFG_GT u_bufg_txusrclk  (.I(txoutclk_out[0]), .CE(1'b1), .CEMASK(1'b0), .CLR(1'b0), .CLRMASK(1'b0), .DIV(3'd0), .O(txusrclk));
-  BUFG_GT u_bufg_txusrclk2 (.I(txoutclk_out[0]), .CE(1'b1), .CEMASK(1'b0), .CLR(1'b0), .CLRMASK(1'b0), .DIV(3'd0), .O(txusrclk2));
-  BUFG_GT u_bufg_rxusrclk  (.I(rxoutclk_out[0]), .CE(1'b1), .CEMASK(1'b0), .CLR(1'b0), .CLRMASK(1'b0), .DIV(3'd0), .O(rxusrclk));
-  BUFG_GT u_bufg_rxusrclk2 (.I(rxoutclk_out[0]), .CE(1'b1), .CEMASK(1'b0), .CLR(1'b0), .CLRMASK(1'b0), .DIV(3'd0), .O(rxusrclk2));
+    gth_raw_top #(.W(W)) u_gth_raw_top (
+        .freerun_clk        (freerun_clk),
+        .gth_reset_all      (gth_reset_all),
+        .mgtrefclk0_x1y1_p  (mgtrefclk0_x1y1_p),
+        .mgtrefclk0_x1y1_n  (mgtrefclk0_x1y1_n),
+        .gthrxp_in          (gthrxp_in),
+        .gthrxn_in          (gthrxn_in),
+        .gthtxp_out         (gthtxp_out),
+        .gthtxn_out         (gthtxn_out),
+        .i_loopback         (loopback_mode),
+        .o_pll_locked       (),
+        .o_tx_clk           (o_tx_clk),
+        .o_tx_rst_n         (o_tx_rst_n),
+        .o_tx_done          (o_tx_done),
+        .o_tx_active        (o_tx_active),
+        .i_tx_data          (tx_data),
+        .o_rx_clk           (o_rx_clk),
+        .o_rx_rst_n         (o_rx_rst_n),
+        .o_rx_done          (o_rx_done),
+        .o_rx_active        (o_rx_active),
+        .o_cdr_stable       (o_cdr_stable),
+        .o_rx_data          (rx_data),
+        .i_rx_slide         (rx_slide)
+    );
 
-  // Pack to [0:0] buses for RAW ports
-  wire [0:0] txusrclk_in  = txusrclk;
-  wire [0:0] txusrclk2_in = txusrclk2;
-  wire [0:0] rxusrclk_in  = rxusrclk;
-  wire [0:0] rxusrclk2_in = rxusrclk2;
+    // =========================================================================
+    // 4. PRBS Generator (TX)
+    // =========================================================================
+    wire [W-1:0] prbs_tx;
+    assign tx_data = prbs_tx;
 
-  // PRBS datapath wires
-  (* MARK_DEBUG="true" *)wire [31:0] txdata32;
-  (* MARK_DEBUG="true" *)wire [31:0] rxdata32;
+    gtwizard_ultrascale_0_prbs_any #(
+        .CHK_MODE    (0),
+        .INV_PATTERN (PRBS_INV),
+        .POLY_LENGHT (PRBS_LEN),
+        .POLY_TAP    (PRBS_TAP),
+        .NBITS       (W)
+    ) u_prbs_gen (
+        .RST      (~o_tx_rst_n),
+        .CLK      (o_tx_clk),
+        .DATA_IN  (tx_err_inject),
+        .EN       (o_tx_rst_n),
+        .DATA_OUT (prbs_tx)
+    );
 
-  (* MARK_DEBUG="true" *)wire gtwiz_reset_rx_cdr_stable_out;
-  (* MARK_DEBUG="true" *)wire gtwiz_reset_tx_done_out;
-  (* MARK_DEBUG="true" *)wire gtwiz_reset_rx_done_out;
+    // =========================================================================
+    // 5. PRBS Checker (RX)
+    // =========================================================================
+    wire [W-1:0] prbs_err_bits_vec;
+    // 用于 ILA 观察是否有错（只要有一位错就是1）
+    (* MARK_DEBUG="true" *) wire prbs_match_fail = |prbs_err_bits_vec;
 
-  (* MARK_DEBUG="true" *)wire        rxlpmen_in;
+    gtwizard_ultrascale_0_prbs_any #(
+        .CHK_MODE    (1),
+        .INV_PATTERN (PRBS_INV),
+        .POLY_LENGHT (PRBS_LEN),
+        .POLY_TAP    (PRBS_TAP),
+        .NBITS       (W)
+    ) u_prbs_chk (
+        .RST      (~o_rx_rst_n),
+        .CLK      (o_rx_clk),
+        .DATA_IN  (rx_data),
+        .EN       (o_rx_rst_n),
+        .DATA_OUT (prbs_err_bits_vec)
+    );
 
-  wire          rxcdrhold_in;
-  wire [2:0]    loopback_in;
-  wire [0 : 0]  rxpolarity_in;
-  wire [0 : 0]  rxslide_in;
-  wire [4 : 0]  txdiffctrl_in;
-  wire [0 : 0]  txpolarity_in;
-  wire [4 : 0] txpostcursor_in;
-  wire [4 : 0] txprecursor_in;
+    // =========================================================================
+    // 6. 工业级误码统计逻辑 (带 ILA Debug)
+    // =========================================================================
 
-  vio_1   vio_1 (
-    .clk            (freerun_clk),                // input wire clk
-    .probe_out0     (rxcdrhold_in),     // output wire [0 : 0] probe_out0
-    .probe_out1     (loopback_in),      // output wire [2 : 0] probe_out1
-    .probe_out2     (rxlpmen_in),       // output wire [0 : 0] probe_out2
-    .probe_out3     (rxpolarity_in),    // output wire [0 : 0] probe_out3
-    .probe_out4     (rxslide_in),       // output wire [0 : 0] probe_out4
-    .probe_out5     (txdiffctrl_in),    // output wire [4 : 0] probe_out5
-    .probe_out6     (txpolarity_in),    // output wire [0 : 0] probe_out6
-    .probe_out7     (txpostcursor_in),       // output wire [4 : 0] probe_out7
-    .probe_out8     (txprecursor_in)        // output wire [4 : 0] probe_out8
-  );
+    // Popcount 函数
+    function integer popcount;
+        input [W-1:0] v;
+        integer k;
+        begin
+            popcount = 0;
+            for (k = 0; k < W; k = k + 1)
+                popcount = popcount + v[k];
+        end
+    endfunction
 
+    // 跨时钟域处理 VIO 复位
+    reg ber_clr_sync_r1, ber_clr_sync_r2;
+    (* MARK_DEBUG="true" *) wire ber_clear_pulse = ber_clr_sync_r2;
 
-  gtwizard_ultrascale_0 u_gt_raw (
-    .gtwiz_userclk_tx_active_in        (gtwiz_userclk_tx_active_in),
-    .gtwiz_userclk_rx_active_in        (gtwiz_userclk_rx_active_in),
+    always @(posedge o_rx_clk) begin
+        ber_clr_sync_r1 <= vio_ber_clr;
+        ber_clr_sync_r2 <= ber_clr_sync_r1;
+    end
 
-    .gtwiz_reset_clk_freerun_in        (gtwiz_reset_clk_freerun_in),
-    .gtwiz_reset_all_in                (gtwiz_reset_all_in),
-    .gtwiz_reset_tx_pll_and_datapath_in(gtwiz_reset_tx_pll_and_datapath_in),
-    .gtwiz_reset_tx_datapath_in        (gtwiz_reset_tx_datapath_in),
-    .gtwiz_reset_rx_pll_and_datapath_in(gtwiz_reset_rx_pll_and_datapath_in),
-    .gtwiz_reset_rx_datapath_in        (gtwiz_reset_rx_datapath_in),
+    // --- 状态机参数与寄存器 ---
+    localparam MASK_WAIT_CYCLES = 1024; 
 
-    .gtwiz_reset_rx_cdr_stable_out     (gtwiz_reset_rx_cdr_stable_out),
-    .gtwiz_reset_tx_done_out           (gtwiz_reset_tx_done_out),
-    .gtwiz_reset_rx_done_out           (gtwiz_reset_rx_done_out),
+    // 这些变量全部加上 MARK_DEBUG 以便调试状态机
+    (* MARK_DEBUG="true" *) reg [31:0] good_cnt;
+    (* MARK_DEBUG="true" *) reg        prbs_locked_internal;
+    (* MARK_DEBUG="true" *) reg [15:0] mask_cnt;
+    (* MARK_DEBUG="true" *) reg        ber_enable; // 统计使能：只有它为1时才计数
 
-    .gtwiz_userdata_tx_in              (txdata32),
-    .gtwiz_userdata_rx_out             (rxdata32),
+    // 64位计数器 (拆分成高低位观察，或者直接观察64位)
+    (* MARK_DEBUG="true" *) reg [63:0] total_bits_cnt;
+    (* MARK_DEBUG="true" *) reg [63:0] total_err_cnt;
+    
+    // 当前时钟周期的错误比特数 (0~32)
+    (* MARK_DEBUG="true" *) wire [5:0] current_err_num; 
+    assign current_err_num = popcount(prbs_err_bits_vec);
 
-    .gtrefclk00_in                     (gtrefclk00_in),
-    .qpll0outclk_out                   (qpll0outclk_out),
-    .qpll0outrefclk_out                (qpll0outrefclk_out),
+    always @(posedge o_rx_clk) begin
+        // 全局复位 或者 物理层未就绪 (Rx Down) 时彻底复位
+        if (!o_rx_rst_n || ber_clear_pulse || !o_rx_done) begin
+            good_cnt             <= 32'd0;
+            prbs_locked_internal <= 1'b0;
+            mask_cnt             <= 16'd0;
+            ber_enable           <= 1'b0;
+            total_bits_cnt       <= 64'd0;
+            total_err_cnt        <= 64'd0;
+        end else begin
+            
+            // --- 状态 1: 如果还没锁定，致力于寻找锁定 ---
+            if (!prbs_locked_internal) begin
+                ber_enable <= 1'b0; // 未锁定时不统计
+                
+                if (prbs_match_fail) begin
+                    good_cnt <= 32'd0; // 有错就重置计数
+                end else begin
+                    // 连续收到正确数据，good_cnt 累加
+                    if (good_cnt == LOCK_THRESH) begin
+                        prbs_locked_internal <= 1'b1; // 终于锁定了！
+                        good_cnt <= 32'd0;
+                    end else begin
+                        good_cnt <= good_cnt + 1;
+                    end
+                end
+            end 
+            
+            else begin                
+                // Mask 等待 (等待刚刚锁定后的不稳定期过去)
+                if (mask_cnt < MASK_WAIT_CYCLES) begin
+                    mask_cnt <= mask_cnt + 1'b1;
+                end else begin
+                    ber_enable <= 1'b1; // Mask 结束，开始统计
+                end
 
-    .gthrxn_in                         (gthrxn_in),
-    .gthrxp_in                         (gthrxp_in),
-    .rxusrclk_in                       (rxusrclk_in),
-    .rxusrclk2_in                      (rxusrclk2_in),
+                // 累加统计 (仅在 ber_enable 有效时)
+                if (ber_enable) begin
+                    total_bits_cnt <= total_bits_cnt + W;
+                    // 无论有没有错，都继续跑，有错就加到 err_cnt 里
+                    if (prbs_match_fail) begin
+                        total_err_cnt <= total_err_cnt + current_err_num;
+                    end
+                end
+            end
+        end
+    end
 
-    .rxcdrhold_in                       (rxcdrhold_in),                                              // input wire [0 : 0] rxcdrhold_in
-    .loopback_in                        (loopback_in),                                                // input wire [2 : 0] loopback_in
-    .rxlpmen_in                         (rxlpmen_in),                                                  // input wire [0 : 0] rxlpmen_in
-    .rxpolarity_in                      (rxpolarity_in),                                            // input wire [0 : 0] rxpolarity_in
-    .rxslide_in                         (rxslide_in),                                                  // input wire [0 : 0] rxslide_in
-    .txdiffctrl_in                      (txdiffctrl_in),                                            // input wire [4 : 0] txdiffctrl_in
-    .txpolarity_in                      (txpolarity_in),                                            // input wire [0 : 0] txpolarity_in
+    // =========================================================================
+    // 7. 硬件除法器 (Div Gen) - Blocking 模式
+    // =========================================================================
+    
+    // 准备数据
+    wire [63:0] axis_dividend_tdata = total_err_cnt;
+    wire [63:0] axis_divisor_tdata  = (total_bits_cnt == 0) ? 64'd1 : total_bits_cnt;
+    
+    (* MARK_DEBUG="true" *) wire        m_axis_dout_tvalid;
+    (* MARK_DEBUG="true" *) wire [95:0] m_axis_dout_tdata; // [95:32]整数, [31:0]小数
+    wire [0:0]  m_axis_dout_tuser; // Dummy
 
-    .txpostcursor_in                    (txpostcursor_in),                                        // input wire [4 : 0] txpostcursor_in
-    .txprecursor_in                     (txprecursor_in),                                          // input wire [4 : 0] txprecursor_in
+    (* MARK_DEBUG="true" *) wire s_axis_divisor_tready;
+    (* MARK_DEBUG="true" *) wire s_axis_dividend_tready;
 
+    div_gen_0 u_ber_div (
+        .aclk                   (o_rx_clk),
+        .aresetn                (~ber_clear_pulse), // 复位
 
-    .txusrclk_in                       (txusrclk_in),
-    .txusrclk2_in                      (txusrclk2_in),
-    .gthtxn_out                        (gthtxn_out),
-    .gthtxp_out                        (gthtxp_out),
+        // Divisor Channel (除数)
+        .s_axis_divisor_tvalid  (ber_enable),       // 使能时持续请求
+        .s_axis_divisor_tready  (s_axis_divisor_tready),
+        .s_axis_divisor_tdata   (axis_divisor_tdata),
 
-    .gtpowergood_out                   (gtpowergood_out),
-    .rxoutclk_out                      (rxoutclk_out),
-    .rxpmaresetdone_out                (rxpmaresetdone_out),
-    .txoutclk_out                      (txoutclk_out),
-    .txpmaresetdone_out                (txpmaresetdone_out)
-  );
+        // Dividend Channel (被除数)
+        .s_axis_dividend_tvalid (ber_enable),
+        .s_axis_dividend_tready (s_axis_dividend_tready),
+        .s_axis_dividend_tdata  (axis_dividend_tdata),
 
-  // --------------------------------------------------------------------------
-  // 3) PRBS31 generator/checker (XAPP884 style)
-  //     注意：与向导的数据位宽一致（此处 32bit）。INV_PATTERN 要 TX/RX 一致。
-  // --------------------------------------------------------------------------
-  // 发送侧
-  gtwizard_ultrascale_0_prbs_any #(
-    .CHK_MODE    (0),
-    .INV_PATTERN (1),
-    .POLY_LENGHT (31),
-    .POLY_TAP    (28),
-    .NBITS       (32)
-  ) u_prbs_gen (
-    .RST      (~gtwiz_userclk_tx_active_in[0]), // 等 TX userclk active
-    .CLK      (txusrclk2),
-    .DATA_IN  (32'd0),
-    .EN       (1'b1),
-    .DATA_OUT (txdata32)
-  );
+        // Output Channel (结果)
+        .m_axis_dout_tvalid     (m_axis_dout_tvalid),
+        .m_axis_dout_tuser      (m_axis_dout_tuser),
+        .m_axis_dout_tdata      (m_axis_dout_tdata)
+    );
 
-  // 接收侧
-  wire [31:0] prbs_err_bits;
-  gtwizard_ultrascale_0_prbs_any #(
-    .CHK_MODE    (1),
-    .INV_PATTERN (1),
-    .POLY_LENGHT (31),
-    .POLY_TAP    (28),
-    .NBITS       (32)
-  ) u_prbs_chk (
-    .RST      (~gtwiz_userclk_rx_active_in[0]),
-    .CLK      (rxusrclk2),
-    .DATA_IN  (rxdata32),
-    .EN       (1'b1),
-    .DATA_OUT (prbs_err_bits)
-  );
+    // =========================================================================
+    // 8. 结果锁存与输出
+    // =========================================================================
+    // 只需要小数部分 [31:0] 给 VIO 显示
+    (* MARK_DEBUG="true" *) reg [31:0] ber_fractional_reg;
 
-  (* MARK_DEBUG="true" *)wire prbs_match = ~(|prbs_err_bits);
-  assign prbs_match_led = prbs_match;
+    always @(posedge o_rx_clk) begin
+        if (m_axis_dout_tvalid) begin
+            ber_fractional_reg <= m_axis_dout_tdata[31:0];
+        end
+    end
+
+    assign vio_ber_result = ber_fractional_reg;
 
 endmodule

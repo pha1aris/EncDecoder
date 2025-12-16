@@ -1,8 +1,9 @@
 `timescale 1ns / 1ps
 
 module fso_deframer #(
- parameter integer W                 = 32,
+    parameter integer W                 = 32,
     parameter integer PAYLOAD_WORDS     = 16,
+    // 只决定计数器位宽的上限，真正超时值由 cfg_frame_timeout_max 决定
     parameter integer FRAME_TIMEOUT_MAX = 256 
 )(
     input                         clk,
@@ -21,15 +22,19 @@ module fso_deframer #(
     
     output reg                    o_blk_soft_rst,
 
-    // ★ 新增：帧级锁定指示
+    // 帧级锁定指示
     output reg                    o_frame_locked,
 
     // Payload 输出
     output reg   [W-1:0]          o_payload_data,
-    output reg                    o_payload_valid
+    output reg                    o_payload_valid,
 
-    // CRC 标志监控：
-    // ,output reg                  o_crc_ok
+    //------------- 运行时可调参数（建议 VIO 驱动） -------------
+    input      [15:0]             cfg_frame_timeout_max, // 搜索/CRC 等待超时
+    input       [7:0]             cfg_crc_bad_th,        // CRC 窗口坏帧阈值
+    input       [7:0]             cfg_pre_bad_th,        // 前导窗口坏计数阈值
+    input                         cfg_realign_or         // 1: (CRC|PRE)  0: (CRC&PRE)
+    // CRC/PREAMBLE 窗口长度你如果也想调，可以再加 cfg_crc_win / cfg_pre_win
 );
 
     localparam [31:0] PREAMBLE_HI = 32'hEB94_BDA3;
@@ -45,8 +50,17 @@ module fso_deframer #(
     reg [2:0]  state;
     reg [15:0] payload_cnt; 
     
+    //----------------------------------------------------------------
+    // 帧超时计数：位宽由参数 FRAME_TIMEOUT_MAX 决定
+    //----------------------------------------------------------------
     localparam integer FRAME_TIMEOUT_WIDTH = $clog2(FRAME_TIMEOUT_MAX + 1);
     reg [FRAME_TIMEOUT_WIDTH-1:0] frame_timeout_cnt;
+
+    // 把 VIO 下来的 cfg_frame_timeout_max 截断到实际计数器位宽
+    wire [FRAME_TIMEOUT_WIDTH-1:0] cfg_frame_timeout_max_trunc =
+        cfg_frame_timeout_max[FRAME_TIMEOUT_WIDTH-1:0];
+
+    wire frame_to_hit = (frame_timeout_cnt == cfg_frame_timeout_max_trunc);
 
     reg [15:0] last_block_id;
     reg [15:0] last_frame_in_block;
@@ -106,31 +120,33 @@ module fso_deframer #(
     );
 
     //================================================================
-    // CRC 窗口统计
+    // CRC 窗口统计（窗口长度仍用固定 256 帧，坏帧阈值由 cfg_crc_bad_th 设置）
     //================================================================
-    localparam integer CRC_WIN    = 256;   // 统计 256 帧
-    localparam integer CRC_BAD_TH = 64;    // 坏帧数超过 64 就认为 CRC 很差
-    localparam integer CRC_CNT_W  = $clog2(CRC_WIN + 1);
+    localparam integer CRC_WIN    = 256;
+    localparam integer CRC_CNT_W  = $clog2(CRC_WIN);
 
     reg [CRC_CNT_W-1:0] crc_win_cnt;   // 窗口内总帧数计数
     reg [CRC_CNT_W-1:0] crc_bad_cnt;   // 窗口内 CRC 错帧数
     reg                 need_realign;  // 由 CRC 统计得出的“建议重对齐”标志
 
+    wire [CRC_CNT_W-1:0] cfg_crc_bad_th_trunc = cfg_crc_bad_th;
+
     //================================================================
-    // 前导命中率统计
+    // 前导命中率统计（窗口长度固定 256 次尝试，坏计数阈值由 cfg_pre_bad_th）
     //================================================================
-    localparam integer PRE_WIN    = 256;   // 统计 256 次“前导尝试”
-    localparam integer PRE_BAD_TH = 64;    // 坏的/缺失的前导超过 64 次认为前导很差
-    localparam integer PRE_CNT_W  = $clog2(PRE_WIN + 1);
+    localparam integer PRE_WIN    = 256;
+    localparam integer PRE_CNT_W  = $clog2(PRE_WIN);
 
     reg [PRE_CNT_W-1:0] pre_win_cnt;      // 前导尝试次数
     reg [PRE_CNT_W-1:0] pre_bad_cnt;      // 前导失败/超时次数
     reg                 pre_need_realign; // 前导统计出的 realign 建议
 
-    // CRC + 前导 两个统计都认为很差才触发 realign
-    wire realign_cond = need_realign & pre_need_realign;
-    // 或者更激进：
-    // wire realign_cond = need_realign | pre_need_realign;
+    wire [PRE_CNT_W-1:0] cfg_pre_bad_th_trunc = cfg_pre_bad_th;
+
+    // CRC + 前导 的统计联合决定是否 realign
+    wire realign_cond_and = need_realign & pre_need_realign;
+    wire realign_cond_or  = need_realign | pre_need_realign;
+    wire realign_cond     = cfg_realign_or ? realign_cond_or : realign_cond_and;
 
     //================================================================
     // 主状态机
@@ -158,13 +174,10 @@ module fso_deframer #(
             crc_ok              <= 1'b0;
             crc_rx_word         <= 32'd0;
 
-            crc_win_cnt      <= 'd0;
-            crc_bad_cnt      <= 'd0;
+            crc_win_cnt      <= {CRC_CNT_W{1'b0}};
+            crc_bad_cnt      <= {CRC_CNT_W{1'b0}};
             need_realign     <= 1'b0;
 
-            pre_win_cnt      <= 'd0;
-            pre_bad_cnt      <= 'd0;
-            // pre_need_realign <= 1'b0;
 
             o_frame_locked   <= 1'b0;
         end else begin
@@ -185,13 +198,9 @@ module fso_deframer #(
                     pending_rst       <= 1'b0;
                     crc_ok            <= 1'b0;
 
-                    crc_win_cnt      <= 'd0;
-                    crc_bad_cnt      <= 'd0;
+                    crc_win_cnt      <= {CRC_CNT_W{1'b0}};
+                    crc_bad_cnt      <= {CRC_CNT_W{1'b0}};
                     need_realign     <= 1'b0;
-
-                    pre_win_cnt      <= 'd0;
-                    pre_bad_cnt      <= 'd0;
-                    // pre_need_realign <= 1'b0;
 
                     if (i_link_up)
                         state <= S_SEARCH_PREAMBLE1;
@@ -207,7 +216,7 @@ module fso_deframer #(
                         if (i_rx_data == PREAMBLE_HI) begin
                             state             <= S_SEARCH_PREAMBLE2;
                             frame_timeout_cnt <= {FRAME_TIMEOUT_WIDTH{1'b0}};
-                        end else if (frame_timeout_cnt == FRAME_TIMEOUT_MAX) begin
+                        end else if (frame_to_hit) begin
                             if (realign_cond) begin
                                 o_realign_req <= 1'b1;
                                 state         <= S_WAIT_LINK;  
@@ -234,7 +243,7 @@ module fso_deframer #(
                             frame_timeout_cnt <= {FRAME_TIMEOUT_WIDTH{1'b0}};
                         end
                     end else begin 
-                        if (frame_timeout_cnt == FRAME_TIMEOUT_MAX) begin
+                        if (frame_to_hit) begin
                             if (realign_cond) begin
                                 o_realign_req <= 1'b1;
                                 state         <= S_WAIT_LINK;
@@ -345,8 +354,8 @@ module fso_deframer #(
                         // ===== CRC 窗口统计 =====
                         if (crc_win_cnt == CRC_WIN - 1) begin
                             // 窗口最后一帧，把当前帧也计入坏帧统计
-                            if ( (!crc_match && (crc_bad_cnt + 1'b1 >= CRC_BAD_TH)) ||
-                                 ( crc_match && (crc_bad_cnt         >= CRC_BAD_TH)) )
+                            if ( (!crc_match && (crc_bad_cnt + 1'b1 >= cfg_crc_bad_th_trunc)) ||
+                                 ( crc_match && (crc_bad_cnt         >= cfg_crc_bad_th_trunc)) )
                                 need_realign <= 1'b1;
                             else
                                 need_realign <= 1'b0;
@@ -365,7 +374,7 @@ module fso_deframer #(
                         state             <= S_SEARCH_PREAMBLE1;
                     end else begin
                         // 等待 CRC 字的过程中超时
-                        if (frame_timeout_cnt == FRAME_TIMEOUT_MAX) begin
+                        if (frame_to_hit) begin
                             if (realign_cond) begin
                                 o_realign_req <= 1'b1;
                                 state         <= S_WAIT_LINK;
@@ -399,20 +408,20 @@ module fso_deframer #(
     //================================================================
     always @(posedge clk) begin
         if (!rst_n) begin
-            pre_win_cnt      <= 'd0;
-            pre_bad_cnt      <= 'd0;
+            pre_win_cnt      <= {PRE_CNT_W{1'b0}};
+            pre_bad_cnt      <= {PRE_CNT_W{1'b0}};
             pre_need_realign <= 1'b0;
         end else if (state == S_WAIT_LINK) begin
             // 在 WAIT_LINK 状态下清空窗口
-            pre_win_cnt      <= 'd0;
-            pre_bad_cnt      <= 'd0;
+            pre_win_cnt      <= {PRE_CNT_W{1'b0}};
+            pre_bad_cnt      <= {PRE_CNT_W{1'b0}};
         end else begin
             // 1) S_SEARCH_PREAMBLE2 有有效数据
             if (state == S_SEARCH_PREAMBLE2 && i_rx_valid) begin
                 if (i_rx_data == PREAMBLE_LO) begin
                     // ===== 前导成功事件 =====
                     if (pre_win_cnt == PRE_WIN - 1) begin
-                        if (pre_bad_cnt >= PRE_BAD_TH)
+                        if (pre_bad_cnt >= cfg_pre_bad_th_trunc)
                             pre_need_realign <= 1'b1;
                         else
                             pre_need_realign <= 1'b0;
@@ -426,7 +435,7 @@ module fso_deframer #(
                 end else begin
                     // ===== 前导失败事件（HI 对了但 LO 不对） =====
                     if (pre_win_cnt == PRE_WIN - 1) begin
-                        if (pre_bad_cnt + 1'b1 >= PRE_BAD_TH)
+                        if (pre_bad_cnt + 1'b1 >= cfg_pre_bad_th_trunc)
                             pre_need_realign <= 1'b1;
                         else
                             pre_need_realign <= 1'b0;
@@ -440,9 +449,9 @@ module fso_deframer #(
                 end
             end
             // 2) 在 S_SEARCH_PREAMBLE2 没数据但 timeout 了，也认为是“前导失败事件”
-            else if (state == S_SEARCH_PREAMBLE2 && !i_rx_valid && frame_timeout_cnt == FRAME_TIMEOUT_MAX) begin
+            else if (state == S_SEARCH_PREAMBLE2 && !i_rx_valid && frame_to_hit) begin
                 if (pre_win_cnt == PRE_WIN - 1) begin
-                    if (pre_bad_cnt + 1'b1 >= PRE_BAD_TH)
+                    if (pre_bad_cnt + 1'b1 >= cfg_pre_bad_th_trunc)
                         pre_need_realign <= 1'b1;
                     else
                         pre_need_realign <= 1'b0;
@@ -466,6 +475,15 @@ module fso_deframer #(
     //     end
     //     if (o_payload_valid) begin
     //         $display("PAYLOAD - o_payload_data: %h, o_payload_valid: %b", o_payload_data, o_payload_valid);
+    //     end
+    //     // 命中 HI 时打印
+    //     if (state == S_SEARCH_PREAMBLE1 && i_rx_valid && i_rx_data == PREAMBLE_HI) begin
+    //         $display("[%0t] HIT PREAMBLE_HI", $time);
+    //     end
+    //     // 在 S2 中每次来数据都打印
+    //     if (state == S_SEARCH_PREAMBLE2 && i_rx_valid) begin
+    //         $display("[%0t] S2: data = %08x (expect LO = %08x)",
+    //                  $time, i_rx_data, PREAMBLE_LO);
     //     end
     // end
 

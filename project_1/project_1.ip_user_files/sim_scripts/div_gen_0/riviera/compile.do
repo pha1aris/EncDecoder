@@ -39,7 +39,6 @@ vlog -work xilinx_vip  -l axi_vip_v1_1_19 -l smartconnect_v1_0 -l zynq_ultra_ps_
 
 vlog -work xpm  -l axi_vip_v1_1_19 -l smartconnect_v1_0 -l zynq_ultra_ps_e_vip_v1_0_19 "+incdir+D:/2024_2/Vivado/2024.2/data/xilinx_vip/include" -l xilinx_vip -l xpm -l xbip_utils_v3_0_14 -l axi_utils_v2_0_10 -l xbip_pipe_v3_0_10 -l xbip_dsp48_wrapper_v3_0_6 -l mult_gen_v12_0_22 -l floating_point_v7_0_24 -l div_gen_v5_1_23 -l xil_defaultlib \
 "D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv" \
-"D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv" \
 "D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv" \
 
 vcom -work xpm -93  \

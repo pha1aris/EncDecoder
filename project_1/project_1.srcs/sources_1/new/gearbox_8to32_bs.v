@@ -17,8 +17,8 @@ module gearbox_8to32_bs (
     reg [1:0]  byte_cnt;
     reg [31:0] word_reg;
     reg        word_has_block_start;
-    assign in_ready = (!out_valid) || out_ready;
-    wire allow_shift = in_valid && in_ready;
+    assign in_ready   = out_ready; 
+    wire allow_shift  = in_valid && in_ready;
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin

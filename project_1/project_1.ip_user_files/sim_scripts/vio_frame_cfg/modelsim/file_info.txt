@@ -1,0 +1,2 @@
+vio_frame_cfg.v,verilog,xil_defaultlib,../../../../project_1.gen/sources_1/ip/vio_frame_cfg/sim/vio_frame_cfg.v,incdir="../../../../project_1.gen/sources_1/ip/vio_frame_cfg/hdl/verilog"incdir="../../../../project_1.gen/sources_1/ip/vio_frame_cfg/hdl"
+glbl.v,Verilog,xil_defaultlib,glbl.v

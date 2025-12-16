@@ -1,0 +1,8 @@
++======================+======================+=======================+
+| Launch Setup Clock   | Launch Hold Clock    | Pin                   |
++======================+======================+=======================+
+| clk_out2_clk_wiz_sys | clk_out2_clk_wiz_sys | loopback_fr1_reg[0]/D |
+| clk_out2_clk_wiz_sys | clk_out2_clk_wiz_sys | loopback_fr1_reg[2]/D |
+| clk_out2_clk_wiz_sys | clk_out2_clk_wiz_sys | loopback_fr1_reg[1]/D |
+| clk_out1_clk_wiz_sys | clk_out1_clk_wiz_sys | tx_act_cdc1_reg/D     |
++----------------------+----------------------+-----------------------+

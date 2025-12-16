@@ -56,9 +56,21 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "div_gen_0_synth_1" START { ROLLUP_AUTO }
+set_param tcl.collectionResultDisplayLimit 0
 set_param general.maxThreads 32
+set_param chipscope.maxJobs 8
+set_param power.BramSDPPropagationFix 1
+set_param power.enableUnconnectedCarry8PinPower 1
+set_param power.enableCarry8RouteBelPower 1
+set_param power.enableLutRouteBelPower 1
+set_param xicom.use_bs_reader 1
 set_param simulator.modelsimInstallPath C:/modeltech64_2020.4/win64
 set_msg_config  -id {Synth 8-11365}  -string {{ERROR: [Synth 8-11365] for the instance 'u_axi_slave' of module 'axi4_lite_slave' declared at 'C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/axi4_lite_slave.v:3', named port connection 'o_slv_reg0' does not exist [C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/fso_rx_top.v:308]}}  -suppress 
+set_msg_config  -id {Vivado 12-1411}  -string {{CRITICAL WARNING: [Vivado 12-1411] Cannot set LOC property of ports, Could not find a valid bel for the shape with the following elements: 
+mgtrefclk0_x1y1_p_IBUF_inst/INBUF_INST
+mgtrefclk0_x1y1_p
+mgtrefclk0_x1y1_p_IBUF_inst/IBUFCTRL_INST
+ [C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/constrs_1/new/system_cons.xdc:5]}}  -suppress 
 set_param project.vivado.isBlockSynthRun true
 set_msg_config -msgmgr_mode ooc_run
 OPTRACE "Creating in-memory project" START { }
@@ -70,14 +82,14 @@ set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
 set_property webtalk.parent_dir C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.cache/wt [current_project]
 set_property parent.project_path C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.xpr [current_project]
-set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
+set_property XPM_LIBRARIES XPM_CDC [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
 set_property ip_output_repo c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
-read_ip -quiet c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/div_gen_0/div_gen_0.xci
+read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/div_gen_0/div_gen_0.xci
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/div_gen_0/div_gen_0_ooc.xdc]
 
 OPTRACE "Adding files" END { }

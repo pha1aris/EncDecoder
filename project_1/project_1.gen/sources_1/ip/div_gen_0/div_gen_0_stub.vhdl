@@ -2,7 +2,7 @@
 -- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
--- Date        : Sat Nov 29 10:37:08 2025
+-- Date        : Fri Dec 12 17:19:55 2025
 -- Host        : FSO-A running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode synth_stub
 --               c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/div_gen_0/div_gen_0_stub.vhdl
@@ -31,7 +31,7 @@ entity div_gen_0 is
   attribute CHECK_LICENSE_TYPE : string;
   attribute CHECK_LICENSE_TYPE of div_gen_0 : entity is "div_gen_0,div_gen_v5_1_23,{}";
   attribute core_generation_info : string;
-  attribute core_generation_info of div_gen_0 : entity is "div_gen_0,div_gen_v5_1_23,{x_ipProduct=Vivado 2024.2,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=div_gen,x_ipVersion=5.1,x_ipCoreRevision=23,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_XDEVICEFAMILY=zynquplus,C_HAS_ARESETN=1,C_HAS_ACLKEN=0,C_LATENCY=99,ALGORITHM_TYPE=1,DIVISOR_WIDTH=64,DIVIDEND_WIDTH=64,SIGNED_B=0,DIVCLK_SEL=8,FRACTIONAL_B=1,FRACTIONAL_WIDTH=32,C_HAS_DIV_BY_ZERO=1,C_THROTTLE_SCHEME=3,C_TLAST_RESOLUTION=0,C_HAS_S_AXIS_DIVISOR_TUSER=0,C_HAS_S_AXIS_DIVISOR_TLAST=0,C_S_AXIS_DIVISOR_TDATA_WIDTH=64,C_S_AXIS_DIVISOR_TUSER_WIDTH=1,C_HAS_S_AXIS_DIVIDEND_TUSER=0,C_HAS_S_AXIS_DIVIDEND_TLAST=0,C_S_AXIS_DIVIDEND_TDATA_WIDTH=64,C_S_AXIS_DIVIDEND_TUSER_WIDTH=1,C_M_AXIS_DOUT_TDATA_WIDTH=96,C_M_AXIS_DOUT_TUSER_WIDTH=1}";
+  attribute core_generation_info of div_gen_0 : entity is "div_gen_0,div_gen_v5_1_23,{x_ipProduct=Vivado 2024.2,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=div_gen,x_ipVersion=5.1,x_ipCoreRevision=23,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_XDEVICEFAMILY=zynquplus,C_HAS_ARESETN=1,C_HAS_ACLKEN=0,C_LATENCY=100,ALGORITHM_TYPE=1,DIVISOR_WIDTH=64,DIVIDEND_WIDTH=64,SIGNED_B=0,DIVCLK_SEL=8,FRACTIONAL_B=1,FRACTIONAL_WIDTH=32,C_HAS_DIV_BY_ZERO=1,C_THROTTLE_SCHEME=4,C_TLAST_RESOLUTION=0,C_HAS_S_AXIS_DIVISOR_TUSER=0,C_HAS_S_AXIS_DIVISOR_TLAST=0,C_S_AXIS_DIVISOR_TDATA_WIDTH=64,C_S_AXIS_DIVISOR_TUSER_WIDTH=1,C_HAS_S_AXIS_DIVIDEND_TUSER=0,C_HAS_S_AXIS_DIVIDEND_TLAST=0,C_S_AXIS_DIVIDEND_TDATA_WIDTH=64,C_S_AXIS_DIVIDEND_TUSER_WIDTH=1,C_M_AXIS_DOUT_TDATA_WIDTH=96,C_M_AXIS_DOUT_TUSER_WIDTH=1}";
   attribute downgradeipidentifiedwarnings : string;
   attribute downgradeipidentifiedwarnings of div_gen_0 : entity is "yes";
 end div_gen_0;

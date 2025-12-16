@@ -92,8 +92,8 @@ output wire [31 : 0] dout;
 output wire full;
 (* X_INTERFACE_INFO = "xilinx.com:interface:fifo_read:1.0 FIFO_READ EMPTY" *)
 output wire empty;
-output wire [7 : 0] rd_data_count;
-output wire [7 : 0] wr_data_count;
+output wire [11 : 0] rd_data_count;
+output wire [11 : 0] wr_data_count;
 output wire wr_rst_busy;
 output wire rd_rst_busy;
 
@@ -101,7 +101,7 @@ output wire rd_rst_busy;
     .C_COMMON_CLOCK(0),
     .C_SELECT_XPM(0),
     .C_COUNT_TYPE(0),
-    .C_DATA_COUNT_WIDTH(8),
+    .C_DATA_COUNT_WIDTH(12),
     .C_DEFAULT_VALUE("BlankString"),
     .C_DIN_WIDTH(32),
     .C_DOUT_RST_VAL("0"),
@@ -133,17 +133,17 @@ output wire rd_rst_busy;
     .C_OVERFLOW_LOW(0),
     .C_PRELOAD_LATENCY(0),
     .C_PRELOAD_REGS(1),
-    .C_PRIM_FIFO_TYPE("512x36"),
+    .C_PRIM_FIFO_TYPE("1kx36"),
     .C_PROG_EMPTY_THRESH_ASSERT_VAL(4),
     .C_PROG_EMPTY_THRESH_NEGATE_VAL(5),
     .C_PROG_EMPTY_TYPE(0),
-    .C_PROG_FULL_THRESH_ASSERT_VAL(255),
-    .C_PROG_FULL_THRESH_NEGATE_VAL(254),
+    .C_PROG_FULL_THRESH_ASSERT_VAL(4095),
+    .C_PROG_FULL_THRESH_NEGATE_VAL(4094),
     .C_PROG_FULL_TYPE(0),
-    .C_RD_DATA_COUNT_WIDTH(8),
-    .C_RD_DEPTH(256),
+    .C_RD_DATA_COUNT_WIDTH(12),
+    .C_RD_DEPTH(4096),
     .C_RD_FREQ(1),
-    .C_RD_PNTR_WIDTH(8),
+    .C_RD_PNTR_WIDTH(12),
     .C_UNDERFLOW_LOW(0),
     .C_USE_DOUT_RST(1),
     .C_USE_ECC(0),
@@ -154,10 +154,10 @@ output wire rd_rst_busy;
     .C_USE_FWFT_DATA_COUNT(0),
     .C_VALID_LOW(0),
     .C_WR_ACK_LOW(0),
-    .C_WR_DATA_COUNT_WIDTH(8),
-    .C_WR_DEPTH(256),
+    .C_WR_DATA_COUNT_WIDTH(12),
+    .C_WR_DEPTH(4096),
     .C_WR_FREQ(1),
-    .C_WR_PNTR_WIDTH(8),
+    .C_WR_PNTR_WIDTH(12),
     .C_WR_RESPONSE_LATENCY(1),
     .C_MSGON_VAL(1),
     .C_ENABLE_RST_SYNC(1),
@@ -313,12 +313,12 @@ output wire rd_rst_busy;
     .din(din),
     .wr_en(wr_en),
     .rd_en(rd_en),
-    .prog_empty_thresh(8'B0),
-    .prog_empty_thresh_assert(8'B0),
-    .prog_empty_thresh_negate(8'B0),
-    .prog_full_thresh(8'B0),
-    .prog_full_thresh_assert(8'B0),
-    .prog_full_thresh_negate(8'B0),
+    .prog_empty_thresh(12'B0),
+    .prog_empty_thresh_assert(12'B0),
+    .prog_empty_thresh_negate(12'B0),
+    .prog_full_thresh(12'B0),
+    .prog_full_thresh_assert(12'B0),
+    .prog_full_thresh_negate(12'B0),
     .int_clk(1'D0),
     .injectdbiterr(1'D0),
     .injectsbiterr(1'D0),

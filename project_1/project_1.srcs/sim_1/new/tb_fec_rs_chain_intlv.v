@@ -106,12 +106,10 @@ module tb_fec_rs_chain_intlv;
         .clk                    (core_clk),   // 上游 8bit 时钟
         .enc_clk                (core_clk),   // RS Encoder 也用同一个时钟
         .rst                    (rst),
-
         // 上游 8bit 输入
         .fifo_input_rdy         (src_ready),
         .data_i                 (src_data),
         .data_valid_i           (src_valid),
-
         // 下游 RS Encoder 的 AXIS（tready 来自交织器 in_ready）
         .m_axis_output_tready   (intlv_in_ready),
         .m_axis_output_tdata    (enc_data),
@@ -155,7 +153,6 @@ module tb_fec_rs_chain_intlv;
         .out_block_start()
     );
 
-    // 交织器输出 ready 由 gearbox in_ready 决定
     assign intlv_out_ready = gb_in_ready;
 
     // ---------- Framer ----------
@@ -167,7 +164,7 @@ module tb_fec_rs_chain_intlv;
     ) u_fso_framer (
         .clk                (core_clk),
         .rst_n              (rst_n),
-
+        
         .i_payload_data     (tx_payload_data),
         .i_payload_valid    (tx_payload_valid),
         .scrambler_en       (SCRAMBLER_EN),
@@ -314,6 +311,23 @@ module tb_fec_rs_chain_intlv;
         .output_tready       (1'b1)
     );
 
+    wire [7:0] prbs_result;
+    wire prbs_match = ~|prbs_result;
+
+    gtwizard_ultrascale_0_prbs_any #(
+        .CHK_MODE    (1),
+        .INV_PATTERN (0),
+        .POLY_LENGHT (7),
+        .POLY_TAP    (6),
+        .NBITS       (8)
+    ) u_prbs_chk (
+        .RST      (~rst_n),
+        .CLK      (core_clk),
+        .DATA_IN  (dec_data),
+        .EN       (dec_valid),
+        .DATA_OUT (prbs_result)
+    );
+
     // ============================================================
     // RX 端检查：计数器模式验证
     // ============================================================
@@ -354,21 +368,21 @@ module tb_fec_rs_chain_intlv;
     // ============================================================
     // 仿真流程控制
     // ============================================================
-    initial begin
-        @(posedge rst_n);
-        $display("[%0t] Reset deasserted, start INTLV simulation.", $time);
+    // initial begin
+    //     @(posedge rst_n);
+    //     $display("[%0t] Reset deasserted, start INTLV simulation.", $time);
 
-        #200000;
+    //     #200000;
 
-        $display("======================================");
-        $display("Stage2 RS + Interleaver/Deinterleaver Test");
-        $display("TEST_PRBS     = %0d", TEST_PRBS);
-        $display("INTLV_D       = %0d", INTLV_D);
-        $display("Counter errors= %0d", cnt_err);
-        $display("======================================");
+    //     $display("======================================");
+    //     $display("Stage2 RS + Interleaver/Deinterleaver Test");
+    //     $display("TEST_PRBS     = %0d", TEST_PRBS);
+    //     $display("INTLV_D       = %0d", INTLV_D);
+    //     $display("Counter errors= %0d", cnt_err);
+    //     $display("======================================");
 
-        $stop;
-    end
+    //     // $stop;
+    // end
     // ============================================================
     // Monitor 1: RS Encoder 输出每个码字长度是否为 255 字节
     // 接口：enc_valid / enc_last / intlv_in_ready

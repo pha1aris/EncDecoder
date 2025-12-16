@@ -97,7 +97,15 @@ proc step_failed { step } {
 OPTRACE "impl_1" END { }
 }
 
+set_msg_config -id {Common 17-41} -limit 10000000
+set_msg_config -id {Synth 8-256} -limit 10000
+set_msg_config -id {Synth 8-638} -limit 10000
 set_msg_config  -id {Synth 8-11365}  -string {{ERROR: [Synth 8-11365] for the instance 'u_axi_slave' of module 'axi4_lite_slave' declared at 'C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/axi4_lite_slave.v:3', named port connection 'o_slv_reg0' does not exist [C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/fso_rx_top.v:308]}}  -suppress 
+set_msg_config  -id {Vivado 12-1411}  -string {{CRITICAL WARNING: [Vivado 12-1411] Cannot set LOC property of ports, Could not find a valid bel for the shape with the following elements: 
+mgtrefclk0_x1y1_p_IBUF_inst/INBUF_INST
+mgtrefclk0_x1y1_p
+mgtrefclk0_x1y1_p_IBUF_inst/IBUFCTRL_INST
+ [C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/constrs_1/new/system_cons.xdc:5]}}  -suppress 
 
 OPTRACE "impl_1" START { ROLLUP_1 }
 OPTRACE "Phase: Init Design" START { ROLLUP_AUTO }
@@ -105,8 +113,15 @@ start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
+  set_param tcl.collectionResultDisplayLimit 0
   set_param general.maxThreads 32
   set_param chipscope.maxJobs 8
+  set_param power.BramSDPPropagationFix 1
+  set_param power.enableUnconnectedCarry8PinPower 1
+  set_param power.enableCarry8RouteBelPower 1
+  set_param checkpoint.writeSynthRtdsInDcp 1
+  set_param power.enableLutRouteBelPower 1
+  set_param xicom.use_bs_reader 1
   set_param simulator.modelsimInstallPath C:/modeltech64_2020.4/win64
   set_param runs.launchOptions { -jobs 32  }
 OPTRACE "create in-memory project" START { }
@@ -129,10 +144,10 @@ OPTRACE "add files" START { }
   read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/gtwizard_ultrascale_0/gtwizard_ultrascale_0.xci
   read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/fifo_0/fifo_0.xci
   read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r.xci
-  read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/dec_rx_fifo/dec_rx_fifo.xci
   read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/clk_wiz_sys/clk_wiz_sys.xci
   read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/div_gen_0/div_gen_0.xci
   read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/vio_2/vio_2.xci
+  read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/vio_frame_cfg/vio_frame_cfg.xci
 OPTRACE "read constraints: implementation" START { }
   read_xdc C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/constrs_1/new/system_cons.xdc
 OPTRACE "read constraints: implementation" END { }

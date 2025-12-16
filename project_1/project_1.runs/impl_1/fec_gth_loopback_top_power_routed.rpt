@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date             : Mon Dec  1 16:32:41 2025
+| Date             : Tue Dec 16 17:30:10 2025
 | Host             : FSO-A running 64-bit major release  (build 9200)
 | Command          : report_power -file fec_gth_loopback_top_power_routed.rpt -pb fec_gth_loopback_top_power_summary_routed.pb -rpx fec_gth_loopback_top_power_routed.rpx
 | Design           : fec_gth_loopback_top
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 1.532        |
+| Total On-Chip Power (W)  | 1.749        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.765        |
-| Device Static (W)        | 0.768        |
+| Dynamic (W)              | 0.980        |
+| Device Static (W)        | 0.769        |
 | Effective TJA (C/W)      | 1.0          |
-| Max Ambient (C)          | 98.5         |
-| Junction Temperature (C) | 26.5         |
+| Max Ambient (C)          | 98.3         |
+| Junction Temperature (C) | 26.7         |
 | Confidence Level         | Medium       |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -52,23 +52,23 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.070 |        6 |       --- |             --- |
-| CLB Logic                |     0.078 |    57969 |       --- |             --- |
-|   LUT as Logic           |     0.066 |    16586 |    341280 |            4.86 |
-|   LUT as Shift Register  |     0.006 |      670 |    184320 |            0.36 |
-|   Register               |     0.003 |    31279 |    682560 |            4.58 |
-|   LUT as Distributed RAM |     0.002 |       60 |    184320 |            0.03 |
-|   CARRY8                 |     0.001 |      246 |     42660 |            0.58 |
-|   BUFG                   |    <0.001 |        3 |        32 |            9.38 |
-|   Others                 |     0.000 |     1968 |       --- |             --- |
-|   F7/F8 Muxes            |     0.000 |     3441 |    341280 |            1.01 |
-| Signals                  |     0.140 |    56104 |       --- |             --- |
-| Block RAM                |     0.175 |    558.5 |       744 |           75.07 |
+| Clocks                   |     0.057 |        6 |       --- |             --- |
+| CLB Logic                |     0.029 |    54753 |       --- |             --- |
+|   LUT as Logic           |     0.023 |    15212 |    341280 |            4.46 |
+|   LUT as Shift Register  |     0.002 |     1575 |    184320 |            0.85 |
+|   LUT as Distributed RAM |     0.001 |       60 |    184320 |            0.03 |
+|   Register               |     0.001 |    28204 |    682560 |            4.13 |
+|   CARRY8                 |     0.001 |      414 |     42660 |            0.97 |
+|   BUFG                   |    <0.001 |        5 |        32 |           15.63 |
+|   Others                 |     0.000 |     2824 |       --- |             --- |
+|   F7/F8 Muxes            |     0.000 |     1744 |    341280 |            0.51 |
+| Signals                  |     0.036 |    46595 |       --- |             --- |
+| Block RAM                |     0.555 |      567 |       744 |           76.21 |
 | MMCM                     |     0.089 |        0 |       --- |             --- |
 | I/O                      |     0.009 |        5 |       328 |            1.52 |
 | GTH                      |     0.204 |        1 |        24 |            4.17 |
-| Static Power             |     0.768 |          |           |                 |
-| Total                    |     1.532 |          |           |                 |
+| Static Power             |     0.769 |          |           |                 |
+| Total                    |     1.749 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -78,9 +78,9 @@ Table of Contents
 +-----------------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source          | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint          |       0.850 |     0.772 |       0.544 |      0.227 |       NA    | Unspecified | NA         |
+| Vccint          |       0.850 |     1.000 |       0.770 |      0.229 |       NA    | Unspecified | NA         |
 | Vccint_io       |       0.850 |     0.037 |       0.001 |      0.035 |       NA    | Unspecified | NA         |
-| Vccbram         |       0.850 |     0.005 |       0.001 |      0.004 |       NA    | Unspecified | NA         |
+| Vccbram         |       0.850 |     0.032 |       0.028 |      0.004 |       NA    | Unspecified | NA         |
 | Vccaux          |       1.800 |     0.274 |       0.049 |      0.225 |       NA    | Unspecified | NA         |
 | Vccaux_io       |       1.800 |     0.037 |       0.004 |      0.033 |       NA    | Unspecified | NA         |
 | Vcco33          |       3.300 |     0.009 |       0.000 |      0.009 |       NA    | Unspecified | NA         |
@@ -168,55 +168,51 @@ Table of Contents
 +--------------------------+-----------+
 | Name                     | Power (W) |
 +--------------------------+-----------+
-| fec_gth_loopback_top     |     0.765 |
-|   dbg_hub                |     0.003 |
-|     inst                 |     0.003 |
-|       BSCANID.u_xsdbm_id |     0.003 |
-|   u_ber_calc             |     0.027 |
-|     U0                   |     0.027 |
-|       i_synth            |     0.027 |
+| fec_gth_loopback_top     |     0.980 |
+|   dbg_hub                |     0.001 |
+|     inst                 |     0.001 |
+|       BSCANID.u_xsdbm_id |     0.001 |
+|   u_ber_calc             |     0.018 |
+|     U0                   |     0.018 |
+|       i_synth            |     0.018 |
 |   u_clk_wiz              |     0.092 |
 |     inst                 |     0.092 |
 |       clkin1_ibufds      |     0.003 |
-|   u_fec_rx               |     0.256 |
-|     u_bit_aligner_ind    |     0.001 |
-|     u_dec_rx_fifo        |     0.001 |
-|       U0                 |     0.001 |
-|     u_deinterleaver      |     0.192 |
-|       u_ram0             |     0.081 |
-|       u_ram1             |     0.081 |
-|     u_gb_32to8           |     0.022 |
-|     u_rs_decode_backend  |     0.037 |
-|       Decoder_U0         |     0.018 |
-|       Decoder_U1         |     0.018 |
-|       u_dec_fifo         |     0.001 |
+|   u_fec_rx               |     0.597 |
+|     u_bit_aligner_ind    |     0.002 |
+|     u_deinterleaver      |     0.551 |
+|       u_mem0             |     0.267 |
+|       u_mem1             |     0.267 |
+|       u_out_fifo         |     0.004 |
+|     u_fso_deframer       |     0.001 |
+|     u_gb_32to8           |     0.003 |
+|     u_rs_decode_backend  |     0.038 |
+|       Decoder_U0         |     0.019 |
+|       Decoder_U1         |     0.019 |
 |     u_rx_fifo            |     0.001 |
 |       U0                 |     0.001 |
-|   u_fec_tx               |     0.142 |
-|     rs_encode_frontend   |     0.003 |
+|   u_fec_tx               |     0.026 |
+|     u_fso_framer         |     0.001 |
+|     u_interleaver        |     0.021 |
+|       u_mem_bank0        |     0.004 |
+|       u_mem_bank1        |     0.004 |
+|       u_out_fifo         |     0.013 |
+|     u_rs_encode_frontend |     0.003 |
 |       Encoder            |     0.003 |
-|     u_fso_framer         |     0.002 |
-|     u_interleaver        |     0.017 |
-|       u_ram0             |     0.005 |
-|       u_ram1             |     0.005 |
-|     u_intlv_fifo         |     0.117 |
-|     u_tx_fifo            |     0.002 |
-|       U0                 |     0.002 |
-|   u_gth_raw              |     0.211 |
-|     u_gth                |     0.205 |
-|       inst               |     0.205 |
-|   u_ila_0                |     0.013 |
-|     inst                 |     0.013 |
-|       ila_core_inst      |     0.013 |
-|   u_ila_1                |     0.010 |
-|     inst                 |     0.010 |
-|       ila_core_inst      |     0.010 |
-|   u_ila_2                |     0.005 |
-|     inst                 |     0.005 |
-|       ila_core_inst      |     0.005 |
-|   u_ila_3                |     0.003 |
-|     inst                 |     0.003 |
-|       ila_core_inst      |     0.003 |
+|     u_tx_fifo            |     0.001 |
+|       U0                 |     0.001 |
+|   u_gth_raw              |     0.212 |
+|     u_gth                |     0.206 |
+|       inst               |     0.206 |
+|   u_ila_0                |     0.026 |
+|     inst                 |     0.026 |
+|       ila_core_inst      |     0.026 |
+|   u_ila_1                |     0.001 |
+|     inst                 |     0.001 |
+|       ila_core_inst      |     0.001 |
+|   u_ila_2                |     0.002 |
+|     inst                 |     0.002 |
+|       ila_core_inst      |     0.002 |
 +--------------------------+-----------+
 
 

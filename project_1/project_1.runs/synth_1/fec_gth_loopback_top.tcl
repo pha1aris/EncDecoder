@@ -56,9 +56,25 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param tcl.collectionResultDisplayLimit 0
 set_param general.maxThreads 32
+set_param chipscope.maxJobs 8
+set_param power.BramSDPPropagationFix 1
+set_param power.enableUnconnectedCarry8PinPower 1
+set_param power.enableCarry8RouteBelPower 1
+set_param checkpoint.writeSynthRtdsInDcp 1
+set_param power.enableLutRouteBelPower 1
+set_param xicom.use_bs_reader 1
 set_param simulator.modelsimInstallPath C:/modeltech64_2020.4/win64
+set_msg_config -id {Common 17-41} -limit 10000000
+set_msg_config -id {Synth 8-256} -limit 10000
+set_msg_config -id {Synth 8-638} -limit 10000
 set_msg_config  -id {Synth 8-11365}  -string {{ERROR: [Synth 8-11365] for the instance 'u_axi_slave' of module 'axi4_lite_slave' declared at 'C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/axi4_lite_slave.v:3', named port connection 'o_slv_reg0' does not exist [C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/fso_rx_top.v:308]}}  -suppress 
+set_msg_config  -id {Vivado 12-1411}  -string {{CRITICAL WARNING: [Vivado 12-1411] Cannot set LOC property of ports, Could not find a valid bel for the shape with the following elements: 
+mgtrefclk0_x1y1_p_IBUF_inst/INBUF_INST
+mgtrefclk0_x1y1_p
+mgtrefclk0_x1y1_p_IBUF_inst/IBUFCTRL_INST
+ [C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/constrs_1/new/system_cons.xdc:5]}}  -suppress 
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xczu15eg-ffvb1156-2-i
 
@@ -75,6 +91,8 @@ set_property ip_output_repo c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.ca
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
+read_verilog C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/global_defines.vh
+set_property is_global_include true [get_files C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/global_defines.vh]
 read_verilog -library xil_defaultlib {
   C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sim_1/new/AdditiveScrambler.v
   C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/bit_aligner_ind.v
@@ -119,11 +137,6 @@ set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fp
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r_clocks.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r_ooc.xdc]
 
-read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/dec_rx_fifo/dec_rx_fifo.xci
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/dec_rx_fifo/dec_rx_fifo.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/dec_rx_fifo/dec_rx_fifo_clocks.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/dec_rx_fifo/dec_rx_fifo_ooc.xdc]
-
 read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/clk_wiz_sys/clk_wiz_sys.xci
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/clk_wiz_sys/clk_wiz_sys_board.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/clk_wiz_sys/clk_wiz_sys.xdc]
@@ -135,6 +148,10 @@ set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fp
 read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/vio_2/vio_2.xci
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/vio_2/vio_2.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/vio_2/vio_2_ooc.xdc]
+
+read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/vio_frame_cfg/vio_frame_cfg.xci
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/vio_frame_cfg/vio_frame_cfg.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/vio_frame_cfg/vio_frame_cfg_ooc.xdc]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being

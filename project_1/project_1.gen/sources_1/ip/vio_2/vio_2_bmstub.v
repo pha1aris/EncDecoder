@@ -7,9 +7,12 @@
 (* BLOCK_STUB = "true" *)
 module vio_2 (
   clk,
+  probe_in0,
   probe_out0,
   probe_out1,
-  probe_out2
+  probe_out2,
+  probe_out3,
+  probe_out4
 );
 
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 signal_clock CLK" *)
@@ -17,11 +20,17 @@ module vio_2 (
   (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME signal_clock, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN , ASSOCIATED_BUSIF , ASSOCIATED_PORT , ASSOCIATED_RESET , INSERT_VIP 0" *)
   input clk;
   (* X_INTERFACE_IGNORE = "true" *)
-  output [0:0]probe_out0;
+  input [31:0]probe_in0;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [2:0]probe_out0;
   (* X_INTERFACE_IGNORE = "true" *)
   output [0:0]probe_out1;
   (* X_INTERFACE_IGNORE = "true" *)
-  output [2:0]probe_out2;
+  output [31:0]probe_out2;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [0:0]probe_out3;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [0:0]probe_out4;
 
   // stub module has no contents
 
