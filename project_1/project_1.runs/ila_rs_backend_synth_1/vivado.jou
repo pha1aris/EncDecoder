@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2024.2 (64-bit)
+# SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
+# IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
+# SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
+# Start of session at: Thu Jan  8 21:41:43 2026
+# Process ID         : 27496
+# Current directory  : C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/ila_rs_backend_synth_1
+# Command line       : vivado.exe -log ila_rs_backend.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source ila_rs_backend.tcl
+# Log file           : C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/ila_rs_backend_synth_1/ila_rs_backend.vds
+# Journal file       : C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.runs/ila_rs_backend_synth_1\vivado.jou
+# Running On         : FSO-A
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 19045
+# Processor Detail   : 13th Gen Intel(R) Core(TM) i9-13900K
+# CPU Frequency      : 2995 MHz
+# CPU Physical cores : 24
+# CPU Logical cores  : 32
+# Host memory        : 68263 MB
+# Swap memory        : 10200 MB
+# Total Virtual      : 78464 MB
+# Available Virtual  : 49515 MB
+#-----------------------------------------------------------
+source ila_rs_backend.tcl -notrace

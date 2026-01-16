@@ -67,7 +67,7 @@ module bit_aligner_ind #(
     // ★ 改为使用 cfg_err_th，而不是固定参数 ERR_TH
     wire         header_match = i_rx_valid && (err_bits <= cfg_err_th);
 
-    // ---------------- realign_req 同步 & 拉宽 ----------------
+    // ---------------- CDC realign_req 同步 & 拉宽 ----------------
     reg [2:0]   realign_cnt;
     reg         realign_sync_d0,
                 realign_sync_d1;

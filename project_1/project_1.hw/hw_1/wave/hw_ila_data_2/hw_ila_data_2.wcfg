@@ -14,62 +14,21 @@
       <Cursor1Time time="0"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="183"></NameColumnWidth>
+      <NameColumnWidth column_width="194"></NameColumnWidth>
       <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="7" />
+   <WVObjectSize size="2" />
    <wave_markers>
    </wave_markers>
-   <wvobject fp_name="fec_tx_data_line" type="array">
-      <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">fec_tx_data_line[31:0]</obj_property>
-      <obj_property name="ObjectShortName">fec_tx_data_line[31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
+   <wvobject fp_name="cdr_stable_line" type="logic">
+      <obj_property name="ElementShortName">cdr_stable_line</obj_property>
+      <obj_property name="ObjectShortName">cdr_stable_line</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>
-   <wvobject fp_name="fec_tx_valid_line" type="logic">
-      <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">fec_tx_valid_line</obj_property>
-      <obj_property name="ObjectShortName">fec_tx_valid_line</obj_property>
-      <obj_property name="LABELRADIX">true</obj_property>
-      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
-   </wvobject>
-   <wvobject fp_name="tx_data_to_gth" type="array">
-      <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">tx_data_to_gth[31:0]</obj_property>
-      <obj_property name="ObjectShortName">tx_data_to_gth[31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-      <obj_property name="LABELRADIX">true</obj_property>
-      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
-   </wvobject>
-   <wvobject fp_name="tx_done" type="logic">
-      <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">tx_done</obj_property>
-      <obj_property name="ObjectShortName">tx_done</obj_property>
-      <obj_property name="LABELRADIX">true</obj_property>
-      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
-   </wvobject>
-   <wvobject fp_name="u_fec_tx/tx32_fifo_dout" type="array">
-      <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">u_fec_tx/tx32_fifo_dout[31:0]</obj_property>
-      <obj_property name="ObjectShortName">tx32_fifo_dout[31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-      <obj_property name="LABELRADIX">true</obj_property>
-      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
-   </wvobject>
-   <wvobject fp_name="u_fec_tx/tx32_fifo_rd_en" type="logic">
-      <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">u_fec_tx/tx32_fifo_rd_en</obj_property>
-      <obj_property name="ObjectShortName">tx32_fifo_rd_en</obj_property>
-      <obj_property name="LABELRADIX">true</obj_property>
-      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
-   </wvobject>
-   <wvobject fp_name="u_fec_tx/tx_fifo_rdcnt" type="array">
-      <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">u_fec_tx/tx_fifo_rdcnt[11:0]</obj_property>
-      <obj_property name="ObjectShortName">tx_fifo_rdcnt[11:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
+   <wvobject fp_name="rx_active_line" type="logic">
+      <obj_property name="ElementShortName">rx_active_line</obj_property>
+      <obj_property name="ObjectShortName">rx_active_line</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>

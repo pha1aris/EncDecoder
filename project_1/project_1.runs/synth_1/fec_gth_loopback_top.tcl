@@ -56,20 +56,12 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param tcl.collectionResultDisplayLimit 0
 set_param general.maxThreads 32
 set_param chipscope.maxJobs 8
-set_param power.BramSDPPropagationFix 1
-set_param power.enableUnconnectedCarry8PinPower 1
-set_param power.enableCarry8RouteBelPower 1
-set_param checkpoint.writeSynthRtdsInDcp 1
-set_param power.enableLutRouteBelPower 1
-set_param xicom.use_bs_reader 1
-set_param simulator.modelsimInstallPath C:/modeltech64_2020.4/win64
-set_msg_config -id {Common 17-41} -limit 10000000
-set_msg_config -id {Synth 8-256} -limit 10000
-set_msg_config -id {Synth 8-638} -limit 10000
-set_msg_config  -id {Synth 8-11365}  -string {{ERROR: [Synth 8-11365] for the instance 'u_axi_slave' of module 'axi4_lite_slave' declared at 'C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/axi4_lite_slave.v:3', named port connection 'o_slv_reg0' does not exist [C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/fso_rx_top.v:308]}}  -suppress 
+set_msg_config  -id {Vivado 12-4739}  -string {{CRITICAL WARNING: [Vivado 12-4739] set_clock_groups:No valid object(s) found for '-group [get_clocks -of_objects [get_pins {GT_0/inst/gen_gtwizard_gthe4_top.gtwizard_ultrascale_0_gtwizard_gthe4_inst/gen_gtwizard_gthe4.gen_channel_container[1].gen_enabled_channel.gthe4_channel_wrapper_inst/channel_inst/gthe4_channel_gen.gen_gthe4_channel_inst[0].GTHE4_CHANNEL_PRIM_INST/TXOUTCLK}]]'. [C:/Users/PC/Desktop/crc8/crc8.srcs/constrs_1/new/TX_cons.xdc:102]
+Resolution: Check if the specified object(s) exists in the current design. If it does, ensure that the correct design hierarchy was specified for the object. If you are working with clocks, make sure create_clock was used to create the clock object before it is referenced.}}  -suppress 
+set_msg_config  -id {[BD 41-1306]}  -suppress 
+set_msg_config  -id {[BD 41-1271]}  -suppress 
 set_msg_config  -id {Vivado 12-1411}  -string {{CRITICAL WARNING: [Vivado 12-1411] Cannot set LOC property of ports, Could not find a valid bel for the shape with the following elements: 
 mgtrefclk0_x1y1_p_IBUF_inst/INBUF_INST
 mgtrefclk0_x1y1_p
@@ -84,7 +76,7 @@ set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
 set_property webtalk.parent_dir C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.cache/wt [current_project]
 set_property parent.project_path C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.xpr [current_project]
-set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
+set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
 set_property ip_output_repo c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.cache/ip [current_project]
@@ -95,6 +87,7 @@ read_verilog C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ne
 set_property is_global_include true [get_files C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/global_defines.vh]
 read_verilog -library xil_defaultlib {
   C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sim_1/new/AdditiveScrambler.v
+  C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/axis_fifo_sync.v
   C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/bit_aligner_ind.v
   C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/crc32.v
   C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/fec_rx.v
@@ -112,13 +105,13 @@ read_verilog -library xil_defaultlib {
   C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/rs_interleaver_xpm.v
   C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/new/fec_gth_loopback_top.v
 }
-read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/dec_fifo_8w_8r/dec_fifo_8w_8r.xci
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/dec_fifo_8w_8r/dec_fifo_8w_8r.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/dec_fifo_8w_8r/dec_fifo_8w_8r_clocks.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/dec_fifo_8w_8r/dec_fifo_8w_8r_ooc.xdc]
-
 read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/rs_decoder_0/rs_decoder_0.xci
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/rs_decoder_0/rs_decoder_0_ooc.xdc]
+
+read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r.xci
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r_clocks.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r_ooc.xdc]
 
 read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/rs_encoder_0/rs_encoder_0.xci
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/rs_encoder_0/rs_encoder_0_ooc.xdc]
@@ -132,11 +125,6 @@ set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fp
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/fifo_0/fifo_0_clocks.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/fifo_0/fifo_0_ooc.xdc]
 
-read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r.xci
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r_clocks.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r_ooc.xdc]
-
 read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/clk_wiz_sys/clk_wiz_sys.xci
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/clk_wiz_sys/clk_wiz_sys_board.xdc]
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/clk_wiz_sys/clk_wiz_sys.xdc]
@@ -145,13 +133,11 @@ set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fp
 read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/div_gen_0/div_gen_0.xci
 set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/div_gen_0/div_gen_0_ooc.xdc]
 
-read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/vio_2/vio_2.xci
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/vio_2/vio_2.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/vio_2/vio_2_ooc.xdc]
-
-read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/vio_frame_cfg/vio_frame_cfg.xci
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/vio_frame_cfg/vio_frame_cfg.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/vio_frame_cfg/vio_frame_cfg_ooc.xdc]
+read_ip -quiet C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.srcs/sources_1/ip/ila_fec_rx/ila_fec_rx.xci
+set_property used_in_synthesis false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/ila_fec_rx/ila_v6_2/constraints/ila_impl.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/ila_fec_rx/ila_v6_2/constraints/ila_impl.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/ila_fec_rx/ila_v6_2/constraints/ila.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/ila_fec_rx/ila_fec_rx_ooc.xdc]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being

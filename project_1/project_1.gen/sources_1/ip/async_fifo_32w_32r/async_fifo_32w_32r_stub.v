@@ -2,10 +2,10 @@
 // Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-// Date        : Wed Dec 10 14:47:35 2025
+// Date        : Wed Dec 10 14:47:34 2025
 // Host        : FSO-A running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode synth_stub
-//               c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top async_fifo_32w_32r -prefix
+//               async_fifo_32w_32r_ async_fifo_32w_32r_stub.v
 // Design      : async_fifo_32w_32r
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xczu15eg-ffvb1156-2-i

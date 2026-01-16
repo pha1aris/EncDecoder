@@ -10,42 +10,42 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0"></ZoomStartTime>
-      <ZoomEndTime time="1,025"></ZoomEndTime>
+      <ZoomEndTime time="10"></ZoomEndTime>
       <Cursor1Time time="0"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="138"></NameColumnWidth>
-      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+      <NameColumnWidth column_width="157"></NameColumnWidth>
+      <ValueColumnWidth column_width="92"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="4" />
-   <wave_markers>
-   </wave_markers>
-   <wvobject fp_name="bit_locked" type="logic">
-      <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">bit_locked</obj_property>
-      <obj_property name="ObjectShortName">bit_locked</obj_property>
+   <WVObjectSize size="5" />
+   <wvobject fp_name="cdr_stable_line" type="logic">
+      <obj_property name="ElementShortName">cdr_stable_line</obj_property>
+      <obj_property name="ObjectShortName">cdr_stable_line</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>
-   <wvobject fp_name="rx_data_from_gth" type="array">
-      <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">rx_data_from_gth[31:0]</obj_property>
-      <obj_property name="ObjectShortName">rx_data_from_gth[31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
+   <wvobject fp_name="u_fec_rx/rx32_fifo_full" type="logic">
+      <obj_property name="ElementShortName">u_fec_rx/rx32_fifo_full</obj_property>
+      <obj_property name="ObjectShortName">rx32_fifo_full</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>
-   <wvobject fp_name="rx_done" type="logic">
-      <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">rx_done</obj_property>
-      <obj_property name="ObjectShortName">rx_done</obj_property>
+   <wvobject fp_name="rx_active_line" type="logic">
+      <obj_property name="ElementShortName">rx_active_line</obj_property>
+      <obj_property name="ObjectShortName">rx_active_line</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>
-   <wvobject fp_name="rx_slide_req" type="logic">
+   <wvobject fp_name="rx_word_valid_line" type="logic">
+      <obj_property name="ElementShortName">rx_word_valid_line</obj_property>
+      <obj_property name="ObjectShortName">rx_word_valid_line</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="u_fec_rx/realign_req_line_pulse" type="logic">
       <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">rx_slide_req</obj_property>
-      <obj_property name="ObjectShortName">rx_slide_req</obj_property>
+      <obj_property name="ElementShortName">u_fec_rx/realign_req_line_pulse</obj_property>
+      <obj_property name="ObjectShortName">realign_req_line_pulse</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>

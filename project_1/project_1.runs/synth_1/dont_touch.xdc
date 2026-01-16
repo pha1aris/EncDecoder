@@ -3,11 +3,11 @@
 
 # XDC: new/system_cons.xdc
 
-# IP: ip/dec_fifo_8w_8r/dec_fifo_8w_8r.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==dec_fifo_8w_8r || ORIG_REF_NAME==dec_fifo_8w_8r} -quiet] -quiet
-
 # IP: ip/rs_decoder_0/rs_decoder_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==rs_decoder_0 || ORIG_REF_NAME==rs_decoder_0} -quiet] -quiet
+
+# IP: ip/async_fifo_32w_32r/async_fifo_32w_32r.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==async_fifo_32w_32r || ORIG_REF_NAME==async_fifo_32w_32r} -quiet] -quiet
 
 # IP: ip/rs_encoder_0/rs_encoder_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==rs_encoder_0 || ORIG_REF_NAME==rs_encoder_0} -quiet] -quiet

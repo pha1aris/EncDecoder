@@ -18,16 +18,14 @@ module fec_tx #(
     output wire             i_ready,
     // 输出给 GTH TX 的 32bit 数据
     input  wire             scrambler_en,
-    output wire [W-1:0]     o_tx_data,
-    output wire             o_tx_valid,
     output wire [31:0]      o_tx_data_line,
     output wire             o_tx_valid_line,
     output wire [15:0]      o_tx_frame_index
 );
-
     // 顶层传进来的异步复位（已经包含 logic_rst_n & tx_rst_n & tx_done）
     wire rst = ~rst_n;
-
+    wire [W-1:0]     o_tx_data;
+    wire             o_tx_valid;
     // -------- 各时钟域同步复位（可用于本模块内部状态机 / 监控） --------
     reg core_rst_d0, core_rst_d1;
     always @(posedge core_clk or posedge rst) begin
@@ -54,10 +52,10 @@ module fec_tx #(
     wire line_rst_sync = line_rst_d1;
 
     // ================= RS 编码 =================
-    (* MARK_DEBUG="true" *) wire [7:0] enc_data;
-    (* MARK_DEBUG="true" *) wire       enc_valid;
-    (* MARK_DEBUG="true" *) wire       enc_last;
-    (* MARK_DEBUG="true" *) wire       xpm_input_tready;
+    wire [7:0] enc_data;
+    wire       enc_valid;
+    wire       enc_last;
+    wire       xpm_input_tready;
 
     wire enc_fifo_rdy;
     assign i_ready = enc_fifo_rdy;
@@ -77,10 +75,10 @@ module fec_tx #(
     );
 
     // ================= 交织器 ==================
-    (* MARK_DEBUG="true" *) wire        intlv_valid;
-    (* MARK_DEBUG="true" *) wire [7:0]  intlv_data;
-    (* MARK_DEBUG="true" *) wire        intlv_block_start;
-    (* MARK_DEBUG="true" *) wire        intlv_out_ready;
+    wire        intlv_valid;
+    wire [7:0]  intlv_data;
+    wire        intlv_block_start;
+    wire        intlv_out_ready;
 
     rs_interleaver_xpm #(
         .D (INTLV_D),
@@ -98,10 +96,10 @@ module fec_tx #(
     );
 
     // =============== 8bit → 32bit 打包 + 块起始 ===============
-    (* MARK_DEBUG="true" *) wire [31:0] gb_data;
-    (* MARK_DEBUG="true" *) wire        gb_valid;
-    (* MARK_DEBUG="true" *) wire        gb_block_start;
-    (* MARK_DEBUG="true" *) wire        gb_ready;
+    wire [31:0] gb_data;
+    wire        gb_valid;
+    wire        gb_block_start;
+    wire        gb_ready;
 
     gearbox_8to32_bs u_gb_8to32 (
         .clk            (core_clk),
@@ -118,38 +116,43 @@ module fec_tx #(
         .out_block_start(gb_block_start)
     );
 
-    (* MARK_DEBUG="true" *) wire tx32_wr_ready_raw;
-    (* MARK_DEBUG="true" *) wire tx32_wr_ready;   // 这里先保留名字，但不再做水位限流
+    wire        tx32_wr_ready_raw;
+    wire        tx32_wr_ready;   
+    wire [15:0] tx_block_id;
+    wire [15:0] tx_frame_in_block;
 
     // ================= 帧封装器 =================
     fso_framer #(
-        .W                  (W),
-        .PAYLOAD_WORDS      (PAYLOAD_WORDS),
-        .FRAMES_PER_BLOCK   (FRAMES_PER_BLOCK)
+      .W                (W),
+      .PAYLOAD_WORDS    (PAYLOAD_WORDS),
+      .FRAMES_PER_BLOCK (FRAMES_PER_BLOCK)
     ) u_fso_framer (
-        .clk                (core_clk),
-        .rst_n              (rst_n),
+      .clk                     (core_clk),
+      .rst_n                   (rst_n),
 
-        .scrambler_en       (scrambler_en),
-        .i_payload_data     (gb_data),
-        .i_payload_valid    (gb_valid),
-        .o_payload_ready    (gb_ready),
+      .i_payload_data          (gb_data),
+      .i_payload_valid         (gb_valid),
+      .i_payload_block_start   (gb_block_start),  // 边界信息
+      .scrambler_en            (scrambler_en),
+      .o_payload_ready         (gb_ready),
 
-        .o_tx_data          (o_tx_data),
-        .o_tx_valid         (o_tx_valid),
-        .i_tx_ready         (tx32_wr_ready),   // 仍是 AXIS 风格
-        .o_frame_index      (o_tx_frame_index)
+      .i_tx_ready              (tx32_wr_ready),
+      .o_tx_data               (o_tx_data),
+      .o_tx_valid              (o_tx_valid),
+      .o_frame_in_block        (tx_frame_in_block),
+      .o_block_id              (tx_block_id),
+      .o_frame_index           (o_tx_frame_index)
     );
 
     // ================= async FIFO: core_clk → line_clk ==============
-    (* MARK_DEBUG="true" *) wire [31:0] tx32_fifo_dout;
     wire        tx32_fifo_empty;
     wire        tx32_fifo_full;
-    (* MARK_DEBUG="true" *) wire        tx32_fifo_rd_en;
     wire        tx32_fifo_wrstbsy;
     wire        tx32_fifo_rrstbsy;
-    (* MARK_DEBUG="true" *) wire [11:0]  tx_fifo_rdcnt;
-    (* MARK_DEBUG="true" *) wire [11:0]  tx_fifo_wrcnt;
+    wire [31:0] tx32_fifo_dout;
+    wire        tx32_fifo_rd_en;
+    wire [11:0]  tx_fifo_rdcnt;
+    wire [11:0]  tx_fifo_wrcnt;
 
     // “物理” ready：只看 FIFO 自身是否能写
     assign tx32_wr_ready_raw = ~tx32_fifo_full & ~tx32_fifo_wrstbsy;
@@ -168,7 +171,7 @@ module fec_tx #(
             rst_sync_d1 <= rst_sync_d0;
         end
     end
-
+    // FWFT 
     async_fifo_32w_32r u_tx_fifo (
         .rst           (rst_sync_d1),  
         .wr_clk        (core_clk),
@@ -200,7 +203,6 @@ module fec_tx #(
     reg        tx_fifo_rd_en_reg;
     reg [31:0] tx_data_out_reg;
     reg        tx_valid_out_reg;
-
     reg        burst_underflow_err;
 
     wire fifo_has_one_frame =

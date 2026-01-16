@@ -6,27 +6,27 @@ module fec_rx #(
     parameter integer PAYLOAD_WORDS = 16,
     parameter integer RS_N          = 255,
     parameter integer INTLV_D       = 4808,
-    parameter integer INTLV_N       = 255
+    parameter integer INTLV_N       = 255,
+
+    // deframer -> gearbox 的保险缓冲：单位=payload 32bit word
+    parameter integer DF_AXIS_FIFO_DEPTH = 1024
 )(
     input  wire             line_clk,
     input  wire             core_clk,
     input  wire             rst_n,
 
-    // 来自 GTH RX 的并行数据（已经是 parallel data）
     input  wire [W-1:0]     i_rx_data,
     input  wire             i_rx_valid,
     input  wire             rx_reset_done,
     input  wire             rx_cdr_stable,
     input  wire             scrambler_en,
 
-    // 解码后的数据（8bit）
     output wire [7:0]       o_data,
     output wire             o_valid,
     input  wire             i_data_ready,
 
-    // 调试信号
     output wire             o_rxslide,
-    output wire             o_bit_locked,
+    output wire             bit_locked_core,
     output wire [15:0]      o_frame_index,
     output wire [15:0]      o_block_id,
     output wire [15:0]      o_frame_in_block
@@ -34,70 +34,62 @@ module fec_rx #(
 
     wire rst = ~rst_n;
 
-    // 这些是“默认参数”，作为 VIO 配置寄存器的上电默认值
-    parameter integer VERIFY_CNT_MAX     = 4;
-    parameter integer SLIDE_COOLDOWN    = 5;
+    // ------------------------------------------------------------
+    // 0) VIO cfg（保持你原逻辑）
+    // ------------------------------------------------------------
+    parameter integer VERIFY_CNT_MAX    = 4;
     parameter integer ERR_TH            = 2;
-    parameter integer CHECK_TIMEOUT_MAX = 50;
     parameter integer LOCK_LOSS_TIMEOUT = 4096;
     parameter integer FRAME_TIMEOUT_MAX = 64;
 
-   // ====================================================
-    // 0) VIO 配置寄存器（帧同步 / 比特对齐）
-    // ====================================================
+    wire [5:0]  cfg_err_th;
+    wire [7:0]  cfg_verify_cnt_max;
+    wire [15:0] cfg_lock_loss_to;
 
-    // bit_aligner 相关
-    wire [5:0]  cfg_err_th;          // 允许的比特误差数（对齐头与期望之间）
-    wire [7:0]  cfg_verify_cnt_max;  // 连续命中次数
-    wire [15:0] cfg_lock_loss_to;    // 失锁超时时间（单位：拍）
-
-    // deframer / CRC / 前导统计相关
-    wire [15:0] cfg_frame_to;        // 帧超时阈值
-    wire [7:0]  cfg_crc_win;         // CRC 统计窗口长度（目前 RTL 没用到，也无妨）
-    wire [7:0]  cfg_crc_bad_th;      // CRC 坏帧阈值
-    wire [7:0]  cfg_pre_win;         // 前导统计窗口长度（目前没用到）
-    wire [7:0]  cfg_pre_bad_th;      // 前导失败阈值
-    wire        cfg_realign_mode;    // 0: need&pre; 1: need|pre
+    wire [15:0] cfg_frame_to;
+    wire [7:0]  cfg_crc_win;
+    wire [7:0]  cfg_crc_bad_th;
+    wire [7:0]  cfg_pre_win;
+    wire [7:0]  cfg_pre_bad_th;
+    wire        cfg_realign_mode;
 
 `ifdef SIM
-    // 仿真用固定默认值（和你原来的 initial 一致）
-    assign cfg_err_th          = ERR_TH[5:0];               // 2 bit 误差
-    assign cfg_verify_cnt_max  = VERIFY_CNT_MAX[7:0];       // 4 次连续命中
-    assign cfg_lock_loss_to    = LOCK_LOSS_TIMEOUT[15:0];   // 4096 拍失锁
+    assign cfg_err_th         = ERR_TH[5:0];
+    assign cfg_verify_cnt_max = VERIFY_CNT_MAX[7:0];
+    assign cfg_lock_loss_to   = LOCK_LOSS_TIMEOUT[15:0];
 
-    assign cfg_frame_to        = FRAME_TIMEOUT_MAX[15:0];   // 64 拍帧超时
-    assign cfg_crc_win         = 8'd64;
-    assign cfg_crc_bad_th      = 8'd16;
-    assign cfg_pre_win         = 8'd64;
-    assign cfg_pre_bad_th      = 8'd16;
-    assign cfg_realign_mode    = 1'b0;                      // AND：need & pre
+    assign cfg_frame_to       = FRAME_TIMEOUT_MAX[15:0];
+    assign cfg_crc_win        = 8'd64;
+    assign cfg_crc_bad_th     = 8'd16;
+    assign cfg_pre_win        = 8'd64;
+    assign cfg_pre_bad_th     = 8'd16;
+    assign cfg_realign_mode   = 1'b0;
 `else
-    // 上板用 VIO，默认值在 VIO IP 里配置
     vio_frame_cfg u_vio_frame_cfg (
         .clk        (core_clk),
-
-        .probe_out0 (cfg_err_th),          // [5:0]
-        .probe_out1 (cfg_verify_cnt_max),  // [7:0]
-        .probe_out2 (cfg_lock_loss_to),    // [15:0]
-        .probe_out3 (cfg_frame_to),        // [15:0]
-        .probe_out4 (cfg_crc_win),         // [7:0]
-        .probe_out5 (cfg_crc_bad_th),      // [7:0]
-        .probe_out6 (cfg_pre_win),         // [7:0]
-        .probe_out7 (cfg_pre_bad_th),      // [7:0]
-        .probe_out8 (cfg_realign_mode)     // [0:0]
+        .probe_out0 (cfg_err_th),
+        .probe_out1 (cfg_verify_cnt_max),
+        .probe_out2 (cfg_lock_loss_to),
+        .probe_out3 (cfg_frame_to),
+        .probe_out4 (cfg_crc_win),
+        .probe_out5 (cfg_crc_bad_th),
+        .probe_out6 (cfg_pre_win),
+        .probe_out7 (cfg_pre_bad_th),
+        .probe_out8 (cfg_realign_mode)
     );
 `endif
-    // ====================================================
-    // 1) bit_aligner：line_clk 域
-    // ====================================================
+
+    // ------------------------------------------------------------
+    // 1) bit_aligner（line_clk）
+    // ------------------------------------------------------------
     wire [W-1:0] aligned_data;
     wire         aligned_valid;
-    (* MARK_DEBUG="true" *)wire         realign_req;
+    wire         realign_req;
 
     bit_aligner_ind #(
         .W                 (W),
         .IDLE_WORD         (32'h0707_0707),
-        .LOCK_LOSS_TIMEOUT (LOCK_LOSS_TIMEOUT) // 仅用于计数器位宽
+        .LOCK_LOSS_TIMEOUT (LOCK_LOSS_TIMEOUT)
     ) u_bit_aligner_ind (
         .clk                (line_clk),
         .rst_n              (rst_n),
@@ -107,10 +99,8 @@ module fec_rx #(
         .i_rx_data          (i_rx_data),
         .i_rx_valid         (i_rx_valid),
 
-        // 来自 deframer 的重对齐请求（core_clk→line_clk，内部有同步 & 拉宽）
         .i_realign_req      (realign_req),
 
-        // ===== VIO 配置（注意：这里直接用 cfg_*，默认认为动态改的频率很低）=====
         .cfg_err_th         (cfg_err_th),
         .cfg_verify_cnt_max (cfg_verify_cnt_max),
         .cfg_lock_loss_to   (cfg_lock_loss_to),
@@ -121,25 +111,35 @@ module fec_rx #(
         .o_data_aligned     (aligned_data)
     );
 
-    // ====================================================
-    // 2) async FIFO：line_clk → core_clk
-    // ====================================================
+    reg [1:0] bit_locked_sync;
+    always@(posedge core_clk or negedge rst_n) begin
+      if (!rst_n)begin
+        bit_locked_sync <= 2'b00;
+      end else begin
+        bit_locked_sync <= {bit_locked_sync[0], o_bit_locked};
+      end
+    end
+    assign bit_locked_core = bit_locked_sync[1];
+
+    // ------------------------------------------------------------
+    // 2) async FIFO：line_clk -> core_clk  (FWFT)
+    // ------------------------------------------------------------
     wire [W-1:0] rx32_fifo_dout;
     wire         rx32_fifo_empty;
     wire         rx32_fifo_full;
     wire         rx32_fifo_wr_rst_busy;
     wire         rx32_fifo_rd_rst_busy;
-    wire         rx32_fifo_rd_en;
-    wire         rx32_fifo_wr_en;
+    wire rx32_fifo_rd_en;
 
-    assign rx32_fifo_wr_en = aligned_valid;
+    // ★关键修复：full/busy 时不允许继续 wr_en（避免 FIFO 溢出后全链路错位）
+    wire aligned_fire = aligned_valid && !rx32_fifo_full && !rx32_fifo_wr_rst_busy;
 
     async_fifo_32w_32r u_rx_fifo (
         .rst        (rst),
         .wr_clk     (line_clk),
         .rd_clk     (core_clk),
         .din        (aligned_data),
-        .wr_en      (rx32_fifo_wr_en),
+        .wr_en      (aligned_fire),
         .rd_en      (rx32_fifo_rd_en),
         .dout       (rx32_fifo_dout),
         .full       (rx32_fifo_full),
@@ -148,104 +148,166 @@ module fec_rx #(
         .rd_rst_busy(rx32_fifo_rd_rst_busy)
     );
 
-    wire [W-1:0] aligned_data_c;
-    wire         aligned_valid_c;
+    wire [31:0] rx32_fifo_drop_cnt;
+    reg [31:0] rx32_drop_cnt;
+    assign rx32_fifo_drop_cnt = rx32_drop_cnt;
 
-    assign aligned_data_c  = rx32_fifo_dout;
-    assign aligned_valid_c = ~rx32_fifo_empty & ~rx32_fifo_rd_rst_busy;
-    assign rx32_fifo_rd_en = aligned_valid_c;  // 简单 streaming
-
-    // ====================================================
-    // 3) bit_locked 同步到 core_clk
-    // ====================================================
-    reg [1:0] bit_locked_sync;
-    always @(posedge core_clk or posedge rst) begin
+    always @(posedge line_clk or posedge rst) begin
         if (rst)
-            bit_locked_sync <= 2'b00;
-        else
-            bit_locked_sync <= {bit_locked_sync[0], o_bit_locked};
+            rx32_drop_cnt <= 0;
+        else if (aligned_valid && !aligned_fire)
+            rx32_drop_cnt <= rx32_drop_cnt + 1;
     end
-    wire bit_locked_core = bit_locked_sync[1];
 
-    // ====================================================
-    // 4) deframer（帧同步 / CRC / 重对齐）
-    // ====================================================
-    (* MARK_DEBUG="true" *)wire [W-1:0] rx_payload_data;
-    (* MARK_DEBUG="true" *)wire         rx_payload_valid;
-    (* MARK_DEBUG="true" *)wire [15:0]  frame_index_rx;
-    (* MARK_DEBUG="true" *)wire [15:0]  block_id_rx;
-    (* MARK_DEBUG="true" *)wire [15:0]  frame_in_block_rx;
-    (* MARK_DEBUG="true" *)wire         blk_soft_rst;
-    (* MARK_DEBUG="true" *)wire         frame_locked;
-    (* MARK_DEBUG="true" *)wire         frame_start;
+    // ------------------------------------------------------------
+    // 2.1) FWFT 1-word prefetch/skid：把 FIFO dout 寄存后再喂给 deframer
+    // ------------------------------------------------------------
+    wire [W-1:0] df_s_tdata;
+    wire         df_s_tvalid;
+    wire         df_s_tready;
+
+    reg  [W-1:0] df_s_tdata_r;
+    reg          df_s_tvalid_r;
+
+    wire fifo_has_data = (~rx32_fifo_empty) & (~rx32_fifo_rd_rst_busy);
+
+    wire df_s_fire = df_s_tvalid_r & df_s_tready;
+    wire df_prefetch = fifo_has_data & (~df_s_tvalid_r | df_s_fire);
+
+    assign rx32_fifo_rd_en = df_prefetch;
+
+    assign df_s_tvalid = df_s_tvalid_r;
+    assign df_s_tdata  = df_s_tdata_r;
+
+    always @(posedge core_clk or posedge rst) begin
+        if (rst) begin
+            df_s_tvalid_r <= 1'b0;
+            df_s_tdata_r  <= {W{1'b0}};
+        end else begin
+            if (df_s_fire && !df_prefetch)
+                df_s_tvalid_r <= 1'b0;
+
+            if (df_prefetch) begin
+                df_s_tdata_r  <= rx32_fifo_dout;
+                df_s_tvalid_r <= 1'b1;
+            end
+        end
+    end
+
+    // ------------------------------------------------------------
+    // deframer 输出 payload AXIS
+    // ------------------------------------------------------------
+    wire [W-1:0] df_m_tdata;
+    wire [1:0]   df_m_tuser;   // [0]=blk_soft_rst_on_word0
+    wire         df_m_tvalid;
+    wire         df_m_tready;
+    wire        frame_start;
+    wire [15:0] frame_index_rx;
+    wire [15:0] block_id_rx;
+    wire [15:0] frame_in_block_rx;
+    wire        frame_locked;
 
     fso_deframer #(
-        .W                      (W),
-        .PAYLOAD_WORDS          (PAYLOAD_WORDS),
-        .FRAME_TIMEOUT_MAX      (FRAME_TIMEOUT_MAX)
+        .W                 (W),
+        .PAYLOAD_WORDS     (PAYLOAD_WORDS),
+        .FRAME_TIMEOUT_MAX (FRAME_TIMEOUT_MAX)
     ) u_fso_deframer (
-        .clk                    (core_clk),
-        .rst_n                  (rst_n),
+        .clk                   (core_clk),
+        .rst_n                 (rst_n),
 
-        .i_link_up              (bit_locked_core),
-        .i_rx_data              (aligned_data_c),
-        .i_rx_valid             (aligned_valid_c),
+        .i_link_up             (bit_locked_core),
 
-        .scrambler_en           (scrambler_en),
+        .s_axis_tdata          (df_s_tdata),
+        .s_axis_tvalid         (df_s_tvalid),
+        .s_axis_tready         (df_s_tready),
 
-        // ===== VIO 配置寄存器（core_clk 域） =====
-        .cfg_frame_timeout_max  (cfg_frame_to),        // 原 cfg_frame_to
-        .cfg_crc_bad_th         (cfg_crc_bad_th),
-        .cfg_pre_bad_th         (cfg_pre_bad_th),
-        .cfg_realign_or         (cfg_realign_mode),    // 原 cfg_realign_mode
+        .scrambler_en          (scrambler_en),
 
-        .o_realign_req          (realign_req),
-        .o_frame_start          (frame_start),
-        .o_frame_index          (frame_index_rx),
-        .o_block_id             (block_id_rx),
-        .o_frame_in_block       (frame_in_block_rx),
-        .o_blk_soft_rst         (blk_soft_rst),
-        
-        .o_frame_locked         (frame_locked),
-        .o_payload_data         (rx_payload_data),
-        .o_payload_valid        (rx_payload_valid)
+        .m_axis_tdata          (df_m_tdata),
+        .m_axis_tuser          (df_m_tuser),
+        .m_axis_tvalid         (df_m_tvalid),
+        .m_axis_tready         (df_m_tready),
+
+        .o_realign_req         (realign_req),
+        .o_frame_start         (frame_start),
+        .o_frame_index         (frame_index_rx),
+        .o_block_id            (block_id_rx),
+        .o_frame_in_block      (frame_in_block_rx),
+        .o_blk_soft_rst        (),
+        .o_frame_locked        (frame_locked),
+        .o_block_aligned       (),
+
+        .cfg_frame_timeout_max (cfg_frame_to),
+        .cfg_crc_bad_th        (cfg_crc_bad_th),
+        .cfg_pre_bad_th        (cfg_pre_bad_th),
+        .cfg_realign_or        (cfg_realign_mode)
     );
 
     assign o_frame_index    = frame_index_rx;
     assign o_block_id       = block_id_rx;
     assign o_frame_in_block = frame_in_block_rx;
 
-    // ====================================================
-    // 5) 32→8 gearbox
-    // ====================================================
-    (* MARK_DEBUG="true" *)wire [7:0] gb8_data;
-    (* MARK_DEBUG="true" *)wire       gb8_valid;
-    (* MARK_DEBUG="true" *)wire       gb8_sync_rst;
+    // ------------------------------------------------------------
+    // 4.5) deframer 后保险 FIFO：边界随数据一起缓冲
+    // ------------------------------------------------------------
+    (* MARK_DEBUG="true" *) wire [W:0] fifo_s_tdata  = {df_m_tuser[0], df_m_tdata};
+    (* MARK_DEBUG="true" *) wire       fifo_s_tvalid = df_m_tvalid;
+    (* MARK_DEBUG="true" *) wire       fifo_s_tready;
+    (* MARK_DEBUG="true" *) wire [W:0] fifo_m_tdata;
+    (* MARK_DEBUG="true" *) wire       fifo_m_tvalid;
+    (* MARK_DEBUG="true" *) wire       fifo_m_tready;
+
+    assign df_m_tready = fifo_s_tready;
+
+    axis_fifo_sync #(
+        .WIDTH         (W+1),
+        .DEPTH         (DF_AXIS_FIFO_DEPTH)
+    ) u_df_axis_fifo (
+        .clk           (core_clk),
+        .rst           (rst),
+
+        .s_axis_tdata  (fifo_s_tdata),
+        .s_axis_tvalid (fifo_s_tvalid),
+        .s_axis_tready (fifo_s_tready),
+
+        .m_axis_tdata  (fifo_m_tdata),
+        .m_axis_tvalid (fifo_m_tvalid),
+        .m_axis_tready (fifo_m_tready)
+    );
+
+    // ------------------------------------------------------------
+    // 5) 32->8 gearbox
+    // ------------------------------------------------------------
+    (* MARK_DEBUG="true" *) wire [7:0] gb8_data;
+    (* MARK_DEBUG="true" *) wire       gb8_valid;
+    (* MARK_DEBUG="true" *) wire       gb8_sync_rst;
+    (* MARK_DEBUG="true" *) wire       gb8_ready;
+    (* MARK_DEBUG="true" *) wire       gb32_in_ready;
+    assign fifo_m_tready = gb32_in_ready;
 
     gearbox_32to8 u_gb_32to8 (
         .clk         (core_clk),
         .rst         (rst),
 
-        .in_sync_rst (blk_soft_rst),
-        .in_data     (rx_payload_data),
-        .in_valid    (rx_payload_valid),
+        .in_sync_rst (fifo_m_tdata[W]),
+        .in_data     (fifo_m_tdata[W-1:0]),
+        .in_valid    (fifo_m_tvalid),
+        .in_ready    (gb32_in_ready),
 
         .out_data    (gb8_data),
         .out_sync_rst(gb8_sync_rst),
-        .out_valid   (gb8_valid)
+        .out_valid   (gb8_valid),
+        .out_ready   (gb8_ready)
     );
 
-    // ====================================================
+    // ------------------------------------------------------------
     // 6) 去交织器
-    // ====================================================
-    (* MARK_DEBUG="true" *)wire        deintlv_valid;
-    (* MARK_DEBUG="true" *)wire [7:0]  deintlv_data;
-    (* MARK_DEBUG="true" *)wire        deintlv_block_start;
-    (* MARK_DEBUG="true" *)wire [7:0]  rs_in_data;
-    (* MARK_DEBUG="true" *)wire        rs_in_valid;
-    (* MARK_DEBUG="true" *)wire        rs_in_ready;
-    (* MARK_DEBUG="true" *)reg  [7:0]  rs_byte_cnt;
-    (* MARK_DEBUG="true" *)wire        rs_tlast;
+    // ------------------------------------------------------------
+    (* MARK_DEBUG="true" *) wire        deintlv_valid;
+    (* MARK_DEBUG="true" *) wire [7:0]  deintlv_data;
+    (* MARK_DEBUG="true" *) wire        deintlv_block_start;
+    (* MARK_DEBUG="true" *) wire        rs_in_ready;
+    (* MARK_DEBUG="true" *) wire gb8_blk_rst_req = gb8_valid && gb8_sync_rst;
 
     rs_deinterleaver_xpm #(
         .D (INTLV_D),
@@ -253,57 +315,52 @@ module fec_rx #(
     ) u_deinterleaver (
         .clk         (core_clk),
         .rst         (rst),
-
-        .blk_soft_rst(gb8_sync_rst),
+        .blk_soft_rst(gb8_blk_rst_req),
 
         .in_valid    (gb8_valid),
         .in_data     (gb8_data),
-        .in_ready    (),                 // gearbox32→8 没有 ready，空着
+        .in_ready    (gb8_ready),
 
         .out_valid   (deintlv_valid),
         .out_data    (deintlv_data),
         .block_start (deintlv_block_start),
-        .out_ready   (rs_in_ready)       
+        .out_ready   (rs_in_ready)
     );
 
-    assign rs_in_data  = deintlv_data;
-    assign rs_in_valid = deintlv_valid;
-
-    wire rs_fire = deintlv_valid && rs_in_ready;
-
-    assign rs_tlast = deintlv_valid && (rs_byte_cnt == RS_N-1);
+    // ------------------------------------------------------------
+    // 6.1) rs_tlast 计数
+    // ------------------------------------------------------------
+    (* MARK_DEBUG="true" *) reg  [7:0] rs_byte_cnt;
+    (* MARK_DEBUG="true" *) wire       rs_fire  = deintlv_valid && rs_in_ready;
+    (* MARK_DEBUG="true" *) wire       rs_tlast = rs_fire && (rs_byte_cnt == RS_N-1);
+    // (* MARK_DEBUG="true" *) wire [7:0] rs_idx_cur = deintlv_block_start ? 8'd0 : rs_byte_cnt;
 
     always @(posedge core_clk or posedge rst) begin
-      if (rst) begin
-        rs_byte_cnt <= 8'd0;
-      end else if (gb8_sync_rst) begin
-        rs_byte_cnt <= 8'd0;
-      end else if (rs_fire) begin
-        //  block_start 对应的这个字节索引=0，消费后下一字节应为1
-        if (deintlv_block_start) begin
-          rs_byte_cnt <= 8'd1;
-        end else if (rs_byte_cnt == RS_N-1) begin
-          rs_byte_cnt <= 8'd0;
-        end else begin
-          rs_byte_cnt <= rs_byte_cnt + 1'b1;
+        if (rst) begin
+            rs_byte_cnt <= 8'd0;
+        end else if (rs_fire) begin
+            if (deintlv_block_start)
+                rs_byte_cnt <= 8'd1;
+            else if (rs_byte_cnt == RS_N-1)
+                rs_byte_cnt <= 8'd0;
+            else
+                rs_byte_cnt <= rs_byte_cnt + 1'b1;
         end
-      end
     end
 
-
-    // ====================================================
-    // 7) RS 解码后端
-    // ====================================================
-    (* MARK_DEBUG="true" *)wire [7:0] dec_data;
-    (* MARK_DEBUG="true" *)wire       dec_valid;
+    // ------------------------------------------------------------
+    // 7) RS 解码后端（
+    // ------------------------------------------------------------
+    (* MARK_DEBUG="true" *) wire [7:0] dec_data;
+    (* MARK_DEBUG="true" *) wire       dec_valid;
 
     rs_decode_backend u_rs_decode_backend (
         .rst                 (rst),
         .core_clk            (core_clk),
         .output_clk          (core_clk),
 
-        .s_axis_input_tdata  (rs_in_data),
-        .s_axis_input_tvalid (rs_in_valid),
+        .s_axis_input_tdata  (deintlv_data),
+        .s_axis_input_tvalid (deintlv_valid),
         .s_axis_input_tlast  (rs_tlast),
         .s_axis_input_tready (rs_in_ready),
 
@@ -315,50 +372,6 @@ module fec_rx #(
     assign o_data  = dec_data;
     assign o_valid = dec_valid;
 
-// `ifdef SIM
-//     integer wr_cnt;
-//     always @(posedge line_clk or posedge rst) begin
-//         if (rst) begin
-//             wr_cnt <= 0;
-//         end else begin
-//             if (aligned_valid && rx32_fifo_full) begin
-//                 $display("[%0t] ERROR: rx32 FIFO FULL, incoming data DROPPED!", $time);
-//             end
-//             if (rx32_fifo_wr_en) begin
-//                 wr_cnt <= wr_cnt + 1;
-//                 $display("[%0t] FIFO WR #%0d: data = %h",
-//                          $time, wr_cnt, aligned_data);
-//             end
-//         end
-//     end
-
-//     integer rd_cnt;
-//     reg [W-1:0] last_read_data;
-
-//     always @(posedge core_clk or posedge rst) begin
-//         if (rst) begin
-//             rd_cnt         <= 0;
-//             last_read_data <= {W{1'b0}};
-//         end else if (aligned_valid_c) begin
-//             rd_cnt <= rd_cnt + 1;
-//             $display("[%0t] FIFO RD #%0d: data = %h",
-//                      $time, rd_cnt, aligned_data_c);
-
-//             if (aligned_data_c == last_read_data) begin
-//                 $display("[%0t] WARNING: consecutive reads have same data: %h",
-//                          $time, aligned_data_c);
-//             end
-//             last_read_data <= aligned_data_c;
-//         end
-//     end
-
-//     always @(posedge line_clk or posedge rst) begin
-//         if (rst) begin
-//         end else if (aligned_valid && rx32_fifo_full) begin
-//             $display("[%0t] ERROR: rx32 FIFO FULL, data dropped!", $time);
-//         end
-//     end
-
-// `endif
+// ila probe 8,1 
 
 endmodule

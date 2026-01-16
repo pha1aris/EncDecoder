@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/PC/Desktop/fps/EnDec/project_1/project_1.hw/hw_1/wave/hw_ila_data_5/hw_ila_data_5.wdb" id="1">
+         <top_modules>
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0"></ZoomStartTime>
+      <ZoomEndTime time="1,252"></ZoomEndTime>
+      <Cursor1Time time="213"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="154"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="3" />
+   <wave_markers>
+   </wave_markers>
+   <wvobject fp_name="u_fec_tx/tx32_fifo_dout" type="array">
+      <obj_property name="ElementShortName">u_fec_tx/tx32_fifo_dout[31:0]</obj_property>
+      <obj_property name="ObjectShortName">tx32_fifo_dout[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="tx_data_to_gth" type="array">
+      <obj_property name="ElementShortName">tx_data_to_gth[31:0]</obj_property>
+      <obj_property name="ObjectShortName">tx_data_to_gth[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="u_fec_tx/tx_fifo_rdcnt" type="array">
+      <obj_property name="ElementShortName">u_fec_tx/tx_fifo_rdcnt[11:0]</obj_property>
+      <obj_property name="ObjectShortName">tx_fifo_rdcnt[11:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+</wave_config>

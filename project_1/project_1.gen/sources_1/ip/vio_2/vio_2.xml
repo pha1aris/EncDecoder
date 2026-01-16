@@ -112,7 +112,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Dec 16 03:13:03 UTC 2025</spirit:value>
+            <spirit:value>Mon Dec 29 01:51:10 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
@@ -130,7 +130,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Dec 16 03:13:03 UTC 2025</spirit:value>
+            <spirit:value>Mon Dec 29 01:51:10 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
@@ -148,11 +148,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Dec 16 03:13:39 UTC 2025</spirit:value>
+            <spirit:value>Mon Dec 29 01:51:11 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:57e34176</spirit:value>
+            <spirit:value>9:a68056a7</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -166,7 +166,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Dec 16 03:13:03 UTC 2025</spirit:value>
+            <spirit:value>Mon Dec 29 01:51:10 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
@@ -185,7 +185,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Dec 16 03:13:03 UTC 2025</spirit:value>
+            <spirit:value>Mon Dec 29 01:51:10 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
@@ -205,7 +205,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Dec 16 03:13:03 UTC 2025</spirit:value>
+            <spirit:value>Mon Dec 29 01:51:10 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
@@ -225,7 +225,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Dec 16 03:13:03 UTC 2025</spirit:value>
+            <spirit:value>Mon Dec 29 01:51:10 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
@@ -243,7 +243,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Dec 16 03:13:03 UTC 2025</spirit:value>
+            <spirit:value>Mon Dec 29 01:51:10 UTC 2025</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
@@ -15498,7 +15498,7 @@
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_PROBE_OUT3_INIT_VAL</spirit:name>
         <spirit:displayName>PROBE OUT3 INIT VALUE</spirit:displayName>
-        <spirit:value spirit:format="bitString" spirit:resolve="dependent" spirit:id="MODELPARAM_VALUE.C_PROBE_OUT3_INIT_VAL" spirit:dependency="(spirit:decode(id(&apos;PARAM_VALUE.C_PROBE_OUT3_INIT_VAL&apos;)))" spirit:bitStringLength="4">0x0</spirit:value>
+        <spirit:value spirit:format="bitString" spirit:resolve="dependent" spirit:id="MODELPARAM_VALUE.C_PROBE_OUT3_INIT_VAL" spirit:dependency="(spirit:decode(id(&apos;PARAM_VALUE.C_PROBE_OUT3_INIT_VAL&apos;)))" spirit:bitStringLength="1">0x0</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>C_PROBE_OUT4_INIT_VAL</spirit:name>
@@ -20814,6 +20814,7 @@
         <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.C_PROBE_OUT0_WIDTH" xilinx:valueSource="user"/>
         <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.C_PROBE_OUT1_INIT_VAL" xilinx:valueSource="user"/>
         <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.C_PROBE_OUT2_WIDTH" xilinx:valueSource="user"/>
+        <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.C_PROBE_OUT3_INIT_VAL" xilinx:valueSource="user"/>
       </xilinx:configElementInfos>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

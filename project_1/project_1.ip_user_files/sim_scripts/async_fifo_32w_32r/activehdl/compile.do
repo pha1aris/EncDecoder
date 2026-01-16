@@ -28,6 +28,7 @@ vlog -work xilinx_vip  -sv2k12 "+incdir+D:/2024_2/Vivado/2024.2/data/xilinx_vip/
 vlog -work xpm  -sv2k12 "+incdir+D:/2024_2/Vivado/2024.2/data/xilinx_vip/include" -l xilinx_vip -l xpm -l fifo_generator_v13_2_11 -l xil_defaultlib \
 "D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv" \
 "D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv" \
+"D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv" \
 
 vcom -work xpm -93  \
 "D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_VCOMP.vhd" \

@@ -49,13 +49,14 @@ module rs_encode_frontend #(
     assign reset_sync = reset_sync_r2;
 
     //================================================================
-    // 2. 异步 FIFO : clk -> enc_clk
+    // 2. 异步 FIFO : clk -> enc_clk  (配置为 FWFT: First-Word Fall-Through)
     //================================================================
     wire       full, empty;
     wire       wr_rst_busy, rd_rst_busy;
     wire [7:0] fifo_dout;
     wire       fifo_rd_en;
 
+    // 写侧反压
     assign fifo_input_rdy = !full && !wr_rst_busy;
 
     fifo_0 fifo0_inst2 (
@@ -72,75 +73,48 @@ module rs_encode_frontend #(
         .rd_rst_busy (rd_rst_busy)
     );
 
-    // always@(posedge clk or posedge reset_sync)begin
-    //     if(fifo_input_rdy && data_valid_i)
-    //         $display("fifo rd data:%d",data_i);
-    // end
-    // always@(posedge enc_clk or posedge reset_sync)begin
-    //     if(fifo_rd_en)
-    //         $display("fifo wr data:%d",fifo_dout);
-    // end
     //================================================================
-    // 3. enc_clk 域：RS Encoder 输入 AXIS 打拍 + 计数产生 tlast
+    // 3. enc_clk 域：FWFT FIFO -> RS Encoder AXIS
+    //
+    // 关键点（FWFT）：
+    // - FIFO 非空时，dout 已经是“当前字”，无需先 rd_en 预取
+    // - 只有当下游真正握手接收时（fire）才 rd_en pop，下一个字会在随后更新到 dout
     //================================================================
-    reg [7:0] s_data_reg;
-    reg       s_valid_reg;
+    wire fifo_vld = (!empty) && (!rd_rst_busy) && (!rst_enc);
 
-    reg [7:0] byte_cnt;          // 足够覆盖 RS_K=229
-    wire      s_ready;           // 来自 Encoder 的 tready
-    wire      fire;              // 一次有效握手
+    wire s_ready;     // 来自 RS Encoder 的 tready
+    wire fire = fifo_vld && s_ready;
 
-    assign fire = s_valid_reg && s_ready;
+    // 仅在握手时 pop
+    assign fifo_rd_en = fire;
 
-    // FIFO 读使能：
-    //  - 不在 rd_rst_busy 期间
-    //  - FIFO 非空
-    //  - Encoder 这边“有位置”：当前没有有效数据，或者本拍刚好 handshake 消费掉
-    assign fifo_rd_en =
-        !rd_rst_busy && !empty &&
-        ((!s_valid_reg) || fire);
+    // 直接驱动 AXIS 输入
+    wire [7:0] s_axis_input_tdata  = fifo_dout;
+    wire       s_axis_input_tvalid = fifo_vld;
 
-    // 数据 / valid / last 寄存器
-    always @(posedge enc_clk or posedge rst_enc) begin
-        if (rst_enc) begin
-            s_data_reg  <= 8'd0;
-            s_valid_reg <= 1'b0;
-        end else begin
-            if (fifo_rd_en) begin
-                s_data_reg  <= fifo_dout;
-                s_valid_reg <= 1'b1;
-            end else if (fire) begin
-                s_valid_reg <= 1'b0;
-            end
-        end
-    end
+    //================================================================
+    // 4. 计数产生 tlast：只在 fire 时计数
+    //================================================================
+    reg [7:0] byte_cnt;  // RS_K=229 足够覆盖
 
-    // 字节计数：只在真正握手 fire 时计数
     always @(posedge enc_clk or posedge rst_enc) begin
         if (rst_enc) begin
             byte_cnt <= 8'd0;
-        end else begin
-            if (fire) begin
-                if (byte_cnt == RS_K-1) //0-228
-                    byte_cnt <= 8'd0;          // 这一拍是第 RS_K 个字节→下一拍从 0 重新开始
-                else
-                    byte_cnt <= byte_cnt + 1'b1;
-            end
+        end else if (fire) begin
+            if (byte_cnt == RS_K-1)
+                byte_cnt <= 8'd0;
+            else
+                byte_cnt <= byte_cnt + 1'b1;
         end
     end
 
-    wire tlast;
-    assign tlast = (byte_cnt == RS_K-1);
+    wire s_axis_input_tlast = (byte_cnt == RS_K-1);
 
     //================================================================
-    // 4. 接到 RS Encoder IP
+    // 5. 接到 RS Encoder IP
     //================================================================
     wire event_s_input_tlast_missing;
     wire event_s_input_tlast_unexpected;
-
-    wire [7:0] s_axis_input_tdata  = s_data_reg;
-    wire       s_axis_input_tvalid = s_valid_reg;
-    wire       s_axis_input_tlast  = tlast;
 
     rs_encoder_0 Encoder (
         .aclk                           (enc_clk),

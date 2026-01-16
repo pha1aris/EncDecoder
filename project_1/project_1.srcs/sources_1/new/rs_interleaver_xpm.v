@@ -33,18 +33,18 @@ module rs_interleaver_xpm #(
     localparam integer COL_W      = $clog2(N);
     localparam integer SYM_IDX_W  = MEM_ADDR_W;
 
-`ifdef SIM
-    initial begin
-        if (D > MAX_D) begin
-            $display("[%0t] WARNING(rs_interleaver_xpm): D=%0d > MAX_D=%0d, D_EFF=%0d",
-                     $time, D, MAX_D, D_EFF);
-        end
-        if (TOTAL_SYM > MAX_DEPTH) begin
-            $display("[%0t] ERROR(rs_interleaver_xpm): TOTAL_SYM=%0d > MAX_DEPTH=%0d",
-                     $time, TOTAL_SYM, MAX_DEPTH);
-        end
-    end
-`endif
+// `ifdef SIM
+//     initial begin
+//         if (D > MAX_D) begin
+//             $display("[%0t] WARNING(rs_interleaver_xpm): D=%0d > MAX_D=%0d, D_EFF=%0d",
+//                      $time, D, MAX_D, D_EFF);
+//         end
+//         if (TOTAL_SYM > MAX_DEPTH) begin
+//             $display("[%0t] ERROR(rs_interleaver_xpm): TOTAL_SYM=%0d > MAX_DEPTH=%0d",
+//                      $time, TOTAL_SYM, MAX_DEPTH);
+//         end
+//     end
+// `endif
 
     // ===================== 写侧：线性写入 + 双缓冲 =====================
     reg [SYM_IDX_W-1:0] wr_sym_idx;
@@ -150,35 +150,35 @@ module rs_interleaver_xpm #(
     // ===================== RAM 实现 =====================
     wire [7:0] doutb0, doutb1;
 
-`ifdef SIM
-    reg [7:0] mem0 [0:TOTAL_SYM-1];
-    reg [7:0] mem1 [0:TOTAL_SYM-1];
-    reg [7:0] doutb0_r, doutb1_r;
-    integer i;
-    initial begin
-        $display("rs_interleaver_xpm: dpram simulation model.");
-        for (i = 0; i < TOTAL_SYM; i = i + 1) begin
-            mem0[i] = 8'd0;
-            mem1[i] = 8'd0;
-        end
-    end
+// `ifdef SIM
+//     reg [7:0] mem0 [0:TOTAL_SYM-1];
+//     reg [7:0] mem1 [0:TOTAL_SYM-1];
+//     reg [7:0] doutb0_r, doutb1_r;
+//     integer i;
+//     initial begin
+//         $display("rs_interleaver_xpm: dpram simulation model.");
+//         for (i = 0; i < TOTAL_SYM; i = i + 1) begin
+//             mem0[i] = 8'd0;
+//             mem1[i] = 8'd0;
+//         end
+//     end
 
-    always @(posedge clk) begin
-        if (wea0)
-            mem0[wr_sym_idx] <= in_data;
-        doutb0_r <= mem0[rd_sym_idx];
-    end
+//     always @(posedge clk) begin
+//         if (wea0)
+//             mem0[wr_sym_idx] <= in_data;
+//         doutb0_r <= mem0[rd_sym_idx];
+//     end
 
-    always @(posedge clk) begin
-        if (wea1)
-            mem1[wr_sym_idx] <= in_data;
-        doutb1_r <= mem1[rd_sym_idx];
-    end
+//     always @(posedge clk) begin
+//         if (wea1)
+//             mem1[wr_sym_idx] <= in_data;
+//         doutb1_r <= mem1[rd_sym_idx];
+//     end
 
-    assign doutb0 = doutb0_r;
-    assign doutb1 = doutb1_r;
+//     assign doutb0 = doutb0_r;
+//     assign doutb1 = doutb1_r;
 
-`else
+// `else
     xpm_memory_tdpram #(
         .MEMORY_SIZE        (MEM_SIZE),
         .MEMORY_PRIMITIVE   ("block"),
@@ -264,9 +264,15 @@ module rs_interleaver_xpm #(
         .injectsbiterra (1'b0),
         .injectdbiterra (1'b0)
     );
-`endif
+// `endif
 
-    wire [7:0] dout_mux = (rd_bank == 1'b0) ? doutb0 : doutb1;
+    wire rd_req = rd_fire;
+    reg rd_bank_q;
+    always @(posedge clk or posedge rst) begin
+      if (rst) rd_bank_q <= 1'b0;
+      else if (rd_req)  rd_bank_q <= rd_bank;
+    end
+    wire [7:0] dout_mux = (rd_bank_q == 1'b0) ? doutb0 : doutb1;
 
     // ===================== RAM 一拍延迟标志 =====================
     reg rd_fire_d1;
@@ -330,17 +336,17 @@ module rs_interleaver_xpm #(
         end
     end
 
-`ifdef SIM
-    // 如果这里触发，说明“FIFO not ready 且 skid 已满”时又来了 src_valid（将会溢出）
-    always @(posedge clk) begin
-        if (!rst) begin
-            if (src_valid && skid_v && !ofifo_in_ready) begin
-                $display("[%0t] INTERLEAVER SKID OVERFLOW (should never happen)", $time);
-                // $stop;
-            end
-        end
-    end
-`endif
+// `ifdef SIM
+//     // 如果这里触发，说明“FIFO not ready 且 skid 已满”时又来了 src_valid（将会溢出）
+//     always @(posedge clk) begin
+//         if (!rst) begin
+//             if (src_valid && skid_v && !ofifo_in_ready) begin
+//                 $display("[%0t] INTERLEAVER SKID OVERFLOW (should never happen)", $time);
+//                 // $stop;
+//             end
+//         end
+//     end
+// `endif
 
     // ===================== 输出 FIFO =====================
     wire [7:0]  ofifo_out_data;

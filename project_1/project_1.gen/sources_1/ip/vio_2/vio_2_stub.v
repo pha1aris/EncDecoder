@@ -2,10 +2,10 @@
 // Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-// Date        : Tue Dec 16 11:13:39 2025
+// Date        : Tue Dec 16 11:13:38 2025
 // Host        : FSO-A running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode synth_stub
-//               c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/vio_2/vio_2_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top vio_2 -prefix
+//               vio_2_ vio_2_stub.v
 // Design      : vio_2
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xczu15eg-ffvb1156-2-i

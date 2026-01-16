@@ -1,7 +1,7 @@
 onbreak {quit -f}
 onerror {quit -f}
 
-vsim -voptargs="+acc"  -L xil_defaultlib -L fifo_generator_v13_2_11 -L xilinx_vip -L unisims_ver -L unimacro_ver -L secureip -L xpm -lib xil_defaultlib xil_defaultlib.async_fifo_32w_32r xil_defaultlib.glbl
+vsim -voptargs="+acc" -voptargs="+acc=npr" -L xil_defaultlib -L fifo_generator_v13_2_11 -L xilinx_vip -L unisims_ver -L unimacro_ver -L secureip -L xpm -lib xil_defaultlib xil_defaultlib.async_fifo_32w_32r xil_defaultlib.glbl
 
 set NumericStdNoWarnings 1
 set StdArithNoWarnings 1
@@ -15,6 +15,16 @@ view signals
 log -r /*
 
 do {async_fifo_32w_32r.udo}
+
+# execute post tcl file
+set rc [catch {
+  puts "source wave nameformat short"
+  source "wave nameformat short"
+} result]
+if {$rc} {
+  puts "$result"
+  puts "ERROR: \[exportsim-Tcl-1\] Script failed:wave nameformat short"
+}
 
 run 0
 

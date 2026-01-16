@@ -10,20 +10,121 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0"></ZoomStartTime>
-      <ZoomEndTime time="1,025"></ZoomEndTime>
-      <Cursor1Time time="1,024"></Cursor1Time>
+      <ZoomEndTime time="7,080"></ZoomEndTime>
+      <Cursor1Time time="0"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="189"></NameColumnWidth>
-      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+      <NameColumnWidth column_width="150"></NameColumnWidth>
+      <ValueColumnWidth column_width="128"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="1" />
+   <WVObjectSize size="15" />
    <wave_markers>
    </wave_markers>
-   <wvobject fp_name="cnt_total_err_cnt" type="array">
+   <wvobject fp_name="bit_locked_core" type="logic">
       <obj_property name="DisplayName">FullPathName</obj_property>
-      <obj_property name="ElementShortName">cnt_total_err_cnt[63:0]</obj_property>
-      <obj_property name="ObjectShortName">cnt_total_err_cnt[63:0]</obj_property>
+      <obj_property name="ElementShortName">bit_locked_core</obj_property>
+      <obj_property name="ObjectShortName">bit_locked_core</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="frame_locked_core" type="logic">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">frame_locked_core</obj_property>
+      <obj_property name="ObjectShortName">frame_locked_core</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="prbs_chk_en" type="logic">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">prbs_chk_en</obj_property>
+      <obj_property name="ObjectShortName">prbs_chk_en</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="prbs_chk_rst" type="logic">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">prbs_chk_rst</obj_property>
+      <obj_property name="ObjectShortName">prbs_chk_rst</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="prbs_cnt_en" type="logic">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">prbs_cnt_en</obj_property>
+      <obj_property name="ObjectShortName">prbs_cnt_en</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="prbs_err_vec" type="array">
+      <obj_property name="ElementShortName">prbs_err_vec[7:0]</obj_property>
+      <obj_property name="ObjectShortName">prbs_err_vec[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="prbs_match_raw" type="logic">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">prbs_match_raw</obj_property>
+      <obj_property name="ObjectShortName">prbs_match_raw</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="prbs_meas_start" type="logic">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">prbs_meas_start</obj_property>
+      <obj_property name="ObjectShortName">prbs_meas_start</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="rx_block_id" type="array">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">rx_block_id[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_block_id[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="rx_frame_in_block" type="array">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">rx_frame_in_block[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_frame_in_block[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="rx_frame_index" type="array">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">rx_frame_index[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_frame_index[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="rx_payload_byte" type="array">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">rx_payload_byte[7:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_payload_byte[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="rx_payload_vld" type="logic">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">rx_payload_vld</obj_property>
+      <obj_property name="ObjectShortName">rx_payload_vld</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="total_bits_cnt" type="array">
+      <obj_property name="ElementShortName">total_bits_cnt[63:0]</obj_property>
+      <obj_property name="ObjectShortName">total_bits_cnt[63:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="total_err_cnt" type="array">
+      <obj_property name="ElementShortName">total_err_cnt[63:0]</obj_property>
+      <obj_property name="ObjectShortName">total_err_cnt[63:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>

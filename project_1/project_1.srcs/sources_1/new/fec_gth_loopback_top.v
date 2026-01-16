@@ -16,7 +16,7 @@ module fec_gth_loopback_top #(
 )(
     input  wire         sys_clk_p,
     input  wire         sys_clk_n,
-    input  wire         sys_rst_n,        // 低有效
+    input  wire         sys_rst_n,        
 
     input  wire         mgtrefclk0_x1y1_p,
     input  wire         mgtrefclk0_x1y1_n,
@@ -26,6 +26,7 @@ module fec_gth_loopback_top #(
     output wire         gthtxp_out,
     output wire         gthtxn_out,
 
+    input wire  [1:0]   sfp_loss,
     output wire [1:0]   tx_disable
 );
     assign tx_disable = 2'b00;
@@ -81,18 +82,19 @@ module fec_gth_loopback_top #(
     wire [31:0] ber_result_to_vio;
 
 `ifdef SIM
-    assign loop_backmode        = 3'b001;
+    assign loop_backmode        = 3'b000;
     assign scrambler_en         = 1'b0;
     assign ber_clr              = 1'b0;
     assign tx_pattern_prbs_vio  = (TEST_PRBS != 0); // SIM 用参数作为默认选择
+    // assign sfp_loss = 2'b00;
 `else
-    // VIO: probe_in0 = 32bit, probe_out0/1/2/3
+    // VIO: probe_in0 = 32bit, probe_out0/1/2/3/4
     vio_2 u_vio_ctrl (
         .clk        (core_clk),
         .probe_out0 (ber_clr),
         .probe_out1 (scrambler_en),
         .probe_out2 (loop_backmode),
-        .probe_out3 (tx_pattern_prbs_vio), // 1=PRBS,0=Counter
+        .probe_out3 (tx_pattern_prbs_vio), // 1=PRBS,0=Counter default 0
         .probe_in0  (ber_result_to_vio)
     );
 `endif
@@ -101,7 +103,7 @@ module fec_gth_loopback_top #(
     reg tx_pat_ff1, tx_pat_ff2, tx_pat_ff2_d;
     always @(posedge core_clk) begin
         if (logic_rst) begin
-            // 关键：上电默认值跟随 VIO（或 SIM 参数）当前值，避免伪切换
+            // 上电默认值跟随 VIO（或 SIM 参数）当前值，避免伪切换
             tx_pat_ff1   <= tx_pattern_prbs_vio;
             tx_pat_ff2   <= tx_pattern_prbs_vio;
             tx_pat_ff2_d <= tx_pattern_prbs_vio;
@@ -112,13 +114,12 @@ module fec_gth_loopback_top #(
         end
     end
 
-    (* MARK_DEBUG="true" *) wire test_prbs_sel   = tx_pat_ff2;                 // 1=PRBS,0=Counter
-    (* MARK_DEBUG="true" *) wire tx_pat_sw_pulse = (tx_pat_ff2 ^ tx_pat_ff2_d);
-
+    wire test_prbs_sel   = tx_pat_ff2;                 // 1=PRBS,0=Counter
+    wire tx_pat_sw_pulse = (tx_pat_ff2 ^ tx_pat_ff2_d);
     wire use_prbs = test_prbs_sel;
     wire use_cnt  = ~test_prbs_sel;
 
-    // 切换 holdoff：切换后暂停若干拍并复位发生器/检查器/统计（避免过渡态污染 ILA/BER）
+    // 切换后暂停若干拍并复位发生器/检查器/统计
     reg [2:0] tx_pat_hold_cnt;
     always @(posedge core_clk) begin
         if (logic_rst) begin
@@ -129,25 +130,25 @@ module fec_gth_loopback_top #(
             tx_pat_hold_cnt <= tx_pat_hold_cnt - 1'b1;
         end
     end
-    (* MARK_DEBUG="true" *) wire tx_pat_hold = (tx_pat_hold_cnt != 0);
+    wire tx_pat_hold = (tx_pat_hold_cnt != 0);
 
     //======================================================================
     // 2. GTH 顶层
     //======================================================================
     wire        tx_usr_clk;
     wire        tx_rst_n;
-    (* MARK_DEBUG="true" *) wire         tx_done;
-    (* MARK_DEBUG="true" *) wire         tx_active;
+    wire         tx_done;
+    wire         tx_active;
 
     wire        rx_usr_clk;
     wire        rx_rst_n;
-    (* MARK_DEBUG="true" *) wire         rx_done;
-    (* MARK_DEBUG="true" *) wire         rx_active;
-    (* MARK_DEBUG="true" *) wire         cdr_stable;
-    (* MARK_DEBUG="true" *) wire [W-1:0] rx_data_from_gth;
+    wire         rx_done;
+    wire         rx_active;
+    wire         cdr_stable;
+    wire [W-1:0] rx_data_from_gth;
 
-    (* MARK_DEBUG="true" *) wire [W-1:0] tx_data_to_gth;
-    (* MARK_DEBUG="true" *) wire         rx_slide_req;
+    wire [W-1:0] tx_data_to_gth;
+    wire         rx_slide_req;
 
     gth_raw_top #(
         .W (W)
@@ -208,22 +209,42 @@ module fec_gth_loopback_top #(
     wire tx_rst_n_core = tx_rstn_cdc2;
     wire rx_done_core  = rx_done_cdc2;
     wire rx_rst_n_core = rx_rstn_cdc2;
-
     wire tx_path_rst_n = logic_rst_n & tx_rst_n_core & tx_done_core & ~tx_pat_hold;
     wire tx_path_rst   = ~tx_path_rst_n;
+    // CDC sfp loss信号 core_clk/rx_usr_clk域
+    reg [1:0] loss_core_ff1,loss_core_ff2;
+    reg [1:0] loss_rx_ff1, loss_rx_ff2;
+    
+    always @(posedge core_clk) begin
+        if(logic_rst) begin
+            loss_core_ff1 <= 2'b11;
+            loss_core_ff2 <= 2'b11;
+        end else begin
+            loss_core_ff1 <= sfp_loss;
+            loss_core_ff2 <= loss_core_ff1;
+        end
+    end
+
+    always @(posedge rx_usr_clk) begin
+        if(!rx_rst_n) begin
+            loss_rx_ff1 <= 2'b11;
+            loss_rx_ff2 <= 2'b11;
+        end else begin
+            loss_rx_ff1 <= sfp_loss;
+            loss_rx_ff2 <= loss_rx_ff1;
+        end
+    end
+    wire have_light_core = ~loss_core_ff2[0];
+    wire have_light_line = ~loss_rx_ff2[0];
     //======================================================================
     // 3. TX：PRBS/Counter → FEC_TX → GTH
     //======================================================================
 
-
-    (* MARK_DEBUG="true" *) wire [7:0]  prbs_tx_data;
-    (* MARK_DEBUG="true" *) wire        prbs_tx_ready;
-
-
-
-    (* MARK_DEBUG="true" *) wire [W-1:0] fec_tx_data_line;
-    (* MARK_DEBUG="true" *) wire         fec_tx_valid_line;
-    (* MARK_DEBUG="true" *) wire [15:0]  tx_frame_index;
+    wire [7:0]  prbs_tx_data;
+    wire        prbs_tx_ready;
+    wire [W-1:0] fec_tx_data_line;
+    wire         fec_tx_valid_line;
+    wire [15:0]  tx_frame_index;
 
     // CDC: tx_active -> core_clk
     reg tx_act_cdc1, tx_act_cdc2;
@@ -255,6 +276,7 @@ module fec_gth_loopback_top #(
                 rate_cnt <= rate_cnt + 1'b1;
         end
     end
+    
     // 模式切换 holdoff 期间不发数（避免过渡态）
     wire prbs_en = use_prbs & prbs_tx_ready & tx_active_core & rate_gate & ~tx_pat_hold;
     wire cnt_en  = use_cnt  & prbs_tx_ready & tx_active_core & rate_gate & ~tx_pat_hold;
@@ -278,16 +300,63 @@ module fec_gth_loopback_top #(
     reg [7:0] cnt_data;
     (* MARK_DEBUG="true" *) wire [7:0] src_data  = use_prbs ? prbs_tx_data : cnt_data;
     (* MARK_DEBUG="true" *) wire       src_valid = use_prbs ? prbs_en      : cnt_en;
+    // always @(posedge core_clk) begin
+    //     if (tx_path_rst) begin
+    //         cnt_data <= 8'd0;
+    //     end else if (cnt_en) begin
+    //         if (cnt_data == 8'd228)
+    //             cnt_data <= 8'd0;
+    //         else
+    //             cnt_data <= cnt_data + 1'b1;
+    //     end
+    // end
+
+    localparam integer BLK_IN_BYTES = INTLV_D * RS_K;   // 64*229=14656
+    localparam integer BLK_W        = $clog2(BLK_IN_BYTES);
+    reg [BLK_W-1:0] blk_byte_idx;   // 0..BLK_IN_BYTES-1
+    reg [15:0] seq16;
+    reg        seq_hi_phase;        // 0:发低字节 1:发高字节（两拍组成一个序号）
+
     always @(posedge core_clk) begin
         if (tx_path_rst) begin
-            cnt_data <= 8'd0;
+            blk_byte_idx  <= 'd0;
+            seq16         <= 16'd0;
+            seq_hi_phase  <= 1'b0;
+            cnt_data      <= 8'd0;
         end else if (cnt_en) begin
-            if (cnt_data == 8'd228)
-                cnt_data <= 8'd0;
+            // 16bit 序号：每发出 2 个字节，序号+1
+            if (!seq_hi_phase) begin
+            cnt_data     <= seq16[7:0];   // 低字节
+            seq_hi_phase <= 1'b1;
+            end else begin
+            cnt_data     <= seq16[15:8];  // 高字节
+            seq_hi_phase <= 1'b0;
+            seq16        <= seq16 + 1'b1;
+            end
+
+            // block 内 byte index（可用于你自己在 RX 端对齐到 block 边界）
+            if (blk_byte_idx == BLK_IN_BYTES-1)
+            blk_byte_idx <= 'd0;
             else
-                cnt_data <= cnt_data + 1'b1;
+            blk_byte_idx <= blk_byte_idx + 1'b1;
         end
     end
+    // 修改后的验证逻辑：添加陷阱字节 8'hAA
+    // always @(posedge core_clk) begin
+    //     if (tx_path_rst) begin
+    //         cnt_data <= 8'd0;
+    //     end else if (cnt_en) begin
+    //         if (cnt_data == 8'd228)
+    //             cnt_data <= 8'hFF;     // ★ 在228后面故意插入一个 AA
+    //         else if (cnt_data == 8'hFF)
+    //             cnt_data <= 8'd0;      // ★ 发完 AA 后再归零
+    //         else
+    //             cnt_data <= cnt_data + 1'b1;
+    //     end
+    // end
+
+    // (* MARK_DEBUG="true" *) wire [W-1:0] fec_tx_data;
+    // (* MARK_DEBUG="true" *) wire         fec_tx_valid;
 
     fec_tx #(
         .W                (W),
@@ -308,8 +377,8 @@ module fec_gth_loopback_top #(
         .i_valid          (src_valid),
         .i_ready          (prbs_tx_ready),
 
-        .o_tx_data        (),
-        .o_tx_valid       (),
+        // .o_tx_data        (fec_tx_data),
+        // .o_tx_valid       (fec_tx_valid),
         .o_tx_data_line   (fec_tx_data_line),
         .o_tx_valid_line  (fec_tx_valid_line),
         .o_tx_frame_index (tx_frame_index)
@@ -320,13 +389,12 @@ module fec_gth_loopback_top #(
     //======================================================================
     // 4. RX：GTH → FEC_RX → PRBS 检查
     //======================================================================
-    (* MARK_DEBUG="true" *) wire [7:0]  fec_rx_data;
-    (* MARK_DEBUG="true" *) wire        fec_rx_valid;
+    wire [7:0]  fec_rx_data;
+    wire        fec_rx_valid;
     (* MARK_DEBUG="true" *) wire        bit_locked;
-    wire [15:0] rx_frame_index;
-    wire [15:0] rx_block_id;
-    wire [15:0] rx_frame_in_block;
-
+    (* MARK_DEBUG="true" *) wire [15:0] rx_frame_index;
+    (* MARK_DEBUG="true" *) wire [15:0] rx_block_id;
+    (* MARK_DEBUG="true" *) wire [15:0] rx_frame_in_block;
     wire fec_rx_rst_n = logic_rst_n & rx_rst_n_core & rx_done_core;
 
     // CDC: rx_active/cdr_stable -> rx_usr_clk
@@ -346,22 +414,23 @@ module fec_gth_loopback_top #(
         end
     end
 
-    wire rx_active_line   = rx_act_l2;
-    wire cdr_stable_line  = cdr_st_l2;
+    (* MARK_DEBUG="true" *) wire rx_active_line   = rx_act_l2;
+    (* MARK_DEBUG="true" *) wire cdr_stable_line  = cdr_st_l2;
+    (* MARK_DEBUG="true" *) wire rx_word_valid_line = rx_active_line & cdr_stable_line & have_light_line;  
 
     fec_rx #(
-        .W             (W),
-        .PAYLOAD_WORDS (PAYLOAD_WORDS),
-        .RS_N          (RS_N),
-        .INTLV_D       (INTLV_D),
-        .INTLV_N       (INTLV_N)
+        .W                (W),
+        .PAYLOAD_WORDS    (PAYLOAD_WORDS),
+        .RS_N             (RS_N),
+        .INTLV_D          (INTLV_D),
+        .INTLV_N          (INTLV_N)
     ) u_fec_rx (
         .line_clk         (rx_usr_clk),
         .core_clk         (core_clk),
         .rst_n            (fec_rx_rst_n),
 
         .i_rx_data        (rx_data_from_gth),
-        .i_rx_valid       (1'b1),
+        .i_rx_valid       (rx_word_valid_line),
 
         .rx_reset_done    (rx_active_line),
         .rx_cdr_stable    (cdr_stable_line),
@@ -373,16 +442,27 @@ module fec_gth_loopback_top #(
         .i_data_ready     (1'b1),
 
         .o_rxslide        (rx_slide_req),
-        .o_bit_locked     (bit_locked),
+        .bit_locked_core  (bit_locked),
         .o_frame_index    (rx_frame_index),
         .o_block_id       (rx_block_id),
         .o_frame_in_block (rx_frame_in_block)
     );
 
+    ila_fec_rx ila_fec_rx (
+        .clk    (core_clk), // input wire clk
+        .probe0 (fec_rx_data), // input wire [7:0]  probe0  
+        .probe1 (fec_rx_valid) // input wire [0:0]  probe1
+    );
+
     //======================================================================
-    // 5. PRBS 检查 + 误码统计
+    // 5. PRBS 检查 + 误码统计（改进：链路不满足条件时输出“无效码”，不再是 0）
     //======================================================================
-    // ber_clr：同步一次并做脉冲化（解决 VIO “清零后不工作”）
+
+    localparam [31:0] BER_CODE_LINK_DOWN = 32'hFFFF_FFFF; // 无光/链路不OK
+    localparam [31:0] BER_CODE_SEARCHING = 32'hFFFF_FFFE; // 未锁定
+    localparam [31:0] BER_CODE_MASKING   = 32'hFFFF_FFFD; // 遮罩期
+
+    // ber_clr：同步
     reg ber_clr_ff1, ber_clr_ff2, ber_clr_ff2_d;
     always @(posedge core_clk) begin
         if (logic_rst) begin
@@ -397,10 +477,26 @@ module fec_gth_loopback_top #(
     end
     wire ber_clear_pulse = ber_clr_ff2 & ~ber_clr_ff2_d;
 
-    // PRBS checker：仅在 PRBS 模式下使能；切换/清零时复位
-    wire prbs_chk_en = fec_rx_valid & use_prbs & ~tx_pat_hold;
+    (* MARK_DEBUG="true" *) wire prbs_meas_ok =
+        have_light_core &
+        use_prbs &
+        ~tx_pat_hold &
+        tx_done_core & rx_done_core &
+        bit_locked;
+
+    // PRBS checker 只在“可测条件成立”且有有效字节时推进
+    wire prbs_chk_fire = fec_rx_valid & prbs_meas_ok;
 
     wire [7:0] prbs_err_vec_int;
+
+    reg prbs_meas_ok_d;
+    always @(posedge core_clk) begin
+    if (logic_rst) prbs_meas_ok_d <= 1'b0;
+    else          prbs_meas_ok_d <= prbs_meas_ok;
+    end
+    wire prbs_meas_start = prbs_meas_ok & ~prbs_meas_ok_d;
+    wire prbs_chk_rst = logic_rst | ber_clear_pulse | prbs_meas_start; // ★只在开始时复位一次
+
     gtwizard_ultrascale_0_prbs_any #(
         .CHK_MODE    (1),
         .INV_PATTERN (0),
@@ -408,18 +504,26 @@ module fec_gth_loopback_top #(
         .POLY_TAP    (6),
         .NBITS       (8)
     ) u_prbs_chk_rx (
-        .RST      (logic_rst | ber_clear_pulse | tx_pat_hold),
+        .RST      (prbs_chk_rst),
         .CLK      (core_clk),
         .DATA_IN  (fec_rx_data),
-        .EN       (prbs_chk_en),
+        .EN       (prbs_chk_fire),
         .DATA_OUT (prbs_err_vec_int)
     );
 
-    // Counter 模式下强制 0，避免 ILA/逻辑被假误码污染
-    (* MARK_DEBUG="true" *) wire [7:0] prbs_err_vec = use_prbs ? prbs_err_vec_int : 8'h00;
-
-    (* MARK_DEBUG="true" *) wire prbs_match      = ~|prbs_err_vec;
-    (* MARK_DEBUG="true" *) wire prbs_match_fail = (fec_rx_valid & use_prbs) && (|prbs_err_vec);
+    reg [7:0] rx_k_cnt;
+    always @(posedge core_clk) begin
+    if (logic_rst || !prbs_meas_ok) begin
+        rx_k_cnt <= 8'd0;
+    end else if (prbs_chk_fire) begin // prbs_chk_fire = fec_rx_valid & prbs_meas_ok
+        if (rx_k_cnt == RS_K-1) rx_k_cnt <= 8'd0;
+        else rx_k_cnt <= rx_k_cnt + 1'b1;
+    end
+    end
+    (* MARK_DEBUG="true" *) wire [7:0] rx_data_idx = rx_k_cnt;
+    (* MARK_DEBUG="true" *) wire prbs_match_raw = ~|prbs_err_vec_int;
+    (* MARK_DEBUG="true" *) wire prbs_match_fail = prbs_chk_fire && (|prbs_err_vec_int);
+    (* MARK_DEBUG="true" *) wire [7:0] prbs_err_vec = prbs_chk_fire ? prbs_err_vec_int : 8'h00;
 
     function integer popcount8;
         input [7:0] v;
@@ -430,191 +534,87 @@ module fec_gth_loopback_top #(
                 popcount8 = popcount8 + v[k];
         end
     endfunction
-    // ============================================================
-    // Counter checker（仅在 use_cnt 下工作）
-    // 目标：像 PRBS 一样给出 locked / match_fail / err_vec / 统计计数
-    // ============================================================
-    localparam MASK_WAIT_CYCLES = 1024;
-    localparam [7:0] CNT_MAX = 8'd228;
-
-    function automatic [7:0] cnt_next;
-        input [7:0] v;
-        begin
-            cnt_next = (v == CNT_MAX) ? 8'd0 : (v + 8'd1);
-        end
-    endfunction
-
-    // Checker 使能：仅在 Counter 模式 + 有效数据 + 非切换 holdoff
-    wire cnt_chk_fire = fec_rx_valid & use_cnt & ~tx_pat_hold;
-
-    (* MARK_DEBUG="true" *) reg        cnt_seeded;
-    (* MARK_DEBUG="true" *) reg        cnt_locked_internal;
-    (* MARK_DEBUG="true" *) reg [31:0] cnt_good_cnt;
-    (* MARK_DEBUG="true" *) reg [15:0] cnt_mask_cnt;
-    (* MARK_DEBUG="true" *) reg        cnt_enable;
-
-     reg  [7:0] cnt_expected;         // 期望值（当前拍）
-     wire [7:0] cnt_err_vec = fec_rx_data ^ cnt_expected;
-    (* MARK_DEBUG="true" *) wire       cnt_match   = ~|cnt_err_vec;
-
-    // 两个 fail：一个是“任何阶段 mismatch”，另一个是“锁定后/统计期 mismatch”
-    (* MARK_DEBUG="true" *) wire cnt_mismatch_any    = cnt_chk_fire & cnt_seeded & ~cnt_match;
-    (* MARK_DEBUG="true" *) wire cnt_mismatch_locked = cnt_chk_fire & cnt_locked_internal & cnt_enable & ~cnt_match;
-
-    (* MARK_DEBUG="true" *) reg [31:0] cnt_bad_word_cnt;     // mismatch 的字节个数
-    (* MARK_DEBUG="true" *) reg [63:0] cnt_total_bits_cnt;   // 统计 bit 数
-    (* MARK_DEBUG="true" *) reg [63:0] cnt_total_err_cnt;    // 统计 bit 错误数（popcount）
-
-    (* MARK_DEBUG="true" *) reg [31:0] rx_cnt_word;
-    (* MARK_DEBUG="true" *) reg        rx_cnt_word_valid;
-    reg [1:0] rx_pack_cnt;
-
-    always @(posedge core_clk) begin
-        if (logic_rst || ber_clear_pulse || !bit_locked || !use_cnt || tx_pat_hold) begin
-            // checker
-            cnt_seeded          <= 1'b0;
-            cnt_locked_internal <= 1'b0;
-            cnt_good_cnt        <= 32'd0;
-            cnt_mask_cnt        <= 16'd0;
-            cnt_enable          <= 1'b0;
-
-            cnt_expected        <= 8'd0;
-
-            cnt_bad_word_cnt    <= 32'd0;
-            cnt_total_bits_cnt  <= 64'd0;
-            cnt_total_err_cnt   <= 64'd0;
-
-            // packer
-            rx_cnt_word         <= 32'd0;
-            rx_cnt_word_valid   <= 1'b0;
-            rx_pack_cnt         <= 2'd0;
-        end else begin
-            // ===== 32bit packer =====
-            rx_cnt_word_valid <= 1'b0;
-            if (cnt_chk_fire) begin
-                case (rx_pack_cnt)
-                    2'd0: rx_cnt_word[7:0]   <= fec_rx_data;
-                    2'd1: rx_cnt_word[15:8]  <= fec_rx_data;
-                    2'd2: rx_cnt_word[23:16] <= fec_rx_data;
-                    2'd3: rx_cnt_word[31:24] <= fec_rx_data;
-                endcase
-                rx_cnt_word_valid <= (rx_pack_cnt == 2'd3);
-                rx_pack_cnt <= rx_pack_cnt + 2'd1;
-            end
-
-            // ===== Counter lock + check =====
-            if (cnt_chk_fire) begin
-                if (!cnt_seeded) begin
-                    // 第一个样本：只种子化 expected=next(sample)
-                    cnt_seeded   <= 1'b1;
-                    cnt_expected <= cnt_next(fec_rx_data);
-                    cnt_good_cnt <= 32'd0;
-                end else if (!cnt_locked_internal) begin
-                    // 解锁期：连续命中 expected 才算“锁定”
-                    if (fec_rx_data == cnt_expected) begin
-                        if (cnt_good_cnt == LOCK_THRESH) begin
-                            cnt_locked_internal <= 1'b1;
-                            cnt_good_cnt        <= 32'd0;
-                            cnt_mask_cnt        <= 16'd0;
-                            cnt_enable          <= 1'b0;
-                        end else begin
-                            cnt_good_cnt <= cnt_good_cnt + 1'b1;
-                        end
-                    end else begin
-                        cnt_good_cnt <= 32'd0;
-                    end
-                    // always 更新 candidate expected
-                    cnt_expected <= cnt_next(fec_rx_data);
-                end else begin
-                    // 锁定期：先 mask 一段再统计
-                    if (cnt_mask_cnt < MASK_WAIT_CYCLES) begin
-                        cnt_mask_cnt <= cnt_mask_cnt + 1'b1;
-                    end else begin
-                        cnt_enable <= 1'b1;
-                    end
-
-                    // mismatch 统计（bit 级 + word 级）
-                    if (cnt_enable) begin
-                        cnt_total_bits_cnt <= cnt_total_bits_cnt + 64'd8;
-                        if (fec_rx_data != cnt_expected) begin
-                            cnt_bad_word_cnt   <= cnt_bad_word_cnt + 1'b1;
-                            cnt_total_err_cnt  <= cnt_total_err_cnt + popcount8(cnt_err_vec);
-                        end
-                    end
-
-                    // 期望更新：match 正常递增；mismatch 时“就地重同步”，避免后续连锁全红
-                    if (fec_rx_data != cnt_expected)
-                        cnt_expected <= cnt_next(fec_rx_data);
-                    else
-                        cnt_expected <= cnt_next(cnt_expected);
-                end
-            end
-        end
-    end
     wire [3:0] current_err_num = popcount8(prbs_err_vec);
 
+    // ---- PRBS 锁定/遮罩/统计（修正 off-by-one + 计数饱和）----
+    localparam integer MASK_WAIT_CYCLES = 1024;
 
     (* MARK_DEBUG="true" *) reg [31:0] good_cnt;
     (* MARK_DEBUG="true" *) reg        prbs_locked_internal;
     (* MARK_DEBUG="true" *) reg [15:0] mask_cnt;
     (* MARK_DEBUG="true" *) reg        ber_enable;
-
     (* MARK_DEBUG="true" *) reg [63:0] total_bits_cnt;
     (* MARK_DEBUG="true" *) reg [63:0] total_err_cnt;
 
     always @(posedge core_clk) begin
-        if (logic_rst || ber_clear_pulse || !bit_locked || !use_prbs || tx_pat_hold) begin
+        if (logic_rst || ber_clear_pulse || ~prbs_meas_ok) begin
             good_cnt             <= 32'd0;
             prbs_locked_internal <= 1'b0;
             mask_cnt             <= 16'd0;
             ber_enable           <= 1'b0;
             total_bits_cnt       <= 64'd0;
             total_err_cnt        <= 64'd0;
-        end else if (fec_rx_valid) begin
+        end else if (prbs_chk_fire) begin
             if (!prbs_locked_internal) begin
                 ber_enable <= 1'b0;
+
+                // 连续命中 LOCK_THRESH 才算锁定（任何 fail 归零）
                 if (prbs_match_fail) begin
                     good_cnt <= 32'd0;
                 end else begin
-                    if (good_cnt == LOCK_THRESH) begin
+                    if (good_cnt >= (LOCK_THRESH-1)) begin
                         prbs_locked_internal <= 1'b1;
-                        good_cnt <= 32'd0;
+                        good_cnt   <= 32'd0;
+                        mask_cnt   <= 16'd0;
+                        ber_enable <= 1'b0;
                     end else begin
                         good_cnt <= good_cnt + 1'b1;
                     end
                 end
             end else begin
-                if (mask_cnt < MASK_WAIT_CYCLES) begin
-                    mask_cnt <= mask_cnt + 1'b1;
-                end else begin
-                    ber_enable <= 1'b1;
+                // 锁定后先 mask 一段再统计（修正 off-by-one）
+                if (!ber_enable) begin
+                    if (mask_cnt >= (MASK_WAIT_CYCLES-1)) begin
+                        ber_enable <= 1'b1;
+                    end else begin
+                        mask_cnt   <= mask_cnt + 1'b1;
+                        ber_enable <= 1'b0;
+                    end
                 end
 
+                // 统计（饱和加，避免溢出回绕）
                 if (ber_enable) begin
-                    total_bits_cnt <= total_bits_cnt + 64'd8;
-                    if (prbs_match_fail)
-                        total_err_cnt <= total_err_cnt + current_err_num;
+                    if (total_bits_cnt != 64'hFFFF_FFFF_FFFF_FFFF)
+                        total_bits_cnt <= total_bits_cnt + 64'd8;
+
+                    if (prbs_match_fail) begin
+                        if (total_err_cnt <= (64'hFFFF_FFFF_FFFF_FFFF - current_err_num))
+                            total_err_cnt <= total_err_cnt + current_err_num;
+                        else
+                            total_err_cnt <= 64'hFFFF_FFFF_FFFF_FFFF;
+                    end
                 end
             end
         end
     end
 
     //======================================================================
-    // 6. BER 计算：div_gen_0
+    // 6. BER 计算：div_gen_0（改进：输出状态码，避免“断纤 BER=0”）
     //======================================================================
+
     reg [2:0] div_clr_cnt;
     always @(posedge core_clk) begin
-        if (logic_rst || !bit_locked || !use_prbs || tx_pat_hold) begin
+        if (logic_rst || ~prbs_meas_ok) begin
             div_clr_cnt <= 3'd0;
         end else if (ber_clear_pulse) begin
-            div_clr_cnt <= 3'd4;     // 展宽 4 拍
+            div_clr_cnt <= 3'd4;
         end else if (div_clr_cnt != 0) begin
             div_clr_cnt <= div_clr_cnt - 1'b1;
         end
     end
 
     wire div_clear_stretch = (div_clr_cnt != 0);
-    wire div_aresetn = logic_rst_n & bit_locked & use_prbs & ~tx_pat_hold & ~div_clear_stretch;
+    wire div_aresetn = logic_rst_n & prbs_meas_ok & ~div_clear_stretch;
 
     reg        div_valid;
     reg [63:0] div_dividend_reg; // err
@@ -668,16 +668,28 @@ module fec_gth_loopback_top #(
         .m_axis_dout_tdata      (m_axis_dout_tdata)
     );
 
+    // ---- BER 输出为“状态机式” ----
     (* MARK_DEBUG="true" *) reg [31:0] ber_q32_reg;
     always @(posedge core_clk) begin
-        if (logic_rst || ber_clear_pulse || !bit_locked || !use_prbs || tx_pat_hold) begin
-            ber_q32_reg <= 32'd0;
+        if (logic_rst) begin
+            ber_q32_reg <= BER_CODE_LINK_DOWN;
+        end else if (!use_prbs) begin
+            ber_q32_reg <= 32'd0; // 非 PRBS 模式先这样（你也可以定义状态码）
+        end else if (!have_light_core) begin
+            ber_q32_reg <= BER_CODE_LINK_DOWN;
+        end else if (!prbs_meas_ok || !prbs_locked_internal) begin
+            ber_q32_reg <= BER_CODE_SEARCHING;
+        end else if (!ber_enable) begin
+            ber_q32_reg <= BER_CODE_MASKING;
+        end else if (ber_clear_pulse) begin
+            ber_q32_reg <= BER_CODE_SEARCHING;
         end else if (m_axis_dout_tvalid) begin
-            ber_q32_reg <= m_axis_dout_tdata[31:0];
+            ber_q32_reg <= m_axis_dout_tdata[31:0]; // 正常 BER(Q32)
         end
     end
 
     assign ber_result_to_vio = ber_q32_reg;
+
 
 endmodule
 

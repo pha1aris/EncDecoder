@@ -1,0 +1,2 @@
+ila_fec_rx.v,verilog,xil_defaultlib,../../../../project_1.gen/sources_1/ip/ila_fec_rx/sim/ila_fec_rx.v,incdir="../../../../project_1.gen/sources_1/ip/ila_fec_rx/hdl/verilog"
+glbl.v,Verilog,xil_defaultlib,glbl.v

@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xczu15eg-ffvb1156-2-i" LaunchTime="1765876771" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/design_1_wrapper.dcp">
-  <File Type="PA-TCL" Name="fec_gth_loopback_top.tcl"/>
+<GenRun Id="synth_1" LaunchPart="xczu15eg-ffvb1156-2-i" LaunchTime="1768308013" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/design_1_wrapper.dcp">
   <File Type="REPORTS-TCL" Name="fec_gth_loopback_top_reports.tcl"/>
+  <File Type="RDS-UTIL" Name="fec_gth_loopback_top_s2_utilization_synth.rpt"/>
+  <File Type="RDS-UTIL-PB" Name="fec_gth_loopback_top_s2_utilization_synth.pb"/>
+  <File Type="PA-TCL" Name="fec_gth_loopback_top.tcl"/>
   <File Type="RDS-RDS" Name="fec_gth_loopback_top.vds"/>
-  <File Type="RDS-PROPCONSTRS" Name="fec_gth_loopback_top_drc_synth.rpt"/>
-  <File Type="RDS-UTIL" Name="fec_gth_loopback_top_utilization_synth.rpt"/>
-  <File Type="RDS-UTIL-PB" Name="fec_gth_loopback_top_utilization_synth.pb"/>
   <File Type="RDS-DCP" Name="fec_gth_loopback_top.dcp"/>
-  <File Type="VDS-TIMINGSUMMARY" Name="fec_gth_loopback_top_timing_summary_synth.rpt"/>
-  <File Type="VDS-TIMING-PB" Name="fec_gth_loopback_top_timing_summary_synth.pb"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/new/global_defines.vh">
@@ -19,19 +16,17 @@
         <Attr Name="IsVisible" Val="1"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/ip/dec_fifo_8w_8r/dec_fifo_8w_8r.xci">
+    <File Path="$PSRCDIR/sources_1/ip/rs_decoder_0/rs_decoder_0.xci">
       <FileInfo>
-        <Attr Name="ImportPath" Val="$PPRDIR/../../../crc8/crc8.srcs/sources_1/ip/dec_fifo_8w_8r/dec_fifo_8w_8r.xci"/>
-        <Attr Name="ImportTime" Val="1757295143"/>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../../crc8/crc8.srcs/sources_1/ip/rs_decoder_0/rs_decoder_0.xci"/>
+        <Attr Name="ImportTime" Val="1747109200"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/ip/rs_decoder_0/rs_decoder_0.xci">
+    <File Path="$PSRCDIR/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r.xci">
       <FileInfo>
-        <Attr Name="ImportPath" Val="$PPRDIR/../../../crc8/crc8.srcs/sources_1/ip/rs_decoder_0/rs_decoder_0.xci"/>
-        <Attr Name="ImportTime" Val="1747109200"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -47,6 +42,13 @@
       </FileInfo>
     </File>
     <File Path="$PSRCDIR/sim_1/new/AdditiveScrambler.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/axis_fifo_sync.v">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
@@ -162,6 +164,78 @@
     </File>
     <File Path="$PSRCDIR/sources_1/new/fec_gth_loopback_top.v">
       <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/fec_rx_s2.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/fec_tx_s2.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/fec_gth_loopback_top_s2.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/ip/vio_2/vio_2.xci">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/rx_deframer_only_s1.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/tx_framer_only_s1.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/fec_gth_loopback_top_s1.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/gth_raw_top_stub.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/axis_skid_fwft.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -779,6 +853,14 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
+    <File Path="$PSRCDIR/sources_1/new/axi_lite_slave_min.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <Config>
       <Option Name="DesignMode" Val="RTL"/>
       <Option Name="TopModule" Val="fec_gth_loopback_top"/>
@@ -818,10 +900,8 @@
   <BlockFileSet Type="BlockSrcs" Name="gtwizard_ultrascale_0"/>
   <BlockFileSet Type="BlockSrcs" Name="design_1_zynq_ultra_ps_e_0_0"/>
   <BlockFileSet Type="BlockSrcs" Name="fifo_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="async_fifo_32w_32r"/>
-  <BlockFileSet Type="BlockSrcs" Name="design_1_ila_0_0"/>
   <BlockFileSet Type="BlockSrcs" Name="clk_wiz_sys"/>
+  <BlockFileSet Type="BlockSrcs" Name="design_1_ila_0_0"/>
   <BlockFileSet Type="BlockSrcs" Name="div_gen_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="vio_2"/>
-  <BlockFileSet Type="BlockSrcs" Name="vio_frame_cfg"/>
+  <BlockFileSet Type="BlockSrcs" Name="ila_fec_rx"/>
 </GenRun>

@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date         : Tue Dec 16 17:10:59 2025
+| Date         : Tue Jan 13 16:45:37 2026
 | Host         : FSO-A running 64-bit major release  (build 9200)
 | Command      : report_utilization -file fec_gth_loopback_top_utilization_synth.rpt -pb fec_gth_loopback_top_utilization_synth.pb
 | Design       : fec_gth_loopback_top
@@ -29,20 +29,20 @@ Table of Contents
 1. CLB Logic
 ------------
 
-+-------------------------+------+-------+------------+-----------+-------+
-|        Site Type        | Used | Fixed | Prohibited | Available | Util% |
-+-------------------------+------+-------+------------+-----------+-------+
-| CLB LUTs*               | 4810 |     0 |          0 |    341280 |  1.41 |
-|   LUT as Logic          | 4810 |     0 |          0 |    341280 |  1.41 |
-|   LUT as Memory         |    0 |     0 |          0 |    184320 |  0.00 |
-| CLB Registers           | 8364 |     0 |          0 |    682560 |  1.23 |
-|   Register as Flip Flop | 8364 |     0 |          0 |    682560 |  1.23 |
-|   Register as Latch     |    0 |     0 |          0 |    682560 |  0.00 |
-| CARRY8                  |   89 |     0 |          0 |     42660 |  0.21 |
-| F7 Muxes                |  961 |     0 |          0 |    170640 |  0.56 |
-| F8 Muxes                |  360 |     0 |          0 |     85320 |  0.42 |
-| F9 Muxes                |    0 |     0 |          0 |     42660 |  0.00 |
-+-------------------------+------+-------+------------+-----------+-------+
++-------------------------+-------+-------+------------+-----------+-------+
+|        Site Type        |  Used | Fixed | Prohibited | Available | Util% |
++-------------------------+-------+-------+------------+-----------+-------+
+| CLB LUTs*               | 13384 |     0 |          0 |    341280 |  3.92 |
+|   LUT as Logic          | 13384 |     0 |          0 |    341280 |  3.92 |
+|   LUT as Memory         |     0 |     0 |          0 |    184320 |  0.00 |
+| CLB Registers           | 30032 |     0 |          0 |    682560 |  4.40 |
+|   Register as Flip Flop | 30032 |     0 |          0 |    682560 |  4.40 |
+|   Register as Latch     |     0 |     0 |          0 |    682560 |  0.00 |
+| CARRY8                  |    70 |     0 |          0 |     42660 |  0.16 |
+| F7 Muxes                |  3736 |     0 |          0 |    170640 |  2.19 |
+| F8 Muxes                |  1810 |     0 |          0 |     85320 |  2.12 |
+| F9 Muxes                |     0 |     0 |          0 |     42660 |  0.00 |
++-------------------------+-------+-------+------------+-----------+-------+
 * Warning! The Final LUT count, after physical optimizations and full implementation, is typically lower. Run opt_design after synthesis, if not already completed, for a more realistic count.
 Warning! LUT value is adjusted to account for LUT combining.
 Warning! For any ECO changes, please run place_design if there are unplaced instances
@@ -60,10 +60,10 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 | 0     |            _ |         Set |            - |
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
-| 118   |          Yes |           - |          Set |
-| 6352  |          Yes |           - |        Reset |
-| 30    |          Yes |         Set |            - |
-| 1864  |          Yes |       Reset |            - |
+| 86    |          Yes |           - |          Set |
+| 6789  |          Yes |           - |        Reset |
+| 73    |          Yes |         Set |            - |
+| 23084 |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -73,9 +73,9 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +-------------------+------+-------+------------+-----------+-------+
 |     Site Type     | Used | Fixed | Prohibited | Available | Util% |
 +-------------------+------+-------+------------+-----------+-------+
-| Block RAM Tile    |  528 |     0 |          0 |       744 | 70.97 |
-|   RAMB36/FIFO*    |  528 |     0 |          0 |       744 | 70.97 |
-|     RAMB36E2 only |  528 |       |            |           |       |
+| Block RAM Tile    |   25 |     0 |          0 |       744 |  3.36 |
+|   RAMB36/FIFO*    |   25 |     0 |          0 |       744 |  3.36 |
+|     RAMB36E2 only |   25 |       |            |           |       |
 |   RAMB18          |    0 |     0 |          0 |      1488 |  0.00 |
 | URAM              |    0 |     0 |          0 |       112 |  0.00 |
 +-------------------+------+-------+------------+-----------+-------+
@@ -98,7 +98,7 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +------------+------+-------+------------+-----------+-------+
 |  Site Type | Used | Fixed | Prohibited | Available | Util% |
 +------------+------+-------+------------+-----------+-------+
-| Bonded IOB |    3 |     0 |          0 |       328 |  0.91 |
+| Bonded IOB |    4 |     0 |          0 |       328 |  1.22 |
 +------------+------+-------+------------+-----------+-------+
 
 
@@ -153,29 +153,29 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 8. Primitives
 -------------
 
-+-------------+------+---------------------+
-|   Ref Name  | Used | Functional Category |
-+-------------+------+---------------------+
-| FDCE        | 6352 |            Register |
-| LUT6        | 3300 |                 CLB |
-| FDRE        | 1864 |            Register |
-| LUT4        | 1026 |                 CLB |
-| MUXF7       |  961 |                 CLB |
-| RAMB36E2    |  528 |            BLOCKRAM |
-| LUT5        |  435 |                 CLB |
-| LUT2        |  434 |                 CLB |
-| MUXF8       |  360 |                 CLB |
-| LUT3        |  282 |                 CLB |
-| FDPE        |  118 |            Register |
-| CARRY8      |   89 |                 CLB |
-| LUT1        |   75 |                 CLB |
-| FDSE        |   30 |            Register |
-| OBUF        |    2 |                 I/O |
-| BUFG_GT     |    2 |               Clock |
-| INBUF       |    1 |                 I/O |
-| IBUFDS_GTE4 |    1 |                 I/O |
-| IBUFCTRL    |    1 |              Others |
-+-------------+------+---------------------+
++-------------+-------+---------------------+
+|   Ref Name  |  Used | Functional Category |
++-------------+-------+---------------------+
+| FDRE        | 23084 |            Register |
+| LUT6        | 10356 |                 CLB |
+| FDCE        |  6789 |            Register |
+| MUXF7       |  3736 |                 CLB |
+| MUXF8       |  1810 |                 CLB |
+| LUT5        |  1802 |                 CLB |
+| LUT4        |   816 |                 CLB |
+| LUT2        |   521 |                 CLB |
+| LUT3        |   434 |                 CLB |
+| LUT1        |   131 |                 CLB |
+| FDPE        |    86 |            Register |
+| FDSE        |    73 |            Register |
+| CARRY8      |    70 |                 CLB |
+| RAMB36E2    |    25 |            BLOCKRAM |
+| OBUF        |     2 |                 I/O |
+| INBUF       |     2 |                 I/O |
+| IBUFCTRL    |     2 |              Others |
+| BUFG_GT     |     2 |               Clock |
+| IBUFDS_GTE4 |     1 |                 I/O |
++-------------+-------+---------------------+
 
 
 9. Black Boxes
@@ -186,13 +186,11 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +-----------------------+------+
 | rs_decoder_0          |    2 |
 | async_fifo_32w_32r    |    2 |
-| vio_frame_cfg         |    1 |
-| vio_2                 |    1 |
 | rs_encoder_0          |    1 |
+| ila_fec_rx            |    1 |
 | gtwizard_ultrascale_0 |    1 |
 | fifo_0                |    1 |
 | div_gen_0             |    1 |
-| dec_fifo_8w_8r        |    1 |
 | clk_wiz_sys           |    1 |
 +-----------------------+------+
 
