@@ -126,7 +126,7 @@ module fec_rx #(
     // ------------------------------------------------------------
     wire [W-1:0] rx32_fifo_dout;
     wire         rx32_fifo_empty;
-    wire         rx32_fifo_full;
+    (* MARK_DEBUG="true" *) wire         rx32_fifo_full;
     wire         rx32_fifo_wr_rst_busy;
     wire         rx32_fifo_rd_rst_busy;
     wire rx32_fifo_rd_en;
@@ -148,7 +148,7 @@ module fec_rx #(
         .rd_rst_busy(rx32_fifo_rd_rst_busy)
     );
 
-    wire [31:0] rx32_fifo_drop_cnt;
+    (* MARK_DEBUG="true" *) wire [31:0] rx32_fifo_drop_cnt;
     reg [31:0] rx32_drop_cnt;
     assign rx32_fifo_drop_cnt = rx32_drop_cnt;
 
@@ -163,8 +163,8 @@ module fec_rx #(
     // 2.1) FWFT 1-word prefetch/skid：把 FIFO dout 寄存后再喂给 deframer
     // ------------------------------------------------------------
     wire [W-1:0] df_s_tdata;
-    wire         df_s_tvalid;
-    wire         df_s_tready;
+    (* MARK_DEBUG="true" *)wire         df_s_tvalid;
+    (* MARK_DEBUG="true" *)wire         df_s_tready;
 
     reg  [W-1:0] df_s_tdata_r;
     reg          df_s_tvalid_r;
@@ -199,8 +199,8 @@ module fec_rx #(
     // ------------------------------------------------------------
     wire [W-1:0] df_m_tdata;
     wire [1:0]   df_m_tuser;   // [0]=blk_soft_rst_on_word0
-    wire         df_m_tvalid;
-    wire         df_m_tready;
+    (* MARK_DEBUG="true" *) wire         df_m_tvalid;
+    (* MARK_DEBUG="true" *) wire         df_m_tready;
     wire        frame_start;
     wire [15:0] frame_index_rx;
     wire [15:0] block_id_rx;

@@ -22,7 +22,7 @@ module fec_gth_loopback_top_s2 #(
     parameter integer FRAMES_PER_BLOCK = 255,
     parameter integer LOCK_THRESH      = 1024,
 
-    parameter integer TEST_PRBS        = 1,
+    parameter integer TEST_PRBS        = 0,
     parameter integer IGNORE_SFP_LOSS  = 0
 )(
     input  wire         sys_clk_p,
@@ -85,7 +85,7 @@ module fec_gth_loopback_top_s2 #(
     wire [2:0] loop_backmode_fr = loopback_fr2;
 
 `ifdef SIM
-    assign loop_backmode        = 3'b000;
+    assign loop_backmode        = 3'b000;           // Near-end PCS loopback for simulation
     assign scrambler_en         = 1'b0;             // 与 S1 一致：Stage bring-up 建议关
     assign ber_clr              = 1'b0;
     assign tx_pattern_prbs_vio  = (TEST_PRBS != 0);
@@ -372,15 +372,22 @@ module fec_gth_loopback_top_s2 #(
     wire prbs_meas_ok =
         have_light_core &
         use_prbs &
-        tx_done_core & rx_done_core &
         bit_locked_core &
         frame_locked_core;
 
-    wire        prbs_chk_rst = logic_rst;                 // 贴 S1：不要绑 ber_clear/模式切换
-    wire        prbs_chk_en  = fec_rx_valid & use_prbs;   // 贴 S1
-    wire        prbs_cnt_en  = fec_rx_valid & prbs_meas_ok;
-
+    // PRBS checker 复位逻辑：在 frame_locked 首次成立时复位一次，确保 LFSR 同步
+    reg prbs_meas_ok_d;
+    always @(posedge core_clk) begin
+        if (logic_rst) prbs_meas_ok_d <= 1'b0;
+        else          prbs_meas_ok_d <= prbs_meas_ok;
+    end
+    wire prbs_meas_start = prbs_meas_ok & ~prbs_meas_ok_d;
+    wire prbs_chk_rst = logic_rst | ber_clear_pulse;
+    wire prbs_chk_en  = fec_rx_valid & use_prbs;
+    wire prbs_cnt_en  = fec_rx_valid & prbs_meas_ok;
     wire [7:0]  prbs_err_vec;
+    wire prbs_match;
+    assign prbs_match = ~|prbs_err_vec;
 
     gtwizard_ultrascale_0_prbs_any #(
         .CHK_MODE    (1),

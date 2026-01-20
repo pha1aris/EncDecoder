@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date         : Tue Jan 13 16:45:37 2026
+| Date         : Mon Jan 19 19:31:49 2026
 | Host         : FSO-A running 64-bit major release  (build 9200)
 | Command      : report_utilization -file fec_gth_loopback_top_utilization_synth.rpt -pb fec_gth_loopback_top_utilization_synth.pb
 | Design       : fec_gth_loopback_top
@@ -32,15 +32,15 @@ Table of Contents
 +-------------------------+-------+-------+------------+-----------+-------+
 |        Site Type        |  Used | Fixed | Prohibited | Available | Util% |
 +-------------------------+-------+-------+------------+-----------+-------+
-| CLB LUTs*               | 13384 |     0 |          0 |    341280 |  3.92 |
-|   LUT as Logic          | 13384 |     0 |          0 |    341280 |  3.92 |
+| CLB LUTs*               | 14168 |     0 |          0 |    341280 |  4.15 |
+|   LUT as Logic          | 14168 |     0 |          0 |    341280 |  4.15 |
 |   LUT as Memory         |     0 |     0 |          0 |    184320 |  0.00 |
-| CLB Registers           | 30032 |     0 |          0 |    682560 |  4.40 |
-|   Register as Flip Flop | 30032 |     0 |          0 |    682560 |  4.40 |
+| CLB Registers           | 30183 |     0 |          0 |    682560 |  4.42 |
+|   Register as Flip Flop | 30183 |     0 |          0 |    682560 |  4.42 |
 |   Register as Latch     |     0 |     0 |          0 |    682560 |  0.00 |
-| CARRY8                  |    70 |     0 |          0 |     42660 |  0.16 |
-| F7 Muxes                |  3736 |     0 |          0 |    170640 |  2.19 |
-| F8 Muxes                |  1810 |     0 |          0 |     85320 |  2.12 |
+| CARRY8                  |    79 |     0 |          0 |     42660 |  0.19 |
+| F7 Muxes                |  3809 |     0 |          0 |    170640 |  2.23 |
+| F8 Muxes                |  1790 |     0 |          0 |     85320 |  2.10 |
 | F9 Muxes                |     0 |     0 |          0 |     42660 |  0.00 |
 +-------------------------+-------+-------+------------+-----------+-------+
 * Warning! The Final LUT count, after physical optimizations and full implementation, is typically lower. Run opt_design after synthesis, if not already completed, for a more realistic count.
@@ -60,10 +60,10 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 | 0     |            _ |         Set |            - |
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
-| 86    |          Yes |           - |          Set |
-| 6789  |          Yes |           - |        Reset |
+| 118   |          Yes |           - |          Set |
+| 6826  |          Yes |           - |        Reset |
 | 73    |          Yes |         Set |            - |
-| 23084 |          Yes |       Reset |            - |
+| 23166 |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -73,9 +73,9 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +-------------------+------+-------+------------+-----------+-------+
 |     Site Type     | Used | Fixed | Prohibited | Available | Util% |
 +-------------------+------+-------+------------+-----------+-------+
-| Block RAM Tile    |   25 |     0 |          0 |       744 |  3.36 |
-|   RAMB36/FIFO*    |   25 |     0 |          0 |       744 |  3.36 |
-|     RAMB36E2 only |   25 |       |            |           |       |
+| Block RAM Tile    |  529 |     0 |          0 |       744 | 71.10 |
+|   RAMB36/FIFO*    |  529 |     0 |          0 |       744 | 71.10 |
+|     RAMB36E2 only |  529 |       |            |           |       |
 |   RAMB18          |    0 |     0 |          0 |      1488 |  0.00 |
 | URAM              |    0 |     0 |          0 |       112 |  0.00 |
 +-------------------+------+-------+------------+-----------+-------+
@@ -156,20 +156,20 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +-------------+-------+---------------------+
 |   Ref Name  |  Used | Functional Category |
 +-------------+-------+---------------------+
-| FDRE        | 23084 |            Register |
-| LUT6        | 10356 |                 CLB |
-| FDCE        |  6789 |            Register |
-| MUXF7       |  3736 |                 CLB |
-| MUXF8       |  1810 |                 CLB |
-| LUT5        |  1802 |                 CLB |
-| LUT4        |   816 |                 CLB |
-| LUT2        |   521 |                 CLB |
-| LUT3        |   434 |                 CLB |
-| LUT1        |   131 |                 CLB |
-| FDPE        |    86 |            Register |
+| FDRE        | 23166 |            Register |
+| LUT6        | 10824 |                 CLB |
+| FDCE        |  6826 |            Register |
+| MUXF7       |  3809 |                 CLB |
+| LUT5        |  1815 |                 CLB |
+| MUXF8       |  1790 |                 CLB |
+| LUT4        |  1290 |                 CLB |
+| LUT2        |   576 |                 CLB |
+| RAMB36E2    |   529 |            BLOCKRAM |
+| LUT3        |   510 |                 CLB |
+| LUT1        |   138 |                 CLB |
+| FDPE        |   118 |            Register |
+| CARRY8      |    79 |                 CLB |
 | FDSE        |    73 |            Register |
-| CARRY8      |    70 |                 CLB |
-| RAMB36E2    |    25 |            BLOCKRAM |
 | OBUF        |     2 |                 I/O |
 | INBUF       |     2 |                 I/O |
 | IBUFCTRL    |     2 |              Others |
@@ -186,6 +186,8 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +-----------------------+------+
 | rs_decoder_0          |    2 |
 | async_fifo_32w_32r    |    2 |
+| vio_frame_cfg         |    1 |
+| vio_2                 |    1 |
 | rs_encoder_0          |    1 |
 | ila_fec_rx            |    1 |
 | gtwizard_ultrascale_0 |    1 |

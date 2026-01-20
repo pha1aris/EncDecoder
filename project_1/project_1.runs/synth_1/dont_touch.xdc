@@ -11,3 +11,6 @@ set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==async_fifo_
 
 # IP: ip/rs_encoder_0/rs_encoder_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==rs_encoder_0 || ORIG_REF_NAME==rs_encoder_0} -quiet] -quiet
+
+# IP: ip/vio_2/vio_2.xci
+set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==vio_2 || ORIG_REF_NAME==vio_2} -quiet] -quiet

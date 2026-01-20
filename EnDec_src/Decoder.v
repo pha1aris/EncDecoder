@@ -1,169 +1,96 @@
 module Decoder(
-    input wire         rst,
-    input wire         core_clk,
-    input wire         output_clk,
+    input  wire         rst,
+    input  wire         core_clk,
+    input  wire         output_clk,
 
-    // 8-bit AXI Stream Input
-    input wire  [7:0]  s_axis_input_tdata,
-    input wire         s_axis_input_tvalid,
-    input wire         s_axis_input_tlast,
-    output wire        s_axis_input_tready,
+    input  wire  [7:0]  s_axis_input_tdata,
+    input  wire         s_axis_input_tvalid,
+    input  wire         s_axis_input_tlast,
+    output wire         s_axis_input_tready,
 
-    // 32-bit AXI Stream Output
-    output wire [31:0] output_tdata,
-    output wire        output_tvalid,
-    input wire         output_tready 
+    output wire [31:0]  output_tdata,
+    output wire         output_tvalid,
+    input  wire         output_tready
 );
 
-//================================================================
-// 1. Ping-Pong Control and Input Demultiplexing
-//================================================================
-    reg pingpang; // 0: Decoder_U0 is active (writing), 1: Decoder_U1 is active (writing)
+    // =========================
+    // 1) RS Decoder IP
+    // =========================
+    wire [7:0] dec_m_tdata;
+    wire       dec_m_tvalid;
+    wire       dec_m_tready;
+    wire       dec_m_tlast;
 
-    reg [7:0] s_axis_input_tdata0, s_axis_input_tdata1;
-    reg       s_axis_input_tvalid0, s_axis_input_tvalid1;
-    reg       s_axis_input_tlast0, s_axis_input_tlast1;
-    wire      s_axis_input_tready0, s_axis_input_tready1;
-
-    assign s_axis_input_tready = !pingpang ? s_axis_input_tready0 : s_axis_input_tready1;
-
-    always @(posedge core_clk or posedge rst) begin
-        if(rst) begin
-            pingpang <= 1'b0;
-        end else if(s_axis_input_tlast && s_axis_input_tvalid && s_axis_input_tready) begin
-            pingpang <= ~pingpang;
-        end
-    end
-
-    always @(*) begin
-        if (!pingpang) begin // Route to Decoder_U0
-            s_axis_input_tdata0  = s_axis_input_tdata;
-            s_axis_input_tvalid0 = s_axis_input_tvalid;
-            s_axis_input_tlast0  = s_axis_input_tlast;
-            s_axis_input_tdata1  = 8'b0;
-            s_axis_input_tvalid1 = 1'b0;
-            s_axis_input_tlast1  = 1'b0;
-        end else begin // Route to Decoder_U1
-            s_axis_input_tdata0  = 8'b0;
-            s_axis_input_tvalid0 = 1'b0;
-            s_axis_input_tlast0  = 1'b0;
-            s_axis_input_tdata1  = s_axis_input_tdata;
-            s_axis_input_tvalid1 = s_axis_input_tvalid;
-            s_axis_input_tlast1  = s_axis_input_tlast;
-        end
-    end
-
-//================================================================
-// 2. Decoder Instantiations
-    //================================================================
-    wire [7:0] m_axis_output_tdata0, m_axis_output_tdata1;
-    wire       m_axis_output_tvalid0, m_axis_output_tvalid1;
-    wire       m_axis_output_tlast0, m_axis_output_tlast1;
-    wire       decoder_tready; // Common tready for both decoders
-
-    // Unused ports...
-    wire [7:0] m_axis_stat_tdata0, m_axis_stat_tdata1;
-    wire       m_axis_stat_tvalid0, m_axis_stat_tvalid1;
+    // 统计口/事件口（可留着调试）
+    wire [7:0] m_axis_stat_tdata;
+    wire       m_axis_stat_tvalid;
     wire       event_s_input_tlast_missing, event_s_input_tlast_unexpected, event_s_ctrl_tdata_invalid;
-    wire       event_s_input_tlast_missing0, event_s_input_tlast_unexpected0, event_s_ctrl_tdata_invalid0;
 
+    rs_decoder_0 u_rs_dec (
+        .aclk                           (core_clk),
 
-    rs_decoder_0 Decoder_U0 (
-      .aclk                             (core_clk),
-      .s_axis_input_tdata               (s_axis_input_tdata0),
-      .s_axis_input_tvalid              (s_axis_input_tvalid0),
-      .s_axis_input_tlast               (s_axis_input_tlast0),
-      .s_axis_input_tready              (s_axis_input_tready0),
+        .s_axis_input_tdata             (s_axis_input_tdata),
+        .s_axis_input_tvalid            (s_axis_input_tvalid),
+        .s_axis_input_tlast             (s_axis_input_tlast),
+        .s_axis_input_tready            (s_axis_input_tready),
 
-      .m_axis_output_tdata              (m_axis_output_tdata0),
-      .m_axis_output_tvalid             (m_axis_output_tvalid0),
-      .m_axis_output_tready             (decoder_tready),
-      .m_axis_output_tlast              (m_axis_output_tlast0),
+        .m_axis_output_tdata            (dec_m_tdata),
+        .m_axis_output_tvalid           (dec_m_tvalid),
+        .m_axis_output_tready           (dec_m_tready),
+        .m_axis_output_tlast            (dec_m_tlast),
 
-      .m_axis_stat_tdata                (m_axis_stat_tdata0),
-      .m_axis_stat_tvalid               (m_axis_stat_tvalid0),
-      .m_axis_stat_tready               (1'b1),
-      .event_s_input_tlast_missing      (event_s_input_tlast_missing),
-      .event_s_input_tlast_unexpected   (event_s_input_tlast_unexpected),
-      .event_s_ctrl_tdata_invalid       (event_s_ctrl_tdata_invalid)
+        .m_axis_stat_tdata              (m_axis_stat_tdata),
+        .m_axis_stat_tvalid             (m_axis_stat_tvalid),
+        .m_axis_stat_tready             (1'b1),
+
+        .event_s_input_tlast_missing    (event_s_input_tlast_missing),
+        .event_s_input_tlast_unexpected (event_s_input_tlast_unexpected),
+        .event_s_ctrl_tdata_invalid     (event_s_ctrl_tdata_invalid)
     );
 
-    rs_decoder_0 Decoder_U1 (
-      .aclk                             (core_clk),
-      .s_axis_input_tdata               (s_axis_input_tdata1),
-      .s_axis_input_tvalid              (s_axis_input_tvalid1),
-      .s_axis_input_tlast               (s_axis_input_tlast1),
-      .s_axis_input_tready              (s_axis_input_tready1),
-
-      .m_axis_output_tdata              (m_axis_output_tdata1),
-      .m_axis_output_tvalid             (m_axis_output_tvalid1),
-      .m_axis_output_tready             (decoder_tready),
-      .m_axis_output_tlast              (m_axis_output_tlast1),
-
-      .m_axis_stat_tdata                (m_axis_stat_tdata1),
-      .m_axis_stat_tvalid               (m_axis_stat_tvalid1),
-      .m_axis_stat_tready               (1'b1),
-      .event_s_input_tlast_missing      (event_s_input_tlast_missing0),
-      .event_s_input_tlast_unexpected   (event_s_input_tlast_unexpected0),
-      .event_s_ctrl_tdata_invalid       (event_s_ctrl_tdata_invalid0)
-    );
-
-//================================================================
-// 3. Output Buffering and Combination
-//================================================================
-    wire       fifo_wr_en;
+    // =========================
+    // 2) 输出 FIFO：8-bit 写入(core_clk) -> 32-bit 读出(output_clk)
+    //    dec_m_tready 必须由 FIFO “是否可写”决定，否则会丢数据
+    // =========================
     wire       fifo_full, fifo_empty, fifo_wr_rst_busy, fifo_rd_rst_busy;
-    wire       fifo_rd_en;
-    reg        rst_sync_r1, rst_sync_r2;
-    wire       rst_sync;
+    wire [31:0] fifo_dout_word;
 
-    reg select; // 0:取decoder0, 1:取decoder1
+    // 写端准备好 -> 给 decoder 的 ready
+    assign dec_m_tready = (!fifo_full) && (!fifo_wr_rst_busy);
 
-    always @(*) begin
-        if (m_axis_output_tvalid0) begin
-            select = 1'b0;
-        end else if (m_axis_output_tvalid1) begin
-            select = 1'b1;
+    // 写使能：必须是握手成功那拍
+    wire wr_xfer = dec_m_tvalid && dec_m_tready;
+
+    // 给 FIFO 的复位同步到 core_clk（和你原来一致思路）
+    reg rst_sync_r1, rst_sync_r2;
+    always @(posedge core_clk or posedge rst) begin
+        if (rst) begin
+            rst_sync_r1 <= 1'b1;
+            rst_sync_r2 <= 1'b1;
         end else begin
-            select = 1'b0; // default
+            rst_sync_r1 <= 1'b0;
+            rst_sync_r2 <= rst_sync_r1;
         end
     end
+    wire rst_sync = rst_sync_r2;
 
-    wire [7:0] Dec_output_tdata;
-    wire Dec_output_valid;
-    assign Dec_output_valid = m_axis_output_tvalid0 | m_axis_output_tvalid1;
-    assign Dec_output_tdata = (select == 1'b0) ? m_axis_output_tdata0
-                                               : m_axis_output_tdata1;
-
-    // 定义FIFO写使能和解码器tready信号
-    assign fifo_wr_en = Dec_output_valid;
-    assign decoder_tready = !fifo_full && !fifo_wr_rst_busy;
-
-    // 创建并使用同步复位
-    always @(posedge core_clk or posedge rst) begin
-        if(rst) {rst_sync_r1, rst_sync_r2} <= 2'b11;
-        else    {rst_sync_r1, rst_sync_r2} <= {1'b0, rst_sync_r1};
-    end
-    assign rst_sync = rst_sync_r2;
-
+    // 这里用你现有的 fifo_sim_8_32（8->32）
     fifo_sim_8_32 output_fifo_inst (
-      .srst         (rst_sync), 
-      .wr_clk       (core_clk),
-      .rd_clk       (output_clk),
-      .din          (Dec_output_tdata),
-      .wr_en        (Dec_output_valid), 
-      .rd_en        (fifo_rd_en), 
-      .dout         (output_tdata),
-      .full         (fifo_full),
-      .empty        (fifo_empty),
-      .wr_rst_busy  (fifo_wr_rst_busy),
-      .rd_rst_busy  (fifo_rd_rst_busy)
+        .srst        (rst_sync),
+        .wr_clk      (core_clk),
+        .rd_clk      (output_clk),
+        .din         (dec_m_tdata),
+        .wr_en       (wr_xfer),
+        .rd_en       (output_tvalid && output_tready),
+        .dout        (fifo_dout_word),
+        .full        (fifo_full),
+        .empty       (fifo_empty),
+        .wr_rst_busy (fifo_wr_rst_busy),
+        .rd_rst_busy (fifo_rd_rst_busy)
     );
 
-    // 实现标准的AXIS输出握手逻辑
-    // assign output_tvalid = !fifo_empty;
-    // assign fifo_rd_en = !fifo_empty && !fifo_rd_rst_busy;
-    assign output_tvalid = !fifo_empty && !fifo_rd_rst_busy;
-    assign fifo_rd_en    = output_tvalid && output_tready;
+    // 读端 AXIS-like 输出（32-bit）
+    assign output_tvalid = (!fifo_empty) && (!fifo_rd_rst_busy);
+    assign output_tdata  = fifo_dout_word;
 
 endmodule

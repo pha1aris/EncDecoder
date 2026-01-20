@@ -20,6 +20,7 @@ module fec_rx_s2 #(
 
     output wire             o_rxslide,
     output wire             bit_locked_core,
+    output wire             frame_locked_core,
     output wire [15:0]      o_frame_index,
     output wire [15:0]      o_block_id,
     output wire [15:0]      o_frame_in_block
@@ -63,7 +64,9 @@ module fec_rx_s2 #(
     );
 `endif
 
+    //===========================================================
     // 1) bit_aligner
+    //===========================================================
     wire [W-1:0] aligned_data;
     wire         aligned_valid;
     wire         realign_req;
@@ -101,7 +104,9 @@ module fec_rx_s2 #(
     end
     assign bit_locked_core = bit_locked_sync[1];
 
+    //===========================================================
     // 2) async fifo line->core (FWFT)
+    //===========================================================
     wire [W-1:0] rx32_fifo_dout;
     wire         rx32_fifo_empty, rx32_fifo_full;
     wire         rx32_fifo_wr_rst_busy, rx32_fifo_rd_rst_busy;
@@ -123,7 +128,9 @@ module fec_rx_s2 #(
         .rd_rst_busy(rx32_fifo_rd_rst_busy)
     );
 
+    //===========================================================
     // 2.1) prefetch/skid
+    //===========================================================
     wire [W-1:0] df_s_tdata;
     wire         df_s_tvalid;
     wire         df_s_tready;
@@ -153,9 +160,11 @@ module fec_rx_s2 #(
         end
     end
 
+    //===========================================================
     // 3) deframer
+    //===========================================================
     wire [W-1:0] df_m_tdata;
-    wire [1:0]   df_m_tuser;   // [0]=blk_soft_rst_on_word0
+    wire [1:0]   df_m_tuser;   // [1]=frame_start_on_word0  [0]=blk_soft_rst_on_word0
     wire         df_m_tvalid;
     wire         df_m_tready;
 
@@ -188,7 +197,7 @@ module fec_rx_s2 #(
         .o_block_id            (block_id_rx),
         .o_frame_in_block      (frame_in_block_rx),
         .o_blk_soft_rst        (),
-        .o_frame_locked        (),
+        .o_frame_locked        (frame_locked_core),
         .o_block_aligned       (),
 
         .cfg_frame_timeout_max (cfg_frame_to),
@@ -201,8 +210,16 @@ module fec_rx_s2 #(
     assign o_block_id       = block_id_rx;
     assign o_frame_in_block = frame_in_block_rx;
 
+    //===========================================================
     // 4) axis fifo
-    wire [W:0] fifo_s_tdata  = {df_m_tuser[0], df_m_tdata};
+    //===========================================================
+    // ***** FIX *****
+    // 用“块起点(word0 & frame_in_block==0)”作为 RS 码字计数对齐同步点
+    // 同时 OR 上 blk_soft_rst_on_word0，遇到 pending_rst 也能强制重对齐
+    wire blk_start_word0 = df_m_tuser[1] && (frame_in_block_rx == 16'd0);
+    wire sync_word0      = blk_start_word0 | df_m_tuser[0];
+
+    wire [W:0] fifo_s_tdata  = {sync_word0, df_m_tdata};
     wire       fifo_s_tvalid = df_m_tvalid;
     wire       fifo_s_tready;
 
@@ -228,7 +245,9 @@ module fec_rx_s2 #(
         .m_axis_tready (fifo_m_tready)
     );
 
+    //===========================================================
     // 5) 32->8 gearbox
+    //===========================================================
     wire [7:0] gb8_data;
     wire       gb8_valid;
     wire       gb8_sync_rst;
@@ -252,25 +271,38 @@ module fec_rx_s2 #(
         .out_ready   (gb8_ready)
     );
 
-    // 6) RS decoder backend
-    reg [7:0] rs_byte_cnt;
-
+    //===========================================================
+    // 6) RS decoder backend：稳健 tlast 生成
+    //===========================================================
     wire rs_in_ready;
     assign gb8_ready = rs_in_ready;
 
-    wire gb8_fire = gb8_valid && gb8_ready;
+    wire gb8_fire   = gb8_valid && gb8_ready;
+    wire sync_pulse = gb8_valid && gb8_sync_rst;
 
-    // ★当前字节位置（sync_rst 强制对齐到 0）
-    wire [7:0] rs_pos_cur = gb8_sync_rst ? 8'd0 : rs_byte_cnt;
+    reg sync_hold;
+    always @(posedge core_clk or posedge rst) begin
+        if (rst) begin
+            sync_hold <= 1'b0;
+        end else begin
+            if (gb8_fire)
+                sync_hold <= 1'b0;
+            else if (sync_pulse)
+                sync_hold <= 1'b1;
+        end
+    end
 
-    // ★关键修复：tlast 跟随 tvalid（stall 时保持为 1）
-    wire rs_tlast = gb8_valid && (rs_pos_cur == RS_N-1);
+    wire sync_eff = sync_hold | sync_pulse;
+    reg [7:0] rs_byte_cnt;
+    wire [7:0] rs_pos_cur = sync_eff ? 8'd0 : rs_byte_cnt;
+    wire rs_tlast = gb8_fire && (rs_pos_cur == RS_N-1);
+
 
     always @(posedge core_clk or posedge rst) begin
         if (rst) begin
             rs_byte_cnt <= 8'd0;
         end else if (gb8_fire) begin
-            if (gb8_sync_rst) begin
+            if (sync_eff) begin
                 rs_byte_cnt <= (RS_N==1) ? 8'd0 : 8'd1;
             end else if (rs_byte_cnt == RS_N-1) begin
                 rs_byte_cnt <= 8'd0;
@@ -279,6 +311,20 @@ module fec_rx_s2 #(
             end
         end
     end
+
+    // synthesis translate_off
+    integer stall_cnt;
+    integer sync_while_stall_cnt;
+    always @(posedge core_clk or posedge rst) begin
+        if (rst) begin
+            stall_cnt <= 0;
+            sync_while_stall_cnt <= 0;
+        end else begin
+            if (gb8_valid && !gb8_ready) stall_cnt <= stall_cnt + 1;
+            if (gb8_valid && !gb8_ready && gb8_sync_rst) sync_while_stall_cnt <= sync_while_stall_cnt + 1;
+        end
+    end
+    // synthesis translate_on
 
     wire [7:0] dec_data;
     wire       dec_valid;

@@ -67,37 +67,12 @@ module tb_fec_gth_loopback_top;
     // ============================================================
     // DUT：Stage1 顶层（bit同步 + 帧同步 + PRBS）
     // ============================================================
-    fec_gth_loopback_top_s1 #(
-        .W                (32),
-        .PAYLOAD_WORDS     (16),
-        .FRAMES_PER_BLOCK  (255),
-        .IGNORE_SFP_LOSS   (1)    // 仿真/板上内部环回时建议=1
-    ) dut_s1     (
-        .sys_clk_p         (sys_clk_p),
-        .sys_clk_n         (sys_clk_n),
-        .sys_rst_n         (sys_rst_n),
-
-        .mgtrefclk0_x1y1_p (mgtrefclk0_x1y1_p),
-        .mgtrefclk0_x1y1_n (mgtrefclk0_x1y1_n),
-
-        // .gthrxp_in        (gthrxp),
-        // .gthrxn_in        (gthrxn),
-        // .gthtxp_out       (gthrxp),
-        // .gthtxn_out       (gthrxn),
-        .gthrxp_in         (gthrxp),
-        .gthrxn_in         (gthrxn),
-        .gthtxp_out        (gthtxp),
-        .gthtxn_out        (gthtxn),
-
-
-        .sfp_loss          (2'd0),
-        .tx_disable        (tx_disable)
-    );
-
-    // fec_gth_loopback_top_s2 #(
-    //     .W                 (32),
-    //     .PAYLOAD_WORDS     (16)
-    // )dut_s2(
+    // fec_gth_loopback_top_s1 #(
+    //     .W                (32),
+    //     .PAYLOAD_WORDS     (16),
+    //     .FRAMES_PER_BLOCK  (255),
+    //     .IGNORE_SFP_LOSS   (1)   
+    // ) dut_s1     (
     //     .sys_clk_p         (sys_clk_p),
     //     .sys_clk_n         (sys_clk_n),
     //     .sys_rst_n         (sys_rst_n),
@@ -109,10 +84,35 @@ module tb_fec_gth_loopback_top;
     //     .gthrxn_in        (gthrxn),
     //     .gthtxp_out       (gthrxp),
     //     .gthtxn_out       (gthrxn),
+    //     // .gthrxp_in         (gthrxp),
+    //     // .gthrxn_in         (gthrxn),
+    //     // .gthtxp_out        (gthtxp),
+    //     // .gthtxn_out        (gthtxn),
+
 
     //     .sfp_loss          (2'd0),
     //     .tx_disable        (tx_disable)
     // );
+
+    fec_gth_loopback_top_s2 #(
+        .W                 (32),
+        .PAYLOAD_WORDS     (16)
+    )dut_s2(
+        .sys_clk_p         (sys_clk_p),
+        .sys_clk_n         (sys_clk_n),
+        .sys_rst_n         (sys_rst_n),
+
+        .mgtrefclk0_x1y1_p (mgtrefclk0_x1y1_p),
+        .mgtrefclk0_x1y1_n (mgtrefclk0_x1y1_n),
+
+        .gthrxp_in        (gthrxp),
+        .gthrxn_in        (gthrxn),
+        .gthtxp_out       (gthrxp),
+        .gthtxn_out       (gthrxn),
+
+        .sfp_loss          (2'd0),
+        .tx_disable        (tx_disable)
+    );
 
     // ------------------------------------------------------------
     // 仿真监控：bit_aligner 锁定、PRBS 锁定 & BER 统计
@@ -152,23 +152,23 @@ module tb_fec_gth_loopback_top;
     // end
 
 // 信道模型:
-    fso_channel_ge_serial  #(
-        .P(16),
-        .P_GB     (13),
-        .P_BG     (524),
-        .FLIP_BAD (7864),
-        .DROP_BAD (655),
-        .DROP_MODE(2),
-        .SEED     (32'h1ACE_B00C)
-    ) u_ch (
-        .clk   (mgtrefclk0_x1y1_p), // choose a fast clock as "line timebase"
-        .rst_n (sys_rst_n),
+    // fso_channel_ge_serial  #(
+    //     .P(16),
+    //     .P_GB     (13),
+    //     .P_BG     (524),
+    //     .FLIP_BAD (7864),
+    //     .DROP_BAD (655),
+    //     .DROP_MODE(2),
+    //     .SEED     (32'h1ACE_B00C)
+    // ) u_ch (
+    //     .clk   (mgtrefclk0_x1y1_p), // choose a fast clock as "line timebase"
+    //     .rst_n (sys_rst_n),
 
-        .txp_in (gthtxp),
-        .txn_in (gthtxn),
-        .rxp_out(gthrxp),
-        .rxn_out(gthrxn)
-    );
+    //     .txp_in (gthtxp),
+    //     .txn_in (gthtxn),
+    //     .rxp_out(gthrxp),
+    //     .rxn_out(gthrxn)
+    // );
 
 
 endmodule
