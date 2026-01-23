@@ -3,10 +3,10 @@
 
 //==============================================================
 // Stage2 Top: bit align + frame sync + RS(255,229) + PRBS verify
-//  - 结构尽量贴近已通过验证的 S1：
-//    * TX 不做 rate_gate/hold，持续流更利于 bit_aligner
-//    * PRBS checker：只推进LFSR，不用 frame_locked gate；统计用 meas_ok gate
-//    * meas_ok = bit_locked & frame_locked
+//  - 在第5节 TX 处加入与你已验证版本完全一致的门控：
+//    * tx_pat_hold（切换模式 holdoff）
+//    * rate_gate（占空比门控）
+//    * tx_path_rst_n 增加 ~tx_pat_hold
 //==============================================================
 module fec_gth_loopback_top_s2 #(
     parameter integer W                = 32,
@@ -15,7 +15,6 @@ module fec_gth_loopback_top_s2 #(
     parameter integer RS_K             = 229,
     parameter integer RS_N             = 255,
 
-    // 推荐：INTLV_D=64, RS_N=255 时 BLK_OUT_BYTES=16320，与 16*4*255 对齐
     parameter integer INTLV_D          = 64,
     parameter integer INTLV_N          = 255,
 
@@ -61,7 +60,7 @@ module fec_gth_loopback_top_s2 #(
     wire logic_rst   = ~logic_rst_n;
 
     //==========================================================
-    // 2) VIO controls（贴近 S1）
+    // 2) VIO controls（贴近你当前 S2）
     //==========================================================
     wire        ber_clr;
     wire        scrambler_en;
@@ -85,8 +84,8 @@ module fec_gth_loopback_top_s2 #(
     wire [2:0] loop_backmode_fr = loopback_fr2;
 
 `ifdef SIM
-    assign loop_backmode        = 3'b000;           // Near-end PCS loopback for simulation
-    assign scrambler_en         = 1'b0;             // 与 S1 一致：Stage bring-up 建议关
+    assign loop_backmode        = 3'b000;
+    assign scrambler_en         = 1'b0;
     assign ber_clr              = 1'b0;
     assign tx_pattern_prbs_vio  = (TEST_PRBS != 0);
 `else
@@ -100,7 +99,7 @@ module fec_gth_loopback_top_s2 #(
     );
 `endif
 
-    // PRBS/Counter 模式选择同步（贴近 S1）
+    // PRBS/Counter 模式选择同步
     reg tx_pat_ff1, tx_pat_ff2, tx_pat_ff2_d;
     always @(posedge core_clk) begin
         if (logic_rst) begin
@@ -181,7 +180,7 @@ module fec_gth_loopback_top_s2 #(
     wire rx_rst_n_core = rx_rstn_cdc2;
 
     //==========================================================
-    // 4) SFP loss gating（贴近 S1）
+    // 4) SFP loss gating
     //==========================================================
     reg [1:0] loss_core_ff1, loss_core_ff2;
     reg [1:0] loss_rx_ff1,   loss_rx_ff2;
@@ -210,8 +209,10 @@ module fec_gth_loopback_top_s2 #(
     wire have_light_line = (IGNORE_SFP_LOSS != 0) ? 1'b1 : ~loss_rx_ff2[0];
 
     //==========================================================
-    // 5) TX: src(8b) -> fec_tx_s2 -> line（贴近 S1：不做 rate_gate/hold）
+    // 5) TX: src(8b) -> fec_tx_s2 -> line
+    //    ★加入与你已验证版本完全相同的门控（tx_pat_hold + rate_gate）
     //==========================================================
+
     // CDC tx_active -> core_clk
     reg tx_act_cdc1, tx_act_cdc2;
     always @(posedge core_clk or posedge logic_rst) begin
@@ -225,14 +226,49 @@ module fec_gth_loopback_top_s2 #(
     end
     wire tx_active_core = tx_act_cdc2;
 
-    // 与 S1 一致：tx_path_rst_n 不额外挂 hold
-    wire tx_path_rst_n = logic_rst_n & tx_rst_n_core & tx_done_core;
+    // ---------- tx_pat_hold：模式切换后 holdoff 若干拍 ----------
+    wire tx_pat_sw_pulse = (tx_pat_ff2 ^ tx_pat_ff2_d);
+
+    reg [2:0] tx_pat_hold_cnt;
+    always @(posedge core_clk) begin
+        if (logic_rst) begin
+            tx_pat_hold_cnt <= 3'd0;
+        end else if (tx_pat_sw_pulse) begin
+            tx_pat_hold_cnt <= 3'd4; // 与已验证版本一致
+        end else if (tx_pat_hold_cnt != 0) begin
+            tx_pat_hold_cnt <= tx_pat_hold_cnt - 1'b1;
+        end
+    end
+    wire tx_pat_hold = (tx_pat_hold_cnt != 0);
+
+    // ★与已验证版本一致：tx_path_rst_n 带 ~tx_pat_hold
+    wire tx_path_rst_n = logic_rst_n & tx_rst_n_core & tx_done_core & ~tx_pat_hold;
     wire tx_path_rst   = ~tx_path_rst_n;
 
+    // fec_tx_s2 的反压
     wire src_ready;
 
+    // ---------- rate_gate：与已验证版本一致 ----------
+    localparam integer RATE_TOT = 64;
+    localparam integer RATE_ON  = 29;
+
+    reg [$clog2(RATE_TOT)-1:0] rate_cnt;
+    wire rate_gate = (rate_cnt < RATE_ON);
+
+    always @(posedge core_clk) begin
+        if (tx_path_rst) begin
+            rate_cnt <= RATE_TOT-1;
+        end else if (tx_active_core && src_ready) begin
+            if (rate_cnt == RATE_TOT-1)
+                rate_cnt <= 'd0;
+            else
+                rate_cnt <= rate_cnt + 1'b1;
+        end
+    end
+
+    // ---------- PRBS 源 ----------
     wire [7:0] prbs_tx_data;
-    wire prbs_en = use_prbs & src_ready & tx_active_core;
+    wire prbs_en = use_prbs & src_ready & tx_active_core & rate_gate & ~tx_pat_hold;
 
     gtwizard_ultrascale_0_prbs_any #(
         .CHK_MODE    (0),
@@ -248,15 +284,36 @@ module fec_gth_loopback_top_s2 #(
         .DATA_OUT (prbs_tx_data)
     );
 
-    // 与 S1 一致：Counter 简化为 8-bit 连续计数
+    // ---------- Counter 源（保持你现在“带同步头+cw_id”的版本） ----------
     reg [7:0] cnt_data;
-    wire cnt_en = use_cnt & src_ready & tx_active_core;
+    wire cnt_en = use_cnt & src_ready & tx_active_core & rate_gate & ~tx_pat_hold;
+
+    localparam [7:0] SYNC0 = 8'hEE;
+    localparam [7:0] SYNC1 = 8'hE1;
+
+    reg [15:0] tx_cw_id;
+    reg [7:0]  tx_pos_in_k;  // 0..RS_K-1
 
     always @(posedge core_clk) begin
         if (tx_path_rst) begin
-            cnt_data <= 8'd0;
+            tx_cw_id    <= 16'd0;
+            tx_pos_in_k <= 8'd0;
+            cnt_data    <= 8'd0;
         end else if (cnt_en) begin
-            cnt_data <= cnt_data + 1'b1;
+            case (tx_pos_in_k)
+                8'd0: cnt_data <= SYNC0;
+                8'd1: cnt_data <= SYNC1;
+                8'd2: cnt_data <= tx_cw_id[7:0];
+                8'd3: cnt_data <= tx_cw_id[15:8];
+                default: cnt_data <= (tx_pos_in_k - 8'd4); // 0..224
+            endcase
+
+            if (tx_pos_in_k == (RS_K-1)) begin
+                tx_pos_in_k <= 8'd0;
+                tx_cw_id    <= tx_cw_id + 1'b1;
+            end else begin
+                tx_pos_in_k <= tx_pos_in_k + 1'b1;
+            end
         end
     end
 
@@ -296,7 +353,7 @@ module fec_gth_loopback_top_s2 #(
     //==========================================================
     wire fec_rx_rst_n = logic_rst_n & rx_rst_n_core & rx_done_core;
 
-    // rx_active/cdr_stable sync to rx_usr_clk（贴近 S1）
+    // rx_active/cdr_stable sync to rx_usr_clk
     reg rx_act_l1, rx_act_l2;
     reg cdr_st_l1, cdr_st_l2;
     always @(posedge rx_usr_clk or negedge rx_rst_n) begin
@@ -350,7 +407,7 @@ module fec_gth_loopback_top_s2 #(
     );
 
     //==========================================================
-    // 7) PRBS checker + BER（按 S1 思路）
+    // 7) PRBS checker + BER（保留你原本 S2 的逻辑）
     //==========================================================
     localparam [31:0] BER_CODE_LINK_DOWN = 32'hFFFF_FFFF;
     localparam [31:0] BER_CODE_SEARCHING = 32'hFFFF_FFFE;
@@ -368,27 +425,17 @@ module fec_gth_loopback_top_s2 #(
     end
     wire ber_clear_pulse = ber_clr_ff2 & ~ber_clr_ff2_d;
 
-    // meas_ok：与 S1 一致：bit_locked + frame_locked
     wire prbs_meas_ok =
         have_light_core &
         use_prbs &
         bit_locked_core &
         frame_locked_core;
 
-    // PRBS checker 复位逻辑：在 frame_locked 首次成立时复位一次，确保 LFSR 同步
-    reg prbs_meas_ok_d;
-    always @(posedge core_clk) begin
-        if (logic_rst) prbs_meas_ok_d <= 1'b0;
-        else          prbs_meas_ok_d <= prbs_meas_ok;
-    end
-    wire prbs_meas_start = prbs_meas_ok & ~prbs_meas_ok_d;
     wire prbs_chk_rst = logic_rst | ber_clear_pulse;
     wire prbs_chk_en  = fec_rx_valid & use_prbs;
     wire prbs_cnt_en  = fec_rx_valid & prbs_meas_ok;
-    wire [7:0]  prbs_err_vec;
-    wire prbs_match;
-    assign prbs_match = ~|prbs_err_vec;
 
+    wire [7:0]  prbs_err_vec;
     gtwizard_ultrascale_0_prbs_any #(
         .CHK_MODE    (1),
         .INV_PATTERN (0),
@@ -438,6 +485,7 @@ module fec_gth_loopback_top_s2 #(
             ber_out <= total_err_cnt[31:0];
         end
     end
+
     assign ber_result_to_vio = ber_out;
 
 endmodule

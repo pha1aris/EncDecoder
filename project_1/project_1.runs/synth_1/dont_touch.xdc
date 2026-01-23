@@ -3,14 +3,8 @@
 
 # XDC: new/system_cons.xdc
 
-# IP: ip/rs_decoder_0/rs_decoder_0.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==rs_decoder_0 || ORIG_REF_NAME==rs_decoder_0} -quiet] -quiet
-
-# IP: ip/async_fifo_32w_32r/async_fifo_32w_32r.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==async_fifo_32w_32r || ORIG_REF_NAME==async_fifo_32w_32r} -quiet] -quiet
-
-# IP: ip/rs_encoder_0/rs_encoder_0.xci
-set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==rs_encoder_0 || ORIG_REF_NAME==rs_encoder_0} -quiet] -quiet
-
 # IP: ip/vio_2/vio_2.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==vio_2 || ORIG_REF_NAME==vio_2} -quiet] -quiet
+
+# XDC: c:/Users/PC/Desktop/fps/EnDec/project_1/project_1.gen/sources_1/ip/vio_2/vio_2.xdc
+#dup# set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==vio_2 || ORIG_REF_NAME==vio_2} -quiet] -quiet

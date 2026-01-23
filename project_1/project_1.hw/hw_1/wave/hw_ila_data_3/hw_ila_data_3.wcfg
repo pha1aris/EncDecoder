@@ -10,29 +10,18 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0"></ZoomStartTime>
-      <ZoomEndTime time="13"></ZoomEndTime>
+      <ZoomEndTime time="11"></ZoomEndTime>
       <Cursor1Time time="0"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="157"></NameColumnWidth>
-      <ValueColumnWidth column_width="76"></ValueColumnWidth>
+      <NameColumnWidth column_width="79"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="3" />
-   <wvobject fp_name="cdr_stable_line" type="logic">
-      <obj_property name="ElementShortName">cdr_stable_line</obj_property>
-      <obj_property name="ObjectShortName">cdr_stable_line</obj_property>
-      <obj_property name="LABELRADIX">true</obj_property>
-      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
-   </wvobject>
-   <wvobject fp_name="rx_active_line" type="logic">
-      <obj_property name="ElementShortName">rx_active_line</obj_property>
-      <obj_property name="ObjectShortName">rx_active_line</obj_property>
-      <obj_property name="LABELRADIX">true</obj_property>
-      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
-   </wvobject>
-   <wvobject fp_name="rx_word_valid_line" type="logic">
-      <obj_property name="ElementShortName">rx_word_valid_line</obj_property>
-      <obj_property name="ObjectShortName">rx_word_valid_line</obj_property>
+   <WVObjectSize size="1" />
+   <wvobject fp_name="tx_data_to_gth" type="array">
+      <obj_property name="ElementShortName">tx_data_to_gth[31:0]</obj_property>
+      <obj_property name="ObjectShortName">tx_data_to_gth[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>

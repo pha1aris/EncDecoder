@@ -25,8 +25,8 @@ vlog -work xilinx_vip  -l axi_vip_v1_1_19 -l smartconnect_v1_0 -l zynq_ultra_ps_
 
 vlog -work xpm  -l axi_vip_v1_1_19 -l smartconnect_v1_0 -l zynq_ultra_ps_e_vip_v1_0_19 "+incdir+../../../../project_1.gen/sources_1/ip/vio_2/hdl/verilog" "+incdir+../../../../project_1.gen/sources_1/ip/vio_2/hdl" "+incdir+D:/2024_2/Vivado/2024.2/data/xilinx_vip/include" -l xilinx_vip -l xpm -l xil_defaultlib \
 "D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv" \
-"D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv" \
 "D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv" \
+"D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv" \
 
 vcom -work xpm -93  \
 "D:/2024_2/Vivado/2024.2/data/ip/xpm/xpm_VCOMP.vhd" \

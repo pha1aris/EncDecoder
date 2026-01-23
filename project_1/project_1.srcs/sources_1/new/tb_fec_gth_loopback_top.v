@@ -38,9 +38,12 @@ module tb_fec_gth_loopback_top;
     wire gthrxn;
 
     wire [1:0] tx_disable;
-
-    // DUT：完整 FEC + GTH loopback 顶层
-    // fec_gth_loopback_top #(
+    // ============================================================
+    // 完整版回环测试仿真通过，上板测试未通过
+    // 无门控版本环回测试 === 仿真测试通过、上板测试通过
+    // ============================================================
+    // fec_gth_loopback_top #(          //完整版本
+    // fec_gth_loopback_top_nogate#(    //无门控版本
     //     .W                (32),
     //     .PAYLOAD_WORDS    (16),
     //     .RS_K             (229),
@@ -65,7 +68,36 @@ module tb_fec_gth_loopback_top;
     // );
 
     // ============================================================
-    // DUT：Stage1 顶层（bit同步 + 帧同步 + PRBS）
+    // 无fec版本，仅测试prbs 用于用于分析比对fec效果
+    // ============================================================
+    
+    gth_loopback_top_nofec #(
+        .W                ( 32   ),
+        .PAYLOAD_WORDS    ( 16   ),
+        .RS_K             ( 229  ),
+        .RS_N             ( 255  ),
+        .INTLV_D          ( 64   ),
+        .INTLV_N          ( 255  ),
+        .FRAMES_PER_BLOCK ( 255  ),
+        .LOCK_THRESH      ( 1024 ),
+        .TEST_PRBS        ( 1    ))
+    u_gth_loopback_top_nofec (
+        .sys_clk_p               ( sys_clk_p           ),
+        .sys_clk_n               ( sys_clk_n           ),
+        .sys_rst_n               ( sys_rst_n           ),
+        .mgtrefclk0_x1y1_p       ( mgtrefclk0_x1y1_p   ),
+        .mgtrefclk0_x1y1_n       ( mgtrefclk0_x1y1_n   ),
+        .gthrxp_in               ( gthrxp              ),
+        .gthrxn_in               ( gthrxn              ),
+        .gthtxp_out              ( gthrxp              ),
+        .gthtxn_out              ( gthrxn              ),
+        .sfp_loss                ( 2'd0                ),
+        .tx_disable              ( tx_disable          )
+    );
+
+// ======================================-------------------分步测试部分---------------------==================================================
+    // ============================================================
+    // Stage 1 版本环回测试 ： framer - bit align - deframer ====测试通过
     // ============================================================
     // fec_gth_loopback_top_s1 #(
     //     .W                (32),
@@ -88,31 +120,31 @@ module tb_fec_gth_loopback_top;
     //     // .gthrxn_in         (gthrxn),
     //     // .gthtxp_out        (gthtxp),
     //     // .gthtxn_out        (gthtxn),
+    //     .sfp_loss          (2'd0),
+    //     .tx_disable        (tx_disable)
+    // );
+    // ============================================================
+    // Stage 2 版本环回测试 ： Stage 1 基础上加入 encode decode ===测试未通过 
+    // ============================================================
+    // fec_gth_loopback_top_s2 #(
+    //     .W                 (32),
+    //     .PAYLOAD_WORDS     (16)
+    // )dut_s2(
+    //     .sys_clk_p         (sys_clk_p),
+    //     .sys_clk_n         (sys_clk_n),
+    //     .sys_rst_n         (sys_rst_n),
 
+    //     .mgtrefclk0_x1y1_p (mgtrefclk0_x1y1_p),
+    //     .mgtrefclk0_x1y1_n (mgtrefclk0_x1y1_n),
+
+    //     .gthrxp_in        (gthrxp),
+    //     .gthrxn_in        (gthrxn),
+    //     .gthtxp_out       (gthrxp),
+    //     .gthtxn_out       (gthrxn),
 
     //     .sfp_loss          (2'd0),
     //     .tx_disable        (tx_disable)
     // );
-
-    fec_gth_loopback_top_s2 #(
-        .W                 (32),
-        .PAYLOAD_WORDS     (16)
-    )dut_s2(
-        .sys_clk_p         (sys_clk_p),
-        .sys_clk_n         (sys_clk_n),
-        .sys_rst_n         (sys_rst_n),
-
-        .mgtrefclk0_x1y1_p (mgtrefclk0_x1y1_p),
-        .mgtrefclk0_x1y1_n (mgtrefclk0_x1y1_n),
-
-        .gthrxp_in        (gthrxp),
-        .gthrxn_in        (gthrxn),
-        .gthtxp_out       (gthrxp),
-        .gthtxn_out       (gthrxn),
-
-        .sfp_loss          (2'd0),
-        .tx_disable        (tx_disable)
-    );
 
     // ------------------------------------------------------------
     // 仿真监控：bit_aligner 锁定、PRBS 锁定 & BER 统计

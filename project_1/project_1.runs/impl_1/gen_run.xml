@@ -1,87 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_1" LaunchPart="xczu15eg-ffvb1156-2-i" LaunchTime="1768874655">
-  <File Type="PA-TCL" Name="fec_gth_loopback_top.tcl"/>
-  <File Type="REPORTS-TCL" Name="fec_gth_loopback_top_reports.tcl"/>
-  <File Type="INIT-TIMING" Name="fec_gth_loopback_top_timing_summary_init.rpt"/>
-  <File Type="OPT-DCP" Name="fec_gth_loopback_top_opt.dcp"/>
-  <File Type="OPT-DRC" Name="fec_gth_loopback_top_drc_opted.rpt"/>
-  <File Type="OPT-METHODOLOGY-DRC" Name="fec_gth_loopback_top_methodology_drc_opted.rpt"/>
-  <File Type="OPT-HWDEF" Name="fec_gth_loopback_top.hwdef"/>
-  <File Type="OPT-TIMING" Name="fec_gth_loopback_top_timing_summary_opted.rpt"/>
-  <File Type="OPT-RQA-PB" Name="fec_gth_loopback_top_rqa_opted.pb"/>
-  <File Type="PWROPT-DCP" Name="fec_gth_loopback_top_pwropt.dcp"/>
-  <File Type="PWROPT-DRC" Name="fec_gth_loopback_top_drc_pwropted.rpt"/>
-  <File Type="PWROPT-TIMING" Name="fec_gth_loopback_top_timing_summary_pwropted.rpt"/>
-  <File Type="PLACE-DCP" Name="fec_gth_loopback_top_placed.dcp"/>
-  <File Type="PLACE-IO" Name="fec_gth_loopback_top_io_placed.rpt"/>
-  <File Type="PLACE-CLK" Name="fec_gth_loopback_top_clock_utilization_placed.rpt"/>
-  <File Type="PLACE-UTIL" Name="fec_gth_loopback_top_utilization_placed.rpt"/>
-  <File Type="PLACE-UTIL-PB" Name="fec_gth_loopback_top_utilization_placed.pb"/>
-  <File Type="PLACE-CTRL" Name="fec_gth_loopback_top_control_sets_placed.rpt"/>
-  <File Type="PLACE-SIMILARITY" Name="fec_gth_loopback_top_incremental_reuse_placed.rpt"/>
-  <File Type="PLACE-PRE-SIMILARITY" Name="fec_gth_loopback_top_incremental_reuse_pre_placed.rpt"/>
-  <File Type="PLACE-TIMING" Name="fec_gth_loopback_top_timing_summary_placed.rpt"/>
-  <File Type="PLACE-RQA-PB" Name="fec_gth_loopback_top_rqa_placed.pb"/>
-  <File Type="POSTPLACE-PWROPT-DCP" Name="fec_gth_loopback_top_postplace_pwropt.dcp"/>
-  <File Type="POSTPLACE-PWROPT-TIMING" Name="fec_gth_loopback_top_timing_summary_postplace_pwropted.rpt"/>
-  <File Type="PHYSOPT-DCP" Name="fec_gth_loopback_top_physopt.dcp"/>
-  <File Type="PHYSOPT-DRC" Name="fec_gth_loopback_top_drc_physopted.rpt"/>
-  <File Type="PHYSOPT-TIMING" Name="fec_gth_loopback_top_timing_summary_physopted.rpt"/>
-  <File Type="ROUTE-ERROR-DCP" Name="fec_gth_loopback_top_routed_error.dcp"/>
-  <File Type="ROUTE-DCP" Name="fec_gth_loopback_top_routed.dcp"/>
-  <File Type="ROUTE-BLACKBOX-DCP" Name="fec_gth_loopback_top_routed_bb.dcp"/>
-  <File Type="ROUTE-DRC" Name="fec_gth_loopback_top_drc_routed.rpt"/>
-  <File Type="ROUTE-DRC-PB" Name="fec_gth_loopback_top_drc_routed.pb"/>
-  <File Type="ROUTE-DRC-RPX" Name="fec_gth_loopback_top_drc_routed.rpx"/>
-  <File Type="ROUTE-METHODOLOGY-DRC" Name="fec_gth_loopback_top_methodology_drc_routed.rpt"/>
-  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="fec_gth_loopback_top_methodology_drc_routed.rpx"/>
-  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="fec_gth_loopback_top_methodology_drc_routed.pb"/>
-  <File Type="ROUTE-PWR" Name="fec_gth_loopback_top_power_routed.rpt"/>
-  <File Type="ROUTE-PWR-SUM" Name="fec_gth_loopback_top_power_summary_routed.pb"/>
-  <File Type="ROUTE-PWR-RPX" Name="fec_gth_loopback_top_power_routed.rpx"/>
-  <File Type="ROUTE-STATUS" Name="fec_gth_loopback_top_route_status.rpt"/>
-  <File Type="ROUTE-STATUS-PB" Name="fec_gth_loopback_top_route_status.pb"/>
-  <File Type="ROUTE-TIMINGSUMMARY" Name="fec_gth_loopback_top_timing_summary_routed.rpt"/>
-  <File Type="ROUTE-TIMING-PB" Name="fec_gth_loopback_top_timing_summary_routed.pb"/>
-  <File Type="ROUTE-TIMING-RPX" Name="fec_gth_loopback_top_timing_summary_routed.rpx"/>
-  <File Type="ROUTE-SIMILARITY" Name="fec_gth_loopback_top_incremental_reuse_routed.rpt"/>
-  <File Type="ROUTE-CLK" Name="fec_gth_loopback_top_clock_utilization_routed.rpt"/>
-  <File Type="ROUTE-BUS-SKEW" Name="fec_gth_loopback_top_bus_skew_routed.rpt"/>
-  <File Type="ROUTE-BUS-SKEW-PB" Name="fec_gth_loopback_top_bus_skew_routed.pb"/>
-  <File Type="ROUTE-BUS-SKEW-RPX" Name="fec_gth_loopback_top_bus_skew_routed.rpx"/>
-  <File Type="ROUTE-RQS-PB" Name="fec_gth_loopback_top_rqs_routed.pb"/>
-  <File Type="POSTROUTE-PHYSOPT-DCP" Name="fec_gth_loopback_top_postroute_physopt.dcp"/>
-  <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="fec_gth_loopback_top_postroute_physopt_bb.dcp"/>
-  <File Type="POSTROUTE-PHYSOPT-TIMING" Name="fec_gth_loopback_top_timing_summary_postroute_physopted.rpt"/>
-  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="fec_gth_loopback_top_timing_summary_postroute_physopted.pb"/>
-  <File Type="POSTROUTE-PHYSOPT-TIMING-RPX" Name="fec_gth_loopback_top_timing_summary_postroute_physopted.rpx"/>
-  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW" Name="fec_gth_loopback_top_bus_skew_postroute_physopted.rpt"/>
-  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-PB" Name="fec_gth_loopback_top_bus_skew_postroute_physopted.pb"/>
-  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-RPX" Name="fec_gth_loopback_top_bus_skew_postroute_physopted.rpx"/>
-  <File Type="BG-BIT" Name="fec_gth_loopback_top.bit"/>
-  <File Type="BG-BIN" Name="fec_gth_loopback_top.bin"/>
-  <File Type="BITSTR-MSK" Name="fec_gth_loopback_top.msk"/>
-  <File Type="BITSTR-RBT" Name="fec_gth_loopback_top.rbt"/>
-  <File Type="BITSTR-NKY" Name="fec_gth_loopback_top.nky"/>
-  <File Type="BITSTR-BMM" Name="fec_gth_loopback_top_bd.bmm"/>
-  <File Type="BITSTR-MMI" Name="fec_gth_loopback_top.mmi"/>
-  <File Type="PDI-FILE" Name="fec_gth_loopback_top.pdi"/>
-  <File Type="BOOT-PDI-FILE" Name="fec_gth_loopback_top_boot.pdi"/>
-  <File Type="PL-PDI-FILE" Name="fec_gth_loopback_top_pld.pdi"/>
-  <File Type="RCFI_FILE" Name="fec_gth_loopback_top.rcfi"/>
-  <File Type="CFI_FILE" Name="fec_gth_loopback_top.cfi"/>
-  <File Type="RNPI_FILE" Name="fec_gth_loopback_top.rnpi"/>
-  <File Type="NPI_FILE" Name="fec_gth_loopback_top.npi"/>
-  <File Type="RBD_FILE" Name="fec_gth_loopback_top.rbd"/>
+<GenRun Id="impl_1" LaunchPart="xczu15eg-ffvb1156-2-i" LaunchTime="1769177728">
+  <File Type="PA-TCL" Name="gth_loopback_top_nofec.tcl"/>
+  <File Type="REPORTS-TCL" Name="gth_loopback_top_nofec_reports.tcl"/>
+  <File Type="INIT-TIMING" Name="gth_loopback_top_nofec_timing_summary_init.rpt"/>
+  <File Type="OPT-DCP" Name="gth_loopback_top_nofec_opt.dcp"/>
+  <File Type="OPT-DRC" Name="gth_loopback_top_nofec_drc_opted.rpt"/>
+  <File Type="OPT-METHODOLOGY-DRC" Name="gth_loopback_top_nofec_methodology_drc_opted.rpt"/>
+  <File Type="OPT-HWDEF" Name="gth_loopback_top_nofec.hwdef"/>
+  <File Type="OPT-TIMING" Name="gth_loopback_top_nofec_timing_summary_opted.rpt"/>
+  <File Type="OPT-RQA-PB" Name="gth_loopback_top_nofec_rqa_opted.pb"/>
+  <File Type="PWROPT-DCP" Name="gth_loopback_top_nofec_pwropt.dcp"/>
+  <File Type="PWROPT-DRC" Name="gth_loopback_top_nofec_drc_pwropted.rpt"/>
+  <File Type="PWROPT-TIMING" Name="gth_loopback_top_nofec_timing_summary_pwropted.rpt"/>
+  <File Type="PLACE-DCP" Name="gth_loopback_top_nofec_placed.dcp"/>
+  <File Type="PLACE-IO" Name="gth_loopback_top_nofec_io_placed.rpt"/>
+  <File Type="PLACE-CLK" Name="gth_loopback_top_nofec_clock_utilization_placed.rpt"/>
+  <File Type="PLACE-UTIL" Name="gth_loopback_top_nofec_utilization_placed.rpt"/>
+  <File Type="PLACE-UTIL-PB" Name="gth_loopback_top_nofec_utilization_placed.pb"/>
+  <File Type="PLACE-CTRL" Name="gth_loopback_top_nofec_control_sets_placed.rpt"/>
+  <File Type="PLACE-SIMILARITY" Name="gth_loopback_top_nofec_incremental_reuse_placed.rpt"/>
+  <File Type="PLACE-PRE-SIMILARITY" Name="gth_loopback_top_nofec_incremental_reuse_pre_placed.rpt"/>
+  <File Type="PLACE-TIMING" Name="gth_loopback_top_nofec_timing_summary_placed.rpt"/>
+  <File Type="PLACE-RQA-PB" Name="gth_loopback_top_nofec_rqa_placed.pb"/>
+  <File Type="POSTPLACE-PWROPT-DCP" Name="gth_loopback_top_nofec_postplace_pwropt.dcp"/>
+  <File Type="POSTPLACE-PWROPT-TIMING" Name="gth_loopback_top_nofec_timing_summary_postplace_pwropted.rpt"/>
+  <File Type="PHYSOPT-DCP" Name="gth_loopback_top_nofec_physopt.dcp"/>
+  <File Type="PHYSOPT-DRC" Name="gth_loopback_top_nofec_drc_physopted.rpt"/>
+  <File Type="PHYSOPT-TIMING" Name="gth_loopback_top_nofec_timing_summary_physopted.rpt"/>
+  <File Type="ROUTE-ERROR-DCP" Name="gth_loopback_top_nofec_routed_error.dcp"/>
+  <File Type="ROUTE-DCP" Name="gth_loopback_top_nofec_routed.dcp"/>
+  <File Type="ROUTE-BLACKBOX-DCP" Name="gth_loopback_top_nofec_routed_bb.dcp"/>
+  <File Type="ROUTE-DRC" Name="gth_loopback_top_nofec_drc_routed.rpt"/>
+  <File Type="ROUTE-DRC-PB" Name="gth_loopback_top_nofec_drc_routed.pb"/>
+  <File Type="ROUTE-DRC-RPX" Name="gth_loopback_top_nofec_drc_routed.rpx"/>
+  <File Type="ROUTE-METHODOLOGY-DRC" Name="gth_loopback_top_nofec_methodology_drc_routed.rpt"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="gth_loopback_top_nofec_methodology_drc_routed.rpx"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="gth_loopback_top_nofec_methodology_drc_routed.pb"/>
+  <File Type="ROUTE-PWR" Name="gth_loopback_top_nofec_power_routed.rpt"/>
+  <File Type="ROUTE-PWR-SUM" Name="gth_loopback_top_nofec_power_summary_routed.pb"/>
+  <File Type="ROUTE-PWR-RPX" Name="gth_loopback_top_nofec_power_routed.rpx"/>
+  <File Type="ROUTE-STATUS" Name="gth_loopback_top_nofec_route_status.rpt"/>
+  <File Type="ROUTE-STATUS-PB" Name="gth_loopback_top_nofec_route_status.pb"/>
+  <File Type="ROUTE-TIMINGSUMMARY" Name="gth_loopback_top_nofec_timing_summary_routed.rpt"/>
+  <File Type="ROUTE-TIMING-PB" Name="gth_loopback_top_nofec_timing_summary_routed.pb"/>
+  <File Type="ROUTE-TIMING-RPX" Name="gth_loopback_top_nofec_timing_summary_routed.rpx"/>
+  <File Type="ROUTE-SIMILARITY" Name="gth_loopback_top_nofec_incremental_reuse_routed.rpt"/>
+  <File Type="ROUTE-CLK" Name="gth_loopback_top_nofec_clock_utilization_routed.rpt"/>
+  <File Type="ROUTE-BUS-SKEW" Name="gth_loopback_top_nofec_bus_skew_routed.rpt"/>
+  <File Type="ROUTE-BUS-SKEW-PB" Name="gth_loopback_top_nofec_bus_skew_routed.pb"/>
+  <File Type="ROUTE-BUS-SKEW-RPX" Name="gth_loopback_top_nofec_bus_skew_routed.rpx"/>
+  <File Type="ROUTE-RQS-PB" Name="gth_loopback_top_nofec_rqs_routed.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-DCP" Name="gth_loopback_top_nofec_postroute_physopt.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="gth_loopback_top_nofec_postroute_physopt_bb.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING" Name="gth_loopback_top_nofec_timing_summary_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="gth_loopback_top_nofec_timing_summary_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-RPX" Name="gth_loopback_top_nofec_timing_summary_postroute_physopted.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW" Name="gth_loopback_top_nofec_bus_skew_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-PB" Name="gth_loopback_top_nofec_bus_skew_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-RPX" Name="gth_loopback_top_nofec_bus_skew_postroute_physopted.rpx"/>
+  <File Type="BG-BIT" Name="gth_loopback_top_nofec.bit"/>
+  <File Type="BG-BIN" Name="gth_loopback_top_nofec.bin"/>
+  <File Type="BITSTR-MSK" Name="gth_loopback_top_nofec.msk"/>
+  <File Type="BITSTR-RBT" Name="gth_loopback_top_nofec.rbt"/>
+  <File Type="BITSTR-NKY" Name="gth_loopback_top_nofec.nky"/>
+  <File Type="BITSTR-BMM" Name="gth_loopback_top_nofec_bd.bmm"/>
+  <File Type="BITSTR-MMI" Name="gth_loopback_top_nofec.mmi"/>
+  <File Type="PDI-FILE" Name="gth_loopback_top_nofec.pdi"/>
+  <File Type="BOOT-PDI-FILE" Name="gth_loopback_top_nofec_boot.pdi"/>
+  <File Type="PL-PDI-FILE" Name="gth_loopback_top_nofec_pld.pdi"/>
+  <File Type="RCFI_FILE" Name="gth_loopback_top_nofec.rcfi"/>
+  <File Type="CFI_FILE" Name="gth_loopback_top_nofec.cfi"/>
+  <File Type="RNPI_FILE" Name="gth_loopback_top_nofec.rnpi"/>
+  <File Type="NPI_FILE" Name="gth_loopback_top_nofec.npi"/>
+  <File Type="RBD_FILE" Name="gth_loopback_top_nofec.rbd"/>
   <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
-  <File Type="BITSTR-LTX" Name="fec_gth_loopback_top.ltx"/>
-  <File Type="BITSTR-SYSDEF" Name="fec_gth_loopback_top.sysdef"/>
-  <File Type="BG-BGN" Name="fec_gth_loopback_top.bgn"/>
-  <File Type="BG-DRC" Name="fec_gth_loopback_top.drc"/>
-  <File Type="RDI-RDI" Name="fec_gth_loopback_top.vdi"/>
+  <File Type="BITSTR-LTX" Name="gth_loopback_top_nofec.ltx"/>
+  <File Type="BITSTR-SYSDEF" Name="gth_loopback_top_nofec.sysdef"/>
+  <File Type="BG-BGN" Name="gth_loopback_top_nofec.bgn"/>
+  <File Type="BG-DRC" Name="gth_loopback_top_nofec.drc"/>
+  <File Type="RDI-RDI" Name="gth_loopback_top_nofec.vdi"/>
   <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
-  <File Type="ROUTE-RQS" Name="fec_gth_loopback_top_routed.rqs"/>
-  <File Type="POSTROUTE-PHYSOPT-RQS" Name="fec_gth_loopback_top_postroute_physopted.rqs"/>
+  <File Type="ROUTE-RQS" Name="gth_loopback_top_nofec_routed.rqs"/>
+  <File Type="POSTROUTE-PHYSOPT-RQS" Name="gth_loopback_top_nofec_postroute_physopted.rqs"/>
   <File Type="ROUTE-RQS-RPT" Name="route_report_qor_suggestions_0.rpt"/>
   <File Type="POSTROUTE-PHYSOPT-RQS-RPT" Name="postroute_physopt_report_qor_suggestions_0.rpt"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
@@ -94,109 +94,7 @@
         <Attr Name="IsVisible" Val="1"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/ip/rs_decoder_0/rs_decoder_0.xci">
-      <FileInfo>
-        <Attr Name="ImportPath" Val="$PPRDIR/../../../crc8/crc8.srcs/sources_1/ip/rs_decoder_0/rs_decoder_0.xci"/>
-        <Attr Name="ImportTime" Val="1747109200"/>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r.xci">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/ip/rs_encoder_0/rs_encoder_0.xci">
-      <FileInfo>
-        <Attr Name="ImportPath" Val="$PPRDIR/../../../crc8/crc8.srcs/sources_1/ip/rs_encoder_0/rs_encoder_0.xci"/>
-        <Attr Name="ImportTime" Val="1757765703"/>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
     <File Path="$PSRCDIR/sources_1/ip/vio_2/vio_2.xci">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sim_1/new/AdditiveScrambler.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/axis_fifo_sync.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/bit_aligner_ind.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/crc32.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/fec_rx.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/fec_tx.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/fifo_8b_flag_sync.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/fso_deframer.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/fso_framer.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/gearbox_32to8.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/gearbox_8to32_bs.v">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
@@ -210,8 +108,45 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
+    <File Path="$PSRCDIR/sources_1/new/prbs_chk.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/uart_rx.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/uart_tx.v">
+      <FileInfo SFType="SVerilog">
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/gth_loopback_top_nofec.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/prbs_any_n.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <File Path="$PSRCDIR/sources_1/imports/imports/gtwizard_ultrascale_0_prbs_any.v">
       <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="ImportPath" Val="$PPRDIR/../../../crc8/crc8.srcs/sources_1/imports/imports/gtwizard_ultrascale_0_prbs_any.v"/>
         <Attr Name="ImportTime" Val="1756264214"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -219,42 +154,7 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sim_1/new/rs_Deinterleaver_xpm.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/rs_decode_backend.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/rs_encode_frontend.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/rs_interleaver_xpm.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/fec_gth_loopback_top.v">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PSRCDIR/sources_1/new/fec_rx_s2.v">
+    <File Path="$PSRCDIR/sources_1/ip/async_fifo_32w_32r/async_fifo_32w_32r.xci">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -262,7 +162,7 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/fec_tx_s2.v">
+    <File Path="$PSRCDIR/sim_1/new/AdditiveScrambler.v">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -270,7 +170,55 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/fec_gth_loopback_top_s2.v">
+    <File Path="$PSRCDIR/sources_1/new/axis_fifo_sync.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/bit_aligner_ind.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/crc32.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/fso_deframer.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/fso_framer.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/gearbox_32to8.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/gearbox_8to32_bs.v">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -302,7 +250,7 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/gth_raw_top_stub.v">
+    <File Path="$PSRCDIR/sources_1/ip/div_gen_0/div_gen_0.xci">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -310,7 +258,27 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/axis_skid_fwft.v">
+    <File Path="$PSRCDIR/sources_1/ip/rs_decoder_0/rs_decoder_0.xci">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../../crc8/crc8.srcs/sources_1/ip/rs_decoder_0/rs_decoder_0.xci"/>
+        <Attr Name="ImportTime" Val="1747109200"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/ip/rs_encoder_0/rs_encoder_0.xci">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="ImportPath" Val="$PPRDIR/../../../crc8/crc8.srcs/sources_1/ip/rs_encoder_0/rs_encoder_0.xci"/>
+        <Attr Name="ImportTime" Val="1757765703"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/fec_rx.v">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -318,7 +286,7 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/bert_prbs8.v">
+    <File Path="$PSRCDIR/sources_1/new/fec_tx.v">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -326,7 +294,55 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/gth_prbs_raw_loopback_top.v">
+    <File Path="$PSRCDIR/sources_1/new/fifo_8b_flag_sync.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sim_1/new/rs_Deinterleaver_xpm.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/rs_decode_backend.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/rs_encode_frontend.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/rs_interleaver_xpm.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/fec_gth_loopback_top_nogate.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/fec_gth_loopback_top.v">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -520,7 +536,31 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
+    <File Path="$PSRCDIR/sources_1/new/axi_lite_slave_min.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/axis_skid_fwft.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <File Path="$PSRCDIR/sources_1/new/ber_test_gen.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/bert_prbs8.v">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -644,6 +684,30 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
+    <File Path="$PSRCDIR/sources_1/new/fec_gth_loopback_top_s2.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/fec_rx_s2.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/fec_tx_s2.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <File Path="$PSRCDIR/sim_1/new/fifo_buffer.v">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
@@ -728,7 +792,23 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
+    <File Path="$PSRCDIR/sources_1/new/gth_prbs_raw_loopback_top.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <File Path="$PSRCDIR/sources_1/new/gth_raw_32b_phy.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/gth_raw_top_stub.v">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -761,6 +841,14 @@
       </FileInfo>
     </File>
     <File Path="$PSRCDIR/sources_1/new/interleaver_top.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/prbs_ber.v">
       <FileInfo>
         <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -930,17 +1018,9 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/new/axi_lite_slave_min.v">
-      <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
     <Config>
       <Option Name="DesignMode" Val="RTL"/>
-      <Option Name="TopModule" Val="fec_gth_loopback_top"/>
+      <Option Name="TopModule" Val="gth_loopback_top_nofec"/>
     </Config>
   </FileSet>
   <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1" RelGenDir="$PGENDIR/constrs_1">
@@ -984,10 +1064,6 @@
   </Strategy>
   <BlockFileSet Type="BlockSrcs" Name="gtwizard_ultrascale_0"/>
   <BlockFileSet Type="BlockSrcs" Name="design_1_zynq_ultra_ps_e_0_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="fifo_0"/>
   <BlockFileSet Type="BlockSrcs" Name="clk_wiz_sys"/>
   <BlockFileSet Type="BlockSrcs" Name="design_1_ila_0_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="div_gen_0"/>
-  <BlockFileSet Type="BlockSrcs" Name="vio_frame_cfg"/>
-  <BlockFileSet Type="BlockSrcs" Name="ila_fec_rx"/>
 </GenRun>

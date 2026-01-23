@@ -385,6 +385,144 @@ module rs_decode_backend #(
         .empty (fifo1_empty)
     );
 
+
+// ============================================================
+//  状态监控部分（RS Decoder IP 事件/统计）
+//  放置位置：Decoder_U0 / Decoder_U1 实例化之后
+// ============================================================
+
+// ---------------- event counters + sticky ----------------
+reg [31:0] miss_cnt0, unexp_cnt0, ctrl_inv_cnt0;
+reg [31:0] miss_cnt1, unexp_cnt1, ctrl_inv_cnt1;
+
+// sticky：事件脉冲可能很短（手册也提醒别漏），用 sticky 保留到复位
+reg miss_sticky0, unexp_sticky0, ctrl_inv_sticky0;
+reg miss_sticky1, unexp_sticky1, ctrl_inv_sticky1;
+
+always @(posedge clk or posedge rst) begin
+  if (rst) begin
+    miss_cnt0       <= 32'd0;
+    unexp_cnt0      <= 32'd0;
+    ctrl_inv_cnt0   <= 32'd0;
+    miss_cnt1       <= 32'd0;
+    unexp_cnt1      <= 32'd0;
+    ctrl_inv_cnt1   <= 32'd0;
+
+    miss_sticky0    <= 1'b0;
+    unexp_sticky0   <= 1'b0;
+    ctrl_inv_sticky0<= 1'b0;
+    miss_sticky1    <= 1'b0;
+    unexp_sticky1   <= 1'b0;
+    ctrl_inv_sticky1<= 1'b0;
+  end else begin
+    // U0 events
+    if (event_s_input_tlast_missing0) begin
+      miss_cnt0    <= miss_cnt0 + 1'b1;
+      miss_sticky0 <= 1'b1;
+    end
+    if (event_s_input_tlast_unexpected0) begin
+      unexp_cnt0    <= unexp_cnt0 + 1'b1;
+      unexp_sticky0 <= 1'b1;
+    end
+    if (event_s_ctrl_tdata_invalid0) begin
+      ctrl_inv_cnt0    <= ctrl_inv_cnt0 + 1'b1;
+      ctrl_inv_sticky0 <= 1'b1;
+    end
+
+    // U1 events
+    if (event_s_input_tlast_missing1) begin
+      miss_cnt1    <= miss_cnt1 + 1'b1;
+      miss_sticky1 <= 1'b1;
+    end
+    if (event_s_input_tlast_unexpected1) begin
+      unexp_cnt1    <= unexp_cnt1 + 1'b1;
+      unexp_sticky1 <= 1'b1;
+    end
+    if (event_s_ctrl_tdata_invalid1) begin
+      ctrl_inv_cnt1    <= ctrl_inv_cnt1 + 1'b1;
+      ctrl_inv_sticky1 <= 1'b1;
+    end
+  end
+end
+
+// ---------------- stat counters ----------------
+// 规范写法：stat_fire = tvalid&tready（你现在 tready=1，但这样以后可扩展）
+wire stat_fire0 = m_axis_stat_tvalid0 & 1'b1; // m_axis_stat_tready0 固定 1
+wire stat_fire1 = m_axis_stat_tvalid1 & 1'b1;
+
+reg [31:0] stat_cnt0, stat_cnt1;
+reg [31:0] stat_nz_cnt0, stat_nz_cnt1;
+reg [7:0]  stat_last0, stat_last1;
+
+// 可选：把“最近一次非0 stat”也记下来，方便定位（可删）
+reg [7:0]  stat_last_nz0, stat_last_nz1;
+
+// 可选：统计某些 bit（如果你后面确定 FAIL/ERR_FOUND 在哪一位，可以在这里直接加）
+reg [31:0] stat_bit0_cnt0, stat_bit0_cnt1; // 示例：统计 stat[0]==1 的次数
+
+always @(posedge clk or posedge rst) begin
+  if (rst) begin
+    stat_cnt0       <= 32'd0;
+    stat_nz_cnt0    <= 32'd0;
+    stat_last0      <= 8'd0;
+    stat_last_nz0   <= 8'd0;
+    stat_bit0_cnt0  <= 32'd0;
+  end else if (stat_fire0) begin
+    stat_cnt0  <= stat_cnt0 + 1'b1;
+    stat_last0 <= m_axis_stat_tdata0;
+
+    if (m_axis_stat_tdata0 != 8'd0) begin
+      stat_nz_cnt0  <= stat_nz_cnt0 + 1'b1;
+      stat_last_nz0 <= m_axis_stat_tdata0;
+    end
+
+    if (m_axis_stat_tdata0[0])
+      stat_bit0_cnt0 <= stat_bit0_cnt0 + 1'b1;
+  end
+end
+
+always @(posedge clk or posedge rst) begin
+  if (rst) begin
+    stat_cnt1       <= 32'd0;
+    stat_nz_cnt1    <= 32'd0;
+    stat_last1      <= 8'd0;
+    stat_last_nz1   <= 8'd0;
+    stat_bit0_cnt1  <= 32'd0;
+  end else if (stat_fire1) begin
+    stat_cnt1  <= stat_cnt1 + 1'b1;
+    stat_last1 <= m_axis_stat_tdata1;
+
+    if (m_axis_stat_tdata1 != 8'd0) begin
+      stat_nz_cnt1  <= stat_nz_cnt1 + 1'b1;
+      stat_last_nz1 <= m_axis_stat_tdata1;
+    end
+
+    if (m_axis_stat_tdata1[0])
+      stat_bit0_cnt1 <= stat_bit0_cnt1 + 1'b1;
+  end
+end
+
+// ---------------- optional simulation prints ----------------
+// 上板建议关掉；仿真时定位很快
+`ifdef SIM
+always @(posedge clk) begin
+  if (!rst) begin
+    if (event_s_input_tlast_missing0)    $display("[%0t] DEC0 TLAST_MISSING",    $time);
+    if (event_s_input_tlast_unexpected0) $display("[%0t] DEC0 TLAST_UNEXPECTED", $time);
+    if (event_s_ctrl_tdata_invalid0)     $display("[%0t] DEC0 CTRL_TDATA_INVALID",$time);
+    if (stat_fire0 && (m_axis_stat_tdata0 != 8'h00))
+      $display("[%0t] DEC0 STAT=%02x", $time, m_axis_stat_tdata0);
+
+    if (event_s_input_tlast_missing1)    $display("[%0t] DEC1 TLAST_MISSING",    $time);
+    if (event_s_input_tlast_unexpected1) $display("[%0t] DEC1 TLAST_UNEXPECTED", $time);
+    if (event_s_ctrl_tdata_invalid1)     $display("[%0t] DEC1 CTRL_TDATA_INVALID",$time);
+    if (stat_fire1 && (m_axis_stat_tdata1 != 8'h00))
+      $display("[%0t] DEC1 STAT=%02x", $time, m_axis_stat_tdata1);
+  end
+end
+`endif
+
+
     // ============================================================
     // 7) 输出仲裁：严格按 order_fifo 队头选择输出来源
     // ============================================================

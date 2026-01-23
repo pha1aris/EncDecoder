@@ -32,7 +32,6 @@ module fec_gth_loopback_top_s1 #(
     output wire [1:0]   tx_disable
 );
     assign tx_disable = 2'b00;
-
     //==========================================================
     // 1) Clocks & logic reset
     //==========================================================

@@ -10,24 +10,39 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0"></ZoomStartTime>
-      <ZoomEndTime time="13"></ZoomEndTime>
+      <ZoomEndTime time="11"></ZoomEndTime>
       <Cursor1Time time="0"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="150"></NameColumnWidth>
-      <ValueColumnWidth column_width="108"></ValueColumnWidth>
+      <NameColumnWidth column_width="100"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="2" />
-   <wvobject fp_name="fec_rx_data" type="array">
-      <obj_property name="ElementShortName">fec_rx_data[7:0]</obj_property>
-      <obj_property name="ObjectShortName">fec_rx_data[7:0]</obj_property>
+   <WVObjectSize size="4" />
+   <wvobject fp_name="bad_cnt" type="array">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">bad_cnt[7:0]</obj_property>
+      <obj_property name="ObjectShortName">bad_cnt[7:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>
-   <wvobject fp_name="fec_rx_valid" type="logic">
-      <obj_property name="ElementShortName">fec_rx_valid</obj_property>
-      <obj_property name="ObjectShortName">fec_rx_valid</obj_property>
+   <wvobject fp_name="prbs_locked" type="logic">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">prbs_locked</obj_property>
+      <obj_property name="ObjectShortName">prbs_locked</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="rx_data_from_gth" type="array">
+      <obj_property name="ElementShortName">rx_data_from_gth[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_data_from_gth[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="rx_done" type="logic">
+      <obj_property name="ElementShortName">rx_done</obj_property>
+      <obj_property name="ObjectShortName">rx_done</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>
