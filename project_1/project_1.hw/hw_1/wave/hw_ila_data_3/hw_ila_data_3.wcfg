@@ -10,14 +10,16 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0"></ZoomStartTime>
-      <ZoomEndTime time="11"></ZoomEndTime>
+      <ZoomEndTime time="1,025"></ZoomEndTime>
       <Cursor1Time time="0"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="79"></NameColumnWidth>
+      <NameColumnWidth column_width="63"></NameColumnWidth>
       <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="1" />
+   <wave_markers>
+   </wave_markers>
    <wvobject fp_name="tx_data_to_gth" type="array">
       <obj_property name="ElementShortName">tx_data_to_gth[31:0]</obj_property>
       <obj_property name="ObjectShortName">tx_data_to_gth[31:0]</obj_property>

@@ -1,6 +1,8 @@
 `timescale 1ns/1ps
 `include "global_defines.vh"
 
+// tx_framer_only_s1 不需要修改，直接使用你提供的版本即可。
+
 module rx_deframer_only_s1 #(
     parameter integer W             = 32,
     parameter integer PAYLOAD_WORDS = 16,
@@ -29,48 +31,36 @@ module rx_deframer_only_s1 #(
 );
     wire rst = ~rst_n;
 
-    // ---- cfg（与你原 fec_rx 保持一致）
+    //========================================================
+    // ★★★ 关键修改：针对 -34dBm 的鲁棒参数配置 (Hardcoded) ★★★
+    //========================================================
+    
+    // 1. Bit Aligner 参数
     localparam integer VERIFY_CNT_MAX    = 4;
-    localparam integer ERR_TH            = 2;
-    localparam integer LOCK_LOSS_TIMEOUT = 4096;
-    localparam integer FRAME_TIMEOUT_MAX = 64;
+    localparam integer ERR_TH            = 5;     // ★ 改为 5：允许 32bit 错 5bit，防止底层失锁
+    localparam integer LOCK_LOSS_TIMEOUT = 4096;  // 迟钝失锁
 
-    wire [5:0]  cfg_err_th;
-    wire [7:0]  cfg_verify_cnt_max;
-    wire [15:0] cfg_lock_loss_to;
+    // 2. Deframer 参数
+    localparam integer FRAME_TIMEOUT_MAX = 512;   // ★ 改大一点，防止间隔过大误判
 
-    wire [15:0] cfg_frame_to;
-    wire [7:0]  cfg_crc_win;
-    wire [7:0]  cfg_crc_bad_th;
-    wire [7:0]  cfg_pre_win;
-    wire [7:0]  cfg_pre_bad_th;
-    wire        cfg_realign_mode;
+    // 3. 内部信号连接 (移除 VIO，强制赋值)
+    wire [5:0]  cfg_err_th         = ERR_TH[5:0];
+    wire [7:0]  cfg_verify_cnt_max = VERIFY_CNT_MAX[7:0];
+    wire [15:0] cfg_lock_loss_to   = LOCK_LOSS_TIMEOUT[15:0];
 
-`ifdef SIM
-    assign cfg_err_th         = ERR_TH[5:0];
-    assign cfg_verify_cnt_max = VERIFY_CNT_MAX[7:0];
-    assign cfg_lock_loss_to   = LOCK_LOSS_TIMEOUT[15:0];
+    wire [15:0] cfg_frame_to       = FRAME_TIMEOUT_MAX[15:0];
+    wire [7:0]  cfg_crc_win        = 8'd64;   // 统计窗口
+    
+    // ★ 强制设置为“死马当活马医”模式：
+    // 只要能锁住，就算 Preamble 烂了、CRC 挂了，也要把数据吐出来给 FEC/PRBS 看
+    wire [7:0]  cfg_crc_bad_th     = 8'd255;  // ★ 设为最大，禁止 CRC 触发 Realign
+    wire [7:0]  cfg_pre_win        = 8'd64;
+    wire [7:0]  cfg_pre_bad_th     = 8'd255;  // ★ 设为最大，禁止 Preamble 触发 Realign
+    wire        cfg_realign_mode   = 1'b0;    // ★ 强制 AND 模式 (必须双重错误才重置)
 
-    assign cfg_frame_to       = FRAME_TIMEOUT_MAX[15:0];
-    assign cfg_crc_win        = 8'd64;
-    assign cfg_crc_bad_th     = 8'd16;
-    assign cfg_pre_win        = 8'd64;
-    assign cfg_pre_bad_th     = 8'd16;
-    assign cfg_realign_mode   = 1'b0;
-`else
-    vio_frame_cfg u_vio_frame_cfg (
-        .clk        (core_clk),
-        .probe_out0 (cfg_err_th),
-        .probe_out1 (cfg_verify_cnt_max),
-        .probe_out2 (cfg_lock_loss_to),
-        .probe_out3 (cfg_frame_to),
-        .probe_out4 (cfg_crc_win),
-        .probe_out5 (cfg_crc_bad_th),
-        .probe_out6 (cfg_pre_win),
-        .probe_out7 (cfg_pre_bad_th),
-        .probe_out8 (cfg_realign_mode)
-    );
-`endif
+    /* // 注释掉 VIO，S1 阶段测试尽量减少变量
+    vio_frame_cfg u_vio_frame_cfg (...) 
+    */
 
     // ---- 1) bit_aligner
     wire [W-1:0] aligned_data;
@@ -200,6 +190,7 @@ module rx_deframer_only_s1 #(
         .o_frame_locked        (frame_locked),
         .o_block_aligned       (),
 
+        // 注入我们上面定义的鲁棒参数
         .cfg_frame_timeout_max (cfg_frame_to),
         .cfg_crc_bad_th        (cfg_crc_bad_th),
         .cfg_pre_bad_th        (cfg_pre_bad_th),

@@ -71,58 +71,58 @@ module tb_fec_gth_loopback_top;
     // 无fec版本，仅测试prbs 用于用于分析比对fec效果
     // ============================================================
     
-    gth_loopback_top_nofec #(
-        .W                ( 32   ),
-        .PAYLOAD_WORDS    ( 16   ),
-        .RS_K             ( 229  ),
-        .RS_N             ( 255  ),
-        .INTLV_D          ( 64   ),
-        .INTLV_N          ( 255  ),
-        .FRAMES_PER_BLOCK ( 255  ),
-        .LOCK_THRESH      ( 1024 ),
-        .TEST_PRBS        ( 1    ))
-    u_gth_loopback_top_nofec (
-        .sys_clk_p               ( sys_clk_p           ),
-        .sys_clk_n               ( sys_clk_n           ),
-        .sys_rst_n               ( sys_rst_n           ),
-        .mgtrefclk0_x1y1_p       ( mgtrefclk0_x1y1_p   ),
-        .mgtrefclk0_x1y1_n       ( mgtrefclk0_x1y1_n   ),
-        .gthrxp_in               ( gthrxp              ),
-        .gthrxn_in               ( gthrxn              ),
-        .gthtxp_out              ( gthrxp              ),
-        .gthtxn_out              ( gthrxn              ),
-        .sfp_loss                ( 2'd0                ),
-        .tx_disable              ( tx_disable          )
-    );
+    // gth_loopback_top_nofec #(
+    //     .W                ( 32   ),
+    //     .PAYLOAD_WORDS    ( 16   ),
+    //     .RS_K             ( 229  ),
+    //     .RS_N             ( 255  ),
+    //     .INTLV_D          ( 64   ),
+    //     .INTLV_N          ( 255  ),
+    //     .FRAMES_PER_BLOCK ( 255  ),
+    //     .LOCK_THRESH      ( 1024 ),
+    //     .TEST_PRBS        ( 1    ))
+    // u_gth_loopback_top_nofec (
+    //     .sys_clk_p               ( sys_clk_p           ),
+    //     .sys_clk_n               ( sys_clk_n           ),
+    //     .sys_rst_n               ( sys_rst_n           ),
+    //     .mgtrefclk0_x1y1_p       ( mgtrefclk0_x1y1_p   ),
+    //     .mgtrefclk0_x1y1_n       ( mgtrefclk0_x1y1_n   ),
+    //     .gthrxp_in               ( gthrxp              ),
+    //     .gthrxn_in               ( gthrxn              ),
+    //     .gthtxp_out              ( gthrxp              ),
+    //     .gthtxn_out              ( gthrxn              ),
+    //     .sfp_loss                ( 2'd0                ),
+    //     .tx_disable              ( tx_disable          )
+    // );
 
 // ======================================-------------------分步测试部分---------------------==================================================
     // ============================================================
     // Stage 1 版本环回测试 ： framer - bit align - deframer ====测试通过
     // ============================================================
-    // fec_gth_loopback_top_s1 #(
-    //     .W                (32),
-    //     .PAYLOAD_WORDS     (16),
-    //     .FRAMES_PER_BLOCK  (255),
-    //     .IGNORE_SFP_LOSS   (1)   
-    // ) dut_s1     (
-    //     .sys_clk_p         (sys_clk_p),
-    //     .sys_clk_n         (sys_clk_n),
-    //     .sys_rst_n         (sys_rst_n),
+    fec_gth_loopback_top_s1 #(
+        .W                (32),
+        .PAYLOAD_WORDS     (16),
+        .FRAMES_PER_BLOCK  (255)
+        // .IGNORE_SFP_LOSS   (1)   
+    ) dut_s1     (
+        .sys_clk_p         (sys_clk_p),
+        .sys_clk_n         (sys_clk_n),
+        .sys_rst_n         (sys_rst_n),
 
-    //     .mgtrefclk0_x1y1_p (mgtrefclk0_x1y1_p),
-    //     .mgtrefclk0_x1y1_n (mgtrefclk0_x1y1_n),
+        .mgtrefclk0_x1y1_p (mgtrefclk0_x1y1_p),
+        .mgtrefclk0_x1y1_n (mgtrefclk0_x1y1_n),
 
-    //     .gthrxp_in        (gthrxp),
-    //     .gthrxn_in        (gthrxn),
-    //     .gthtxp_out       (gthrxp),
-    //     .gthtxn_out       (gthrxn),
-    //     // .gthrxp_in         (gthrxp),
-    //     // .gthrxn_in         (gthrxn),
-    //     // .gthtxp_out        (gthtxp),
-    //     // .gthtxn_out        (gthtxn),
-    //     .sfp_loss          (2'd0),
-    //     .tx_disable        (tx_disable)
-    // );
+        .gthrxp_in        (gthrxp),
+        .gthrxn_in        (gthrxn),
+        .gthtxp_out       (gthrxp),
+        .gthtxn_out       (gthrxn),
+        // .gthrxp_in         (gthrxp),
+        // .gthrxn_in         (gthrxn),
+        // .gthtxp_out        (gthtxp),
+        // .gthtxn_out        (gthtxn),
+        .sfp_loss          (2'd0),
+        .tx_disable        (tx_disable)
+    );
     // ============================================================
     // Stage 2 版本环回测试 ： Stage 1 基础上加入 encode decode ===测试未通过 
     // ============================================================

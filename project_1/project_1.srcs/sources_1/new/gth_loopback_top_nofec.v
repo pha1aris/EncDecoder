@@ -17,24 +17,24 @@ module gth_loopback_top_nofec #(
     parameter integer UART_BAUD        = 9600,
     parameter integer PRINT_DIV        = 100_000_000
 )(
-    input  wire         sys_clk_p,
-    input  wire         sys_clk_n,
-    input  wire         sys_rst_n,
+    input  wire          sys_clk_p,
+    input  wire          sys_clk_n,
+    input  wire          sys_rst_n,
 
-    input  wire         mgtrefclk0_x1y1_p,
-    input  wire         mgtrefclk0_x1y1_n,
+    input  wire          mgtrefclk0_x1y1_p,
+    input  wire          mgtrefclk0_x1y1_n,
 
     // UART 接口
-    output wire         uart_txd,
-    input  wire         uart_rxd, // 【输入】连接到 ALINX uart_rx 的 rx_pin
+    output wire          uart_txd,
+    input  wire          uart_rxd, 
 
-    input  wire         gthrxp_in,
-    input  wire         gthrxn_in,
-    output wire         gthtxp_out,
-    output wire         gthtxn_out,
+    input  wire          gthrxp_in,
+    input  wire          gthrxn_in,
+    output wire          gthtxp_out,
+    output wire          gthtxn_out,
 
-    input  wire [1:0]   sfp_loss,
-    output wire [1:0]   tx_disable
+    input  wire [1:0]    sfp_loss,
+    output wire [1:0]    tx_disable
 );
     assign tx_disable = 2'b00;
 
@@ -68,7 +68,6 @@ module gth_loopback_top_nofec #(
     wire        tx_pattern_prbs_vio;
     wire [31:0] ber_result_to_vio;
 
-    // 请根据你的实际 IP 核名称进行例化
     vio_2 u_vio_ctrl (
         .clk        (core_clk),
         .probe_out0 (ber_clr),
@@ -135,7 +134,7 @@ module gth_loopback_top_nofec #(
     wire tx_done_core = tx_done_cdc2;
     wire rx_done_core = rx_done_cdc2;
 
-    // SFP Loss Logic (Core域用于状态显示，RX域用于...其实这里RX域不再阻断统计了)
+    // SFP Loss Logic
     reg [1:0] loss_core_ff1, loss_core_ff2;
     reg [1:0] loss_rx_ff1, loss_rx_ff2;
     always @(posedge core_clk) begin loss_core_ff1 <= sfp_loss; loss_core_ff2 <= loss_core_ff1; end
@@ -149,7 +148,6 @@ module gth_loopback_top_nofec #(
     wire [W-1:0] prbs_tx_word;
     wire tx_fire = tx_active & tx_rst_n; 
     
-    // TX 使用修改后的模块，i_force_lock=0 代表纯前馈生成
     prbs_chk #(
         .CHK_MODE    (0),
         .INV_PATTERN (0),
@@ -180,6 +178,7 @@ module gth_loopback_top_nofec #(
     reg tx_done_rx1, tx_done_rx2;
     always @(posedge rx_usr_clk) begin
        rx_act_l1 <= rx_active; rx_act_l2 <= rx_act_l1;
+       // 这里把 CDR stable 信号同步到 RX 用户时钟域，用于打包发送
        cdr_st_l1 <= cdr_stable; cdr_st_l2 <= cdr_st_l1;
        tx_done_rx1 <= tx_done; tx_done_rx2 <= tx_done_rx1;
     end
@@ -187,25 +186,21 @@ module gth_loopback_top_nofec #(
     wire cdr_stable_line = cdr_st_l2;
     wire tx_done_line    = tx_done_rx2;
     
-    // ★★★ 修改点 1：强行统计模式 ★★★
-    // 去掉 have_light_line 和 cdr_stable 的限制，只看 GTH RX 是否 Active。
-    // 这样即使全是噪声，也会送入 PRBS Checker 产生误码计数。
     wire rx_word_valid_line = rx_active_line; 
 
     //======================================================================
     // 5. UART RX & 命令解析 
     //======================================================================
-    // 状态码定义
+    // VIO 仍保持旧的状态定义以便调试
     localparam [31:0] BER_CODE_LINK_DOWN  = 32'hFFFF_FFFF;
     localparam [31:0] BER_CODE_NOT_READY  = 32'hFFFF_FFFE;
     localparam [31:0] BER_CODE_SEARCHING  = 32'hFFFF_FFFD;
     localparam [31:0] BER_CODE_LOCKING    = 32'hFFFF_FFFC;
 
     wire [7:0] rx_byte;
-    wire       rx_valid;
+    wire        rx_valid;
     localparam integer CORE_CLK_MHZ = CORE_CLK_HZ / 1_000_000;
 
-    // ALINX UART RX 模块
     uart_rx #(
         .CLK_FRE   (CORE_CLK_MHZ),
         .BAUD_RATE (UART_BAUD)
@@ -214,14 +209,12 @@ module gth_loopback_top_nofec #(
         .rst_n         (~logic_rst),
         .rx_data       (rx_byte),
         .rx_data_valid (rx_valid),
-        .rx_data_ready (1'b1), // 持续接收
+        .rx_data_ready (1'b1),
         .rx_pin        (uart_rxd)
     );
 
-    // 解析清零指令 (c / C / 0xAA)
     wire uart_clr_cmd = rx_valid && (rx_byte == 8'h63 || rx_byte == 8'h43 || rx_byte == 8'hAA);
 
-    // Core域脉冲 -> Toggle
     reg uart_clr_tgl;
     always @(posedge core_clk) begin
         if (logic_rst) uart_clr_tgl <= 1'b0;
@@ -229,7 +222,7 @@ module gth_loopback_top_nofec #(
     end
 
     //======================================================================
-    // 6. 清零信号跨域处理 (Core -> RX)
+    // 6. 清零信号跨域处理
     //======================================================================
     reg uart_clr_rx1, uart_clr_rx2, uart_clr_rx3;
     always @(posedge rx_usr_clk or negedge rx_rst_n) begin
@@ -254,16 +247,11 @@ module gth_loopback_top_nofec #(
         end
     end
     wire vio_clear_pulse_rx = ber_clr_ff2 & ~ber_clr_ff2_d;
-    
-    // 最终清零信号 (VIO or UART)
     wire master_clear_pulse = vio_clear_pulse_rx | uart_clear_pulse_rx;
 
     //======================================================================
-    // 7. PRBS Checker & 统计逻辑 (专业误码仪模式)
+    // 7. PRBS Checker & 统计逻辑
     //======================================================================
-    
-    // ★★★ 修改点 2：测量许可 ★★★
-    // 只要 TX/RX 初始化完成，就允许测量。不关心光功率/CDR锁定。
     wire prbs_meas_ok = rx_word_valid_line & tx_done_line; 
     
     reg prbs_meas_ok_d;
@@ -280,7 +268,6 @@ module gth_loopback_top_nofec #(
     wire [W-1:0] prbs_err_vec_int;
     wire prbs_chk_fire = prbs_meas_ok; 
 
-    // RX Checker 实例化 (带 force_lock)
     prbs_chk #(
         .CHK_MODE    (1),
         .INV_PATTERN (0),
@@ -293,7 +280,7 @@ module gth_loopback_top_nofec #(
         .DATA_IN      (rx_data_from_gth),
         .EN           (prbs_chk_fire),
         .DATA_OUT     (prbs_err_vec_int),
-        .i_force_lock (force_lock_req) // 强制闭环
+        .i_force_lock (force_lock_req)
     );
 
     function integer popcountW;
@@ -307,7 +294,6 @@ module gth_loopback_top_nofec #(
     wire [15:0] current_err_num = popcountW(prbs_err_vec_int);
     localparam [63:0] W64 = (64'd0 + W);
 
-    // 统计状态机 (Sticky Lock)
     (* MARK_DEBUG="true" *) reg [31:0] good_cnt;
     (* MARK_DEBUG="true" *) reg        prbs_locked;
     (* MARK_DEBUG="true" *) reg [63:0] total_bits_cnt;
@@ -327,39 +313,34 @@ module gth_loopback_top_nofec #(
         total_bits_cnt <= 64'd0;
         total_err_cnt  <= 64'd0;
       end else if (!prbs_meas_ok) begin
-        // 仅当 GTH 彻底未准备好时复位
         good_cnt       <= 32'd0;
         prbs_locked    <= 1'b0;
         force_lock_req <= 1'b0;
       end else if (prbs_chk_fire) begin
         if (!prbs_locked) begin
-          // --- 搜索阶段 ---
           if (|prbs_err_vec_int) begin
             good_cnt <= 32'd0;
           end else begin
             if (good_cnt >= (LOCK_THRESH-1)) begin
                prbs_locked    <= 1'b1;
-               force_lock_req <= 1'b1; // 锁定！切断外部干扰
+               force_lock_req <= 1'b1;
                good_cnt       <= 32'd0;
             end else begin
                good_cnt <= good_cnt + 1'b1;
             end
           end
         end else begin
-          // --- 锁定统计阶段 ---
-          // 哪怕此时光纤被拔，数据全0，Checker 也会疯狂报错，但不会掉锁
-          // 从而如实记录下“断开瞬间”和“断开期间”的所有错误
           total_bits_cnt <= total_bits_cnt + W64;
           total_err_cnt  <= total_err_cnt  + current_err_num;
         end
       end
     end
 
-    // VIO Display
+    // VIO Display (兼容旧逻辑)
     reg [31:0] ber_status_rx;
     always @(posedge rx_usr_clk) begin
       if (!have_light_line)        ber_status_rx <= BER_CODE_LINK_DOWN;
-      else if (!cdr_stable)        ber_status_rx <= BER_CODE_NOT_READY;
+      else if (!cdr_stable_line)   ber_status_rx <= BER_CODE_NOT_READY;
       else if (!prbs_locked)       ber_status_rx <= BER_CODE_SEARCHING;
       else                         ber_status_rx <= total_err_cnt[31:0];
     end
@@ -377,26 +358,11 @@ module gth_loopback_top_nofec #(
     assign ber_result_to_vio = ber_sync2;
 
     //======================================================================
-    // 8. UART TX Logic (包含 Watchdog 和 物理层诊断)
+    // 8. UART TX Logic (普通握手，无死后验尸)
     //======================================================================
     
     wire ber_clear_pulse_core = (ber_clr_ff2 & ~ber_clr_ff2_d); 
     wire uart_clear_pulse_core = uart_clr_cmd; 
-    
-    // [RX域] 逻辑状态码
-    reg [7:0] rx_stat_code_internal;
-    always @(*) begin
-        if (!prbs_locked) rx_stat_code_internal = 8'h01; // Searching
-        else              rx_stat_code_internal = 8'h00; // Locked
-    end
-
-    // [Core域] 物理状态直通 (用于 RX CLK 挂掉时验尸)
-    reg cdr_stable_c1, cdr_stable_c2;
-    always @(posedge core_clk) begin
-        cdr_stable_c1 <= cdr_stable; cdr_stable_c2 <= cdr_stable_c1;
-    end
-    wire cdr_stable_core = cdr_stable_c2;
-    // have_light_core 之前已定义
 
     // 快照握手
     reg snap_req_tgl;
@@ -411,16 +377,28 @@ module gth_loopback_top_nofec #(
     end
     wire snap_req_pulse_rx = snap_req_rx2 ^ snap_req_rx2_d;
     
-    // RX -> Core (锁存)
+    // RX -> Core (锁存 + 状态打包)
     reg [63:0] bits_latch_rx, err_latch_rx;
     reg [7:0] stat_latch_rx;
     reg snap_ack_tgl_rx;
     
     always @(posedge rx_usr_clk) begin
         if(snap_req_pulse_rx) begin
-            bits_latch_rx   <= total_bits_cnt;
-            err_latch_rx    <= total_err_cnt;
-            stat_latch_rx   <= rx_stat_code_internal;
+            bits_latch_rx    <= total_bits_cnt;
+            err_latch_rx     <= total_err_cnt;
+            
+            // ★★★ 核心修改：在 RX 域打包状态 (Bitmask) ★★★
+            // Bit 0: Light (from SFP logic)
+            // Bit 1: CDR (from GTH logic)
+            // Bit 4: PRBS (from Checker)
+            stat_latch_rx    <= {
+                3'b000,
+                prbs_locked,       // Bit 4
+                2'b00,
+                cdr_stable_line,   // Bit 1
+                have_light_line    // Bit 0
+            };
+            
             snap_ack_tgl_rx <= ~snap_ack_tgl_rx;
         end
     end
@@ -433,28 +411,10 @@ module gth_loopback_top_nofec #(
         snap_ack_c2_d <= snap_ack_c2;
     end
     wire snap_ready_normal = snap_ack_c2 ^ snap_ack_c2_d; 
-
-    // ★★★ 看门狗：防止 RX 时钟停振导致死机 ★★★
-    reg [9:0] watchdog_cnt;
-    reg snap_timeout_pulse;
     
-    always @(posedge core_clk) begin
-        if (logic_rst) begin
-            watchdog_cnt <= 0; snap_timeout_pulse <= 0;
-        end else if (snap_busy) begin
-            if (snap_ready_normal) begin
-                watchdog_cnt <= 0; snap_timeout_pulse <= 0;
-            end else if (watchdog_cnt == 10'd1023) begin
-                watchdog_cnt <= 0; snap_timeout_pulse <= 1; // 超时!
-            end else begin
-                watchdog_cnt <= watchdog_cnt + 1; snap_timeout_pulse <= 0;
-            end
-        end else begin
-            watchdog_cnt <= 0; snap_timeout_pulse <= 0;
-        end
-    end
-
-    wire snap_finish = snap_ready_normal | snap_timeout_pulse;
+    // 移除了 Watchdog 相关代码 (watchdog_cnt, snap_timeout_pulse)
+    
+    wire snap_finish = snap_ready_normal; // 只有正常应答才算完成
 
     // 最终数据更新 (Core Domain)
     reg [63:0] bits_snap_core, err_snap_core;
@@ -469,18 +429,9 @@ module gth_loopback_top_nofec #(
         stat_l1 <= stat_latch_rx; stat_l2 <= stat_l1;
         
         if (snap_ready_normal) begin
-            // RX 正常，综合逻辑 + 物理状态判断
             bits_snap_core <= bits_l2; 
             err_snap_core  <= err_l2; 
-            if (!have_light_core)      stat_snap_core <= 8'h03; // No Light
-            else if (!cdr_stable_core) stat_snap_core <= 8'h02; // CDR Unlock
-            else                       stat_snap_core <= stat_l2; // Locked/Search
-        end else if (snap_timeout_pulse) begin
-            // RX 挂了，直接验尸
-            // 保留最后的计数值
-            if (!have_light_core)      stat_snap_core <= 8'h03; // No Light
-            else if (!cdr_stable_core) stat_snap_core <= 8'h02; // CDR Unlock
-            else                       stat_snap_core <= 8'h04; // S=04: RX CLK DEAD
+            stat_snap_core <= stat_l2; // 直接使用 RX 域传递过来的 Bitmask
         end
     end
 
@@ -495,6 +446,7 @@ module gth_loopback_top_nofec #(
     end
     
     reg sending;
+    // 如果 snap_busy 一直为 1 (因为 RX 死了没 Ack)，这里就不会再发起新请求，符合“停止”的表现
     wire snap_can_issue = print_pulse && !sending && (!snap_busy || snap_finish);
     
     always @(posedge core_clk) begin
@@ -540,11 +492,12 @@ module gth_loopback_top_nofec #(
             case (fsm_state)
                 S_IDLE_WAIT: begin
                     sending <= 0;
-                    if (snap_finish) begin // 只要完成（无论成功失败）都发送
+                    if (snap_finish) begin 
                         bits_frame <= bits_snap_core; err_frame <= err_snap_core; stat_frame <= stat_snap_core;
                         sending <= 1; msg_idx <= 0; fsm_state <= S_PREPARE;
                     end
                 end
+                // ... (余下发送状态机代码与之前相同，省略以节省篇幅，功能未变)
                 S_PREPARE: begin
                     if (uart_tx_ready) begin
                         case (msg_idx)

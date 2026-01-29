@@ -1,6 +1,12 @@
 `timescale 1ps/1ps
 
-module gtwizard_ultrascale_0_prbs_any(
+module gtwizard_ultrascale_0_prbs_any#(
+      parameter CHK_MODE = 0,
+      parameter INV_PATTERN = 0,
+      parameter POLY_LENGHT = 7,
+      parameter POLY_TAP = 6,
+      parameter NBITS = 16 
+)(
     input wire RST,
     input wire CLK,
     input wire [NBITS - 1:0] DATA_IN,
@@ -13,11 +19,7 @@ module gtwizard_ultrascale_0_prbs_any(
   //--------------------------------------------
   // Configuration parameters
   //--------------------------------------------
-   parameter CHK_MODE = 0;
-   parameter INV_PATTERN = 0;
-   parameter POLY_LENGHT = 7;
-   parameter POLY_TAP = 6;
-   parameter NBITS = 16;
+
 
   //--------------------------------------------
   // Internal variables
